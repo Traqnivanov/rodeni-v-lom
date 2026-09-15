@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Родени в Лом</title>
+<style>
+  :root{
+    --bg:#0a0e1a;
+    --surface:#121729;
+    --ink:#eef1f8;
+    --muted:#8993ac;
+    --accent:#e2a53d;
+    --accent-2:#f4c469;
+    --line:rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+    padding:20px;
+  }
+  .card{
+    width:100%;
+    max-width:380px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:28px;
+  }
+  h1{
+    font-size:1.4rem;
+    margin:0 0 6px;
+  }
+  p.lead{
+    color:var(--muted);
+    font-size:.9rem;
+    margin:0 0 22px;
+    line-height:1.5;
+  }
+  label{
+    display:block;
+    font-size:.82rem;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  input[type=email]{
+    width:100%;
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:11px 13px;
+    color:var(--ink);
+    font-size:.95rem;
+    margin-bottom:14px;
+  }
+  input[type=email]:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  button{
+    width:100%;
+    background:var(--accent);
+    color:#1a1206;
+    border:none;
+    border-radius:10px;
+    padding:12px;
+    font-weight:700;
+    font-size:.95rem;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  button:disabled{opacity:.6;cursor:default;}
+  button.secondary{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ink);
+    margin-top:10px;
+  }
+  .status{
+    margin-top:16px;
+    font-size:.85rem;
+    color:var(--muted);
+    line-height:1.5;
+  }
+  .status.ok{color:var(--accent-2);}
+  .status.err{color:#e07a6b;}
+  [hidden]{display:none!important;}
+  .signed-in-email{color:var(--accent-2);font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div id="loggedOutView">
+    <h1>Родени в Лом</h1>
+    <p class="lead">Влез с имейла си — без парола. Ще ти пратим линк за вход.</p>
+    <label for="emailInput">Имейл</label>
+    <input type="email" id="emailInput" placeholder="ti@example.com" autocomplete="email">
+    <button type="button" id="sendLinkBtn">Изпрати ми линк за вход</button>
+    <div class="status" id="statusMsg" hidden></div>
+  </div>
+
+  <div id="loggedInView" hidden>
+    <h1>Влязъл си</h1>
+    <p class="lead">Влязъл си като <span class="signed-in-email" id="userEmail"></span></p>
+    <button type="button" class="secondary" id="signOutBtn">Изход</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+(function(){
+  "use strict";
+  var sb = window.rodeniSupabase;
+
+  var loggedOutView = document.getElementById('loggedOutView');
+  var loggedInView = document.getElementById('loggedInView');
+  var userEmailEl = document.getElementById('userEmail');
+  var emailInput = document.getElementById('emailInput');
+  var sendLinkBtn = document.getElementById('sendLinkBtn');
+  var signOutBtn = document.getElementById('signOutBtn');
+  var statusMsg = document.getElementById('statusMsg');
+
+  function showStatus(text, kind){
+    statusMsg.textContent = text;
+    statusMsg.className = 'status' + (kind ? ' '+kind : '');
+    statusMsg.hidden = false;
+  }
+
+  function renderSession(session){
+    if (session && session.user){
+      loggedOutView.hidden = true;
+      loggedInView.hidden = false;
+      userEmailEl.textContent = session.user.email;
+    } else {
+      loggedOutView.hidden = false;
+      loggedInView.hidden = true;
+    }
+  }
+
+  sendLinkBtn.addEventListener('click', async function(){
+    var email = emailInput.value.trim();
+    if (!email){
+      showStatus('Моля, въведи имейл.', 'err');
+      return;
+    }
+    sendLinkBtn.disabled = true;
+    showStatus('Изпращам линк…');
+    var res = await sb.auth.signInWithOtp({
+      email: email,
+      options: { emailRedirectTo: window.location.href }
+    });
+    sendLinkBtn.disabled = false;
+    if (res.error){
+      showStatus('Нещо се обърка: ' + res.error.message, 'err');
+    } else {
+      showStatus('Провери имейла си — изпратихме ти линк за вход.', 'ok');
+    }
+  });
+
+  signOutBtn.addEventListener('click', async function(){
+    await sb.auth.signOut();
+  });
+
+  sb.auth.onAuthStateChange(function(_event, session){
+    renderSession(session);
+  });
+
+  sb.auth.getSession().then(function(res){
+    renderSession(res.data.session);
+  });
+})();
+</script>
+</body>
+</html>
