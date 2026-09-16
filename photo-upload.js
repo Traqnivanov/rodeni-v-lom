@@ -40,23 +40,36 @@ window.RodeniPhoto = (function(){
 
   // Смалява и качва снимка в bucket "photos", в папка на текущия потребител.
   // sb - Supabase клиент; file - File от <input type=file>; userId - auth.uid().
+  //
+  // options.slot - ако е зададен (напр. "profile"), снимката пази ЕДНО фиксирано
+  //   място - нова качена снимка ПРЕЗАПИСВА старата, старите файлове не се трупат.
+  //   Ползва се за профилна снимка (само една на човек).
+  // options.unique - ако е true (и няма slot), всяко качване създава нов отделен
+  //   файл - за бъдещи раздели с по няколко снимки на човек. Извикващият код
+  //   трябва сам да пази лимит колко снимки позволява (напр. максимум 5).
+  //
   // Връща публичния адрес на качената снимка.
-  async function uploadUserPhoto(sb, file, userId){
+  async function uploadUserPhoto(sb, file, userId, options){
+    options = options || {};
     if (!file) throw new Error('Няма избрана снимка.');
     if (!/^image\/(jpeg|png|webp)$/.test(file.type)){
       throw new Error('Позволени са само снимки (JPEG, PNG, WebP).');
     }
     var blob = await compressImage(file);
-    var path = userId + '/' + Date.now() + '.jpg';
+    var path = options.slot
+      ? userId + '/' + options.slot + '.jpg'
+      : userId + '/' + Date.now() + '.jpg';
 
     var uploadRes = await sb.storage.from('photos').upload(path, blob, {
       contentType: 'image/jpeg',
-      upsert: false
+      upsert: !!options.slot
     });
     if (uploadRes.error) throw uploadRes.error;
 
+    // при презапис публичният адрес остава същият, но кешът на браузъра/CDN
+    // може да пази старата снимка - добавяме версия по време, за да се опресни
     var urlRes = sb.storage.from('photos').getPublicUrl(path);
-    return urlRes.data.publicUrl;
+    return urlRes.data.publicUrl + '?v=' + Date.now();
   }
 
   return {

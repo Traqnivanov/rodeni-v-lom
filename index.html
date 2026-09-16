@@ -470,7 +470,7 @@
     if (pendingPhotoFile){
       showFormStatus('Качвам снимката…');
       try {
-        payload.photo_url = await window.RodeniPhoto.uploadUserPhoto(sb, pendingPhotoFile, user.id);
+        payload.photo_url = await window.RodeniPhoto.uploadUserPhoto(sb, pendingPhotoFile, user.id, { slot: 'profile' });
       } catch (photoErr){
         submitBtn.disabled = false;
         showFormStatus('Снимката не се качи: ' + photoErr.message, 'err');
