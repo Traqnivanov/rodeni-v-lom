@@ -137,6 +137,7 @@
   <div id="communitySection" class="community-section" hidden>
     <div class="tabs" id="communityTabs">
       <button type="button" class="tab active" data-ctab="settlement">По населено място</button>
+      <button type="button" class="tab" data-ctab="city">По град</button>
     </div>
     <p class="hint" id="communityHint">Кой още е от твоето село или квартал в Община Лом — независимо къде е по света.</p>
     <div id="communityChips" class="chips"></div>
@@ -249,16 +250,30 @@
   var allEntries = [];
   var activeCommunityTab = 'settlement';
   var activeSettlement = null;
+  var activeCity = null;
   var entriesLoaded = false;
   var authChecked = false;
 
   var COMMUNITY_HINTS = {
-    settlement: 'Кой още е от твоето село или квартал в Община Лом — независимо къде е по света.'
+    settlement: 'Кой още е от твоето село или квартал в Община Лом — независимо къде е по света.',
+    city: 'Кой още е в твоя град в чужбина — където и да си, независимо от държавата.'
   };
 
   function entrySettlementLabel(r){
     if (!r.settlement) return null;
     return r.settlement === 'Друго' ? r.settlement_other : r.settlement;
+  }
+
+  function entryCityLabel(r){
+    var v = (r.city_abroad || '').trim();
+    return v || null;
+  }
+
+  function communityCardLine(r){
+    var bits = [];
+    if (r.settlement) bits.push(r.settlement === 'Друго' ? r.settlement_other : r.settlement);
+    if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
+    return bits.filter(Boolean).join(' · ') || countryName(r.country_code);
   }
 
   function renderSettlementTab(){
@@ -282,7 +297,7 @@
     if (!activeSettlement || !groups[activeSettlement]) activeSettlement = labels[0];
 
     communityChips.innerHTML = labels.map(function(l){
-      return '<button type="button" class="chip' + (l === activeSettlement ? ' active' : '') + '" data-settlement="' + l.replace(/"/g,'&quot;') + '">' + l + ' <span class="n">' + groups[l].length + '</span></button>';
+      return '<button type="button" class="chip' + (l === activeSettlement ? ' active' : '') + '" data-key="' + l.replace(/"/g,'&quot;') + '">' + l + ' <span class="n">' + groups[l].length + '</span></button>';
     }).join('');
 
     var myId = myRegistration ? myRegistration.id : null;
@@ -302,15 +317,60 @@
     communitySection.hidden = false;
   }
 
+  function renderCityTab(){
+    var groups = {}; // key: lowercase trimmed city, value: {label, rows}
+    allEntries.forEach(function(r){
+      var label = entryCityLabel(r);
+      if (!label) return;
+      var key = label.toLowerCase();
+      (groups[key] = groups[key] || { label: label, rows: [] }).rows.push(r);
+    });
+    var keys = Object.keys(groups);
+    if (!keys.length){
+      communitySection.hidden = true;
+      return;
+    }
+    var mine = myRegistration && myRegistration.city_abroad ? myRegistration.city_abroad.trim().toLowerCase() : null;
+    keys.sort(function(a, b){
+      if (a === mine) return -1;
+      if (b === mine) return 1;
+      return groups[b].rows.length - groups[a].rows.length;
+    });
+    if (!activeCity || !groups[activeCity]) activeCity = keys[0];
+
+    communityChips.innerHTML = keys.map(function(k){
+      return '<button type="button" class="chip' + (k === activeCity ? ' active' : '') + '" data-key="' + k.replace(/"/g,'&quot;') + '">' + groups[k].label + ' <span class="n">' + groups[k].rows.length + '</span></button>';
+    }).join('');
+
+    var myId = myRegistration ? myRegistration.id : null;
+    var activeGroup = groups[activeCity];
+    var visible = activeGroup.rows.filter(function(r){ return r.id !== myId; });
+    if (!visible.length){
+      communityList.innerHTML = '<p class="empty-cta">Все още само ти си в ' + activeGroup.label + ' — бъди първият, който ще намери друг оттук.</p>';
+    } else {
+      communityList.innerHTML = visible.slice(0, 12).map(function(r){
+        var photo = r.photo_url
+          ? '<img src="'+r.photo_url+'" alt="">'
+          : '<div class="ph-placeholder"></div>';
+        var heading = r.display_name || countryName(r.country_code);
+        return '<div class="person-card">' + photo +
+          '<div class="info"><b>' + heading + '</b><br>' + communityCardLine(r) + '</div></div>';
+      }).join('');
+    }
+    communitySection.hidden = false;
+  }
+
   function renderCommunitySection(){
     if (!entriesLoaded || !authChecked) return;
     if (activeCommunityTab === 'settlement') renderSettlementTab();
+    else if (activeCommunityTab === 'city') renderCityTab();
   }
 
   communityChips.addEventListener('click', function(e){
     var btn = e.target.closest('.chip');
     if (!btn) return;
-    activeSettlement = btn.dataset.settlement;
+    if (activeCommunityTab === 'settlement') activeSettlement = btn.dataset.key;
+    else if (activeCommunityTab === 'city') activeCity = btn.dataset.key;
     renderCommunitySection();
   });
 
@@ -336,7 +396,7 @@
       renderCommunitySection();
       return;
     }
-    sb.from('registrations').select('id, settlement, settlement_other').eq('user_id', user.id).maybeSingle().then(function(regRes){
+    sb.from('registrations').select('id, settlement, settlement_other, city_abroad, profession_category, profession, willing_to_help').eq('user_id', user.id).maybeSingle().then(function(regRes){
       if (regRes.data){
         iAmRegistered = true;
         myRegistration = regRes.data;
