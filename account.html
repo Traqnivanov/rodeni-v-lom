@@ -626,14 +626,19 @@
       professionMatches.hidden = true;
     }
 
-    // ---- приети връзки, с разкрит контакт ----
+    // ---- приети връзки - води към частен чат, не разкрива контакт директно ----
     var accepted = myConnections.filter(function(c){ return c.status === 'accepted'; });
     if (accepted.length){
       var otherIds = accepted.map(function(c){ return c.from_registration_id === myId ? c.to_registration_id : c.from_registration_id; });
-      var otherRes = await sb.from('registrations').select('*').in('id', otherIds);
-      acceptedList.innerHTML = (otherRes.data || []).map(function(r){
-        return '<div class="conn-card"><div class="info"><b>' + personSummary(r) + '</b><br>' +
-          (r.contact_method ? 'Контакт: ' + r.contact_method : 'Няма посочен начин за връзка') + '</div></div>';
+      var otherRes = await sb.from('public_registrations').select('*').in('id', otherIds);
+      var otherById = {};
+      (otherRes.data || []).forEach(function(r){ otherById[r.id] = r; });
+      acceptedList.innerHTML = accepted.map(function(c){
+        var otherId = c.from_registration_id === myId ? c.to_registration_id : c.from_registration_id;
+        var r = otherById[otherId];
+        if (!r) return '';
+        return '<div class="conn-card"><div class="info"><b>' + personSummary(r) + '</b></div>' +
+          '<a class="secondary" style="width:auto;padding:7px 12px;font-size:.78rem;text-decoration:none;display:inline-block;" href="razgovor.html?id=' + c.id + '">Пиши</a></div>';
       }).join('');
       acceptedConnections.hidden = false;
     } else {
