@@ -139,7 +139,7 @@
         <label for="fPhoto">Снимка <span class="opt">(по желание)</span></label>
         <div style="display:flex;align-items:center;gap:14px;">
           <img id="fPhotoPreview" alt="" hidden style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:1px solid var(--line);">
-          <input type="file" id="fPhoto" accept="image/png,image/jpeg,image/webp" style="flex:1;font-size:.82rem;">
+          <input type="file" id="fPhoto" accept="image/*" style="flex:1;font-size:.82rem;">
         </div>
         <div class="hint" id="photoHint">Смалява се автоматично — леко и ясно.</div>
       </div>
@@ -290,8 +290,8 @@
   fPhoto.addEventListener('change', function(){
     var file = fPhoto.files[0];
     if (!file) return;
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type)){
-      photoHint.textContent = 'Позволени са само снимки (JPEG, PNG, WebP).';
+    if (file.type.indexOf('image/') !== 0){
+      photoHint.textContent = 'Файлът трябва да е снимка.';
       fPhoto.value = '';
       return;
     }

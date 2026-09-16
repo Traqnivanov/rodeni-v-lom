@@ -52,10 +52,12 @@ window.RodeniPhoto = (function(){
   async function uploadUserPhoto(sb, file, userId, options){
     options = options || {};
     if (!file) throw new Error('Няма избрана снимка.');
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type)){
-      throw new Error('Позволени са само снимки (JPEG, PNG, WebP).');
+    if (file.type.indexOf('image/') !== 0){
+      throw new Error('Файлът трябва да е снимка.');
     }
-    var blob = await compressImage(file);
+    var blob = await compressImage(file).catch(function(err){
+      throw new Error('Този формат снимка не се разчита от браузъра ти. Пробвай друга снимка или направи екранна снимка на нея.');
+    });
     var path = options.slot
       ? userId + '/' + options.slot + '.jpg'
       : userId + '/' + Date.now() + '.jpg';
