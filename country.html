@@ -113,7 +113,7 @@
     var bits = [];
     if (r.settlement) bits.push(r.settlement === 'Друго' ? r.settlement_other : r.settlement);
     if (r.city_abroad) bits.push(r.city_abroad);
-    if (r.school) bits.push(r.school);
+    if (r.school) bits.push(r.school === 'Друго' ? r.school_other : r.school);
     if (r.age) bits.push(r.age + ' г.');
     return bits.filter(Boolean).join(' · ') || 'Без допълнителни данни';
   }
@@ -122,7 +122,7 @@
     var rows = allEntries;
     if (activeCity) rows = rows.filter(function(r){ return r.city_abroad === activeCity; });
     if (activeTab === 'open') rows = rows.filter(function(r){ return r.open_to_strangers; });
-    if (activeTab === 'profession') rows = rows.filter(function(r){ return !!r.profession; });
+    if (activeTab === 'profession') rows = rows.filter(function(r){ return !!(r.profession_category || r.profession); });
 
     if (!rows.length){
       listEl.innerHTML = '';
@@ -137,7 +137,9 @@
       var photo = r.photo_url
         ? '<img src="'+r.photo_url+'" alt="">'
         : '<div class="ph-placeholder"></div>';
-      var profBadge = r.profession ? '<span class="badge">'+r.profession+'</span>' : '';
+      var profBadge = r.profession_category
+        ? '<span class="badge">'+r.profession_category+'</span>'
+        : (r.profession ? '<span class="badge">'+r.profession+'</span>' : '');
       var openBadge = r.open_to_strangers ? '<span class="badge">отворен за запознанства</span>' : '';
       return '<div class="person-card">' + photo +
         '<div class="info"><b>' + countryName(code) + '</b>' + profBadge + openBadge + '<br>' + personLine(r) + '</div></div>';

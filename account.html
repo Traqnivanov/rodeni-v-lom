@@ -623,11 +623,27 @@
     var declineBtn = e.target.closest('.conn-decline');
     if (acceptBtn){
       acceptBtn.disabled = true;
-      await sb.from('connections').update({ status: 'accepted', responded_at: new Date().toISOString() }).eq('id', acceptBtn.dataset.id);
+      var acceptRes = await sb.from('connections').update({ status: 'accepted', responded_at: new Date().toISOString() }).eq('id', acceptBtn.dataset.id);
+      if (acceptRes.error){
+        acceptBtn.disabled = false;
+        connStatusMsg.textContent = 'Нещо се обърка: ' + acceptRes.error.message;
+        connStatusMsg.className = 'status err';
+        connStatusMsg.hidden = false;
+        return;
+      }
       loadConnectionsUI();
     } else if (declineBtn){
       declineBtn.disabled = true;
-      await sb.from('connections').update({ status: 'declined', responded_at: new Date().toISOString() }).eq('id', declineBtn.dataset.id);
+      // тихо изтриваме молбата - изпращачът никога не научава, че е отказана,
+      // и може да опита пак по-късно (не остава заключен запис)
+      var declineRes = await sb.from('connections').delete().eq('id', declineBtn.dataset.id);
+      if (declineRes.error){
+        declineBtn.disabled = false;
+        connStatusMsg.textContent = 'Нещо се обърка: ' + declineRes.error.message;
+        connStatusMsg.className = 'status err';
+        connStatusMsg.hidden = false;
+        return;
+      }
       loadConnectionsUI();
     }
   });
