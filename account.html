@@ -170,6 +170,11 @@
         <div id="schoolList"></div>
       </div>
 
+      <div id="professionMatches" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
+        <h2 id="professionMatchesTitle">Хора със същата работа</h2>
+        <div id="professionList"></div>
+      </div>
+
       <div class="status" id="connStatusMsg" hidden></div>
 
       <div id="acceptedConnections" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
@@ -248,9 +253,23 @@
       </div>
 
       <div class="field">
-        <label for="fProfession">Професия / сфера <span class="opt">(по желание)</span></label>
-        <input type="text" id="fProfession" placeholder="напр. електротехник, лекар" maxlength="60">
-        <div class="hint">Ако я напишеш — ще се вижда на профила ти, за да те намерят затова.</div>
+        <label for="fProfessionCategory">Сфера на работа <span class="opt">(по желание)</span></label>
+        <select id="fProfessionCategory">
+          <option value="">— не посочвам —</option>
+          <option>Гледане на възрастни/болни хора</option>
+          <option>Домакинска помощ/почистване</option>
+          <option>Строителство</option>
+          <option>Промишленост/производство</option>
+          <option>Земеделие</option>
+          <option>Транспорт/шофьори</option>
+          <option>Хотелиерство/ресторантьорство</option>
+          <option>Здравеопазване</option>
+          <option>IT/технологии</option>
+          <option>Търговия/услуги</option>
+          <option>Друго</option>
+        </select>
+        <div class="hint">За да те намират хора със същата работа.</div>
+        <input type="text" id="fProfession" placeholder="напр. електротехник, готвач (уточнение по желание)" maxlength="60" style="margin-top:8px;">
       </div>
 
       <div class="field">
@@ -315,6 +334,7 @@
   var fSchoolOther = document.getElementById('fSchoolOther');
   var fAge = document.getElementById('fAge');
   var fProfession = document.getElementById('fProfession');
+  var fProfessionCategory = document.getElementById('fProfessionCategory');
   var fContact = document.getElementById('fContact');
   var fOpen = document.getElementById('fOpen');
   var fPhoto = document.getElementById('fPhoto');
@@ -339,6 +359,9 @@
   var schoolMatches = document.getElementById('schoolMatches');
   var schoolMatchesTitle = document.getElementById('schoolMatchesTitle');
   var schoolList = document.getElementById('schoolList');
+  var professionMatches = document.getElementById('professionMatches');
+  var professionMatchesTitle = document.getElementById('professionMatchesTitle');
+  var professionList = document.getElementById('professionList');
   var connStatusMsg = document.getElementById('connStatusMsg');
   var acceptedConnections = document.getElementById('acceptedConnections');
   var acceptedList = document.getElementById('acceptedList');
@@ -426,6 +449,7 @@
       ['Град в чужбина', reg.city_abroad],
       ['Училище', reg.school === 'Друго' ? reg.school_other : reg.school],
       ['Възраст', reg.age],
+      ['Сфера на работа', reg.profession_category],
       ['Професия', reg.profession],
       ['Начин за връзка', reg.contact_method],
       ['Пътувам за България', reg.travel_status],
@@ -558,6 +582,24 @@
       schoolMatches.hidden = true;
     }
 
+    // ---- хора със същата сфера на работа ----
+    if (currentRegistration.profession_category && currentRegistration.profession_category !== 'Друго'){
+      professionMatchesTitle.textContent = 'Хора с работа: ' + currentRegistration.profession_category;
+      var professionRes = await sb.from('public_registrations')
+        .select('*')
+        .eq('profession_category', currentRegistration.profession_category)
+        .neq('id', myId);
+      var professionCandidates = professionRes.data || [];
+      if (professionCandidates.length){
+        professionList.innerHTML = professionCandidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
+      } else {
+        professionList.innerHTML = '<div class="hint">Все още няма друг регистриран с тази сфера на работа.</div>';
+      }
+      professionMatches.hidden = false;
+    } else {
+      professionMatches.hidden = true;
+    }
+
     // ---- приети връзки, с разкрит контакт ----
     var accepted = myConnections.filter(function(c){ return c.status === 'accepted'; });
     if (accepted.length){
@@ -608,6 +650,7 @@
   settlementList.addEventListener('click', handleConnRequestClick);
   cityList.addEventListener('click', handleConnRequestClick);
   schoolList.addEventListener('click', handleConnRequestClick);
+  professionList.addEventListener('click', handleConnRequestClick);
 
   function fillFormFrom(reg){
     fCountry.value = reg.country_code || '';
@@ -619,6 +662,7 @@
     fSchoolOther.hidden = reg.school !== 'Друго';
     fSchoolOther.value = reg.school_other || '';
     fAge.value = reg.age || '';
+    fProfessionCategory.value = reg.profession_category || '';
     fProfession.value = reg.profession || '';
     fContact.value = reg.contact_method || '';
     fOpen.checked = !!reg.open_to_strangers;
@@ -747,6 +791,7 @@
       school: fSchool.value || null,
       school_other: fSchool.value === 'Друго' ? (fSchoolOther.value.trim() || null) : null,
       age: fAge.value ? parseInt(fAge.value, 10) : null,
+      profession_category: fProfessionCategory.value || null,
       profession: fProfession.value.trim() || null,
       contact_method: fContact.value.trim() || null,
       open_to_strangers: fOpen.checked,
