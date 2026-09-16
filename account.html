@@ -92,6 +92,16 @@
   .status.ok{color:var(--accent-2);}
   .status.err{color:#e07a6b;}
   [hidden]{display:none!important;}
+  .conn-card{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:10px 0;border-top:1px solid var(--line);font-size:.85rem;
+  }
+  .conn-card:first-child{border-top:none;}
+  .conn-card .info{color:var(--muted);line-height:1.5;}
+  .conn-card .info b{color:var(--ink);font-weight:600;}
+  .conn-card button{width:auto;padding:7px 12px;font-size:.78rem;margin:0;}
+  .conn-actions{display:flex;gap:6px;flex-shrink:0;}
+  .conn-actions .hint{color:var(--muted-2);font-size:.76rem;white-space:nowrap;}
   .signed-in-email{color:var(--accent-2);font-weight:700;}
   .profile-list{list-style:none;margin:0 0 18px;padding:0;}
   .profile-list li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:.9rem;}
@@ -138,6 +148,22 @@
         <div class="hint">Остави празно, за да го изчистиш.</div>
         <button type="button" class="secondary" id="travelSaveBtn" style="margin-top:10px;">Запази статуса</button>
         <div class="status" id="travelStatusMsg" hidden></div>
+      </div>
+
+      <div id="incomingRequests" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
+        <h2>Молби към теб</h2>
+        <div id="incomingList"></div>
+      </div>
+
+      <div id="settlementMatches" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
+        <h2 id="settlementMatchesTitle">Хора от твоето населено място</h2>
+        <div id="settlementList"></div>
+        <div class="status" id="connStatusMsg" hidden></div>
+      </div>
+
+      <div id="acceptedConnections" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
+        <h2>Твоите връзки</h2>
+        <div id="acceptedList"></div>
       </div>
 
       <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
@@ -278,6 +304,15 @@
   var fAgeConsent = document.getElementById('fAgeConsent');
   var fHoneypot = document.getElementById('fHoneypot');
 
+  var incomingRequests = document.getElementById('incomingRequests');
+  var incomingList = document.getElementById('incomingList');
+  var settlementMatches = document.getElementById('settlementMatches');
+  var settlementMatchesTitle = document.getElementById('settlementMatchesTitle');
+  var settlementList = document.getElementById('settlementList');
+  var connStatusMsg = document.getElementById('connStatusMsg');
+  var acceptedConnections = document.getElementById('acceptedConnections');
+  var acceptedList = document.getElementById('acceptedList');
+
   var currentRegistration = null;
 
   function showLoginStatus(text, kind){
@@ -364,7 +399,128 @@
     } else {
       profilePhoto.hidden = true;
     }
+    loadConnectionsUI();
   }
+
+  function personSummary(r){
+    var bits = [countryName(r.country_code)];
+    if (r.city_abroad) bits.push(r.city_abroad);
+    if (r.profession) bits.push(r.profession);
+    return bits.filter(Boolean).join(' · ');
+  }
+
+  async function loadConnectionsUI(){
+    if (!currentRegistration) return;
+    var myId = currentRegistration.id;
+
+    var connRes = await sb.from('connections')
+      .select('*')
+      .or('from_registration_id.eq.' + myId + ',to_registration_id.eq.' + myId);
+    var myConnections = connRes.data || [];
+
+    // ---- молби към теб ----
+    var incoming = myConnections.filter(function(c){ return c.to_registration_id === myId && c.status === 'pending'; });
+    if (incoming.length){
+      var fromRes = await sb.from('public_registrations').select('*').in('id', incoming.map(function(c){ return c.from_registration_id; }));
+      var fromById = {};
+      (fromRes.data || []).forEach(function(r){ fromById[r.id] = r; });
+      incomingList.innerHTML = incoming.map(function(c){
+        var r = fromById[c.from_registration_id];
+        if (!r) return '';
+        return '<div class="conn-card"><div class="info">Някой от ' + personSummary(r) + ' иска да се свърже с теб.</div>' +
+          '<div class="conn-actions">' +
+          '<button type="button" class="secondary conn-accept" data-id="'+c.id+'">Приеми</button>' +
+          '<button type="button" class="secondary conn-decline" data-id="'+c.id+'">Откажи</button>' +
+          '</div></div>';
+      }).join('');
+      incomingRequests.hidden = false;
+    } else {
+      incomingRequests.hidden = true;
+    }
+
+    // ---- хора от твоето населено място ----
+    if (currentRegistration.settlement && currentRegistration.settlement !== 'Друго'){
+      settlementMatchesTitle.textContent = 'Хора от ' + currentRegistration.settlement;
+      var matchRes = await sb.from('public_registrations')
+        .select('*')
+        .eq('settlement', currentRegistration.settlement)
+        .neq('id', myId);
+      var candidates = matchRes.data || [];
+      if (candidates.length){
+        settlementList.innerHTML = candidates.map(function(r){
+          var existing = myConnections.find(function(c){
+            return (c.from_registration_id === myId && c.to_registration_id === r.id)
+                || (c.to_registration_id === myId && c.from_registration_id === r.id);
+          });
+          var actionHtml;
+          if (!existing){
+            actionHtml = '<button type="button" class="secondary conn-request" data-id="'+r.id+'">Искам да се свържа</button>';
+          } else if (existing.status === 'pending'){
+            actionHtml = existing.from_registration_id === myId
+              ? '<span class="hint">Изчаква отговор</span>'
+              : '<span class="hint">Виж молбите към теб</span>';
+          } else if (existing.status === 'accepted'){
+            actionHtml = '<span class="hint">Вече сте свързани</span>';
+          } else {
+            actionHtml = '<span class="hint">Отказано</span>';
+          }
+          return '<div class="conn-card"><div class="info"><b>' + personSummary(r) + '</b></div><div class="conn-actions">' + actionHtml + '</div></div>';
+        }).join('');
+      } else {
+        settlementList.innerHTML = '<div class="hint">Все още няма друг регистриран от ' + currentRegistration.settlement + '.</div>';
+      }
+      settlementMatches.hidden = false;
+    } else {
+      settlementMatches.hidden = true;
+    }
+
+    // ---- приети връзки, с разкрит контакт ----
+    var accepted = myConnections.filter(function(c){ return c.status === 'accepted'; });
+    if (accepted.length){
+      var otherIds = accepted.map(function(c){ return c.from_registration_id === myId ? c.to_registration_id : c.from_registration_id; });
+      var otherRes = await sb.from('registrations').select('*').in('id', otherIds);
+      acceptedList.innerHTML = (otherRes.data || []).map(function(r){
+        return '<div class="conn-card"><div class="info"><b>' + personSummary(r) + '</b><br>' +
+          (r.contact_method ? 'Контакт: ' + r.contact_method : 'Няма посочен начин за връзка') + '</div></div>';
+      }).join('');
+      acceptedConnections.hidden = false;
+    } else {
+      acceptedConnections.hidden = true;
+    }
+  }
+
+  incomingList.addEventListener('click', async function(e){
+    var acceptBtn = e.target.closest('.conn-accept');
+    var declineBtn = e.target.closest('.conn-decline');
+    if (acceptBtn){
+      acceptBtn.disabled = true;
+      await sb.from('connections').update({ status: 'accepted', responded_at: new Date().toISOString() }).eq('id', acceptBtn.dataset.id);
+      loadConnectionsUI();
+    } else if (declineBtn){
+      declineBtn.disabled = true;
+      await sb.from('connections').update({ status: 'declined', responded_at: new Date().toISOString() }).eq('id', declineBtn.dataset.id);
+      loadConnectionsUI();
+    }
+  });
+
+  settlementList.addEventListener('click', async function(e){
+    var reqBtn = e.target.closest('.conn-request');
+    if (!reqBtn) return;
+    reqBtn.disabled = true;
+    connStatusMsg.hidden = true;
+    var res = await sb.from('connections').insert({
+      from_registration_id: currentRegistration.id,
+      to_registration_id: reqBtn.dataset.id
+    });
+    if (res.error){
+      reqBtn.disabled = false;
+      connStatusMsg.textContent = 'Нещо се обърка: ' + res.error.message;
+      connStatusMsg.className = 'status err';
+      connStatusMsg.hidden = false;
+      return;
+    }
+    loadConnectionsUI();
+  });
 
   function fillFormFrom(reg){
     fCountry.value = reg.country_code || '';
