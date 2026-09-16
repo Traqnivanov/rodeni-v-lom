@@ -69,7 +69,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="all">Хора</button>
     <button class="tab" data-tab="help">Готови да помагат</button>
-    <button class="tab" data-tab="open">Отворени за запознанства</button>
+    <button class="tab" data-tab="open">Отворени за общуване</button>
     <button class="tab" data-tab="profession">По професия</button>
   </div>
 
@@ -105,6 +105,15 @@
 
   countryTitle.textContent = countryName(code) || 'Държава';
   joinCta.href = 'account.html?country=' + encodeURIComponent(code);
+
+  // ---- ако вече си регистриран, "Присъедини се" не важи за теб - крием го ----
+  sb.auth.getSession().then(function(res){
+    var user = res.data.session && res.data.session.user;
+    if (!user) return;
+    sb.from('registrations').select('id').eq('user_id', user.id).maybeSingle().then(function(regRes){
+      if (regRes.data) joinCta.hidden = true;
+    });
+  });
 
   var allEntries = [];
   var activeTab = 'all';
@@ -142,7 +151,7 @@
       var profBadge = r.profession_category
         ? '<span class="badge">'+r.profession_category+'</span>'
         : (r.profession ? '<span class="badge">'+r.profession+'</span>' : '');
-      var openBadge = r.open_to_strangers ? '<span class="badge">отворен за запознанства</span>' : '';
+      var openBadge = r.open_to_strangers ? '<span class="badge">отворен за общуване</span>' : '';
       var helpBadge = r.willing_to_help ? '<span class="badge">готов да помага</span>' : '';
       var heading = r.display_name ? r.display_name : countryName(code);
       return '<div class="person-card">' + photo +

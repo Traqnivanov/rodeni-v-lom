@@ -204,6 +204,20 @@
 
   // ---- панел с хора от избраната държава ----
   var countryPanel = document.getElementById('countryPanel');
+  var hookPill = document.querySelector('.hook-pill');
+  var iAmRegistered = false;
+
+  // ---- ако вече си регистриран, куката и "Присъедини се" не важат за теб ----
+  sb.auth.getSession().then(function(res){
+    var user = res.data.session && res.data.session.user;
+    if (!user) return;
+    sb.from('registrations').select('id').eq('user_id', user.id).maybeSingle().then(function(regRes){
+      if (regRes.data){
+        iAmRegistered = true;
+        if (hookPill) hookPill.hidden = true;
+      }
+    });
+  });
 
   function renderCountryPanel(code){
     var entries = entriesByCode[code] || [];
@@ -211,8 +225,8 @@
     if (!entries.length){
       countryPanel.innerHTML =
         '<h2>' + name + '</h2>' +
-        '<p class="empty-cta">Все още няма регистриран ломчанин оттук. Може да си първият, който се появи на картата от ' + name + '.</p>' +
-        '<a class="cta" href="account.html?country=' + code + '">Стани първият от ' + name + '</a>';
+        '<p class="empty-cta">Все още няма регистриран ломчанин оттук.' + (iAmRegistered ? '' : ' Може да си първият, който се появи на картата от ' + name + '.') + '</p>' +
+        (iAmRegistered ? '' : '<a class="cta" href="account.html?country=' + code + '">Стани първият от ' + name + '</a>');
       countryPanel.hidden = false;
       return;
     }
@@ -234,7 +248,7 @@
       '<p class="count">' + entries.length + (entries.length===1?' регистриран ломчанин':' регистрирани ломчани') + '</p>' +
       cards +
       '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">' +
-      '<a class="cta" href="account.html?country=' + code + '">Присъедини се и ти от ' + name + '</a>' +
+      (iAmRegistered ? '' : '<a class="cta" href="account.html?country=' + code + '">Присъедини се и ти от ' + name + '</a>') +
       '<a class="cta" style="background:transparent;border:1px solid var(--line);color:var(--ink);" href="country.html?code=' + code + '">Пълен изглед</a>' +
       '</div>';
     countryPanel.hidden = false;

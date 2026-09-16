@@ -296,7 +296,7 @@
 
       <div class="checkbox-row">
         <input type="checkbox" id="fOpen">
-        <label for="fOpen">Отворен съм за запознанства с непознати ломчани</label>
+        <label for="fOpen">Отворен съм за общуване с непознати ломчани</label>
       </div>
 
       <div class="checkbox-row">
@@ -477,7 +477,7 @@
       ['Професия', reg.profession],
       ['Начин за връзка', reg.contact_method],
       ['Пътувам за България', reg.travel_status],
-      ['Отворен за непознати', reg.open_to_strangers ? 'Да' : 'Не']
+      ['Отворен за общуване', reg.open_to_strangers ? 'Да' : 'Не']
     ];
     profileList.innerHTML = rows
       .filter(function(r){ return r[1]; })
