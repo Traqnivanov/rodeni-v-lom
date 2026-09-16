@@ -501,7 +501,7 @@
     if (r.display_name) bits.push(r.display_name);
     bits.push(countryName(r.country_code));
     if (r.city_abroad) bits.push(r.city_abroad);
-    if (r.profession) bits.push(r.profession);
+    if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
     return bits.filter(Boolean).join(' · ');
   }
 
@@ -517,10 +517,8 @@
       actionHtml = existing.from_registration_id === myId
         ? '<span class="hint">Изчаква отговор</span>'
         : '<span class="hint">Виж молбите към теб</span>';
-    } else if (existing.status === 'accepted'){
-      actionHtml = '<span class="hint">Вече сте свързани</span>';
     } else {
-      actionHtml = '<span class="hint">Отказано</span>';
+      actionHtml = '<span class="hint">Вече сте свързани</span>';
     }
     return '<div class="conn-card"><div class="info"><b>' + personSummary(r) + '</b></div><div class="conn-actions">' + actionHtml + '</div></div>';
   }

@@ -115,7 +115,7 @@
     if (r.display_name) bits.push(r.display_name);
     bits.push(countryName(r.country_code));
     if (r.city_abroad) bits.push(r.city_abroad);
-    if (r.profession) bits.push(r.profession);
+    if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
     return bits.filter(Boolean).join(' · ');
   }
   function showStatus(text){
