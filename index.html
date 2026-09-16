@@ -120,6 +120,14 @@
       <h2>Ти вече си регистриран</h2>
       <ul class="profile-list" id="profileList"></ul>
       <button type="button" class="secondary" id="editBtn">Редактирай</button>
+
+      <div class="field" style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
+        <label for="fTravelQuick">Пътувам за България <span class="opt">(по желание — само когато имаш пътуване)</span></label>
+        <input type="text" id="fTravelQuick" placeholder="напр. март 2026" maxlength="40">
+        <div class="hint">Остави празно, за да го изчистиш.</div>
+        <button type="button" class="secondary" id="travelSaveBtn" style="margin-top:10px;">Запази статуса</button>
+        <div class="status" id="travelStatusMsg" hidden></div>
+      </div>
     </div>
 
     <form id="regForm" hidden>
@@ -177,11 +185,6 @@
         <input type="text" id="fContact" placeholder="Facebook, Viber номер и т.н." maxlength="200">
       </div>
 
-      <div class="field">
-        <label for="fTravel">Пътувам за България <span class="opt">(по желание)</span></label>
-        <input type="text" id="fTravel" placeholder="напр. март 2026" maxlength="40">
-      </div>
-
       <div class="checkbox-row">
         <input type="checkbox" id="fOpen">
         <label for="fOpen">Отворен съм за запознанства с непознати ломчани</label>
@@ -235,8 +238,10 @@
   var fAge = document.getElementById('fAge');
   var fProfession = document.getElementById('fProfession');
   var fContact = document.getElementById('fContact');
-  var fTravel = document.getElementById('fTravel');
   var fOpen = document.getElementById('fOpen');
+  var fTravelQuick = document.getElementById('fTravelQuick');
+  var travelSaveBtn = document.getElementById('travelSaveBtn');
+  var travelStatusMsg = document.getElementById('travelStatusMsg');
   var fAgeConsent = document.getElementById('fAgeConsent');
   var fHoneypot = document.getElementById('fHoneypot');
 
@@ -293,6 +298,8 @@
       .filter(function(r){ return r[1]; })
       .map(function(r){ return '<li><span>'+r[0]+'</span><span>'+r[1]+'</span></li>'; })
       .join('');
+    fTravelQuick.value = reg.travel_status || '';
+    travelStatusMsg.hidden = true;
   }
 
   function fillFormFrom(reg){
@@ -305,7 +312,6 @@
     fAge.value = reg.age || '';
     fProfession.value = reg.profession || '';
     fContact.value = reg.contact_method || '';
-    fTravel.value = reg.travel_status || '';
     fOpen.checked = !!reg.open_to_strangers;
     fAgeConsent.checked = true;
   }
@@ -334,6 +340,30 @@
       showSubview('form');
     }
   }
+
+  travelSaveBtn.addEventListener('click', async function(){
+    if (!currentRegistration) return;
+    travelSaveBtn.disabled = true;
+    travelStatusMsg.hidden = true;
+    var value = fTravelQuick.value.trim() || null;
+    var res = await sb.from('registrations')
+      .update({ travel_status: value })
+      .eq('id', currentRegistration.id)
+      .select()
+      .single();
+    travelSaveBtn.disabled = false;
+    if (res.error){
+      travelStatusMsg.textContent = 'Нещо се обърка: ' + res.error.message;
+      travelStatusMsg.className = 'status err';
+      travelStatusMsg.hidden = false;
+      return;
+    }
+    currentRegistration = res.data;
+    renderProfile(currentRegistration);
+    travelStatusMsg.textContent = value ? 'Записано.' : 'Изчистено.';
+    travelStatusMsg.className = 'status ok';
+    travelStatusMsg.hidden = false;
+  });
 
   editBtn.addEventListener('click', function(){
     fillFormFrom(currentRegistration);
@@ -381,7 +411,6 @@
       age: fAge.value ? parseInt(fAge.value, 10) : null,
       profession: fProfession.value.trim() || null,
       contact_method: fContact.value.trim() || null,
-      travel_status: fTravel.value.trim() || null,
       open_to_strangers: fOpen.checked,
       age_consent: true
     };
