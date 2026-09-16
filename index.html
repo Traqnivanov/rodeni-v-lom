@@ -227,7 +227,10 @@
       '<h2>' + name + '</h2>' +
       '<p class="count">' + entries.length + (entries.length===1?' регистриран ломчанин':' регистрирани ломчани') + '</p>' +
       cards +
-      '<a class="cta" href="account.html?country=' + code + '">Присъедини се и ти от ' + name + '</a>';
+      '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">' +
+      '<a class="cta" href="account.html?country=' + code + '">Присъедини се и ти от ' + name + '</a>' +
+      '<a class="cta" style="background:transparent;border:1px solid var(--line);color:var(--ink);" href="country.html?code=' + code + '">Пълен изглед</a>' +
+      '</div>';
     countryPanel.hidden = false;
   }
 

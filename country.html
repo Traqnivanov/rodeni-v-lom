@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Родени в Лом — по държава</title>
+<style>
+  :root{
+    --bg:#0a0e1a;
+    --surface:#121729;
+    --surface-2:#1a2038;
+    --ink:#eef1f8;
+    --muted:#8993ac;
+    --muted-2:#5f6786;
+    --accent:#e2a53d;
+    --accent-2:#f4c469;
+    --line:rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;min-height:100vh;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:20px 18px 40px;}
+  .back-link{display:inline-block;color:var(--muted);font-size:.82rem;text-decoration:none;margin-bottom:14px;}
+  .back-link:hover{color:var(--accent-2);}
+  h1{font-size:1.4rem;margin:0 0 4px;}
+  .count{color:var(--muted);font-size:.85rem;margin:0 0 18px;}
+
+  select#cityFilter{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    color:var(--ink);padding:9px 12px;font-size:.85rem;font-family:inherit;margin-bottom:16px;
+  }
+
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:16px;flex-wrap:wrap;}
+  .tab{
+    background:none;border:none;color:var(--muted);font-size:.85rem;font-family:inherit;
+    padding:9px 4px;cursor:pointer;border-bottom:2px solid transparent;margin-right:14px;
+  }
+  .tab.active{color:var(--ink);border-bottom-color:var(--accent);font-weight:600;}
+
+  .person-card{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);}
+  .person-card:first-of-type{border-top:none;}
+  .person-card img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:1px solid var(--line);flex-shrink:0;}
+  .person-card .ph-placeholder{width:52px;height:52px;border-radius:50%;background:var(--surface-2);flex-shrink:0;}
+  .person-card .info{font-size:.87rem;line-height:1.55;color:var(--muted);}
+  .person-card .info b{color:var(--ink);font-weight:600;}
+  .badge{
+    display:inline-block;font-size:.7rem;background:var(--surface-2);color:var(--accent-2);
+    border-radius:20px;padding:2px 9px;margin-left:6px;
+  }
+
+  .empty{color:var(--muted);font-size:.88rem;line-height:1.6;padding:20px 0;}
+  .cta{
+    display:inline-block;margin-top:20px;background:var(--accent);color:#1a1206;
+    text-decoration:none;font-weight:700;font-size:.9rem;padding:11px 20px;border-radius:10px;
+  }
+  [hidden]{display:none!important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back-link" href="index.html">← Към картата</a>
+  <h1 id="countryTitle">…</h1>
+  <p class="count" id="countryCount"></p>
+
+  <select id="cityFilter" hidden></select>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="all">Хора</button>
+    <button class="tab" data-tab="open">Отворени за запознанства</button>
+    <button class="tab" data-tab="profession">По професия</button>
+  </div>
+
+  <div id="list"></div>
+  <div id="emptyMsg" class="empty" hidden></div>
+
+  <a class="cta" id="joinCta" href="account.html">Присъедини се</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-config.js"></script>
+<script src="countries.js"></script>
+<script>
+(function(){
+  "use strict";
+  var sb = window.rodeniSupabase;
+
+  var params = new URLSearchParams(window.location.search);
+  var code = (params.get('code') || '').toUpperCase();
+
+  function countryName(c){
+    var found = window.RODENI_COUNTRIES.find(function(p){ return p[0]===c; });
+    return found ? found[1] : c;
+  }
+
+  var countryTitle = document.getElementById('countryTitle');
+  var countryCount = document.getElementById('countryCount');
+  var cityFilter = document.getElementById('cityFilter');
+  var listEl = document.getElementById('list');
+  var emptyMsg = document.getElementById('emptyMsg');
+  var joinCta = document.getElementById('joinCta');
+  var tabs = document.querySelectorAll('.tab');
+
+  countryTitle.textContent = countryName(code) || 'Държава';
+  joinCta.href = 'account.html?country=' + encodeURIComponent(code);
+
+  var allEntries = [];
+  var activeTab = 'all';
+  var activeCity = '';
+
+  function personLine(r){
+    var bits = [];
+    if (r.settlement) bits.push(r.settlement === 'Друго' ? r.settlement_other : r.settlement);
+    if (r.city_abroad) bits.push(r.city_abroad);
+    if (r.school) bits.push(r.school);
+    if (r.age) bits.push(r.age + ' г.');
+    return bits.filter(Boolean).join(' · ') || 'Без допълнителни данни';
+  }
+
+  function render(){
+    var rows = allEntries;
+    if (activeCity) rows = rows.filter(function(r){ return r.city_abroad === activeCity; });
+    if (activeTab === 'open') rows = rows.filter(function(r){ return r.open_to_strangers; });
+    if (activeTab === 'profession') rows = rows.filter(function(r){ return !!r.profession; });
+
+    if (!rows.length){
+      listEl.innerHTML = '';
+      emptyMsg.textContent = allEntries.length
+        ? 'Няма никой в тази категория засега.'
+        : 'Все още няма регистриран ломчанин от ' + countryName(code) + '. Може да си първият.';
+      emptyMsg.hidden = false;
+      return;
+    }
+    emptyMsg.hidden = true;
+    listEl.innerHTML = rows.map(function(r){
+      var photo = r.photo_url
+        ? '<img src="'+r.photo_url+'" alt="">'
+        : '<div class="ph-placeholder"></div>';
+      var profBadge = r.profession ? '<span class="badge">'+r.profession+'</span>' : '';
+      var openBadge = r.open_to_strangers ? '<span class="badge">отворен за запознанства</span>' : '';
+      return '<div class="person-card">' + photo +
+        '<div class="info"><b>' + countryName(code) + '</b>' + profBadge + openBadge + '<br>' + personLine(r) + '</div></div>';
+    }).join('');
+  }
+
+  tabs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabs.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeTab = btn.dataset.tab;
+      render();
+    });
+  });
+
+  cityFilter.addEventListener('change', function(){
+    activeCity = cityFilter.value;
+    render();
+  });
+
+  function setupCityFilter(){
+    var cities = Array.from(new Set(allEntries.map(function(r){ return r.city_abroad; }).filter(Boolean))).sort();
+    if (cities.length < 2){ cityFilter.hidden = true; return; }
+    cityFilter.innerHTML = '<option value="">Всички градове</option>' +
+      cities.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
+    cityFilter.hidden = false;
+  }
+
+  if (!code){
+    countryTitle.textContent = 'Няма избрана държава';
+    emptyMsg.textContent = 'Върни се към картата и избери държава.';
+    emptyMsg.hidden = false;
+  } else {
+    sb.from('public_registrations').select('*').eq('country_code', code).then(function(res){
+      if (res.error){
+        emptyMsg.textContent = 'Грешка при зареждане: ' + res.error.message;
+        emptyMsg.hidden = false;
+        return;
+      }
+      allEntries = res.data || [];
+      countryCount.textContent = allEntries.length
+        ? allEntries.length + (allEntries.length===1?' регистриран ломчанин':' регистрирани ломчани')
+        : '';
+      setupCityFilter();
+      render();
+    });
+  }
+})();
+</script>
+</body>
+</html>
