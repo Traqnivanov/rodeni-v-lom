@@ -8,8 +8,10 @@
   :root{
     --bg:#0a0e1a;
     --surface:#121729;
+    --surface-2:#1a2038;
     --ink:#eef1f8;
     --muted:#8993ac;
+    --muted-2:#5f6786;
     --accent:#e2a53d;
     --accent-2:#f4c469;
     --line:rgba(255,255,255,.09);
@@ -19,7 +21,7 @@
     margin:0;
     min-height:100vh;
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:center;
     background:var(--bg);
     color:var(--ink);
@@ -28,29 +30,20 @@
   }
   .card{
     width:100%;
-    max-width:380px;
+    max-width:460px;
     background:var(--surface);
     border:1px solid var(--line);
     border-radius:16px;
     padding:28px;
+    margin-top:20px;
+    margin-bottom:20px;
   }
-  h1{
-    font-size:1.4rem;
-    margin:0 0 6px;
-  }
-  p.lead{
-    color:var(--muted);
-    font-size:.9rem;
-    margin:0 0 22px;
-    line-height:1.5;
-  }
-  label{
-    display:block;
-    font-size:.82rem;
-    font-weight:600;
-    margin-bottom:6px;
-  }
-  input[type=email]{
+  h1{font-size:1.4rem;margin:0 0 6px;}
+  h2{font-size:1.1rem;margin:0 0 4px;}
+  p.lead{color:var(--muted);font-size:.9rem;margin:0 0 22px;line-height:1.5;}
+  label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;}
+  label .opt{font-weight:500;color:var(--muted-2);}
+  input[type=email], input[type=text], input[type=number], select{
     width:100%;
     background:var(--bg);
     border:1px solid var(--line);
@@ -58,9 +51,16 @@
     padding:11px 13px;
     color:var(--ink);
     font-size:.95rem;
-    margin-bottom:14px;
+    margin-bottom:6px;
+    font-family:inherit;
   }
-  input[type=email]:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  select{appearance:auto;}
+  input:focus, select:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .field{margin-bottom:16px;}
+  .hint{font-size:.76rem;color:var(--muted);line-height:1.4;}
+  .checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;}
+  .checkbox-row input{width:auto;margin:3px 0 0;}
+  .checkbox-row label{margin:0;font-weight:500;font-size:.86rem;}
   button{
     width:100%;
     background:var(--accent);
@@ -80,16 +80,18 @@
     color:var(--ink);
     margin-top:10px;
   }
-  .status{
-    margin-top:16px;
-    font-size:.85rem;
-    color:var(--muted);
-    line-height:1.5;
-  }
+  .status{margin-top:16px;font-size:.85rem;color:var(--muted);line-height:1.5;}
   .status.ok{color:var(--accent-2);}
   .status.err{color:#e07a6b;}
   [hidden]{display:none!important;}
   .signed-in-email{color:var(--accent-2);font-weight:700;}
+  .profile-list{list-style:none;margin:0 0 18px;padding:0;}
+  .profile-list li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:.9rem;}
+  .profile-list li:first-child{border-top:none;}
+  .profile-list li span:first-child{color:var(--muted);}
+  .profile-list li span:last-child{text-align:right;}
+  .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .top-bar .who{font-size:.78rem;color:var(--muted-2);}
 </style>
 </head>
 <body>
@@ -101,18 +103,108 @@
     <label for="emailInput">Имейл</label>
     <input type="email" id="emailInput" placeholder="ti@example.com" autocomplete="email">
     <button type="button" id="sendLinkBtn">Изпрати ми линк за вход</button>
-    <div class="status" id="statusMsg" hidden></div>
+    <div class="status" id="loginStatusMsg" hidden></div>
   </div>
 
   <div id="loggedInView" hidden>
-    <h1>Влязъл си</h1>
-    <p class="lead">Влязъл си като <span class="signed-in-email" id="userEmail"></span></p>
-    <button type="button" class="secondary" id="signOutBtn">Изход</button>
+    <div class="top-bar">
+      <span class="who">Влязъл си като <span class="signed-in-email" id="userEmail"></span></span>
+      <button type="button" class="secondary" id="signOutBtn" style="width:auto;padding:6px 12px;font-size:.78rem;margin:0;">Изход</button>
+    </div>
+
+    <div id="loadingView">
+      <p class="lead">Зареждам…</p>
+    </div>
+
+    <div id="profileView" hidden>
+      <h2>Ти вече си регистриран</h2>
+      <ul class="profile-list" id="profileList"></ul>
+      <button type="button" class="secondary" id="editBtn">Редактирай</button>
+    </div>
+
+    <form id="regForm" hidden>
+      <h2>Регистрация</h2>
+      <p class="lead">Само държавата е задължителна. Всичко друго е по желание.</p>
+
+      <div class="field">
+        <label for="fCountry">Държава</label>
+        <select id="fCountry" required></select>
+      </div>
+
+      <div class="field">
+        <label for="fSettlement">Населено място в Община Лом <span class="opt">(по желание)</span></label>
+        <select id="fSettlement">
+          <option value="">— не посочвам —</option>
+          <option>Лом</option>
+          <option>Трайково</option>
+          <option>Ковачица</option>
+          <option>Сталийска махала</option>
+          <option>Замфир</option>
+          <option>Долно Линево</option>
+          <option>Сливата</option>
+          <option>Добридол</option>
+          <option>Станево</option>
+          <option>Орсоя</option>
+          <option>Друго</option>
+        </select>
+        <input type="text" id="fSettlementOther" placeholder="Кое населено място?" hidden maxlength="60">
+      </div>
+
+      <div class="field">
+        <label for="fCity">Град в чужбина <span class="opt">(по желание)</span></label>
+        <input type="text" id="fCity" placeholder="напр. Мюнхен" maxlength="60">
+        <div class="hint">За да те намират хора наблизо в чужбина.</div>
+      </div>
+
+      <div class="field">
+        <label for="fSchool">Училище <span class="opt">(по желание)</span></label>
+        <input type="text" id="fSchool" placeholder="напр. СОУ „Найден Геров“" maxlength="120">
+      </div>
+
+      <div class="field">
+        <label for="fAge">Възраст <span class="opt">(по желание)</span></label>
+        <input type="number" id="fAge" min="14" max="120" placeholder="напр. 34">
+      </div>
+
+      <div class="field">
+        <label for="fProfession">Професия / сфера <span class="opt">(по желание)</span></label>
+        <input type="text" id="fProfession" placeholder="напр. електротехник, лекар" maxlength="60">
+        <div class="hint">Ако я напишеш — ще се вижда на профила ти, за да те намерят затова.</div>
+      </div>
+
+      <div class="field">
+        <label for="fContact">Начин за връзка <span class="opt">(по желание)</span></label>
+        <input type="text" id="fContact" placeholder="Facebook, Viber номер и т.н." maxlength="200">
+      </div>
+
+      <div class="field">
+        <label for="fTravel">Пътувам за България <span class="opt">(по желание)</span></label>
+        <input type="text" id="fTravel" placeholder="напр. март 2026" maxlength="40">
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="fOpen">
+        <label for="fOpen">Отворен съм за запознанства с непознати ломчани</label>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="fAgeConsent" required>
+        <label for="fAgeConsent">Потвърждавам, че съм на 14 или повече години</label>
+      </div>
+
+      <!-- капан за ботове: невидим за хора, скрито поле -->
+      <input type="text" id="fHoneypot" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;" aria-hidden="true">
+
+      <button type="submit" id="submitBtn">Регистрирай се</button>
+      <button type="button" class="secondary" id="cancelEditBtn" hidden>Отказ</button>
+      <div class="status" id="formStatusMsg" hidden></div>
+    </form>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-config.js"></script>
+<script src="countries.js"></script>
 <script>
 (function(){
   "use strict";
@@ -124,48 +216,235 @@
   var emailInput = document.getElementById('emailInput');
   var sendLinkBtn = document.getElementById('sendLinkBtn');
   var signOutBtn = document.getElementById('signOutBtn');
-  var statusMsg = document.getElementById('statusMsg');
+  var loginStatusMsg = document.getElementById('loginStatusMsg');
 
-  function showStatus(text, kind){
-    statusMsg.textContent = text;
-    statusMsg.className = 'status' + (kind ? ' '+kind : '');
-    statusMsg.hidden = false;
+  var loadingView = document.getElementById('loadingView');
+  var profileView = document.getElementById('profileView');
+  var profileList = document.getElementById('profileList');
+  var editBtn = document.getElementById('editBtn');
+  var regForm = document.getElementById('regForm');
+  var cancelEditBtn = document.getElementById('cancelEditBtn');
+  var formStatusMsg = document.getElementById('formStatusMsg');
+  var submitBtn = document.getElementById('submitBtn');
+
+  var fCountry = document.getElementById('fCountry');
+  var fSettlement = document.getElementById('fSettlement');
+  var fSettlementOther = document.getElementById('fSettlementOther');
+  var fCity = document.getElementById('fCity');
+  var fSchool = document.getElementById('fSchool');
+  var fAge = document.getElementById('fAge');
+  var fProfession = document.getElementById('fProfession');
+  var fContact = document.getElementById('fContact');
+  var fTravel = document.getElementById('fTravel');
+  var fOpen = document.getElementById('fOpen');
+  var fAgeConsent = document.getElementById('fAgeConsent');
+  var fHoneypot = document.getElementById('fHoneypot');
+
+  var currentRegistration = null;
+
+  function showLoginStatus(text, kind){
+    loginStatusMsg.textContent = text;
+    loginStatusMsg.className = 'status' + (kind ? ' '+kind : '');
+    loginStatusMsg.hidden = false;
+  }
+  function showFormStatus(text, kind){
+    formStatusMsg.textContent = text;
+    formStatusMsg.className = 'status' + (kind ? ' '+kind : '');
+    formStatusMsg.hidden = false;
   }
 
-  function renderSession(session){
-    if (session && session.user){
-      loggedOutView.hidden = true;
-      loggedInView.hidden = false;
-      userEmailEl.textContent = session.user.email;
+  // ---- падащо меню с държави ----
+  window.RODENI_COUNTRIES.forEach(function(pair){
+    var opt = document.createElement('option');
+    opt.value = pair[0];
+    opt.textContent = pair[1];
+    fCountry.appendChild(opt);
+  });
+
+  fSettlement.addEventListener('change', function(){
+    fSettlementOther.hidden = fSettlement.value !== 'Друго';
+    if (fSettlement.value !== 'Друго') fSettlementOther.value = '';
+  });
+
+  function countryName(code){
+    var found = window.RODENI_COUNTRIES.find(function(p){ return p[0]===code; });
+    return found ? found[1] : code;
+  }
+
+  function showSubview(name){
+    loadingView.hidden = name !== 'loading';
+    profileView.hidden = name !== 'profile';
+    regForm.hidden = name !== 'form';
+  }
+
+  function renderProfile(reg){
+    var rows = [
+      ['Държава', countryName(reg.country_code)],
+      ['Населено място', reg.settlement === 'Друго' ? reg.settlement_other : reg.settlement],
+      ['Град в чужбина', reg.city_abroad],
+      ['Училище', reg.school],
+      ['Възраст', reg.age],
+      ['Професия', reg.profession],
+      ['Начин за връзка', reg.contact_method],
+      ['Пътувам за България', reg.travel_status],
+      ['Отворен за непознати', reg.open_to_strangers ? 'Да' : 'Не']
+    ];
+    profileList.innerHTML = rows
+      .filter(function(r){ return r[1]; })
+      .map(function(r){ return '<li><span>'+r[0]+'</span><span>'+r[1]+'</span></li>'; })
+      .join('');
+  }
+
+  function fillFormFrom(reg){
+    fCountry.value = reg.country_code || '';
+    fSettlement.value = reg.settlement || '';
+    fSettlementOther.hidden = reg.settlement !== 'Друго';
+    fSettlementOther.value = reg.settlement_other || '';
+    fCity.value = reg.city_abroad || '';
+    fSchool.value = reg.school || '';
+    fAge.value = reg.age || '';
+    fProfession.value = reg.profession || '';
+    fContact.value = reg.contact_method || '';
+    fTravel.value = reg.travel_status || '';
+    fOpen.checked = !!reg.open_to_strangers;
+    fAgeConsent.checked = true;
+  }
+
+  function resetForm(){
+    regForm.reset();
+    fSettlementOther.hidden = true;
+    formStatusMsg.hidden = true;
+  }
+
+  async function loadRegistration(userId){
+    showSubview('loading');
+    var res = await sb.from('registrations').select('*').eq('user_id', userId).maybeSingle();
+    if (res.error){
+      showFormStatus('Грешка при зареждане: ' + res.error.message, 'err');
+      showSubview('form');
+      return;
+    }
+    currentRegistration = res.data;
+    if (currentRegistration){
+      renderProfile(currentRegistration);
+      showSubview('profile');
     } else {
-      loggedOutView.hidden = false;
-      loggedInView.hidden = true;
+      resetForm();
+      cancelEditBtn.hidden = true;
+      showSubview('form');
     }
   }
+
+  editBtn.addEventListener('click', function(){
+    fillFormFrom(currentRegistration);
+    cancelEditBtn.hidden = false;
+    showSubview('form');
+  });
+
+  cancelEditBtn.addEventListener('click', function(){
+    if (currentRegistration){
+      renderProfile(currentRegistration);
+      showSubview('profile');
+    }
+  });
+
+  regForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    if (fHoneypot.value){
+      // ботовете попълват скритото поле - тихо отхвърляме, без съобщение
+      return;
+    }
+    if (!fAgeConsent.checked){
+      showFormStatus('Трябва да потвърдиш, че си на 14 или повече години.', 'err');
+      return;
+    }
+    if (!fCountry.value){
+      showFormStatus('Моля, избери държава.', 'err');
+      return;
+    }
+
+    var sessionRes = await sb.auth.getSession();
+    var user = sessionRes.data.session && sessionRes.data.session.user;
+    if (!user){
+      showFormStatus('Сесията изтече — влез отново.', 'err');
+      return;
+    }
+
+    var payload = {
+      user_id: user.id,
+      country_code: fCountry.value,
+      settlement: fSettlement.value || null,
+      settlement_other: fSettlement.value === 'Друго' ? (fSettlementOther.value.trim() || null) : null,
+      city_abroad: fCity.value.trim() || null,
+      school: fSchool.value.trim() || null,
+      age: fAge.value ? parseInt(fAge.value, 10) : null,
+      profession: fProfession.value.trim() || null,
+      contact_method: fContact.value.trim() || null,
+      travel_status: fTravel.value.trim() || null,
+      open_to_strangers: fOpen.checked,
+      age_consent: true
+    };
+
+    submitBtn.disabled = true;
+    showFormStatus('Записвам…');
+
+    var res;
+    if (currentRegistration){
+      res = await sb.from('registrations').update(payload).eq('id', currentRegistration.id).select().single();
+    } else {
+      res = await sb.from('registrations').insert(payload).select().single();
+    }
+
+    submitBtn.disabled = false;
+
+    if (res.error){
+      showFormStatus('Нещо се обърка: ' + res.error.message, 'err');
+      return;
+    }
+
+    currentRegistration = res.data;
+    renderProfile(currentRegistration);
+    cancelEditBtn.hidden = true;
+    showSubview('profile');
+  });
 
   sendLinkBtn.addEventListener('click', async function(){
     var email = emailInput.value.trim();
     if (!email){
-      showStatus('Моля, въведи имейл.', 'err');
+      showLoginStatus('Моля, въведи имейл.', 'err');
       return;
     }
     sendLinkBtn.disabled = true;
-    showStatus('Изпращам линк…');
+    showLoginStatus('Изпращам линк…');
     var res = await sb.auth.signInWithOtp({
       email: email,
       options: { emailRedirectTo: window.location.href }
     });
     sendLinkBtn.disabled = false;
     if (res.error){
-      showStatus('Нещо се обърка: ' + res.error.message, 'err');
+      showLoginStatus('Нещо се обърка: ' + res.error.message, 'err');
     } else {
-      showStatus('Провери имейла си — изпратихме ти линк за вход.', 'ok');
+      showLoginStatus('Провери имейла си — изпратихме ти линк за вход.', 'ok');
     }
   });
 
   signOutBtn.addEventListener('click', async function(){
     await sb.auth.signOut();
   });
+
+  function renderSession(session){
+    if (session && session.user){
+      loggedOutView.hidden = true;
+      loggedInView.hidden = false;
+      userEmailEl.textContent = session.user.email;
+      loadRegistration(session.user.id);
+    } else {
+      loggedOutView.hidden = false;
+      loggedInView.hidden = true;
+      currentRegistration = null;
+    }
+  }
 
   sb.auth.onAuthStateChange(function(_event, session){
     renderSession(session);
