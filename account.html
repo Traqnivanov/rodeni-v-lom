@@ -509,6 +509,27 @@
       .or('from_registration_id.eq.' + myId + ',to_registration_id.eq.' + myId);
     var myConnections = connRes.data || [];
 
+    // ---- ако и двамата вече сте поискали връзка един с друг, без да чакате
+    // изричното "приемане" - просто сте съгласни, свързваме ви автоматично ----
+    var toResolve = [];
+    myConnections.forEach(function(c){
+      if (c.status !== 'pending' || c.to_registration_id !== myId) return;
+      var mirror = myConnections.find(function(o){
+        return o.status === 'pending' && o.from_registration_id === c.to_registration_id && o.to_registration_id === c.from_registration_id;
+      });
+      if (mirror) toResolve.push({ accept: c.id, remove: mirror.id });
+    });
+    if (toResolve.length){
+      for (var ri = 0; ri < toResolve.length; ri++){
+        await sb.from('connections').update({ status: 'accepted', responded_at: new Date().toISOString() }).eq('id', toResolve[ri].accept);
+        await sb.from('connections').delete().eq('id', toResolve[ri].remove);
+      }
+      connRes = await sb.from('connections')
+        .select('*')
+        .or('from_registration_id.eq.' + myId + ',to_registration_id.eq.' + myId);
+      myConnections = connRes.data || [];
+    }
+
     // ---- молби към теб ----
     var incoming = myConnections.filter(function(c){ return c.to_registration_id === myId && c.status === 'pending'; });
     if (incoming.length){
@@ -554,9 +575,11 @@
       var cityRes = await sb.from('public_registrations')
         .select('*')
         .eq('country_code', currentRegistration.country_code)
-        .ilike('city_abroad', myCity)
         .neq('id', myId);
-      var cityCandidates = cityRes.data || [];
+      var myCityLower = myCity.toLowerCase();
+      var cityCandidates = (cityRes.data || []).filter(function(r){
+        return (r.city_abroad || '').trim().toLowerCase() === myCityLower;
+      });
       if (cityCandidates.length){
         cityList.innerHTML = cityCandidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
       } else {
@@ -699,6 +722,7 @@
   function resetForm(){
     regForm.reset();
     fSettlementOther.hidden = true;
+    fSchoolOther.hidden = true;
     formStatusMsg.hidden = true;
     pendingPhotoFile = null;
     fPhotoPreview.hidden = true;
