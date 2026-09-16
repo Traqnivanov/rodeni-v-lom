@@ -38,6 +38,10 @@
     padding:9px 4px;cursor:pointer;border-bottom:2px solid transparent;margin-right:14px;
   }
   .tab.active{color:var(--ink);border-bottom-color:var(--accent);font-weight:600;}
+  .tab-hint{
+    color:var(--muted);font-size:.78rem;line-height:1.5;margin:-8px 0 16px;
+    transition:opacity .18s ease;
+  }
 
   .person-card{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);}
   .person-card:first-of-type{border-top:none;}
@@ -72,6 +76,7 @@
     <button class="tab" data-tab="open">Отворени за общуване</button>
     <button class="tab" data-tab="profession">По професия</button>
   </div>
+  <p class="tab-hint" id="tabHint">Всички регистрирани от тази държава.</p>
 
   <div id="list"></div>
   <div id="emptyMsg" class="empty" hidden></div>
@@ -159,11 +164,24 @@
     }).join('');
   }
 
+  var tabHint = document.getElementById('tabHint');
+  var TAB_HINTS = {
+    all: 'Всички регистрирани от тази държава.',
+    help: 'Отговарят на въпроси — виза, работа, животът там и т.н.',
+    open: 'Искат да се запознаят с други ломчани наблизо.',
+    profession: 'Групирани по сфера на работа.'
+  };
+
   tabs.forEach(function(btn){
     btn.addEventListener('click', function(){
       tabs.forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       activeTab = btn.dataset.tab;
+      tabHint.style.opacity = 0;
+      setTimeout(function(){
+        tabHint.textContent = TAB_HINTS[activeTab] || '';
+        tabHint.style.opacity = 1;
+      }, 120);
       render();
     });
   });
