@@ -530,6 +530,13 @@
       myConnections = connRes.data || [];
     }
 
+    // ---- блокирани хора - скриваме ги напълно от съвпаденията ----
+    var blockedIds = {};
+    myConnections.forEach(function(c){
+      if (c.status !== 'blocked') return;
+      blockedIds[c.from_registration_id === myId ? c.to_registration_id : c.from_registration_id] = true;
+    });
+
     // ---- молби към теб ----
     var incoming = myConnections.filter(function(c){ return c.to_registration_id === myId && c.status === 'pending'; });
     if (incoming.length){
@@ -557,7 +564,7 @@
         .select('*')
         .eq('settlement', currentRegistration.settlement)
         .neq('id', myId);
-      var candidates = matchRes.data || [];
+      var candidates = (matchRes.data || []).filter(function(r){ return !blockedIds[r.id]; });
       if (candidates.length){
         settlementList.innerHTML = candidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
       } else {
@@ -578,7 +585,7 @@
         .neq('id', myId);
       var myCityLower = myCity.toLowerCase();
       var cityCandidates = (cityRes.data || []).filter(function(r){
-        return (r.city_abroad || '').trim().toLowerCase() === myCityLower;
+        return (r.city_abroad || '').trim().toLowerCase() === myCityLower && !blockedIds[r.id];
       });
       if (cityCandidates.length){
         cityList.innerHTML = cityCandidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
@@ -597,7 +604,7 @@
         .select('*')
         .eq('school', currentRegistration.school)
         .neq('id', myId);
-      var schoolCandidates = schoolRes.data || [];
+      var schoolCandidates = (schoolRes.data || []).filter(function(r){ return !blockedIds[r.id]; });
       if (schoolCandidates.length){
         schoolList.innerHTML = schoolCandidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
       } else {
@@ -615,7 +622,7 @@
         .select('*')
         .eq('profession_category', currentRegistration.profession_category)
         .neq('id', myId);
-      var professionCandidates = professionRes.data || [];
+      var professionCandidates = (professionRes.data || []).filter(function(r){ return !blockedIds[r.id]; });
       if (professionCandidates.length){
         professionList.innerHTML = professionCandidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
       } else {
@@ -638,7 +645,10 @@
         var r = otherById[otherId];
         if (!r) return '';
         return '<div class="conn-card"><div class="info"><b>' + personSummary(r) + '</b></div>' +
-          '<a class="secondary" style="width:auto;padding:7px 12px;font-size:.78rem;text-decoration:none;display:inline-block;" href="razgovor.html?id=' + c.id + '">Пиши</a></div>';
+          '<div class="conn-actions">' +
+          '<a class="secondary" style="width:auto;padding:7px 12px;font-size:.78rem;text-decoration:none;display:inline-block;" href="razgovor.html?id=' + c.id + '">Пиши</a>' +
+          '<button type="button" class="secondary conn-block" data-id="'+c.id+'" style="width:auto;padding:7px 12px;font-size:.78rem;">Премахни</button>' +
+          '</div></div>';
       }).join('');
       acceptedConnections.hidden = false;
     } else {
@@ -661,6 +671,7 @@
       }
       loadConnectionsUI();
     } else if (declineBtn){
+      if (!window.confirm('Отказваш тази молба?')) return;
       declineBtn.disabled = true;
       // тихо изтриваме молбата - изпращачът никога не научава, че е отказана,
       // и може да опита пак по-късно (не остава заключен запис)
@@ -698,6 +709,22 @@
   cityList.addEventListener('click', handleConnRequestClick);
   schoolList.addEventListener('click', handleConnRequestClick);
   professionList.addEventListener('click', handleConnRequestClick);
+
+  acceptedList.addEventListener('click', async function(e){
+    var blockBtn = e.target.closest('.conn-block');
+    if (!blockBtn) return;
+    if (!window.confirm('Сигурен ли си? Ще изчезне от връзките ти и няма да може да ти праща нови молби.')) return;
+    blockBtn.disabled = true;
+    var res = await sb.from('connections').update({ status: 'blocked', responded_at: new Date().toISOString() }).eq('id', blockBtn.dataset.id);
+    if (res.error){
+      blockBtn.disabled = false;
+      connStatusMsg.textContent = 'Нещо се обърка: ' + res.error.message;
+      connStatusMsg.className = 'status err';
+      connStatusMsg.hidden = false;
+      return;
+    }
+    loadConnectionsUI();
+  });
 
   function fillFormFrom(reg){
     fCountry.value = reg.country_code || '';
