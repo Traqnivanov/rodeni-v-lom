@@ -144,8 +144,9 @@
         : (r.profession ? '<span class="badge">'+r.profession+'</span>' : '');
       var openBadge = r.open_to_strangers ? '<span class="badge">отворен за запознанства</span>' : '';
       var helpBadge = r.willing_to_help ? '<span class="badge">готов да помага</span>' : '';
+      var heading = r.display_name ? r.display_name : countryName(code);
       return '<div class="person-card">' + photo +
-        '<div class="info"><b>' + countryName(code) + '</b>' + profBadge + openBadge + helpBadge + '<br>' + personLine(r) + '</div></div>';
+        '<div class="info"><b>' + heading + '</b>' + profBadge + openBadge + helpBadge + '<br>' + personLine(r) + '</div></div>';
     }).join('');
   }
 

@@ -203,6 +203,12 @@
       <p class="lead">Само държавата е задължителна. Всичко друго е по желание.</p>
 
       <div class="field">
+        <label for="fDisplayName">Име <span class="opt">(по желание)</span></label>
+        <input type="text" id="fDisplayName" placeholder="напр. Мария, Стоян" maxlength="60">
+        <div class="hint">За да те познаят — без него си просто снимка и данни.</div>
+      </div>
+
+      <div class="field">
         <label for="fPhoto">Снимка <span class="opt">(по желание)</span></label>
         <div style="display:flex;align-items:center;gap:14px;">
           <img id="fPhotoPreview" alt="" hidden style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:1px solid var(--line);">
@@ -350,6 +356,7 @@
   var fProfessionCategory = document.getElementById('fProfessionCategory');
   var fContact = document.getElementById('fContact');
   var fOpen = document.getElementById('fOpen');
+  var fDisplayName = document.getElementById('fDisplayName');
   var fPhoto = document.getElementById('fPhoto');
   var fPhotoPreview = document.getElementById('fPhotoPreview');
   var photoHint = document.getElementById('photoHint');
@@ -460,6 +467,7 @@
 
   function renderProfile(reg){
     var rows = [
+      ['Име', reg.display_name],
       ['Държава', countryName(reg.country_code)],
       ['Населено място', reg.settlement === 'Друго' ? reg.settlement_other : reg.settlement],
       ['Град в чужбина', reg.city_abroad],
@@ -489,7 +497,9 @@
   }
 
   function personSummary(r){
-    var bits = [countryName(r.country_code)];
+    var bits = [];
+    if (r.display_name) bits.push(r.display_name);
+    bits.push(countryName(r.country_code));
     if (r.city_abroad) bits.push(r.city_abroad);
     if (r.profession) bits.push(r.profession);
     return bits.filter(Boolean).join(' · ');
@@ -742,6 +752,7 @@
   });
 
   function fillFormFrom(reg){
+    fDisplayName.value = reg.display_name || '';
     fCountry.value = reg.country_code || '';
     fSettlement.value = reg.settlement || '';
     fSettlementOther.hidden = reg.settlement !== 'Друго';
@@ -898,6 +909,7 @@
 
     var payload = {
       user_id: user.id,
+      display_name: fDisplayName.value.trim() || null,
       country_code: fCountry.value,
       settlement: fSettlement.value || null,
       settlement_other: fSettlement.value === 'Друго' ? (fSettlementOther.value.trim() || null) : null,

@@ -170,7 +170,7 @@
     return countryName(row.country_code);
   }
 
-  // ---- тих индикатор за скорошна активност (реални данни, без измислени имена) ----
+  // ---- тих индикатор за скорошна активност (реални данни; име само ако човекът сам го е написал) ----
   var tickerWrap = document.getElementById('tickerWrap');
   var tickerText = document.getElementById('tickerText');
   var tickerItems = [];
@@ -187,13 +187,14 @@
 
   function loadTicker(){
     sb.from('public_registrations')
-      .select('country_code,city_abroad,created_at')
+      .select('country_code,city_abroad,display_name,created_at')
       .order('created_at', { ascending:false })
       .limit(8)
       .then(function(res){
         if (res.error || !res.data || !res.data.length) return;
         tickerItems = res.data.map(function(r){
-          return 'Ломчанин от ' + placeLabel(r) + ' се присъедини — ' + relTime(r.created_at);
+          var who = r.display_name || 'Ломчанин';
+          return who + ' от ' + placeLabel(r) + ' се присъедини — ' + relTime(r.created_at);
         });
         tickerWrap.hidden = false;
         rotateTicker();
@@ -224,8 +225,9 @@
       if (r.city_abroad) bits.push(r.city_abroad);
       if (r.profession) bits.push(r.profession);
       var line = bits.filter(Boolean).join(' · ') || 'Без допълнителни данни';
+      var heading = r.display_name ? r.display_name + ' · ' + name : name;
       return '<div class="person-card">' + photo +
-        '<div class="info"><b>' + name + '</b><br>' + line + '</div></div>';
+        '<div class="info"><b>' + heading + '</b><br>' + line + '</div></div>';
     }).join('');
     countryPanel.innerHTML =
       '<h2>' + name + '</h2>' +

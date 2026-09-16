@@ -111,7 +111,9 @@
     return found ? found[1] : code;
   }
   function personSummary(r){
-    var bits = [countryName(r.country_code)];
+    var bits = [];
+    if (r.display_name) bits.push(r.display_name);
+    bits.push(countryName(r.country_code));
     if (r.city_abroad) bits.push(r.city_abroad);
     if (r.profession) bits.push(r.profession);
     return bits.filter(Boolean).join(' · ');
