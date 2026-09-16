@@ -165,6 +165,11 @@
         <div id="cityList"></div>
       </div>
 
+      <div id="schoolMatches" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
+        <h2 id="schoolMatchesTitle">Хора от твоето училище</h2>
+        <div id="schoolList"></div>
+      </div>
+
       <div class="status" id="connStatusMsg" hidden></div>
 
       <div id="acceptedConnections" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
@@ -223,8 +228,18 @@
       </div>
 
       <div class="field">
-        <label for="fSchool">Училище <span class="opt">(по желание)</span></label>
-        <input type="text" id="fSchool" placeholder="напр. СОУ „Найден Геров“" maxlength="120">
+        <label for="fSchool">Училище (до 12-ти клас) в Община Лом <span class="opt">(по желание)</span></label>
+        <select id="fSchool">
+          <option value="">— не посочвам —</option>
+          <option>СУ „Отец Паисий“</option>
+          <option>СУ „Димитър Маринов“</option>
+          <option>Профилирана гимназия „Найден Геров“</option>
+          <option>Професионална гимназия по производствени технологии</option>
+          <option>Професионална гимназия по хранене и земеделие „Дмитрий Ив. Менделеев“</option>
+          <option>Професионална гимназия по селско стопанство „Дунавска земя“ (с. Ковачица)</option>
+          <option>Друго</option>
+        </select>
+        <input type="text" id="fSchoolOther" placeholder="Кое училище?" hidden maxlength="120">
       </div>
 
       <div class="field">
@@ -297,6 +312,7 @@
   var fSettlementOther = document.getElementById('fSettlementOther');
   var fCity = document.getElementById('fCity');
   var fSchool = document.getElementById('fSchool');
+  var fSchoolOther = document.getElementById('fSchoolOther');
   var fAge = document.getElementById('fAge');
   var fProfession = document.getElementById('fProfession');
   var fContact = document.getElementById('fContact');
@@ -320,6 +336,9 @@
   var cityMatches = document.getElementById('cityMatches');
   var cityMatchesTitle = document.getElementById('cityMatchesTitle');
   var cityList = document.getElementById('cityList');
+  var schoolMatches = document.getElementById('schoolMatches');
+  var schoolMatchesTitle = document.getElementById('schoolMatchesTitle');
+  var schoolList = document.getElementById('schoolList');
   var connStatusMsg = document.getElementById('connStatusMsg');
   var acceptedConnections = document.getElementById('acceptedConnections');
   var acceptedList = document.getElementById('acceptedList');
@@ -366,6 +385,11 @@
     if (fSettlement.value !== 'Друго') fSettlementOther.value = '';
   });
 
+  fSchool.addEventListener('change', function(){
+    fSchoolOther.hidden = fSchool.value !== 'Друго';
+    if (fSchool.value !== 'Друго') fSchoolOther.value = '';
+  });
+
   fPhoto.addEventListener('change', function(){
     var file = fPhoto.files[0];
     if (!file) return;
@@ -400,7 +424,7 @@
       ['Държава', countryName(reg.country_code)],
       ['Населено място', reg.settlement === 'Друго' ? reg.settlement_other : reg.settlement],
       ['Град в чужбина', reg.city_abroad],
-      ['Училище', reg.school],
+      ['Училище', reg.school === 'Друго' ? reg.school_other : reg.school],
       ['Възраст', reg.age],
       ['Професия', reg.profession],
       ['Начин за връзка', reg.contact_method],
@@ -516,6 +540,24 @@
       cityMatches.hidden = true;
     }
 
+    // ---- хора от твоето училище ----
+    if (currentRegistration.school && currentRegistration.school !== 'Друго'){
+      schoolMatchesTitle.textContent = 'Хора от ' + currentRegistration.school;
+      var schoolRes = await sb.from('public_registrations')
+        .select('*')
+        .eq('school', currentRegistration.school)
+        .neq('id', myId);
+      var schoolCandidates = schoolRes.data || [];
+      if (schoolCandidates.length){
+        schoolList.innerHTML = schoolCandidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
+      } else {
+        schoolList.innerHTML = '<div class="hint">Все още няма друг регистриран от това училище.</div>';
+      }
+      schoolMatches.hidden = false;
+    } else {
+      schoolMatches.hidden = true;
+    }
+
     // ---- приети връзки, с разкрит контакт ----
     var accepted = myConnections.filter(function(c){ return c.status === 'accepted'; });
     if (accepted.length){
@@ -565,6 +607,7 @@
   }
   settlementList.addEventListener('click', handleConnRequestClick);
   cityList.addEventListener('click', handleConnRequestClick);
+  schoolList.addEventListener('click', handleConnRequestClick);
 
   function fillFormFrom(reg){
     fCountry.value = reg.country_code || '';
@@ -573,6 +616,8 @@
     fSettlementOther.value = reg.settlement_other || '';
     fCity.value = reg.city_abroad || '';
     fSchool.value = reg.school || '';
+    fSchoolOther.hidden = reg.school !== 'Друго';
+    fSchoolOther.value = reg.school_other || '';
     fAge.value = reg.age || '';
     fProfession.value = reg.profession || '';
     fContact.value = reg.contact_method || '';
@@ -699,7 +744,8 @@
       settlement: fSettlement.value || null,
       settlement_other: fSettlement.value === 'Друго' ? (fSettlementOther.value.trim() || null) : null,
       city_abroad: fCity.value.trim() || null,
-      school: fSchool.value.trim() || null,
+      school: fSchool.value || null,
+      school_other: fSchool.value === 'Друго' ? (fSchoolOther.value.trim() || null) : null,
       age: fAge.value ? parseInt(fAge.value, 10) : null,
       profession: fProfession.value.trim() || null,
       contact_method: fContact.value.trim() || null,
