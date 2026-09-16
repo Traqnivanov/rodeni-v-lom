@@ -60,9 +60,9 @@
   input:focus, select:focus{outline:2px solid var(--accent);outline-offset:1px;}
   .field{margin-bottom:16px;}
   .hint{font-size:.76rem;color:var(--muted);line-height:1.4;}
-  .checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;}
-  .checkbox-row input{width:auto;margin:3px 0 0;}
-  .checkbox-row label{margin:0;font-weight:500;font-size:.86rem;}
+  .checkbox-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;min-height:44px;cursor:pointer;}
+  .checkbox-row input{width:20px;height:20px;flex-shrink:0;margin:0;accent-color:var(--accent);cursor:pointer;}
+  .checkbox-row span{font-weight:500;font-size:.86rem;line-height:1.4;}
   button{
     width:100%;
     background:var(--accent);
@@ -138,10 +138,10 @@
 
     <div id="profileView" hidden>
       <div style="background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:18px;">
-        <div class="checkbox-row" style="margin-bottom:8px;">
+        <label class="checkbox-row" style="margin-bottom:8px;">
           <input type="checkbox" id="fHelpQuick">
-          <label for="fHelpQuick">Готов съм да помагам на новодошли ломчани</label>
-        </div>
+          <span>Готов съм да помагам на новодошли ломчани</span>
+        </label>
         <div class="hint">Каквото и да питат — виза, работа, живота там, каквото се сетиш. Не пиши какво точно — просто казваш, че си насреща.</div>
         <button type="button" class="secondary" id="helpSaveBtn" style="margin-top:10px;">Запази</button>
         <div class="status" id="helpStatusMsg" hidden></div>
@@ -190,6 +190,11 @@
       <div id="acceptedConnections" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
         <h2>Твоите връзки</h2>
         <div id="acceptedList"></div>
+      </div>
+
+      <div id="blockedConnections" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
+        <h2>Блокирани</h2>
+        <div id="blockedList"></div>
       </div>
 
       <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
@@ -294,15 +299,15 @@
         <input type="text" id="fContact" placeholder="Facebook, Viber номер и т.н." maxlength="200">
       </div>
 
-      <div class="checkbox-row">
+      <label class="checkbox-row">
         <input type="checkbox" id="fOpen">
-        <label for="fOpen">Отворен съм за общуване с непознати ломчани</label>
-      </div>
+        <span>Отворен съм за общуване с непознати ломчани</span>
+      </label>
 
-      <div class="checkbox-row">
+      <label class="checkbox-row">
         <input type="checkbox" id="fAgeConsent" required>
-        <label for="fAgeConsent">Потвърждавам, че съм на 14 или повече години</label>
-      </div>
+        <span>Потвърждавам, че съм на 14 или повече години</span>
+      </label>
 
       <p class="hint" style="margin-top:-10px;margin-bottom:16px;">Виж <a href="poveritelnost.html" style="color:var(--accent-2);">политиката за поверителност</a> — какви данни пазим и как да ги изтриеш.</p>
 
@@ -388,6 +393,8 @@
   var connStatusMsg = document.getElementById('connStatusMsg');
   var acceptedConnections = document.getElementById('acceptedConnections');
   var acceptedList = document.getElementById('acceptedList');
+  var blockedConnections = document.getElementById('blockedConnections');
+  var blockedList = document.getElementById('blockedList');
 
   var currentRegistration = null;
 
@@ -677,6 +684,27 @@
     } else {
       acceptedConnections.hidden = true;
     }
+
+    // ---- блокирани от теб - с възможност за отблокиране ----
+    var blocked = myConnections.filter(function(c){ return c.status === 'blocked'; });
+    if (blocked.length){
+      var blockedOtherIds = blocked.map(function(c){ return c.from_registration_id === myId ? c.to_registration_id : c.from_registration_id; });
+      var blockedOtherRes = await sb.from('public_registrations').select('*').in('id', blockedOtherIds);
+      var blockedOtherById = {};
+      (blockedOtherRes.data || []).forEach(function(r){ blockedOtherById[r.id] = r; });
+      blockedList.innerHTML = blocked.map(function(c){
+        var otherId = c.from_registration_id === myId ? c.to_registration_id : c.from_registration_id;
+        var r = blockedOtherById[otherId];
+        var label = r ? personSummary(r) : 'Изтрит профил';
+        return '<div class="conn-card"><div class="info"><b>' + label + '</b></div>' +
+          '<div class="conn-actions">' +
+          '<button type="button" class="secondary conn-unblock" data-id="'+c.id+'" style="width:auto;padding:7px 12px;font-size:.78rem;">Отблокирай</button>' +
+          '</div></div>';
+      }).join('');
+      blockedConnections.hidden = false;
+    } else {
+      blockedConnections.hidden = true;
+    }
   }
 
   incomingList.addEventListener('click', async function(e){
@@ -741,6 +769,22 @@
     var res = await sb.from('connections').update({ status: 'blocked', responded_at: new Date().toISOString() }).eq('id', blockBtn.dataset.id);
     if (res.error){
       blockBtn.disabled = false;
+      connStatusMsg.textContent = 'Нещо се обърка: ' + res.error.message;
+      connStatusMsg.className = 'status err';
+      connStatusMsg.hidden = false;
+      return;
+    }
+    loadConnectionsUI();
+  });
+
+  blockedList.addEventListener('click', async function(e){
+    var unblockBtn = e.target.closest('.conn-unblock');
+    if (!unblockBtn) return;
+    if (!window.confirm('Отблокирай ли? Ще може отново да ти праща искане за връзка.')) return;
+    unblockBtn.disabled = true;
+    var res = await sb.from('connections').delete().eq('id', unblockBtn.dataset.id);
+    if (res.error){
+      unblockBtn.disabled = false;
       connStatusMsg.textContent = 'Нещо се обърка: ' + res.error.message;
       connStatusMsg.className = 'status err';
       connStatusMsg.hidden = false;
