@@ -75,6 +75,19 @@
   }
   #countryPanel h2{font-size:1.02rem;margin:0 0 4px;}
   #countryPanel .count{color:var(--muted);font-size:.82rem;margin:0 0 14px;}
+
+  .community-section{border-top:1px solid var(--line);padding:16px 18px 8px;max-width:640px;margin:0 auto;width:100%;}
+  .community-section h2{font-size:1.02rem;margin:0 0 4px;}
+  .community-section .hint{color:var(--muted);font-size:.8rem;line-height:1.5;margin:0 0 12px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .chip{
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    padding:0 14px;min-height:40px;display:inline-flex;align-items:center;gap:6px;
+    font-size:.82rem;color:var(--muted);font-family:inherit;cursor:pointer;
+  }
+  .chip:hover{border-color:var(--accent);color:var(--ink);}
+  .chip.active{background:var(--accent);border-color:var(--accent);color:#1a1206;}
+  .chip .n{font-size:.72rem;opacity:.75;}
   .person-card{
     display:flex;gap:12px;align-items:center;padding:10px 0;
     border-top:1px solid var(--line);
@@ -109,6 +122,12 @@
     <svg id="worldMap" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
     <div id="tooltip"></div>
     <a class="hook-pill" href="account.html"><span class="q">Карта на ломчани по света.</span>Ти къде си?</a>
+  </div>
+  <div id="settlementSection" class="community-section" hidden>
+    <h2>По населено място</h2>
+    <p class="hint">Кой още е от твоето село или квартал в Община Лом — независимо къде е по света.</p>
+    <div id="settlementChips" class="chips"></div>
+    <div id="settlementList"></div>
   </div>
   <div id="countryPanel" hidden></div>
 </main>
@@ -206,16 +225,87 @@
   var countryPanel = document.getElementById('countryPanel');
   var hookPill = document.querySelector('.hook-pill');
   var iAmRegistered = false;
+  var myRegistration = null;
+
+  // ---- по населено място: показва твоето село/квартал от Лом първо, ако си регистриран ----
+  var settlementSection = document.getElementById('settlementSection');
+  var settlementChips = document.getElementById('settlementChips');
+  var settlementList = document.getElementById('settlementList');
+  var allEntries = [];
+  var activeSettlement = null;
+  var entriesLoaded = false;
+  var authChecked = false;
+
+  function entrySettlementLabel(r){
+    if (!r.settlement) return null;
+    return r.settlement === 'Друго' ? r.settlement_other : r.settlement;
+  }
+
+  function renderSettlementSection(){
+    if (!entriesLoaded || !authChecked) return;
+    var groups = {};
+    allEntries.forEach(function(r){
+      var label = entrySettlementLabel(r);
+      if (!label) return;
+      (groups[label] = groups[label] || []).push(r);
+    });
+    var labels = Object.keys(groups);
+    if (!labels.length){
+      settlementSection.hidden = true;
+      return;
+    }
+    var mine = myRegistration ? entrySettlementLabel(myRegistration) : null;
+    labels.sort(function(a, b){
+      if (a === mine) return -1;
+      if (b === mine) return 1;
+      return groups[b].length - groups[a].length;
+    });
+    if (!activeSettlement || !groups[activeSettlement]) activeSettlement = labels[0];
+
+    settlementChips.innerHTML = labels.map(function(l){
+      return '<button type="button" class="chip' + (l === activeSettlement ? ' active' : '') + '" data-settlement="' + l.replace(/"/g,'&quot;') + '">' + l + ' <span class="n">' + groups[l].length + '</span></button>';
+    }).join('');
+
+    var myId = myRegistration ? myRegistration.id : null;
+    var visible = groups[activeSettlement].filter(function(r){ return r.id !== myId; });
+    if (!visible.length){
+      settlementList.innerHTML = '<p class="empty-cta">Все още само ти си от ' + activeSettlement + ' — бъди първият, който ще намери друг оттук.</p>';
+    } else {
+      settlementList.innerHTML = visible.slice(0, 12).map(function(r){
+        var photo = r.photo_url
+          ? '<img src="'+r.photo_url+'" alt="">'
+          : '<div class="ph-placeholder"></div>';
+        var heading = r.display_name || countryName(r.country_code);
+        return '<div class="person-card">' + photo +
+          '<div class="info"><b>' + heading + '</b><br>' + placeLabel(r) + '</div></div>';
+      }).join('');
+    }
+    settlementSection.hidden = false;
+  }
+
+  settlementChips.addEventListener('click', function(e){
+    var btn = e.target.closest('.chip');
+    if (!btn) return;
+    activeSettlement = btn.dataset.settlement;
+    renderSettlementSection();
+  });
 
   // ---- ако вече си регистриран, куката и "Присъедини се" не важат за теб ----
   sb.auth.getSession().then(function(res){
     var user = res.data.session && res.data.session.user;
-    if (!user) return;
-    sb.from('registrations').select('id').eq('user_id', user.id).maybeSingle().then(function(regRes){
+    if (!user){
+      authChecked = true;
+      renderSettlementSection();
+      return;
+    }
+    sb.from('registrations').select('id, settlement, settlement_other').eq('user_id', user.id).maybeSingle().then(function(regRes){
       if (regRes.data){
         iAmRegistered = true;
+        myRegistration = regRes.data;
         if (hookPill) hookPill.hidden = true;
       }
+      authChecked = true;
+      renderSettlementSection();
     });
   });
 
@@ -258,11 +348,14 @@
   function loadRegistrations(){
     return sb.from('public_registrations').select('*').then(function(res){
       if (res.error || !res.data) return;
+      allEntries = res.data;
       res.data.forEach(function(row){
         countByCode[row.country_code] = (countByCode[row.country_code] || 0) + 1;
         (entriesByCode[row.country_code] = entriesByCode[row.country_code] || []).push(row);
       });
       colorMap();
+      entriesLoaded = true;
+      renderSettlementSection();
     });
   }
 
