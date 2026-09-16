@@ -117,6 +117,7 @@
     </div>
 
     <div id="profileView" hidden>
+      <img id="profilePhoto" alt="" hidden style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--line);margin-bottom:10px;">
       <h2>Ти вече си регистриран</h2>
       <ul class="profile-list" id="profileList"></ul>
       <button type="button" class="secondary" id="editBtn">Редактирай</button>
@@ -133,6 +134,15 @@
     <form id="regForm" hidden>
       <h2>Регистрация</h2>
       <p class="lead">Само държавата е задължителна. Всичко друго е по желание.</p>
+
+      <div class="field">
+        <label for="fPhoto">Снимка <span class="opt">(по желание)</span></label>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <img id="fPhotoPreview" alt="" hidden style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:1px solid var(--line);">
+          <input type="file" id="fPhoto" accept="image/png,image/jpeg,image/webp" style="flex:1;font-size:.82rem;">
+        </div>
+        <div class="hint" id="photoHint">Смалява се автоматично — леко и ясно.</div>
+      </div>
 
       <div class="field">
         <label for="fCountry">Държава</label>
@@ -208,6 +218,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-config.js"></script>
 <script src="countries.js"></script>
+<script src="photo-upload.js"></script>
 <script>
 (function(){
   "use strict";
@@ -239,6 +250,11 @@
   var fProfession = document.getElementById('fProfession');
   var fContact = document.getElementById('fContact');
   var fOpen = document.getElementById('fOpen');
+  var fPhoto = document.getElementById('fPhoto');
+  var fPhotoPreview = document.getElementById('fPhotoPreview');
+  var photoHint = document.getElementById('photoHint');
+  var profilePhoto = document.getElementById('profilePhoto');
+  var pendingPhotoFile = null;
   var fTravelQuick = document.getElementById('fTravelQuick');
   var travelSaveBtn = document.getElementById('travelSaveBtn');
   var travelStatusMsg = document.getElementById('travelStatusMsg');
@@ -271,6 +287,24 @@
     if (fSettlement.value !== 'Друго') fSettlementOther.value = '';
   });
 
+  fPhoto.addEventListener('change', function(){
+    var file = fPhoto.files[0];
+    if (!file) return;
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)){
+      photoHint.textContent = 'Позволени са само снимки (JPEG, PNG, WebP).';
+      fPhoto.value = '';
+      return;
+    }
+    pendingPhotoFile = file;
+    var reader = new FileReader();
+    reader.onload = function(){
+      fPhotoPreview.src = reader.result;
+      fPhotoPreview.hidden = false;
+    };
+    reader.readAsDataURL(file);
+    photoHint.textContent = 'Смалява се автоматично — леко и ясно.';
+  });
+
   function countryName(code){
     var found = window.RODENI_COUNTRIES.find(function(p){ return p[0]===code; });
     return found ? found[1] : code;
@@ -300,6 +334,12 @@
       .join('');
     fTravelQuick.value = reg.travel_status || '';
     travelStatusMsg.hidden = true;
+    if (reg.photo_url){
+      profilePhoto.src = reg.photo_url;
+      profilePhoto.hidden = false;
+    } else {
+      profilePhoto.hidden = true;
+    }
   }
 
   function fillFormFrom(reg){
@@ -314,12 +354,22 @@
     fContact.value = reg.contact_method || '';
     fOpen.checked = !!reg.open_to_strangers;
     fAgeConsent.checked = true;
+    pendingPhotoFile = null;
+    fPhoto.value = '';
+    if (reg.photo_url){
+      fPhotoPreview.src = reg.photo_url;
+      fPhotoPreview.hidden = false;
+    } else {
+      fPhotoPreview.hidden = true;
+    }
   }
 
   function resetForm(){
     regForm.reset();
     fSettlementOther.hidden = true;
     formStatusMsg.hidden = true;
+    pendingPhotoFile = null;
+    fPhotoPreview.hidden = true;
   }
 
   async function loadRegistration(userId){
@@ -416,6 +466,18 @@
     };
 
     submitBtn.disabled = true;
+
+    if (pendingPhotoFile){
+      showFormStatus('Качвам снимката…');
+      try {
+        payload.photo_url = await window.RodeniPhoto.uploadUserPhoto(sb, pendingPhotoFile, user.id);
+      } catch (photoErr){
+        submitBtn.disabled = false;
+        showFormStatus('Снимката не се качи: ' + photoErr.message, 'err');
+        return;
+      }
+    }
+
     showFormStatus('Записвам…');
 
     var res;
@@ -433,6 +495,7 @@
     }
 
     currentRegistration = res.data;
+    pendingPhotoFile = null;
     renderProfile(currentRegistration);
     cancelEditBtn.hidden = true;
     showSubview('profile');
