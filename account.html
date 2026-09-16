@@ -158,8 +158,14 @@
       <div id="settlementMatches" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
         <h2 id="settlementMatchesTitle">Хора от твоето населено място</h2>
         <div id="settlementList"></div>
-        <div class="status" id="connStatusMsg" hidden></div>
       </div>
+
+      <div id="cityMatches" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
+        <h2 id="cityMatchesTitle">Хора от твоя град</h2>
+        <div id="cityList"></div>
+      </div>
+
+      <div class="status" id="connStatusMsg" hidden></div>
 
       <div id="acceptedConnections" hidden style="margin-top:22px;padding-top:18px;border-top:1px solid var(--line);">
         <h2>Твоите връзки</h2>
@@ -211,7 +217,8 @@
 
       <div class="field">
         <label for="fCity">Град в чужбина <span class="opt">(по желание)</span></label>
-        <input type="text" id="fCity" placeholder="напр. Мюнхен" maxlength="60">
+        <input type="text" id="fCity" list="cityOptions" placeholder="напр. Мюнхен" maxlength="60" autocomplete="off">
+        <datalist id="cityOptions"></datalist>
         <div class="hint">За да те намират хора наблизо в чужбина.</div>
       </div>
 
@@ -259,6 +266,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-config.js"></script>
 <script src="countries.js"></script>
+<script src="cities.js"></script>
 <script src="photo-upload.js"></script>
 <script>
 (function(){
@@ -309,6 +317,9 @@
   var settlementMatches = document.getElementById('settlementMatches');
   var settlementMatchesTitle = document.getElementById('settlementMatchesTitle');
   var settlementList = document.getElementById('settlementList');
+  var cityMatches = document.getElementById('cityMatches');
+  var cityMatchesTitle = document.getElementById('cityMatchesTitle');
+  var cityList = document.getElementById('cityList');
   var connStatusMsg = document.getElementById('connStatusMsg');
   var acceptedConnections = document.getElementById('acceptedConnections');
   var acceptedList = document.getElementById('acceptedList');
@@ -340,6 +351,15 @@
     var pre = params.get('country');
     if (pre) fCountry.value = pre;
   })();
+
+  // ---- предложения за градове според избраната държава ----
+  var cityOptions = document.getElementById('cityOptions');
+  function refreshCityOptions(){
+    var list = (window.RODENI_CITIES && window.RODENI_CITIES[fCountry.value]) || [];
+    cityOptions.innerHTML = list.map(function(name){ return '<option value="'+name+'">'; }).join('');
+  }
+  fCountry.addEventListener('change', refreshCityOptions);
+  refreshCityOptions();
 
   fSettlement.addEventListener('change', function(){
     fSettlementOther.hidden = fSettlement.value !== 'Друго';
@@ -409,6 +429,26 @@
     return bits.filter(Boolean).join(' · ');
   }
 
+  function renderMatchCard(r, myConnections, myId){
+    var existing = myConnections.find(function(c){
+      return (c.from_registration_id === myId && c.to_registration_id === r.id)
+          || (c.to_registration_id === myId && c.from_registration_id === r.id);
+    });
+    var actionHtml;
+    if (!existing){
+      actionHtml = '<button type="button" class="secondary conn-request" data-id="'+r.id+'">Искам да се свържа</button>';
+    } else if (existing.status === 'pending'){
+      actionHtml = existing.from_registration_id === myId
+        ? '<span class="hint">Изчаква отговор</span>'
+        : '<span class="hint">Виж молбите към теб</span>';
+    } else if (existing.status === 'accepted'){
+      actionHtml = '<span class="hint">Вече сте свързани</span>';
+    } else {
+      actionHtml = '<span class="hint">Отказано</span>';
+    }
+    return '<div class="conn-card"><div class="info"><b>' + personSummary(r) + '</b></div><div class="conn-actions">' + actionHtml + '</div></div>';
+  }
+
   async function loadConnectionsUI(){
     if (!currentRegistration) return;
     var myId = currentRegistration.id;
@@ -447,31 +487,33 @@
         .neq('id', myId);
       var candidates = matchRes.data || [];
       if (candidates.length){
-        settlementList.innerHTML = candidates.map(function(r){
-          var existing = myConnections.find(function(c){
-            return (c.from_registration_id === myId && c.to_registration_id === r.id)
-                || (c.to_registration_id === myId && c.from_registration_id === r.id);
-          });
-          var actionHtml;
-          if (!existing){
-            actionHtml = '<button type="button" class="secondary conn-request" data-id="'+r.id+'">Искам да се свържа</button>';
-          } else if (existing.status === 'pending'){
-            actionHtml = existing.from_registration_id === myId
-              ? '<span class="hint">Изчаква отговор</span>'
-              : '<span class="hint">Виж молбите към теб</span>';
-          } else if (existing.status === 'accepted'){
-            actionHtml = '<span class="hint">Вече сте свързани</span>';
-          } else {
-            actionHtml = '<span class="hint">Отказано</span>';
-          }
-          return '<div class="conn-card"><div class="info"><b>' + personSummary(r) + '</b></div><div class="conn-actions">' + actionHtml + '</div></div>';
-        }).join('');
+        settlementList.innerHTML = candidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
       } else {
         settlementList.innerHTML = '<div class="hint">Все още няма друг регистриран от ' + currentRegistration.settlement + '.</div>';
       }
       settlementMatches.hidden = false;
     } else {
       settlementMatches.hidden = true;
+    }
+
+    // ---- хора от твоя град в чужбина (в рамките на същата държава) ----
+    var myCity = (currentRegistration.city_abroad || '').trim();
+    if (myCity){
+      cityMatchesTitle.textContent = 'Хора от ' + myCity;
+      var cityRes = await sb.from('public_registrations')
+        .select('*')
+        .eq('country_code', currentRegistration.country_code)
+        .ilike('city_abroad', myCity)
+        .neq('id', myId);
+      var cityCandidates = cityRes.data || [];
+      if (cityCandidates.length){
+        cityList.innerHTML = cityCandidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
+      } else {
+        cityList.innerHTML = '<div class="hint">Все още няма друг регистриран от ' + myCity + '.</div>';
+      }
+      cityMatches.hidden = false;
+    } else {
+      cityMatches.hidden = true;
     }
 
     // ---- приети връзки, с разкрит контакт ----
@@ -503,7 +545,7 @@
     }
   });
 
-  settlementList.addEventListener('click', async function(e){
+  async function handleConnRequestClick(e){
     var reqBtn = e.target.closest('.conn-request');
     if (!reqBtn) return;
     reqBtn.disabled = true;
@@ -520,7 +562,9 @@
       return;
     }
     loadConnectionsUI();
-  });
+  }
+  settlementList.addEventListener('click', handleConnRequestClick);
+  cityList.addEventListener('click', handleConnRequestClick);
 
   function fillFormFrom(reg){
     fCountry.value = reg.country_code || '';
