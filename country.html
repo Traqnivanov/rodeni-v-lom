@@ -68,6 +68,7 @@
 
   <div class="tabs">
     <button class="tab active" data-tab="all">Хора</button>
+    <button class="tab" data-tab="help">Готови да помагат</button>
     <button class="tab" data-tab="open">Отворени за запознанства</button>
     <button class="tab" data-tab="profession">По професия</button>
   </div>
@@ -123,6 +124,7 @@
     if (activeCity) rows = rows.filter(function(r){ return r.city_abroad === activeCity; });
     if (activeTab === 'open') rows = rows.filter(function(r){ return r.open_to_strangers; });
     if (activeTab === 'profession') rows = rows.filter(function(r){ return !!(r.profession_category || r.profession); });
+    if (activeTab === 'help') rows = rows.filter(function(r){ return r.willing_to_help; });
 
     if (!rows.length){
       listEl.innerHTML = '';
@@ -141,8 +143,9 @@
         ? '<span class="badge">'+r.profession_category+'</span>'
         : (r.profession ? '<span class="badge">'+r.profession+'</span>' : '');
       var openBadge = r.open_to_strangers ? '<span class="badge">отворен за запознанства</span>' : '';
+      var helpBadge = r.willing_to_help ? '<span class="badge">готов да помага</span>' : '';
       return '<div class="person-card">' + photo +
-        '<div class="info"><b>' + countryName(code) + '</b>' + profBadge + openBadge + '<br>' + personLine(r) + '</div></div>';
+        '<div class="info"><b>' + countryName(code) + '</b>' + profBadge + openBadge + helpBadge + '<br>' + personLine(r) + '</div></div>';
     }).join('');
   }
 

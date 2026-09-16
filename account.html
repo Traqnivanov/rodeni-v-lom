@@ -137,6 +137,16 @@
     </div>
 
     <div id="profileView" hidden>
+      <div style="background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:18px;">
+        <div class="checkbox-row" style="margin-bottom:8px;">
+          <input type="checkbox" id="fHelpQuick">
+          <label for="fHelpQuick">Готов съм да помагам на новодошли ломчани</label>
+        </div>
+        <div class="hint">Каквото и да питат — виза, работа, живота там, каквото се сетиш. Не пиши какво точно — просто казваш, че си насреща.</div>
+        <button type="button" class="secondary" id="helpSaveBtn" style="margin-top:10px;">Запази</button>
+        <div class="status" id="helpStatusMsg" hidden></div>
+      </div>
+
       <img id="profilePhoto" alt="" hidden style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--line);margin-bottom:10px;">
       <h2>Ти вече си регистриран</h2>
       <ul class="profile-list" id="profileList"></ul>
@@ -348,6 +358,9 @@
   var fTravelQuick = document.getElementById('fTravelQuick');
   var travelSaveBtn = document.getElementById('travelSaveBtn');
   var travelStatusMsg = document.getElementById('travelStatusMsg');
+  var fHelpQuick = document.getElementById('fHelpQuick');
+  var helpSaveBtn = document.getElementById('helpSaveBtn');
+  var helpStatusMsg = document.getElementById('helpStatusMsg');
   var fAgeConsent = document.getElementById('fAgeConsent');
   var fHoneypot = document.getElementById('fHoneypot');
 
@@ -464,6 +477,8 @@
       .join('');
     fTravelQuick.value = reg.travel_status || '';
     travelStatusMsg.hidden = true;
+    fHelpQuick.checked = !!reg.willing_to_help;
+    helpStatusMsg.hidden = true;
     if (reg.photo_url){
       profilePhoto.src = reg.photo_url;
       profilePhoto.hidden = false;
@@ -801,6 +816,30 @@
     travelStatusMsg.textContent = value ? 'Записано.' : 'Изчистено.';
     travelStatusMsg.className = 'status ok';
     travelStatusMsg.hidden = false;
+  });
+
+  helpSaveBtn.addEventListener('click', async function(){
+    if (!currentRegistration) return;
+    helpSaveBtn.disabled = true;
+    helpStatusMsg.hidden = true;
+    var value = fHelpQuick.checked;
+    var res = await sb.from('registrations')
+      .update({ willing_to_help: value })
+      .eq('id', currentRegistration.id)
+      .select()
+      .single();
+    helpSaveBtn.disabled = false;
+    if (res.error){
+      helpStatusMsg.textContent = 'Нещо се обърка: ' + res.error.message;
+      helpStatusMsg.className = 'status err';
+      helpStatusMsg.hidden = false;
+      return;
+    }
+    currentRegistration = res.data;
+    renderProfile(currentRegistration);
+    helpStatusMsg.textContent = value ? 'Записано — вече си видим в "Готови да помагат".' : 'Изчистено.';
+    helpStatusMsg.className = 'status ok';
+    helpStatusMsg.hidden = false;
   });
 
   deleteMeBtn.addEventListener('click', async function(){
