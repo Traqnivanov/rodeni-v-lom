@@ -240,6 +240,12 @@
     return countryName(row.country_code);
   }
 
+  // статус на пътуване - декларирано е публично в поверителността, но досега
+  // не се показваше никъде; добавяме го като допълнителен фрагмент в реда
+  function withTravel(line, r){
+    return r.travel_status ? line + ' · ' + r.travel_status : line;
+  }
+
   // ---- тих индикатор за скорошна активност (реални данни; име само ако човекът сам го е написал) ----
   var tickerWrap = document.getElementById('tickerWrap');
   var tickerText = document.getElementById('tickerText');
@@ -321,6 +327,7 @@
     var bits = [];
     if (r.settlement) bits.push(r.settlement === 'Друго' ? r.settlement_other : r.settlement);
     if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
+    if (r.travel_status) bits.push(r.travel_status);
     return bits.filter(Boolean).join(' · ') || countryName(r.country_code);
   }
 
@@ -440,7 +447,7 @@
       communityList.innerHTML = '<p class="empty-cta">Все още само ти си от ' + escapeHtml(activeSettlement) + ' — бъди първият, който ще намери друг оттук.</p>';
     } else {
       communityList.innerHTML = visible.slice(0, 12).map(function(r){
-        return renderPersonCard(r, placeLabel(r));
+        return renderPersonCard(r, withTravel(placeLabel(r), r));
       }).join('');
     }
     communitySection.hidden = false;
@@ -492,6 +499,7 @@
     var bits = [];
     if (r.city_abroad) bits.push(r.city_abroad);
     if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
+    if (r.travel_status) bits.push(r.travel_status);
     return bits.filter(Boolean).join(' · ') || countryName(r.country_code);
   }
 
@@ -560,7 +568,7 @@
       communityList.innerHTML = '<p class="empty-cta">Все още само ти си с тази сфера на работа — бъди първият, който ще намери друг оттук.</p>';
     } else {
       communityList.innerHTML = visible.slice(0, 12).map(function(r){
-        return renderPersonCard(r, placeLabel(r));
+        return renderPersonCard(r, withTravel(placeLabel(r), r));
       }).join('');
     }
     communitySection.hidden = false;
@@ -625,6 +633,7 @@
     if (r.settlement) bits.push(r.settlement === 'Друго' ? r.settlement_other : r.settlement);
     if (r.city_abroad) bits.push(r.city_abroad);
     if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
+    if (r.travel_status) bits.push(r.travel_status);
     return bits.filter(Boolean).join(' · ') || 'Без допълнителни данни';
   }
 

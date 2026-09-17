@@ -250,6 +250,7 @@
     if (r.city_abroad) bits.push(r.city_abroad);
     if (r.school) bits.push(r.school === 'Друго' ? r.school_other : r.school);
     if (r.age) bits.push(r.age + ' г.');
+    if (r.travel_status) bits.push(r.travel_status);
     return escapeHtml(bits.filter(Boolean).join(' · ') || 'Без допълнителни данни');
   }
 
