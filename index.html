@@ -138,6 +138,7 @@
     <div class="tabs" id="communityTabs">
       <button type="button" class="tab active" data-ctab="settlement">По населено място</button>
       <button type="button" class="tab" data-ctab="city">По град</button>
+      <button type="button" class="tab" data-ctab="help">Готови да помагат</button>
     </div>
     <p class="hint" id="communityHint">Кой още е от твоето село или квартал в Община Лом — независимо къде е по света.</p>
     <div id="communityChips" class="chips"></div>
@@ -251,12 +252,14 @@
   var activeCommunityTab = 'settlement';
   var activeSettlement = null;
   var activeCity = null;
+  var activeHelpCountry = null;
   var entriesLoaded = false;
   var authChecked = false;
 
   var COMMUNITY_HINTS = {
     settlement: 'Кой още е от твоето село или квартал в Община Лом — независимо къде е по света.',
-    city: 'Кой още е в твоя град в чужбина — където и да си, независимо от държавата.'
+    city: 'Кой още е в твоя град в чужбина — където и да си, независимо от държавата.',
+    help: 'Отговарят на въпроси — виза, работа, животът там и т.н.'
   };
 
   function entrySettlementLabel(r){
@@ -360,10 +363,58 @@
     communitySection.hidden = false;
   }
 
+  function helpCardLine(r){
+    var bits = [];
+    if (r.city_abroad) bits.push(r.city_abroad);
+    if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
+    return bits.filter(Boolean).join(' · ') || countryName(r.country_code);
+  }
+
+  function renderHelpTab(){
+    var helpers = allEntries.filter(function(r){ return r.willing_to_help; });
+    if (!helpers.length){
+      communitySection.hidden = true;
+      return;
+    }
+    var groups = {};
+    helpers.forEach(function(r){
+      (groups[r.country_code] = groups[r.country_code] || []).push(r);
+    });
+    var codes = Object.keys(groups);
+    var mine = myRegistration ? myRegistration.country_code : null;
+    codes.sort(function(a, b){
+      if (a === mine) return -1;
+      if (b === mine) return 1;
+      return groups[b].length - groups[a].length;
+    });
+    if (!activeHelpCountry || !groups[activeHelpCountry]) activeHelpCountry = codes[0];
+
+    communityChips.innerHTML = codes.map(function(c){
+      return '<button type="button" class="chip' + (c === activeHelpCountry ? ' active' : '') + '" data-key="' + c + '">' + countryName(c) + ' <span class="n">' + groups[c].length + '</span></button>';
+    }).join('');
+
+    var myId = myRegistration ? myRegistration.id : null;
+    var visible = groups[activeHelpCountry].filter(function(r){ return r.id !== myId; });
+    if (!visible.length){
+      communityList.innerHTML = '<p class="empty-cta">Все още само ти си готов да помагаш в ' + countryName(activeHelpCountry) + '.</p>';
+    } else {
+      communityList.innerHTML = visible.slice(0, 12).map(function(r){
+        var photo = r.photo_url
+          ? '<img src="'+r.photo_url+'" alt="">'
+          : '<div class="ph-placeholder"></div>';
+        var heading = r.display_name || countryName(r.country_code);
+        return '<div class="person-card">' + photo +
+          '<div class="info"><b>' + heading + '</b><br>' + helpCardLine(r) + '</div></div>';
+      }).join('');
+    }
+    communitySection.hidden = false;
+  }
+
   function renderCommunitySection(){
     if (!entriesLoaded || !authChecked) return;
     if (activeCommunityTab === 'settlement') renderSettlementTab();
     else if (activeCommunityTab === 'city') renderCityTab();
+    else if (activeCommunityTab === 'help') renderHelpTab();
   }
 
   communityChips.addEventListener('click', function(e){
@@ -371,6 +422,7 @@
     if (!btn) return;
     if (activeCommunityTab === 'settlement') activeSettlement = btn.dataset.key;
     else if (activeCommunityTab === 'city') activeCity = btn.dataset.key;
+    else if (activeCommunityTab === 'help') activeHelpCountry = btn.dataset.key;
     renderCommunitySection();
   });
 
@@ -396,7 +448,7 @@
       renderCommunitySection();
       return;
     }
-    sb.from('registrations').select('id, settlement, settlement_other, city_abroad, profession_category, profession, willing_to_help').eq('user_id', user.id).maybeSingle().then(function(regRes){
+    sb.from('registrations').select('id, settlement, settlement_other, city_abroad, country_code, profession_category, profession, willing_to_help').eq('user_id', user.id).maybeSingle().then(function(regRes){
       if (regRes.data){
         iAmRegistered = true;
         myRegistration = regRes.data;
