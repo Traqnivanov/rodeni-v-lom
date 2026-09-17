@@ -49,16 +49,25 @@
     transition:opacity .18s ease;
   }
 
-  .person-card{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);}
+  .person-card{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);}
   .person-card:first-of-type{border-top:none;}
   .person-card img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:1px solid var(--line);flex-shrink:0;}
   .person-card .ph-placeholder{width:52px;height:52px;border-radius:50%;background:var(--surface-2);flex-shrink:0;}
   .person-card .info{font-size:.87rem;line-height:1.55;color:var(--muted);}
   .person-card .info b{color:var(--ink);font-weight:600;}
+  .person-card .pc-main{display:flex;gap:12px;align-items:center;flex:1;min-width:200px;}
+  .person-card .pc-action{flex-shrink:0;margin-left:auto;}
   .badge{
     display:inline-block;font-size:.7rem;background:var(--surface-2);color:var(--accent-2);
     border-radius:20px;padding:2px 9px;margin-left:6px;
   }
+  .connect-cta{color:var(--accent-2);font-size:.78rem;text-decoration:none;font-weight:600;}
+  .connect-btn{
+    background:var(--accent);color:#1a1206;border:none;border-radius:8px;
+    padding:0 14px;min-height:36px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;
+  }
+  .connect-btn:disabled{opacity:.6;cursor:default;}
+  .connect-hint{color:var(--muted);font-size:.76rem;}
 
   .empty{color:var(--muted);font-size:.88rem;line-height:1.6;padding:20px 0;}
   .cta{
@@ -133,12 +142,92 @@
   countryTitle.textContent = countryName(code) || 'Държава';
   joinCta.href = 'account.html?country=' + encodeURIComponent(code);
 
+  var iAmRegistered = false;
+  var myRegistration = null;
+  var myConnections = [];
+  var blockedIds = {};
+  var authChecked = false;
+  var entriesLoaded = false;
+
+  // ---- действие на всяка картичка: зависи дали си регистриран и какъв е статусът към човека ----
+  function connectionActionHtml(r){
+    if (!iAmRegistered){
+      return '<a class="connect-cta" href="account.html">Присъедини се, за да пишеш</a>';
+    }
+    var myId = myRegistration.id;
+    var existing = myConnections.find(function(c){
+      return (c.from_registration_id === myId && c.to_registration_id === r.id)
+          || (c.to_registration_id === myId && c.from_registration_id === r.id);
+    });
+    if (!existing){
+      return '<button type="button" class="connect-btn" data-id="' + r.id + '">Искам да се свържа</button>';
+    }
+    if (existing.status === 'pending'){
+      return existing.from_registration_id === myId
+        ? '<span class="connect-hint">Изчаква отговор</span>'
+        : '<span class="connect-hint">Виж молбите към теб</span>';
+    }
+    return '<a class="connect-cta" href="razgovor.html?id=' + existing.id + '">Вече сте свързани — Пиши</a>';
+  }
+
+  function loadMyConnections(){
+    if (!myRegistration){
+      myConnections = [];
+      blockedIds = {};
+      return Promise.resolve();
+    }
+    return sb.from('connections').select('*')
+      .or('from_registration_id.eq.' + myRegistration.id + ',to_registration_id.eq.' + myRegistration.id)
+      .then(function(res){
+        myConnections = res.data || [];
+        blockedIds = {};
+        myConnections.forEach(function(c){
+          if (c.status !== 'blocked') return;
+          var otherId = c.from_registration_id === myRegistration.id ? c.to_registration_id : c.from_registration_id;
+          blockedIds[otherId] = true;
+        });
+      });
+  }
+
+  function tryRender(){
+    if (!entriesLoaded || !authChecked) return;
+    render();
+  }
+
+  listEl.addEventListener('click', async function(e){
+    var btn = e.target.closest('.connect-btn');
+    if (!btn) return;
+    btn.disabled = true;
+    var res = await sb.from('connections').insert({
+      from_registration_id: myRegistration.id,
+      to_registration_id: btn.dataset.id
+    });
+    if (res.error){
+      btn.outerHTML = '<span class="connect-hint">Грешка: ' + escapeHtml(res.error.message) + '</span>';
+      return;
+    }
+    await loadMyConnections();
+    render();
+  });
+
   // ---- ако вече си регистриран, "Присъедини се" не важи за теб - крием го ----
   sb.auth.getSession().then(function(res){
     var user = res.data.session && res.data.session.user;
-    if (!user) return;
+    if (!user){
+      authChecked = true;
+      tryRender();
+      return;
+    }
     sb.from('registrations').select('id').eq('user_id', user.id).maybeSingle().then(function(regRes){
-      if (regRes.data) joinCta.hidden = true;
+      if (regRes.data){
+        iAmRegistered = true;
+        myRegistration = regRes.data;
+        joinCta.hidden = true;
+      }
+      loadMyConnections().then(function(){
+        authChecked = true;
+        tryRender();
+      });
     });
   });
 
@@ -156,7 +245,8 @@
   }
 
   function render(){
-    var rows = allEntries;
+    var myId = myRegistration ? myRegistration.id : null;
+    var rows = allEntries.filter(function(r){ return r.id !== myId && !blockedIds[r.id]; });
     if (activeCity) rows = rows.filter(function(r){ return r.city_abroad === activeCity; });
     if (activeTab === 'open') rows = rows.filter(function(r){ return r.open_to_strangers; });
     if (activeTab === 'profession') rows = rows.filter(function(r){ return !!(r.profession_category || r.profession); });
@@ -181,8 +271,9 @@
       var openBadge = r.open_to_strangers ? '<span class="badge">отворен за общуване</span>' : '';
       var helpBadge = r.willing_to_help ? '<span class="badge">готов да помага</span>' : '';
       var heading = escapeHtml(r.display_name ? r.display_name : countryName(code));
-      return '<div class="person-card">' + photo +
-        '<div class="info"><b>' + heading + '</b>' + profBadge + openBadge + helpBadge + '<br>' + personLine(r) + '</div></div>';
+      return '<div class="person-card"><div class="pc-main">' + photo +
+        '<div class="info"><b>' + heading + '</b>' + profBadge + openBadge + helpBadge + '<br>' + personLine(r) + '</div></div>' +
+        '<div class="pc-action">' + connectionActionHtml(r) + '</div></div>';
     }).join('');
   }
 
@@ -237,7 +328,8 @@
         ? allEntries.length + (allEntries.length===1?' регистриран ломчанин':' регистрирани ломчани')
         : '';
       setupCityFilter();
-      render();
+      entriesLoaded = true;
+      tryRender();
     });
   }
 })();
