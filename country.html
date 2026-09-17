@@ -57,9 +57,10 @@
   .person-card .info b{color:var(--ink);font-weight:600;}
   .person-card .pc-main{display:flex;gap:12px;align-items:center;flex:1;min-width:200px;}
   .person-card .pc-action{flex-shrink:0;margin-left:auto;}
+  .badges{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0;}
   .badge{
     display:inline-block;font-size:.7rem;background:var(--surface-2);color:var(--accent-2);
-    border-radius:20px;padding:2px 9px;margin-left:6px;
+    border-radius:20px;padding:2px 9px;
   }
   .connect-cta{color:var(--accent-2);font-size:.78rem;text-decoration:none;font-weight:600;}
   .connect-btn{
@@ -271,8 +272,11 @@
       var openBadge = r.open_to_strangers ? '<span class="badge">отворен за общуване</span>' : '';
       var helpBadge = r.willing_to_help ? '<span class="badge">готов да помага</span>' : '';
       var heading = escapeHtml(r.display_name ? r.display_name : countryName(code));
+      var badges = profBadge + openBadge + helpBadge;
       return '<div class="person-card"><div class="pc-main">' + photo +
-        '<div class="info"><b>' + heading + '</b>' + profBadge + openBadge + helpBadge + '<br>' + personLine(r) + '</div></div>' +
+        '<div class="info"><b>' + heading + '</b>' +
+        (badges ? '<div class="badges">' + badges + '</div>' : '<br>') +
+        personLine(r) + '</div></div>' +
         '<div class="pc-action">' + connectionActionHtml(r) + '</div></div>';
     }).join('');
   }
