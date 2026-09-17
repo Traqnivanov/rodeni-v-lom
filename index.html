@@ -139,6 +139,7 @@
       <button type="button" class="tab active" data-ctab="settlement">По населено място</button>
       <button type="button" class="tab" data-ctab="city">По град</button>
       <button type="button" class="tab" data-ctab="help">Готови да помагат</button>
+      <button type="button" class="tab" data-ctab="profession">По професия</button>
     </div>
     <p class="hint" id="communityHint">Кой още е от твоето село или квартал в Община Лом — независимо къде е по света.</p>
     <div id="communityChips" class="chips"></div>
@@ -253,13 +254,15 @@
   var activeSettlement = null;
   var activeCity = null;
   var activeHelpCountry = null;
+  var activeProfession = null;
   var entriesLoaded = false;
   var authChecked = false;
 
   var COMMUNITY_HINTS = {
     settlement: 'Кой още е от твоето село или квартал в Община Лом — независимо къде е по света.',
     city: 'Кой още е в твоя град в чужбина — където и да си, независимо от държавата.',
-    help: 'Отговарят на въпроси — виза, работа, животът там и т.н.'
+    help: 'Отговарят на въпроси — виза, работа, животът там и т.н.',
+    profession: 'Хора със същата сфера на работа, независимо къде са по света.'
   };
 
   function entrySettlementLabel(r){
@@ -270,6 +273,10 @@
   function entryCityLabel(r){
     var v = (r.city_abroad || '').trim();
     return v || null;
+  }
+
+  function entryProfessionLabel(r){
+    return r.profession_category || r.profession || null;
   }
 
   function communityCardLine(r){
@@ -410,11 +417,53 @@
     communitySection.hidden = false;
   }
 
+  function renderProfessionTab(){
+    var groups = {};
+    allEntries.forEach(function(r){
+      var label = entryProfessionLabel(r);
+      if (!label) return;
+      (groups[label] = groups[label] || []).push(r);
+    });
+    var labels = Object.keys(groups);
+    if (!labels.length){
+      communitySection.hidden = true;
+      return;
+    }
+    var mine = myRegistration ? entryProfessionLabel(myRegistration) : null;
+    labels.sort(function(a, b){
+      if (a === mine) return -1;
+      if (b === mine) return 1;
+      return groups[b].length - groups[a].length;
+    });
+    if (!activeProfession || !groups[activeProfession]) activeProfession = labels[0];
+
+    communityChips.innerHTML = labels.map(function(l){
+      return '<button type="button" class="chip' + (l === activeProfession ? ' active' : '') + '" data-key="' + l.replace(/"/g,'&quot;') + '">' + l + ' <span class="n">' + groups[l].length + '</span></button>';
+    }).join('');
+
+    var myId = myRegistration ? myRegistration.id : null;
+    var visible = groups[activeProfession].filter(function(r){ return r.id !== myId; });
+    if (!visible.length){
+      communityList.innerHTML = '<p class="empty-cta">Все още само ти си с тази сфера на работа — бъди първият, който ще намери друг оттук.</p>';
+    } else {
+      communityList.innerHTML = visible.slice(0, 12).map(function(r){
+        var photo = r.photo_url
+          ? '<img src="'+r.photo_url+'" alt="">'
+          : '<div class="ph-placeholder"></div>';
+        var heading = r.display_name || countryName(r.country_code);
+        return '<div class="person-card">' + photo +
+          '<div class="info"><b>' + heading + '</b><br>' + placeLabel(r) + '</div></div>';
+      }).join('');
+    }
+    communitySection.hidden = false;
+  }
+
   function renderCommunitySection(){
     if (!entriesLoaded || !authChecked) return;
     if (activeCommunityTab === 'settlement') renderSettlementTab();
     else if (activeCommunityTab === 'city') renderCityTab();
     else if (activeCommunityTab === 'help') renderHelpTab();
+    else if (activeCommunityTab === 'profession') renderProfessionTab();
   }
 
   communityChips.addEventListener('click', function(e){
@@ -423,6 +472,7 @@
     if (activeCommunityTab === 'settlement') activeSettlement = btn.dataset.key;
     else if (activeCommunityTab === 'city') activeCity = btn.dataset.key;
     else if (activeCommunityTab === 'help') activeHelpCountry = btn.dataset.key;
+    else if (activeCommunityTab === 'profession') activeProfession = btn.dataset.key;
     renderCommunitySection();
   });
 
