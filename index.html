@@ -123,6 +123,12 @@
   }
   #countryPanel .empty-cta{color:var(--muted);font-size:.85rem;line-height:1.6;}
   [hidden]{display:none!important;}
+
+  /* на по-широк екран съдържанието под картата диша повече, вместо да
+     остане свито в мобилна колона - картата остава пълноширинна */
+  @media (min-width:900px){
+    .community-section, #countryPanel{ max-width:900px; }
+  }
 </style>
 </head>
 <body>
