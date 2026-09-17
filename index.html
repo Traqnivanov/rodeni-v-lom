@@ -132,7 +132,7 @@
     <h1>Родени в Лом</h1>
     <div class="sub">Карта на разпръснатите по света ломчани</div>
   </div>
-  <a class="login-link" href="account.html">Вход / Профил</a>
+  <a class="login-link" href="account.html" id="loginLink">Вход / Профил</a>
 </header>
 
 <div class="ticker-wrap" id="tickerWrap" hidden><span id="tickerText"></span></div>
@@ -316,7 +316,7 @@
         ? '<span class="connect-hint">Изчаква отговор</span>'
         : '<span class="connect-hint">Виж молбите към теб</span>';
     }
-    return '<span class="connect-hint">Вече сте свързани</span>';
+    return '<a class="connect-cta" href="razgovor.html?id=' + existing.id + '">Вече сте свързани — Пиши</a>';
   }
 
   function renderPersonCard(r, lineHtml){
@@ -329,10 +329,24 @@
       '<div class="pc-action">' + connectionActionHtml(r) + '</div></div>';
   }
 
+  var loginLink = document.getElementById('loginLink');
+
+  function updateLoginLinkBadge(){
+    if (!myRegistration){
+      loginLink.textContent = 'Вход / Профил';
+      return;
+    }
+    var pending = myConnections.filter(function(c){
+      return c.to_registration_id === myRegistration.id && c.status === 'pending';
+    }).length;
+    loginLink.textContent = pending ? 'Профил (' + pending + ')' : 'Профил';
+  }
+
   function loadMyConnections(){
     if (!myRegistration){
       myConnections = [];
       blockedIds = {};
+      updateLoginLinkBadge();
       return Promise.resolve();
     }
     return sb.from('connections').select('*')
@@ -345,6 +359,7 @@
           var otherId = c.from_registration_id === myRegistration.id ? c.to_registration_id : c.from_registration_id;
           blockedIds[otherId] = true;
         });
+        updateLoginLinkBadge();
       });
   }
 
