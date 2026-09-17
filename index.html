@@ -105,7 +105,11 @@
   }
   .person-card:first-of-type{border-top:none;}
   .person-card img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid var(--line);flex-shrink:0;}
-  .person-card .ph-placeholder{width:44px;height:44px;border-radius:50%;background:var(--surface-2);flex-shrink:0;}
+  .person-card .ph-placeholder{
+    width:44px;height:44px;border-radius:50%;background:var(--surface-2);flex-shrink:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238993ac' stroke-width='1.6'%3E%3Ccircle cx='12' cy='8' r='3.4'/%3E%3Cpath d='M5 19.2c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-size:58%;background-position:center;background-repeat:no-repeat;
+  }
   .person-card .info{font-size:.84rem;line-height:1.5;color:var(--muted);}
   .person-card .info b{color:var(--ink);font-weight:600;}
   .person-card .pc-main{display:flex;gap:12px;align-items:center;flex:1;min-width:200px;}
