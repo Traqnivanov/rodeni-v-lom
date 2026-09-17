@@ -112,6 +112,16 @@
     return div.innerHTML;
   }
 
+  // за влагане в кавички на атрибут - escapeHtml (през textContent) не пази
+  // кавичките, те не са специални в текстов възел
+  function escapeAttr(s){
+    return (s == null ? '' : String(s))
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   var countryTitle = document.getElementById('countryTitle');
   var countryCount = document.getElementById('countryCount');
   var cityFilter = document.getElementById('cityFilter');
@@ -207,7 +217,7 @@
     var cities = Array.from(new Set(allEntries.map(function(r){ return r.city_abroad; }).filter(Boolean))).sort();
     if (cities.length < 2){ cityFilter.hidden = true; return; }
     cityFilter.innerHTML = '<option value="">Всички градове</option>' +
-      cities.map(function(c){ return '<option value="'+escapeHtml(c)+'">'+escapeHtml(c)+'</option>'; }).join('');
+      cities.map(function(c){ return '<option value="'+escapeAttr(c)+'">'+escapeHtml(c)+'</option>'; }).join('');
     cityFilter.hidden = false;
   }
 
