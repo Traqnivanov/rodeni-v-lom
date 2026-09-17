@@ -187,6 +187,22 @@
     return found ? found[1] : code;
   }
 
+  function escapeHtml(s){
+    var div = document.createElement('div');
+    div.textContent = s == null ? '' : String(s);
+    return div.innerHTML;
+  }
+
+  // за влагане в кавички на атрибут (напр. data-key="...") - textContent трик
+  // не пази кавичките, там не са специални за текстов възел
+  function escapeAttr(s){
+    return (s == null ? '' : String(s))
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   var tooltip = document.getElementById('tooltip');
   var mapWrap = document.querySelector('.map-wrap');
   var svg = d3.select('#worldMap');
@@ -323,9 +339,9 @@
     var photo = r.photo_url
       ? '<img src="'+r.photo_url+'" alt="">'
       : '<div class="ph-placeholder"></div>';
-    var heading = r.display_name || countryName(r.country_code);
+    var heading = escapeHtml(r.display_name || countryName(r.country_code));
     return '<div class="person-card"><div class="pc-main">' + photo +
-      '<div class="info"><b>' + heading + '</b><br>' + lineHtml + '</div></div>' +
+      '<div class="info"><b>' + heading + '</b><br>' + escapeHtml(lineHtml) + '</div></div>' +
       '<div class="pc-action">' + connectionActionHtml(r) + '</div></div>';
   }
 
@@ -363,7 +379,9 @@
       });
   }
 
-  communityList.addEventListener('click', async function(e){
+  var currentPanelCode = null;
+
+  async function handleConnectClick(e){
     var btn = e.target.closest('.connect-btn');
     if (!btn) return;
     btn.disabled = true;
@@ -372,12 +390,15 @@
       to_registration_id: btn.dataset.id
     });
     if (res.error){
-      btn.outerHTML = '<span class="connect-hint">Грешка: ' + res.error.message + '</span>';
+      btn.outerHTML = '<span class="connect-hint">Грешка: ' + escapeHtml(res.error.message) + '</span>';
       return;
     }
     await loadMyConnections();
     renderCommunitySection();
-  });
+    if (currentPanelCode) renderCountryPanel(currentPanelCode);
+  }
+  communityList.addEventListener('click', handleConnectClick);
+  countryPanel.addEventListener('click', handleConnectClick);
 
   function renderSettlementTab(){
     var groups = {};
@@ -400,13 +421,13 @@
     if (!activeSettlement || !groups[activeSettlement]) activeSettlement = labels[0];
 
     communityChips.innerHTML = labels.map(function(l){
-      return '<button type="button" class="chip' + (l === activeSettlement ? ' active' : '') + '" data-key="' + l.replace(/"/g,'&quot;') + '">' + l + ' <span class="n">' + groups[l].length + '</span></button>';
+      return '<button type="button" class="chip' + (l === activeSettlement ? ' active' : '') + '" data-key="' + escapeAttr(l) + '">' + escapeHtml(l) + ' <span class="n">' + groups[l].length + '</span></button>';
     }).join('');
 
     var myId = myRegistration ? myRegistration.id : null;
     var visible = groups[activeSettlement].filter(function(r){ return r.id !== myId; });
     if (!visible.length){
-      communityList.innerHTML = '<p class="empty-cta">Все още само ти си от ' + activeSettlement + ' — бъди първият, който ще намери друг оттук.</p>';
+      communityList.innerHTML = '<p class="empty-cta">Все още само ти си от ' + escapeHtml(activeSettlement) + ' — бъди първият, който ще намери друг оттук.</p>';
     } else {
       communityList.innerHTML = visible.slice(0, 12).map(function(r){
         return renderPersonCard(r, placeLabel(r));
@@ -441,14 +462,14 @@
     if (!activeCity || !groups[activeCity]) activeCity = keys[0];
 
     communityChips.innerHTML = keys.map(function(k){
-      return '<button type="button" class="chip' + (k === activeCity ? ' active' : '') + '" data-key="' + k.replace(/"/g,'&quot;') + '">' + groups[k].label + ' <span class="n">' + groups[k].rows.length + '</span></button>';
+      return '<button type="button" class="chip' + (k === activeCity ? ' active' : '') + '" data-key="' + escapeAttr(k) + '">' + escapeHtml(groups[k].label) + ' <span class="n">' + groups[k].rows.length + '</span></button>';
     }).join('');
 
     var myId = myRegistration ? myRegistration.id : null;
     var activeGroup = groups[activeCity];
     var visible = activeGroup.rows.filter(function(r){ return r.id !== myId; });
     if (!visible.length){
-      communityList.innerHTML = '<p class="empty-cta">Все още само ти си в ' + activeGroup.label + ' — бъди първият, който ще намери друг оттук.</p>';
+      communityList.innerHTML = '<p class="empty-cta">Все още само ти си в ' + escapeHtml(activeGroup.label) + ' — бъди първият, който ще намери друг оттук.</p>';
     } else {
       communityList.innerHTML = visible.slice(0, 12).map(function(r){
         return renderPersonCard(r, communityCardLine(r));
@@ -520,7 +541,7 @@
     if (!activeProfession || !groups[activeProfession]) activeProfession = labels[0];
 
     communityChips.innerHTML = labels.map(function(l){
-      return '<button type="button" class="chip' + (l === activeProfession ? ' active' : '') + '" data-key="' + l.replace(/"/g,'&quot;') + '">' + l + ' <span class="n">' + groups[l].length + '</span></button>';
+      return '<button type="button" class="chip' + (l === activeProfession ? ' active' : '') + '" data-key="' + escapeAttr(l) + '">' + escapeHtml(l) + ' <span class="n">' + groups[l].length + '</span></button>';
     }).join('');
 
     var myId = myRegistration ? myRegistration.id : null;
@@ -589,37 +610,36 @@
     });
   });
 
+  function countryPersonLine(r){
+    var bits = [];
+    if (r.settlement) bits.push(r.settlement === 'Друго' ? r.settlement_other : r.settlement);
+    if (r.city_abroad) bits.push(r.city_abroad);
+    if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
+    return bits.filter(Boolean).join(' · ') || 'Без допълнителни данни';
+  }
+
   function renderCountryPanel(code){
-    var entries = entriesByCode[code] || [];
+    currentPanelCode = code;
+    var entries = (entriesByCode[code] || []).filter(function(r){ return !blockedIds[r.id]; });
     var name = countryName(code);
     if (!entries.length){
       countryPanel.innerHTML =
-        '<h2>' + name + '</h2>' +
-        '<p class="empty-cta">Все още няма регистриран ломчанин оттук.' + (iAmRegistered ? '' : ' Може да си първият, който се появи на картата от ' + name + '.') + '</p>' +
-        (iAmRegistered ? '' : '<a class="cta" href="account.html?country=' + code + '">Стани първият от ' + name + '</a>');
+        '<h2>' + escapeHtml(name) + '</h2>' +
+        '<p class="empty-cta">Все още няма регистриран ломчанин оттук.' + (iAmRegistered ? '' : ' Може да си първият, който се появи на картата от ' + escapeHtml(name) + '.') + '</p>' +
+        (iAmRegistered ? '' : '<a class="cta" href="account.html?country=' + encodeURIComponent(code) + '">Стани първият от ' + escapeHtml(name) + '</a>');
       countryPanel.hidden = false;
       return;
     }
     var cards = entries.slice(0, 12).map(function(r){
-      var photo = r.photo_url
-        ? '<img src="'+r.photo_url+'" alt="">'
-        : '<div class="ph-placeholder"></div>';
-      var bits = [];
-      if (r.settlement) bits.push(r.settlement === 'Друго' ? r.settlement_other : r.settlement);
-      if (r.city_abroad) bits.push(r.city_abroad);
-      if (r.profession) bits.push(r.profession);
-      var line = bits.filter(Boolean).join(' · ') || 'Без допълнителни данни';
-      var heading = r.display_name ? r.display_name + ' · ' + name : name;
-      return '<div class="person-card">' + photo +
-        '<div class="info"><b>' + heading + '</b><br>' + line + '</div></div>';
+      return renderPersonCard(r, countryPersonLine(r));
     }).join('');
     countryPanel.innerHTML =
-      '<h2>' + name + '</h2>' +
+      '<h2>' + escapeHtml(name) + '</h2>' +
       '<p class="count">' + entries.length + (entries.length===1?' регистриран ломчанин':' регистрирани ломчани') + '</p>' +
       cards +
       '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">' +
-      (iAmRegistered ? '' : '<a class="cta" href="account.html?country=' + code + '">Присъедини се и ти от ' + name + '</a>') +
-      '<a class="cta" style="background:transparent;border:1px solid var(--line);color:var(--ink);" href="country.html?code=' + code + '">Пълен изглед</a>' +
+      (iAmRegistered ? '' : '<a class="cta" href="account.html?country=' + encodeURIComponent(code) + '">Присъедини се и ти от ' + escapeHtml(name) + '</a>') +
+      '<a class="cta" style="background:transparent;border:1px solid var(--line);color:var(--ink);" href="country.html?code=' + encodeURIComponent(code) + '">Пълен изглед</a>' +
       '</div>';
     countryPanel.hidden = false;
   }

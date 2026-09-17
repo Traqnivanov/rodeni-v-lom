@@ -331,6 +331,12 @@
   "use strict";
   var sb = window.rodeniSupabase;
 
+  function escapeHtml(s){
+    var div = document.createElement('div');
+    div.textContent = s == null ? '' : String(s);
+    return div.innerHTML;
+  }
+
   var loggedOutView = document.getElementById('loggedOutView');
   var loggedInView = document.getElementById('loggedInView');
   var userEmailEl = document.getElementById('userEmail');
@@ -488,7 +494,7 @@
     ];
     profileList.innerHTML = rows
       .filter(function(r){ return r[1]; })
-      .map(function(r){ return '<li><span>'+r[0]+'</span><span>'+r[1]+'</span></li>'; })
+      .map(function(r){ return '<li><span>'+escapeHtml(r[0])+'</span><span>'+escapeHtml(r[1])+'</span></li>'; })
       .join('');
     fTravelQuick.value = reg.travel_status || '';
     travelStatusMsg.hidden = true;
@@ -509,7 +515,7 @@
     bits.push(countryName(r.country_code));
     if (r.city_abroad) bits.push(r.city_abroad);
     if (r.profession_category || r.profession) bits.push(r.profession_category || r.profession);
-    return bits.filter(Boolean).join(' · ');
+    return escapeHtml(bits.filter(Boolean).join(' · '));
   }
 
   function renderMatchCard(r, myConnections, myId){
@@ -620,7 +626,7 @@
       if (cityCandidates.length){
         cityList.innerHTML = cityCandidates.map(function(r){ return renderMatchCard(r, myConnections, myId); }).join('');
       } else {
-        cityList.innerHTML = '<div class="hint">Все още няма друг регистриран от ' + myCity + '.</div>';
+        cityList.innerHTML = '<div class="hint">Все още няма друг регистриран от ' + escapeHtml(myCity) + '.</div>';
       }
       cityMatches.hidden = false;
     } else {

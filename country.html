@@ -106,6 +106,12 @@
     return found ? found[1] : c;
   }
 
+  function escapeHtml(s){
+    var div = document.createElement('div');
+    div.textContent = s == null ? '' : String(s);
+    return div.innerHTML;
+  }
+
   var countryTitle = document.getElementById('countryTitle');
   var countryCount = document.getElementById('countryCount');
   var cityFilter = document.getElementById('cityFilter');
@@ -136,7 +142,7 @@
     if (r.city_abroad) bits.push(r.city_abroad);
     if (r.school) bits.push(r.school === 'Друго' ? r.school_other : r.school);
     if (r.age) bits.push(r.age + ' г.');
-    return bits.filter(Boolean).join(' · ') || 'Без допълнителни данни';
+    return escapeHtml(bits.filter(Boolean).join(' · ') || 'Без допълнителни данни');
   }
 
   function render(){
@@ -160,11 +166,11 @@
         ? '<img src="'+r.photo_url+'" alt="">'
         : '<div class="ph-placeholder"></div>';
       var profBadge = r.profession_category
-        ? '<span class="badge">'+r.profession_category+'</span>'
-        : (r.profession ? '<span class="badge">'+r.profession+'</span>' : '');
+        ? '<span class="badge">'+escapeHtml(r.profession_category)+'</span>'
+        : (r.profession ? '<span class="badge">'+escapeHtml(r.profession)+'</span>' : '');
       var openBadge = r.open_to_strangers ? '<span class="badge">отворен за общуване</span>' : '';
       var helpBadge = r.willing_to_help ? '<span class="badge">готов да помага</span>' : '';
-      var heading = r.display_name ? r.display_name : countryName(code);
+      var heading = escapeHtml(r.display_name ? r.display_name : countryName(code));
       return '<div class="person-card">' + photo +
         '<div class="info"><b>' + heading + '</b>' + profBadge + openBadge + helpBadge + '<br>' + personLine(r) + '</div></div>';
     }).join('');
@@ -201,7 +207,7 @@
     var cities = Array.from(new Set(allEntries.map(function(r){ return r.city_abroad; }).filter(Boolean))).sort();
     if (cities.length < 2){ cityFilter.hidden = true; return; }
     cityFilter.innerHTML = '<option value="">Всички градове</option>' +
-      cities.map(function(c){ return '<option value="'+c+'">'+c+'</option>'; }).join('');
+      cities.map(function(c){ return '<option value="'+escapeHtml(c)+'">'+escapeHtml(c)+'</option>'; }).join('');
     cityFilter.hidden = false;
   }
 
