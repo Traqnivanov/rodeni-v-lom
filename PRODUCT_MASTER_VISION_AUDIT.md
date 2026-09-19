@@ -4962,3 +4962,112 @@ Unknown locality не съвпада надеждно, но user продълж�
 
 Уникалното поведение не е "fuzzy search", а:
 **несигурният сигнал остава полезен → системата показва степента на увереност → иска минимално потвърждение → след потвърждение автоматично преоценява старите и новите users.**
+
+
+# 66. [АНАЛИЗ][ПРЕДЛОЖЕНИЕ][P0-7] Bulgarian Root Resolver — EKATTE-first
+
+**Дата:** 19.09.2026  
+**Статус:** ПРЕДЛОЖЕНИЕ — НЕ Е ОДОБРЕНО  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB ПРОМЕНИ
+
+## Корекция на предишната посока
+
+За **българския Root сигнал** GeoNames fallback не е най-добрият основен resolver.
+
+България има официален Национален регистър на населените места / ЕКАТТЕ, поддържан от НСИ, с уникален код и административна принадлежност на всяко населено място.
+
+Следователно working recommendation:
+
+### Root в България
+**ЕКАТТЕ е canonical source.**
+
+### Current locality извън България
+Запазва се:
+- local fast city suggestions;
+- controlled external fallback (напр. GeoNames) за липсващо място.
+
+## UI за Root — mobile-first
+
+Първоначалният избор показва:
+1. Лом;
+2. деветте села от Община Лом;
+3. „Друго населено място“.
+
+При „Друго населено място“:
+- не се отваря raw free-text save;
+- отваря се бързо търсене по официалния EKATTE registry;
+- резултатът показва име + община/област при нужда за disambiguation;
+- selection записва stable EKATTE code.
+
+## Защо не "още 10 най-близки села" като архитектура
+
+Може да има nearby quick suggestions, но фиксиран списък от още 10:
+- е произволна граница;
+- пак оставя 11-тото село извън системата;
+- изисква продуктово поддържане;
+- не решава duplicate/name ambiguity;
+- затваря бъдещо разширяване.
+
+По-добре:
+- curated priority = Лом + 9-те села;
+- optional nearby suggestions;
+- full official Bulgarian settlement search отзад.
+
+## Nearby може да бъде автоматично, не ръчно
+
+НСИ публикува и spatial data за ЕКАТТЕ.
+
+При implementation може еднократно/offline да се изчисли proximity до Лом и да се пази local ranking:
+- nearby places first;
+- няма runtime map dependency;
+- няма ръчна поддръжка на "10 най-близки".
+
+Това е enhancement, не условие за V1.
+
+## Storage direction
+
+Не се зарежда гигантски dropdown с всички населени места на mobile.
+
+Working backend model:
+\`bg_localities\`
+- ekatte_code;
+- type;
+- canonical_name;
+- transliteration;
+- municipality_code/name;
+- district_code/name;
+- optional proximity tier/distance;
+- active/current registry status.
+
+Client:
+- показва 10 priority choices;
+- при "Друго" прави lightweight search към Supabase/RPC;
+- връща 5–10 резултата.
+
+## Matching
+
+Root exact match използва:
+**ekatte_code**, не display text.
+
+Така:
+- правописна грешка не създава нов Root;
+- еднакви имена в различни общини не се смесват;
+- Admin не трябва ръчно да свързва нормално българско населено място;
+- нов user може веднага да участва в Context Engine.
+
+## Exceptional fallback
+
+Само ако мястото действително липсва/е историческо/специален случай:
+- user може да изпрати "Не намирам мястото";
+- записът отива за review;
+- това е exception, не нормалният flow.
+
+## Product conclusion
+
+За Root сигнала:
+**priority shortlist + official full registry search** е по-надеждно от:
+- hardcoded 20 villages;
+- raw free text;
+- fuzzy pending matching.
+
+Това практически премахва "dead context" за нормалните български населени места.
