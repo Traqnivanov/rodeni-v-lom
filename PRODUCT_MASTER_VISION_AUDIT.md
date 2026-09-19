@@ -3604,3 +3604,93 @@ Connection/block lifecycle не трябва да разчита само на �
 - block като \`connections.status='blocked'\`.
 
 Текущата DB/код реализация остава непроменена до отделна одобрена implementation стъпка.
+
+
+# 53. [ОДОБРЕНО][P0] Structured Travel V1 — „Следващо прибиране в Лом“
+
+**Дата:** 19.09.2026  
+**Одобрено от:** Admin/Owner  
+**Статус:** ОДОБРЕНО  
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО
+
+## Продуктов обхват
+
+V1 не е общ travel planner.
+
+Структурираното пътуване има една конкретна задача:
+**да покаже кога двама релевантни ломчани ще бъдат в Лом/общината по едно и също време.**
+
+## User flow
+
+Потребителят избира:
+**„Ще се прибирам в Лом“**
+
+Минимални данни:
+- начална дата;
+- крайна дата;
+- по желание конкретно населено място в Община Лом.
+
+Origin се взема от текущия city/country context на профила и се пази като snapshot за конкретното пътуване.
+
+## V1 ограничения
+
+- максимум едно предстоящо/активно прибиране на потребител;
+- може да се редактира или отмени;
+- след крайната дата автоматично става неактивно;
+- не се изграждат маршрути, карта на движение, календарна система или тежки travel библиотеки;
+- exact dates не се показват на нерегистрирани посетители;
+- structured travel се използва само в разрешената 18+ community среда и според privacy настройките.
+
+## Consent / visibility
+
+При създаване user изрично разрешава travel plan-ът да бъде използван за релевантни community opportunities.
+
+Public/non-account browsing не получава exact travel dates.
+
+## Overlap invariant
+
+Travel overlap съществува само ако:
+- и двамата имат active travel plan;
+- destination context е съвместим (Лом/общината);
+- има поне един общ календарен ден.
+
+Самото overlap не е достатъчно за агресивно предложение за контакт.
+Context Engine може да го усили с:
+- общ root/settlement;
+- school;
+- accepted connection;
+- друга конкретна reason signal.
+
+## Expiry
+
+След края на travel period:
+- opportunity изчезва;
+- travel plan не остава като постоянен profile badge;
+- старото free-text „пътувам март 2026“ не се пази като паралелна active истина.
+
+## Техническа посока
+
+При implementation structured travel трябва да бъде отделен лек model (например \`travel_plans\`), а не свободно поле \`travel_status\`.
+
+Минималният model трябва да може да пази:
+- owner/user;
+- start_date;
+- end_date;
+- destination context;
+- origin snapshot;
+- consent/visibility;
+- active/cancelled/expired state.
+
+Точната schema се определя едва при implementation review.
+
+## Performance
+
+Този V1 модел е избран, защото дава надежден date-overlap с минимална техническа тежест.
+
+Анимации, маршрути, calendar engine, real-time movement и travel recommendations не са част от V1 и изискват отделна оценка performance vs quality.
+
+## Какво заменя
+
+Заменя продуктовата посока, при която \`travel_status\` free text е достатъчен за бъдещи автоматични travel opportunities.
+
+Текущият код/DB остават непроменени до отделна implementation стъпка.

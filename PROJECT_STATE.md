@@ -31,6 +31,8 @@
 
 ## 3. Текущи важни решения
 
+- Structured Travel V1: „Следващо прибиране в Лом“ = start/end date + optional settlement, максимум един active plan, exact dates само в 18+ community контекст, automatic expiry, без тежък travel planner.
+
 - Performance/quality invariant: пазим сайта лек, но не жертваме видимо качество. Ако осезаемо по-добър вариант е умерено по-тежък, tradeoff-ът се докладва предварително и Admin/Owner решава на място.
 
 - Connection pair integrity: максимум една active relationship за unordered pair A+B. Block е отделен safety механизъм; само blocker може да unblock. Atomic backend/RPC enforcement е задължително при implementation.
@@ -71,7 +73,6 @@ Security Advisor:
 End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine е одобрен на 19.09.2026**.
 
 Остават:
-- structured travel model за date-overlap;
 - точната Admin/Owner role matrix;
 - ordinary-user auth модел;
 - security remediation plan;
@@ -79,9 +80,10 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
-**P0-4: да се затвори structured travel model за реални date-overlap opportunities.**
+**P0-5: да се затвори точната Admin/Owner ↔ Moderator role matrix.**
 
-Текущото `travel_status` е free text. То не е достатъчно за надеждно „Кой се прибира?“ / overlap логика, expiry и notifications.
+Трябва да е еднозначно кой вижда и кой може да действа по:
+community reports, users, blocks/restrictions, service requests, providers, audit, system/security и необратими действия.
 
 Без код и без DB промени преди изрично одобрение.
 
@@ -109,4 +111,4 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 Открити са четири P0 несъответствия преди implementation:
 `open_to_strangers`, minors/14+, connection pair integrity и structured travel.
 
-**P0-1: 18+ — затворено. P0-2: inbound contact gate — затворено. P0-3: unordered pair + separate safety block — затворено. Следва P0-4: structured travel.**
+**P0-1: 18+ — затворено. P0-2: inbound contact gate — затворено. P0-3: unordered pair + separate safety block — затворено. P0-4: structured travel — затворено. Следва P0-5: role matrix.**
