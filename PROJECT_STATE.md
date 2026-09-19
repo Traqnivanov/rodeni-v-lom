@@ -92,7 +92,7 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
-**P0-7 analysis checkpoint:** Hybrid locality resolution е анализирано предложение: запазване на local country/city lists + explicit fallback за липсващо населено място + canonical locality identity + pending/unverified last-resort. НЕ е одобрено и не е реализирано.
+**P0-7 approved:** Hybrid locality resolution е одобрено: запазват се local country/city lists; при липсващо място има explicit fallback към controlled external lookup; избраното място има canonical identity; last-resort ръчно добавено място остава pending/unverified и не създава A-level exact-locality match. Не е реализирано.
 
 **P0-7 analysis checkpoint:** предложени са Minimum Context → Context Loop → Opportunity и детайлна Signal Contract Matrix. Explain-while-asking UX принципът е ОДОБРЕН: всеки въпрос обяснява защо се иска, каква стойност отключва и какво следва; CTA подсказва реалната следваща стъпка, а не е кухо „Продължи“. Текущата препоръка е first screen = display name + primary Lom root + current country + canonical current locality. Photo/school/profession/help/travel идват адаптивно след първа стойност. Критични зависимости остават visibility contract, canonical locality strategy и notification/cooldown.
 
