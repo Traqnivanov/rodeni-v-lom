@@ -2328,3 +2328,423 @@ User-initiated need + transparent service lifecycle.
 Explicit usefulness feedback и подобряване на rules.
 
 Всеки stage следва Rule 1 в CLAUDE.md и се одобрява отделно преди implementation.
+
+
+# 41. [ПРЕДЛОЖЕНИЕ][P1] UX blueprint — бутони, контекстни картички, подсказки и пълен Context Engine
+
+Това е SPEC предложение, НЕ разрешение за implementation.
+
+## 1. Stable shell
+
+Основната навигация трябва да остава стабилна. Контекстът променя съдържанието, не местоположението на основните входове.
+
+Работна IA:
+- **За теб** — малък брой най-релевантни opportunities;
+- **Карта** — exploration по света;
+- **Хора** — browse/filter surface;
+- **Ти** — профил, настройки, заявки, връзки, privacy.
+
+На desktop същите четири могат да бъдат горна навигация.
+На mobile — bottom navigation.
+
+Service/Home bridge НЕ е задължително постоянен пети primary tab. Появява се като contextual entry point и може да има secondary utility access от „Ти“/menu.
+
+## 2. Контекстни картички („острови“)
+
+Основна единица на adaptive UI.
+
+Всяка картичка има:
+- кратко заглавие;
+- 1–3 човешки причини;
+- optional trust/moment badge;
+- едно primary action;
+- максимум едно secondary action;
+- „Защо го виждам?“ при нужда;
+- dismiss/snooze само когато има смисъл.
+
+Пример:
+**Може да има смисъл да се познавате**
+Ковачица · Мюнхен · Готов да помага
+[Виж човека]   [Не сега]
+
+## 3. Видове surface
+
+### Opportunity card
+За човек, група, пътуване, молба, future match, service progress.
+
+### Quiet hint
+Малък inline текст под поле/секция. Обяснява полза или privacy.
+Не блокира и не изисква действие.
+
+### Context chip
+Кратък сигнал: „Ковачица“, „Мюнхен“, „Същото училище“, „Прибира се декември“.
+
+### Status strip
+Само когато има нещо, което чака потребителя:
+- „2 молби към теб“
+- „Има нов отчет за огледа“
+- „Трябва да одобриш офертата“
+
+### Toast
+Само confirmation/error:
+- „Заявката е изпратена“
+- „Промяната е запазена“
+- „Не успяхме да изпратим“
+
+Не се използва за discovery или реклама.
+
+### Modal / bottom sheet
+Само когато трябва да се вземе конкретно решение без напускане:
+- защо този човек;
+- приемане/отказ на молба;
+- избор на вид помощ;
+- преглед на кратко service действие.
+
+Не се използва за дълги профили по подразбиране.
+
+## 4. Home / „За теб“ layout
+
+Редът е:
+1. **Action-needed zone** — неща, които чакат потребителя.
+2. **Right-now zone** — най-силните 1–3 opportunities.
+3. **Explore zone** — карта/хора, когато иска сам да търси.
+4. **Quiet enrichment prompt** — само ако липсва сигнал, който реално ще подобри matching.
+
+Никога повече от 3 adaptive cards above-the-fold на mobile.
+
+Ако няма силна opportunity:
+- не пълним с шум;
+- казваме „Няма нищо ново с истинска причина в момента.“
+- даваме exploration или optional profile enrichment.
+
+## 5. Бутони — йерархия
+
+### Primary
+Един на card/decision:
+- „Виж човека“
+- „Отговори“
+- „Пиши“
+- „Виж кой се прибира“
+- „Поискай човек на място“
+- „Прегледай отчета“
+
+### Secondary
+Само безопасна алтернатива:
+- „Не сега“
+- „По-късно“
+- „Виж защо“
+- „Редактирай“
+
+### Destructive
+Винаги отделено визуално:
+- „Блокирай“
+- „Изтрий“
+- „Откажи услугата“
+
+### Никога
+- два еднакво силни CTA;
+- „Звънни сега“;
+- агресивна urgency;
+- скрит commercial CTA в community card.
+
+## 6. Context Engine — сигнали
+
+### Root signals
+- settlement / settlement_other;
+- school / school_other;
+- municipality root.
+
+### Location signals
+- country_code;
+- city_abroad;
+- future canonical city_id.
+
+### Capability signals
+- profession_category;
+- profession;
+- willing_to_help.
+
+### Social intent signals
+- open_to_strangers;
+- existing connection;
+- incoming/outgoing request;
+- accepted chat relationship.
+
+### Moment signals
+- travel_status сега;
+- future structured travel dates/destination;
+- newcomer state;
+- temporary need.
+
+### Service intent signals
+Само изрично създадени:
+- „имам проблем в Лом“;
+- вид проблем;
+- имот/близък/друго;
+- need status.
+
+Никога не се inferred-ва собственост на имот.
+
+### Trust/safety signals
+- block;
+- age/minor policy;
+- privacy;
+- contact permission;
+- report state;
+- verified provider/service state.
+
+### Feedback signals
+- dismissed;
+- opened;
+- connection requested;
+- accepted;
+- useful/not useful;
+- solved/not solved.
+
+## 7. Gate rules — винаги преди relevance
+
+Не показвай opportunity ако:
+- е блокиран;
+- нарушава minor/safety rule;
+- exposure не е разрешено от privacy;
+- човекът е самият потребител;
+- връзката вече е в състояние, което прави предложението безсмислено;
+- предложение е stale/expired;
+- същото предложение е dismissed и cooldown не е изтекъл.
+
+Commercial/service opportunity:
+- само след explicit user intent;
+- никога от city/root signals сами по себе си.
+
+## 8. Relevance rules
+
+Първо използваме tiers, не opaque AI score.
+
+### Tier A — action required
+- incoming request;
+- accepted connection с ново действие;
+- service approval/report;
+- safety/account item.
+
+### Tier B — high relevance
+- same city + same settlement;
+- same city + same school;
+- overlapping travel + existing/root connection;
+- newcomer + helper in same city with shared root.
+
+### Tier C — meaningful relevance
+- same city + profession;
+- same settlement + profession/help;
+- school + profession;
+- helper + strong root context.
+
+### Tier D — exploration only
+- един слаб сигнал;
+- same country без same city;
+- generic profession alone.
+
+Tier D не трябва да влиза автоматично в „За теб“, освен при cold start и ясно означено като exploration.
+
+## 9. Tie-break rules
+
+При няколко равни opportunities:
+1. action-needed;
+2. more concrete proximity/moment;
+3. повече независими силни причини;
+4. novelty;
+5. diversity — да не показва 3 почти еднакви cards;
+6. recency;
+7. stable deterministic order.
+
+## 10. Suppression / cooldown
+
+- dismissed person opportunity: не се показва отново, освен ако не се появи нов силен контекст;
+- travel opportunity: изтича след периода;
+- profile-enrichment hint: не всеки login;
+- service CTA: не се появява отново след „не ме интересува“, освен при нов explicit need;
+- notification: dedupe по opportunity key.
+
+## 11. Подсказки
+
+Подсказка се показва само когато:
+- обяснява защо поле е полезно;
+- обяснява кой ще го вижда;
+- обяснява защо системата предлага нещо;
+- предотвратява грешно очакване.
+
+Примери:
+- „Градът помага да намерим ломчани реално близо до теб.“
+- „Училището е по желание. Показва се само като обща причина.“
+- „Ще ти пишем само ако се появи човек с конкретно съвпадение.“
+- „Тази заявка не публикува адреса ти публично.“
+
+Не се използват tutorial bubbles при всяко действие.
+
+## 12. Onboarding
+
+Progressive, не дълга регистрационна анкета.
+
+### Задължително
+- email/auth;
+- country;
+- age consent / launch safety requirement.
+
+### Първа полезна стъпка
+- settlement;
+- city.
+
+След регистрация системата веднага показва какво е намерила.
+
+После optional prompts се появяват само ако могат да отключат реална полза:
+- school;
+- profession;
+- helper;
+- open;
+- travel.
+
+Пример:
+„Ако добавиш училище, можем да намерим хора от същото училище.“
+Не:
+„Попълни профила си 80%.“
+
+## 13. Concrete user journeys
+
+### A. Нов човек в Мюнхен
+Регистрация → Ковачица + Мюнхен.
+Engine:
+- gate;
+- намира 2 души same city;
+- единият also Ковачица + helper.
+Home:
+**„Най-силно съвпадение: Ковачица · Мюнхен · може да помогне“**
+Primary: [Виж човека]
+Secondary: [Защо го виждам]
+
+### B. Няма човек
+Регистрация → Станево + Лион.
+Няма Tier B/C.
+Home:
+**„Още няма човек с достатъчно силна причина.“**
+Action:
+[Уведоми ме, когато се появи]
+Optional hint:
+„Училище или професия може да даде още една реална причина.“
+
+### C. Прибиране
+Потребителят въвежда структурирано: Мюнхен → Лом, 21–29 декември.
+Engine намира:
+- accepted connection overlap;
+- 3 други root matches overlap.
+Home:
+**„Иван също ще е в Лом 23–27 декември.“**
+[Пиши]
+По-долу:
+**„Още 3 ломчани от Германия се прибират тогава.“**
+[Виж]
+
+### D. Новодошъл
+Потребителят маркира „Наскоро съм в Хамбург“ / задава need.
+Engine:
+- търси helper;
+- same city;
+- shared root;
+- safety gates.
+Card:
+**„Мария е от Трайково, живее в Хамбург и е отбелязала, че може да помага.“**
+[Свържи се]
+
+### E. Incoming connection
+Status strip в top:
+**„Имаш молба от човек, с когото имате 2 общи причини.“**
+[Виж молбата]
+Никакво generic red notification badge без контекст.
+
+### F. Home/service need
+Потребителят сам натиска secondary utility:
+**„Трябва ми човек на място в Лом“**
+Bottom sheet:
+- Проверка/оглед
+- Теч/влага
+- Ремонт
+- Друго
+
+След избор:
+**„Ще уточним проблема. Нищо не се възлага и не се плаща без твоето одобрение.“**
+
+После service lifecycle card живее в „За теб“ само докато задачата е активна:
+**„Огледът е готов · 8 снимки · има предложение за решение“**
+[Прегледай]
+
+Provider identity/ownership се показва ясно на service boundary, не като banner в community.
+
+### G. След резултат
+След accepted connection/closed service:
+еднократен quiet prompt:
+**„Това беше ли полезно?“**
+[Да] [Не особено]
+Без дълъг survey.
+
+## 14. Empty states
+
+Empty state никога не е „Няма данни“.
+
+Той казва:
+- какво липсва;
+- дали системата ще продължи да следи;
+- едно доброволно действие.
+
+Пример:
+„Засега няма ломчанин в твоя град с достатъчно общи неща. Можем да те уведомим, когато се появи.“
+
+## 15. Notification policy
+
+Notification се изпраща само за:
+- incoming action;
+- high-relevance new opportunity;
+- time-sensitive moment;
+- explicit watch;
+- service status requiring attention.
+
+Никога за:
+- generic activity;
+- „някой разгледа“;
+- weak same-country matches;
+- engagement bait.
+
+## 16. Как се вписват сегашните страници
+
+### index.html
+Остава public discovery/map surface.
+Не става personal dashboard за unauthenticated.
+При signed-in може да има малък unobtrusive link/card към „За теб“, но картата запазва ролята си.
+
+### account.html
+Днешният дълъг profile/control page постепенно се разделя концептуално:
+- „За теб“ — relevance;
+- „Ти“ — profile/settings/requests/connections.
+
+Не се прави веднага без prototype/approval.
+
+### country.html
+Остава exploration/browse, не personalization engine.
+Може да показва reason chips спрямо logged-in user.
+
+### razgovor.html
+Остава private chat.
+Контекстът не влиза в самия разговор като intrusive recommendations.
+Може само header да напомни първоначалната причина за връзката при първо отваряне.
+
+## 17. Acceptance test за всеки бъдещ механизъм
+
+Преди implementation трябва да можем да попълним:
+- Signal input;
+- Gate;
+- Opportunity;
+- Human explanation;
+- Primary action;
+- Result/event;
+- Cooldown/expiry;
+- Privacy impact;
+- Empty/failure state.
+
+Ако едно поле липсва, механизмът не е готов.
