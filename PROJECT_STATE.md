@@ -96,15 +96,14 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 
 
-- Ново P0-7 предложение: **No Dead Context / Confidence Ladder** — pending locality не блокира мотора; resolve-now се опитва веднага, а unresolved signal остава usable с по-ниска увереност и може да се self-heal при бъдещо потвърждение. НЕ е одобрено/реализирано.
-
 
 - Onboarding block 1 — Identity е одобрен: „Как да те виждат другите?“ + „Напиши името или прякора, с който искаш да се показваш в „Родени в Лом“.“ + поле „Име или прякор“.
+- **P0-7 Onboarding Block 2 — ОДОБРЕН:** „Откъде си?“ → едно национално поле за населено място в България. Лом + населените места от общината могат да са priority choices за пилота, но Root не е ограничен до Лом. Context Engine трябва да работи с canonical root locality, без hardcoded Lom-only логика. Няма implementation сега.
 
 
 **P0-7 approved:** Hybrid locality resolution е одобрено: запазват се local country/city lists; при липсващо място има explicit fallback към controlled external lookup; избраното място има canonical identity; last-resort ръчно добавено място остава pending/unverified и не създава A-level exact-locality match. Не е реализирано.
 
-**P0-7 analysis checkpoint:** предложени са Minimum Context → Context Loop → Opportunity и детайлна Signal Contract Matrix. Explain-while-asking UX принципът е ОДОБРЕН: всеки въпрос обяснява защо се иска, каква стойност отключва и какво следва; CTA подсказва реалната следваща стъпка, а не е кухо „Продължи“. Текущата препоръка е first screen = display name + primary Lom root + current country + canonical current locality. Photo/school/profession/help/travel идват адаптивно след първа стойност. Критични зависимости остават visibility contract, canonical locality strategy и notification/cooldown.
+**P0-7 analysis checkpoint:** предложени са Minimum Context → Context Loop → Opportunity и детайлна Signal Contract Matrix. Explain-while-asking UX принципът е ОДОБРЕН: всеки въпрос обяснява защо се иска, каква стойност отключва и какво следва; CTA подсказва реалната следваща стъпка, а не е кухо „Продължи“. Текущата препоръка е first screen = display name + national canonical Root locality + current country + canonical current locality. Photo/school/profession/help/travel идват адаптивно след първа стойност. Критични зависимости остават visibility contract, canonical locality strategy и notification/cooldown.
 
 
 **P0-7: да се затвори post-confirmation onboarding / първият екран след регистрация.**
