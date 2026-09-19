@@ -134,12 +134,14 @@ Moderator е бъдеща по-ниска оперативна роля.
 
 ## 8. Текущи P0 отворени решения
 
-- точна Admin/Owner role matrix;
-- ordinary-user auth model;
-- safety/minor launch rule;
+Затворени: 18+ launch policy, inbound-contact gate, unordered connection pair + separate block, structured travel, Admin/Moderator role matrix, ordinary-user registration/auth direction.
+
+Остават:
+- P0-7 post-confirmation onboarding / Minimum Context;
+- visibility contract;
+- exact Context Engine ranking/cooldown + Next Best Question logic;
 - security remediation plan;
-- Context Engine / Opportunity contract;
-- User Context Engine ↔ Admin/Owner Operations Engine.
+- implementation alignment на стария magic-link/14+/free-text travel код с одобрените правила.
 
 ## 9. NEXT
 

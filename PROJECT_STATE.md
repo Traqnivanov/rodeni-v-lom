@@ -57,7 +57,7 @@
 - Staff role е DB-backed security identity и трябва да се налага и в backend/RLS/RPC.
 - Формите следват общ BG UX стандарт: labels, hints, inline validation, loading, success/error state, next step, duplicate-submit protection, accessibility и backend enforcement.
 - От Popitai.Lom се пренасят доказани security/form patterns, но не се копира продуктът 1:1.
-- Сегашният magic-link auth на Rodeni не е автоматично заменен с password auth; финалният ordinary-user auth избор остава отворен.
+- Ordinary-user auth посоката вече е заключена: email + password; текущият magic-link код е старо поведение до implementation.
 - Законността и нормативното съответствие са hard constraint, не продуктова опция.
 - За minors/safety първо се прилага задължителната правна рамка; само допълнителните ограничения над законовия минимум са продуктово/safety решение.
 
