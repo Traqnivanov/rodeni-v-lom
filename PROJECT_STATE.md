@@ -92,6 +92,9 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
+- Ново P0-7 предложение: **No Dead Context / Confidence Ladder** — pending locality не блокира мотора; resolve-now се опитва веднага, а unresolved signal остава usable с по-ниска увереност и може да се self-heal при бъдещо потвърждение. НЕ е одобрено/реализирано.
+
+
 - Onboarding block 1 — Identity е одобрен: „Как да те виждат другите?“ + „Напиши името или прякора, с който искаш да се показваш в „Родени в Лом“.“ + поле „Име или прякор“.
 
 

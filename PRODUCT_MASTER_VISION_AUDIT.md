@@ -4880,3 +4880,85 @@ User вижда просто:
 - използва се в profile/person cards/opportunities;
 - блокът остава кратък и mobile-first;
 - не се добавя допълнителен обяснителен текст.
+
+
+# 65. [АНАЛИЗ][ПРЕДЛОЖЕНИЕ][P0-7] No Dead Context / Confidence Ladder
+
+**Дата:** 19.09.2026  
+**Статус:** ПРЕДЛОЖЕНИЕ — НЕ Е ОДОБРЕНО  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB ПРОМЕНИ
+
+## Проблем
+
+При hybrid locality resolution pending/unverified място не трябва да превръща user-а в "мъртъв край", който няма Root-based value до ръчна Admin/Supabase намеса.
+
+## Принцип
+
+**Непотвърден сигнал не е нулев сигнал.**
+
+Context Engine работи с confidence ladder, а не с binary verified/unusable.
+
+### Level A — Verified
+Canonical locality ID е потвърден.
+Може да участва в силни exact-locality Opportunities.
+
+### Level B — Probable
+Мястото още не е canonical, но има достатъчно основания, че две стойности вероятно сочат към едно и също място:
+- една и съща избрана държава/регион;
+- еднакъв normalized text;
+- alias/transliteration similarity;
+- външен lookup candidate с висока увереност.
+
+Може да създаде **тиха tentative Opportunity**, ясно означена като възможна, не като факт.
+
+Пример:
+„Възможно е и двамата да сте свързани с едно и също място — потвърди.“
+
+### Level C — Broad context
+Unknown locality не съвпада надеждно, но user продължава да участва чрез други сигнали:
+- current country/locality;
+- school;
+- profession/capability;
+- help intent;
+- travel;
+- explicit need.
+
+Няма блокиране на Context Engine.
+
+## Resolve-now first
+
+Когато user добави липсващо място:
+1. backend опитва незабавно controlled external resolution;
+2. ако намери надежден canonical candidate — user потвърждава и signal става Verified;
+3. ако не — записва се Pending, без да се блокира onboarding.
+
+Не се чака ръчна Supabase/Admin обработка, освен ако автоматичното resolution е неясно.
+
+## Self-healing context
+
+Когато по-късно:
+- друг user въведе същото pending място;
+- provider намери canonical match;
+- Admin потвърди mapping;
+- user коригира мястото;
+
+системата преоценява засегнатите Opportunities автоматично.
+
+Това означава:
+**една корекция може да отключи стойност и за стари users, не само за този, който току-що е редактиран.**
+
+## Safety against false matches
+
+- probable match не се представя като сигурен факт;
+- не се прави high-confidence push само по pending locality;
+- contact permission/gates остават задължителни;
+- user може да потвърди/отхвърли предположението;
+- отхвърлянето става suppression signal и не се повтаря веднага.
+
+## Product distinction
+
+Работно име на механизма:
+**No Dead Context / Confidence Ladder**
+
+Уникалното поведение не е "fuzzy search", а:
+**несигурният сигнал остава полезен → системата показва степента на увереност → иска минимално потвърждение → след потвърждение автоматично преоценява старите и новите users.**
