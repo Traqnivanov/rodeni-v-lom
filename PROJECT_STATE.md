@@ -31,6 +31,8 @@
 
 ## 3. Текущи важни решения
 
+- `open_to_strangers` = разрешение за нов входящ contact. OFF спира нови входящи connection requests, но не прекратява accepted/pending state и не пречи user сам да изпрати заявка.
+
 - V1 safety policy: регистрация/matching/contact/chat = **18+**. Текущото техническо `age >= 14` е старо поведение и трябва да се промени при implementation.
 
 - Собственикът е **Admin/Owner — най-високата роля**.
@@ -65,7 +67,6 @@ Security Advisor:
 End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine е одобрен на 19.09.2026**.
 
 Остават:
-- точна семантика на `open_to_strangers`;
 - connection pair integrity;
 - structured travel model за date-overlap;
 - точната Admin/Owner role matrix;
@@ -75,9 +76,9 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
-**P0-2: да се затвори точната семантика на `open_to_strangers`.**
+**P0-3: да се затвори connection pair integrity — една връзка между двама души, без паралелни A→B и B→A редове.**
 
-Текущо полето работи като badge/filter, но не е Gate за изпращане на connection request. Трябва да има едно канонично правило преди Context Engine implementation.
+Текущата база има directed UNIQUE `(from_registration_id, to_registration_id)`, което позволява две противоположни заявки. Frontend в момента ги auto-resolve-ва, но каноничното invariant правило трябва да е еднозначно преди implementation.
 
 Без код и без DB промени преди изрично одобрение.
 
@@ -105,4 +106,4 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 Открити са четири P0 несъответствия преди implementation:
 `open_to_strangers`, minors/14+, connection pair integrity и structured travel.
 
-**P0-1 е затворено: V1 = 18+ за регистрация, matching, connection requests и private chat. Следва P0-2: `open_to_strangers`.**
+**P0-1 е затворено: V1 = 18+. P0-2 е затворено: `open_to_strangers` управлява новия входящ contact. Следва P0-3: connection pair integrity.**
