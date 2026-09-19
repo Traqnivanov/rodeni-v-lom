@@ -31,6 +31,8 @@
 
 ## 3. Текущи важни решения
 
+- P0-6 ordinary-user registration V1: email + password, show/hide, минимум 12 знака с кратка подсказка, 18+, Terms/Privacy, email confirmation. Без profile/context полета в първата регистрационна форма.
+
 - P0-6 auth direction: email + password е основният ordinary-user модел. Взема се доказаният password UX от Popitai.Lom (show/hide, confirm, inline BG validation, email confirmation, forgot/reset) и се доразвива специално за Rodeni; magic link не е основният login.
 
 - Role matrix V1: Admin управлява системата; Moderator пази community/safety средата и не е „малък Admin“. Service/business, role management, infrastructure, hard delete и exceptional chat access са Admin/Owner scope.
@@ -87,19 +89,9 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
-**P0-6: да се затвори ordinary-user auth + registration flow.**
+**P0-7: да се затвори post-confirmation onboarding / първият екран след регистрация.**
 
-Трябва да има едно канонично решение за:
-- magic link / auth mechanism;
-- първа регистрация;
-- връщащ се потребител;
-- confirmation states;
-- recovery/access problems;
-- 18+ gate;
-- progressive onboarding;
-- profile creation vs auth identity;
-- BG emails/messages;
-- session expiry.
+P0-6 затваря само първата регистрационна форма и email confirmation. Следва отделно решение какво вижда потребителят веднага след потвърждението и кои минимални profile/context данни са нужни, за да получи първа реална стойност.
 
 Без код и без DB промени преди изрично одобрение.
 
@@ -127,4 +119,4 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 Открити са четири P0 несъответствия преди implementation:
 `open_to_strangers`, minors/14+, connection pair integrity и structured travel.
 
-**P0-1: 18+ — затворено. P0-2: inbound contact gate — затворено. P0-3: unordered pair + separate safety block — затворено. P0-4: structured travel — затворено. P0-5: role matrix — затворено. Следва P0-6: auth/registration.**
+**P0-1: 18+ — затворено. P0-2: inbound contact gate — затворено. P0-3: unordered pair + separate safety block — затворено. P0-4: structured travel — затворено. P0-5: role matrix — затворено. P0-6: registration V1 — затворено. Следва P0-7: post-confirmation onboarding.**

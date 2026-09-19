@@ -3900,3 +3900,84 @@ Admin/Owner отхвърли magic-link като основен ordinary-user lo
 
 Процесна корекция:
 при избор между auth модели не се оптимизира автоматично за най-малко UI/код. Първо се оценява най-добрият дългосрочен UX + security модел за конкретния продукт, след това performance/weight.
+
+
+# 57. [ОДОБРЕНО][P0-6] Ordinary-user registration V1
+
+**Дата:** 19.09.2026  
+**Одобрено от:** Admin/Owner  
+**Статус:** ОДОБРЕНО  
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО
+
+## Scope
+
+Тази точка затваря **само първоначалната регистрация** на ordinary user.
+
+Не решава още onboarding/profile completion след email confirmation.
+
+## Registration fields
+
+Първата регистрационна форма съдържа само:
+- email;
+- password;
+- show/hide password control;
+- 18+ confirmation;
+- acceptance of Terms + Privacy;
+- primary CTA „Създай профил“.
+
+Не се искат на този етап:
+- име/прякор;
+- държава;
+- град;
+- root/settlement;
+- school;
+- profession;
+- photo;
+- helper/open toggles;
+- travel;
+- други profile/context данни.
+
+## Password policy — ordinary user
+
+- минимум **12 знака**;
+- без задължителни комбинации от главна буква/цифра/символ;
+- под полето има кратка ясна подсказка;
+- show/hide password („око“);
+- paste/autofill/password manager не се блокират;
+- leaked-password protection трябва да бъде включено преди production;
+- password validation и error states са на български.
+
+Работна helper copy:
+**„Поне 12 знака. Може да използваш няколко думи.“**
+
+Текстът може да бъде UX-полиран при implementation, без да се променя правилото.
+
+## Confirmation flow
+
+След submit:
+- показва се ясно, че трябва да се провери email;
+- account email трябва да бъде потвърден;
+- след успешното потвърждение регистрацията е завършена;
+- какво следва след това се решава в отделна P0 точка за onboarding/profile.
+
+## Recovery
+
+Ordinary-user auth използва email + password.
+
+Забравена парола:
+- user въвежда email;
+- получава reset link;
+- задава нова парола;
+- получава ясно BG confirmation.
+
+## What is explicitly not part of this decision
+
+- „Запомни ме“ session UX — решава се при login/session contract;
+- profile completion;
+- onboarding questions;
+- staff MFA/security;
+- exact staff auth flow.
+
+## Principle
+
+**Регистрацията трябва да е кратка и разбираема. Контекстът за профила се събира след нея, а не се натъпква в първата форма.**
