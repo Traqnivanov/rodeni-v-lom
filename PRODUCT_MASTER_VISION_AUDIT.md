@@ -5069,3 +5069,65 @@ Context Engine не съдържа hardcoded логика „Лом“. Рабо
 - Училищата не се национализират автоматично в този етап.
 - Услугите остават по отделното вече одобрено правило: national-ready, local activation; първо Лом ON.
 
+
+# 68. [ОДОБРЕНО][P0-7] Onboarding Block 3 — Current Location
+
+**Дата на одобрение:** 19.09.2026  
+**Одобрено от:** Admin/Owner  
+**Статус:** ОДОБРЕНО ПРОДУКТОВО РЕШЕНИЕ  
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО
+
+## User-facing block
+
+**Заглавие:** „Къде си сега?“
+
+**Подсказка:** „Избери къде живееш в момента. Така можем да ти показваме хора наблизо.“
+
+**Полета:**
+1. Държава
+2. Населено място
+
+## Product rule
+
+Current location е отделен context signal от Root.
+
+- „Откъде си?“ = постоянен/по-стабилен Root сигнал;
+- „Къде си сега?“ = текущо местоположение.
+
+Двата сигнала не се смесват и не се използват взаимозаменяемо.
+
+## Context Engine use
+
+Current location може да участва в:
+- хора наблизо;
+- same-current-locality opportunities;
+- country/locality discovery;
+- travel/context transitions;
+- други location-aware opportunities според бъдещите ranking правила.
+
+Root остава отделен за community belonging / origin context.
+
+## Minimum onboarding V1 — одобрена структура
+
+След email confirmation първият onboarding е един mobile-first екран с три семантични блока:
+
+1. **Как да те виждат другите?**
+   - поле: Име или прякор
+
+2. **Откъде си?**
+   - едно национално canonical поле за населено място в България
+
+3. **Къде си сега?**
+   - Държава
+   - Населено място
+
+След тези минимални сигнали Context Engine трябва да опита да даде първа стойност, преди да пита за следващи допълнителни полета.
+
+Photo / school / profession / willing_to_help / travel не са част от този първи minimum onboarding screen.
+
+## Scope
+
+- НЯМА implementation сега.
+- НЯМА DB migration сега.
+- Точната UI композиция/spacing/visual design се прави при implementation, но следва mobile-first + clarity-first правилата.
+
