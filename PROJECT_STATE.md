@@ -31,6 +31,8 @@
 
 ## 3. Текущи важни решения
 
+- V1 safety policy: регистрация/matching/contact/chat = **18+**. Текущото техническо `age >= 14` е старо поведение и трябва да се промени при implementation.
+
 - Собственикът е **Admin/Owner — най-високата роля**.
 - Moderator е бъдеща по-ниска оперативна роля.
 - Admin/Owner има отделен защитен staff вход; URL или скрит бутон не са security.
@@ -63,7 +65,6 @@ Security Advisor:
 End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine е одобрен на 19.09.2026**.
 
 Остават:
-- safety/minor launch rule;
 - точна семантика на `open_to_strangers`;
 - connection pair integrity;
 - structured travel model за date-overlap;
@@ -74,13 +75,11 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
-**P0-1: да се фиксира точният legal + safety contract за непълнолетни преди personalized matching.**
+**P0-2: да се затвори точната семантика на `open_to_strangers`.**
 
-LEGAL REQUIREMENT се установява от актуалната приложима правна рамка и не подлежи на продуктово одобрение.
+Текущо полето работи като badge/filter, но не е Gate за изпращане на connection request. Трябва да има едно канонично правило преди Context Engine implementation.
 
-След това отделно се решава дали „Родени в Лом“ ще наложи по-строга PRODUCT POLICY (например 18+ за V1), ако това е оправдано за safety.
-
-Без код и без DB промени, докато legal/safety contract-ът не е формулиран еднозначно.
+Без код и без DB промени преди изрично одобрение.
 
 ## 7. Source-of-truth правило
 
@@ -106,4 +105,4 @@ LEGAL REQUIREMENT се установява от актуалната прило
 Открити са четири P0 несъответствия преди implementation:
 `open_to_strangers`, minors/14+, connection pair integrity и structured travel.
 
-**Следва: P0-1 minors/safety launch rule.**
+**P0-1 е затворено: V1 = 18+ за регистрация, matching, connection requests и private chat. Следва P0-2: `open_to_strangers`.**
