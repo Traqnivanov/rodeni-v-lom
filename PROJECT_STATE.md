@@ -31,6 +31,8 @@
 
 ## 3. Текущи важни решения
 
+- Owner access must remain technically possible: архитектурата не трябва необратимо да заключва Admin/Owner извън private messages при реален dispute/safety/security/legal case. Достъпът остава case-specific, минимален, прозрачно описан и audit-ван.
+
 - Admin/Owner exceptional chat access: няма рутинно четене, но при конкретен report/dispute/safety/security/legal case Owner може да прегледа минимално необходимото съдържание; причината и достъпът се audit-ват. Moderator няма общ такъв достъп.
 
 - Structured Travel V1: „Следващо прибиране в Лом“ = start/end date + optional settlement, максимум един active plan, exact dates само в 18+ community контекст, automatic expiry, без тежък travel planner.
