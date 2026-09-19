@@ -31,6 +31,8 @@
 
 ## 3. Текущи важни решения
 
+- Admin/Owner exceptional chat access: няма рутинно четене, но при конкретен report/dispute/safety/security/legal case Owner може да прегледа минимално необходимото съдържание; причината и достъпът се audit-ват. Moderator няма общ такъв достъп.
+
 - Structured Travel V1: „Следващо прибиране в Лом“ = start/end date + optional settlement, максимум един active plan, exact dates само в 18+ community контекст, automatic expiry, без тежък travel planner.
 
 - Performance/quality invariant: пазим сайта лек, но не жертваме видимо качество. Ако осезаемо по-добър вариант е умерено по-тежък, tradeoff-ът се докладва предварително и Admin/Owner решава на място.
@@ -73,7 +75,7 @@ Security Advisor:
 End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine е одобрен на 19.09.2026**.
 
 Остават:
-- точната Admin/Owner role matrix;
+- точната Admin/Owner role matrix (с вече одобрено exceptional chat-access правило);
 - ordinary-user auth модел;
 - security remediation plan;
 - точните ranking/cooldown правила на Context Engine.
