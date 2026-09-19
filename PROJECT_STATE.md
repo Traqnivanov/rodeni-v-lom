@@ -92,8 +92,6 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
-- P0-7 refined proposal: **EKATTE-first Root Resolver**. За български Root: Лом + 9 села като priority choices, „Друго населено място“ търси в официалния EKATTE registry и записва stable EKATTE code. Фиксирани „още 10 села“ може да са само optional nearby suggestions, не архитектурна граница. НЕ е одобрено/реализирано.
-
 
 - Ново P0-7 предложение: **No Dead Context / Confidence Ladder** — pending locality не блокира мотора; resolve-now се опитва веднага, а unresolved signal остава usable с по-ниска увереност и може да се self-heal при бъдещо потвърждение. НЕ е одобрено/реализирано.
 
