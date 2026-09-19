@@ -3174,3 +3174,65 @@ Admin login не трябва да разчита на таен URL.
 ## Принцип
 
 **Формата никога не трябва да оставя човека да гадае: прието ли е действието, има ли грешка, каква е тя и какво следва.**
+
+
+# 47. [CHECKPOINT][P0] Готовност за старт — какво остава от построеното и какво следва
+
+Към 19.09.2026 проектът има достатъчна основа да започне следващият етап, но не трябва да се пренаписва от нулата.
+
+## Запазва се като работеща основа
+
+- public world map и country discovery;
+- текущият Supabase проект;
+- registrations data model като текущ baseline;
+- photo upload;
+- quiet matching сигналите: settlement, city, school, profession;
+- willing_to_help / open_to_strangers / travel_status като текущи signals;
+- connection lifecycle;
+- blocking;
+- accepted private chat;
+- privacy page;
+- текущият lightweight stack: HTML/CSS/JS + Supabase.
+
+Тези елементи не се изхвърлят само защото продуктовата архитектура става по-свързана.
+
+## Променя се основно orchestration/UX слоят
+
+Съществуващите механизми трябва постепенно да се подчинят на:
+- Context Engine;
+- Opportunity model;
+- explainability contract;
+- stable shell + adaptive content;
+- „За теб“;
+- progressive onboarding;
+- clear form standard.
+
+Това е evolution върху съществуващата база, не нов сайт.
+
+## Нови P0 слоеве преди full prototype/implementation
+
+1. точна Admin/Owner role matrix;
+2. отделен защитен Admin/Owner auth route;
+3. окончателен ordinary-user auth decision;
+4. owner operations model;
+5. safety/minor launch decision;
+6. security remediation plan;
+7. context/opportunity contract с текущите 4 сигнала.
+
+## Текущи Supabase факти
+
+- \`registrations\`: 2 тестови реда;
+- \`connections\`: 1 тестов ред;
+- \`messages\`: 0;
+- RLS е включено на основните таблици.
+
+Security Advisor към 19.09.2026 показва:
+- ERROR: \`public.public_registrations\` е SECURITY DEFINER view;
+- WARN: три SECURITY DEFINER helper функции са executable от authenticated;
+- WARN: leaked password protection disabled (релевантно само ако се използва password auth).
+
+Тези точки трябва да се анализират/затворят преди production launch. Не се прави автоматична промяна без отделно предложение и одобрение.
+
+## Основен принцип за следващия етап
+
+**Не започваме отначало. Не трупаме нов слой върху хаос. Първо правим contract-а между сегашните механизми, после prototype, после implementation на малки одобрени части.**
