@@ -38,7 +38,8 @@
 - Формите следват общ BG UX стандарт: labels, hints, inline validation, loading, success/error state, next step, duplicate-submit protection, accessibility и backend enforcement.
 - От Popitai.Lom се пренасят доказани security/form patterns, но не се копира продуктът 1:1.
 - Сегашният magic-link auth на Rodeni не е автоматично заменен с password auth; финалният ordinary-user auth избор остава отворен.
-- Преди personalized matching launch трябва да има окончателно решение за minors/safety.
+- Законността и нормативното съответствие са hard constraint, не продуктова опция.
+- За minors/safety първо се прилага задължителната правна рамка; само допълнителните ограничения над законовия минимум са продуктово/safety решение.
 
 ## 4. Текущ Supabase checkpoint
 
@@ -73,11 +74,13 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
-**P0-1: да се вземе окончателно launch решение за minors/safety преди personalized matching.**
+**P0-1: да се фиксира точният legal + safety contract за непълнолетни преди personalized matching.**
 
-Причина: текущият модел допуска възраст 14+ и публични profile signals. Това решение влияе на Gate, public visibility, contact permissions, reports, matching и onboarding, затова трябва да бъде затворено преди останалите P0 детайли.
+LEGAL REQUIREMENT се установява от актуалната приложима правна рамка и не подлежи на продуктово одобрение.
 
-Без код и без DB промени преди изрично одобрение.
+След това отделно се решава дали „Родени в Лом“ ще наложи по-строга PRODUCT POLICY (например 18+ за V1), ако това е оправдано за safety.
+
+Без код и без DB промени, докато legal/safety contract-ът не е формулиран еднозначно.
 
 ## 7. Source-of-truth правило
 
