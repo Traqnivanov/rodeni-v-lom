@@ -2912,3 +2912,79 @@ Moderator/Owner достъпът е отделен служебен security bou
 - audit.
 
 Този служебен слой остава отделен от нормалния consumer/community UX.
+
+
+# 44. [РЕФЕРЕНТЕН МОДЕЛ][P0] Admin / Moderator security pattern от Popitai.Lom
+
+Това е референтен модел за бъдещия staff layer на „Родени в Лом“. Не е разрешение за implementation и не означава 1:1 копиране на Popitai.Lom.
+
+## Каноничен източник в Popitai.Lom
+
+Основният role contract е:
+\`PROJECT_RULES_ADMIN_MODERATOR.md\`
+Статус: \`КАНОНИЧНО / LOCKED\`.
+
+Редът на правилата в Popitai.Lom изрично поставя:
+1. \`PROJECT_RULES_00_READ_FIRST.md\`
+2. \`PROJECT_RULES_PROTECTED_CORE.md\`
+3. \`PROJECT_RULES_ADMIN_MODERATOR.md\`
+преди общите правила.
+
+## Моделът
+
+### Admin / Owner
+Admin е собственик на системните и необратимите права:
+- назначава/премахва Moderator;
+- управлява системни роли;
+- permanent/hard delete;
+- критични business privileges;
+- direct-publish exceptions;
+- лимити/квоти;
+- schema/RLS/migrations/security;
+- infrastructure credentials;
+- emergency access recovery.
+
+### Moderator
+Moderator е ежедневен оперативен staff:
+- преглежда чуждо чакащо съдържание;
+- approve/reject/needs_changes/hide според flow;
+- обработва reports;
+- блокира/разблокира само обикновен user;
+- няма hard delete;
+- няма role management;
+- няма infrastructure/Supabase direct access;
+- не получава Admin privileges за собствено съдържание;
+- не модерира собственото си съдържание.
+
+## Security architecture
+
+Popitai.Lom прилага границата на повече от едно ниво:
+
+1. **Session/auth check** — потребителят трябва да е реално authenticated.
+2. **DB-backed role check** — \`profiles.role\` трябва да е \`admin\` или \`moderator\` и профилът да не е блокиран.
+3. **UI guard** — забранените действия не се показват/се блокират.
+4. **RPC/RLS/backend enforcement** — критичните права не зависят само от frontend.
+5. **Role self-protection** — обикновен authenticated user не може сам да промени \`role\` или \`is_blocked\`.
+6. **Admin-only RPCs** — напр. назначаване на Moderator проверява \`is_admin()\` server-side.
+7. **Staff action RPCs** — Moderator може да управлява само разрешените target-и.
+8. **Auditability principle** — staff действията трябва да са проследими.
+
+## Какво да пренесем в „Родени в Лом“
+
+Не копираме UI или бизнес правилата 1:1.
+
+Пренасяме invariant-а:
+
+**Staff role е security identity, не визуален режим.**
+
+За „Родени в Лом“ бъдещият staff вход трябва:
+- да е отделен служебен вход/route;
+- да установява authenticated user;
+- да проверява DB-backed role;
+- да допуска само \`owner/admin\` и бъдещ \`moderator\`;
+- да налага същата матрица и в DB/RPC/RLS;
+- да не разчита на скрит URL или hidden buttons;
+- да няма client-side hardcoded owner flag;
+- да разделя Owner необратимите/system права от Moderator оперативните права.
+
+Точната Rodeni role matrix остава за отделно одобрение.
