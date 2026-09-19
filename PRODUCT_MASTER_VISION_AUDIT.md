@@ -3236,3 +3236,152 @@ Security Advisor към 19.09.2026 показва:
 ## Основен принцип за следващия етап
 
 **Не започваме отначало. Не трупаме нов слой върху хаос. Първо правим contract-а между сегашните механизми, после prototype, после implementation на малки одобрени части.**
+
+
+# 48. [ОДОБРЕНО][P0] End-to-End operating contract — User Context Engine + Admin/Owner Operations Engine
+
+**Дата:** 19.09.2026  
+**Одобрено от:** Admin/Owner  
+**Статус:** ОДОБРЕНО КАТО КАНОНИЧНА ПРОДУКТОВА ЛОГИКА  
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО; следват P0 решенията и после prototype/implementation.
+
+## Каноничен модел
+
+Системата има две свързани страни:
+
+- **User Context Engine** — определя какво е релевантно за конкретния човек и защо.
+- **Admin/Owner Operations Engine** — определя какво реално изисква човешко действие от Admin/Owner.
+
+И двете следват един contract:
+
+**event → gate → reason → opportunity/queue → one clear action → result → next state → audit/privacy**
+
+Потребителят не трябва да разбира вътрешната архитектура. Той трябва да вижда:
+**„Защо го виждам?“ → „Защо сега?“ → „Какво мога да направя?“**
+
+## Канонични user процеси
+
+### Registration / onboarding
+- Auth създава identity.
+- Първите полезни context сигнали са Root + Current location.
+- School / profession / help / openness / travel / photo се добавят progressive, когато могат да отключат конкретна полза.
+- При липса на силна opportunity не се показва filler; може да има explicit watch/notification по-късно.
+
+### Person opportunity
+Преди показване/контакт задължително минава Gate:
+- exclude self;
+- block;
+- safety/age;
+- privacy/contact permission;
+- connection state;
+- stale/expired;
+- dismissed cooldown.
+
+След Gate се оценява relevance от конкретни сигнали: root, city, school, profession, helper capability, moment/travel и explicit intent.
+
+### Connection
+- request → pending;
+- получателят вижда конкретната причина за връзката;
+- accept → accepted → private chat;
+- decline е тих;
+- block има приоритет над matching/contact;
+- private chat не се използва за ranking, matching или реклама.
+
+### Report / safety
+- signal/report създава action-needed item за staff;
+- Admin не получава свободен default достъп до private chats;
+- бъдещ достъп до report-attached content изисква отделна safety policy.
+
+### Helper / travel
+- willing_to_help е capability signal, не реклама;
+- travel е Moment signal и opportunity изтича след периода;
+- overlap се използва само при реално времево припокриване.
+
+## Каноничен service процес
+
+Explicit need от потребителя може да създаде service request:
+
+**new → review → clarification → assigned provider → inspection → offer → client decision → execution → report → closed / declined**
+
+Правила:
+- service request започва само от explicit user need;
+- влиза в Admin/Owner Action Queue;
+- community data не се копира автоматично към business/contractor layer;
+- transfer е minimum necessary + explicit consent;
+- provider identity се показва ясно;
+- ако provider е Ivanov Remonti, това се разкрива преди commercial commitment;
+- operational/business tools могат да държат contractor-specific estimate/offer/contract/payment detail;
+- Rodeni държи само статуса и доказателствата, нужни за continuity.
+
+## Admin/Owner Control Center
+
+Първият въпрос е:
+**„Какво чака твоето действие?“**
+
+Приоритет:
+1. safety/report;
+2. new service request;
+3. client reply / decision point;
+4. stuck/overdue;
+5. system failure requiring action;
+6. secondary statistics.
+
+Admin/Owner е най-високата роля.
+Moderator е по-ниска operational роля и няма автоматично Admin system/service права.
+
+## Privacy invariant
+
+- no chat mining;
+- no hidden commercial targeting;
+- no unsupported inference;
+- internal notes са отделени от user-visible status;
+- service data се споделя само за конкретната explicit задача;
+- explainability е задължителна за automatic opportunities.
+
+## Failure / stuck contract
+
+Всяка operational задача има:
+- current status;
+- assignee/owner;
+- last activity;
+- next action;
+- expected/due time, когато е релевантно.
+
+Системен проблем става Admin queue item само когато изисква реална човешка намеса.
+
+## Анализ спрямо текущата реализация
+
+Архитектурата е съвместима със сегашната база и не изисква rewrite от нулата.
+
+Съвпадат:
+- current matching signals;
+- pending/accepted connection flow;
+- silent decline;
+- blocking;
+- accepted-only chat;
+- willing_to_help;
+- travel as existing signal;
+- lightweight HTML/CSS/JS + Supabase approach.
+
+### Задължителни P0 несъответствия преди implementation
+
+1. **open_to_strangers mismatch**  
+   Днес е badge/filter, но connection insert не го използва като Gate. Точната семантика трябва да се одобри преди новия Context Engine.
+
+2. **Minors / age 14+**  
+   Текущата база допуска age >= 14 и публични profile signals. Launch safety rule трябва да се реши преди personalized matching.
+
+3. **Connection pair integrity**  
+   Текущият UNIQUE е directed: \`(from_registration_id, to_registration_id)\`. A→B и B→A могат да съществуват едновременно; frontend в момента има auto-resolution. Преди новия flow трябва да има одобрено invariant решение.
+
+4. **travel_status е free text**  
+   Сегашното поле може да остане baseline, но true date-overlap opportunities изискват structured travel model преди този механизъм да се реализира.
+
+Допълнително остава отделният security remediation plan за \`public_registrations\` SECURITY DEFINER view и helper function exposure.
+
+## Решение
+
+Този end-to-end contract е **ОДОБРЕН** и оттук нататък е основа за всички user/admin процеси.
+
+Не е разрешение автоматично да се изградят всички описани механизми. Продължава правилото:
+**P0 решение → одобрение → prototype/implementation на малки части → verification.**

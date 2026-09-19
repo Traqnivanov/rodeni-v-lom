@@ -59,19 +59,25 @@ Security Advisor:
 
 ## 5. Отворени P0 решения преди full implementation
 
+End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine е одобрен на 19.09.2026**.
+
+Остават:
+- safety/minor launch rule;
+- точна семантика на `open_to_strangers`;
+- connection pair integrity;
+- structured travel model за date-overlap;
 - точната Admin/Owner role matrix;
 - ordinary-user auth модел;
-- safety/minor launch rule;
 - security remediation plan;
-- точният Context Engine / Opportunity contract върху текущите сигнали;
-- end-to-end връзката User Context Engine ↔ Admin/Owner Operations Engine.
+- точните ranking/cooldown правила на Context Engine.
 
 ## 6. NEXT EXACT STEP
 
-**Да се изработи една обща end-to-end процесна карта на User Context Engine + Admin/Owner Operations Engine, без код и без DB промени.**
+**P0-1: да се вземе окончателно launch решение за minors/safety преди personalized matching.**
 
-За всеки важен event да се опише:
-user sees → event → gate → opportunity/queue → кой има право да действа → action → user update → notification → next/terminal state → audit/privacy.
+Причина: текущият модел допуска възраст 14+ и публични profile signals. Това решение влияе на Gate, public visibility, contact permissions, reports, matching и onboarding, затова трябва да бъде затворено преди останалите P0 детайли.
+
+Без код и без DB промени преди изрично одобрение.
 
 ## 7. Source-of-truth правило
 
@@ -89,7 +95,12 @@ user sees → event → gate → opportunity/queue → кой има право 
 
 ## 8. Последен значим checkpoint
 
-На 19.09.2026 Admin/Owner изрично въведе правило за continuity между чатове:
-**следващ чат не трябва да сравнява остарели правила с нов код и сам да отгатва истината. При промяна на важна логика source-of-truth се актуализира изрично.**
+На 19.09.2026 Admin/Owner одобри end-to-end operating contract-а:
+**User Context Engine + Admin/Owner Operations Engine**.
 
-Статус: **ОДОБРЕНО ПРАВИЛО ЗА ПРОЦЕСА**.
+Потвърдено е, че архитектурата стъпва върху текущата база, а не я заменя.
+
+Открити са четири P0 несъответствия преди implementation:
+`open_to_strangers`, minors/14+, connection pair integrity и structured travel.
+
+**Следва: P0-1 minors/safety launch rule.**
