@@ -2992,3 +2992,152 @@ Popitai.Lom прилага границата на повече от едно н
 - да разделя Owner необратимите/system права от Moderator оперативните права.
 
 Точната Rodeni role matrix остава за отделно одобрение.
+
+
+# 45. [ПРЕДЛОЖЕНИЕ][P0] Auth / Registration / Admin entry architecture — какво пренасяме от Popitai.Lom
+
+Това е продуктова спецификация за обсъждане, не разрешение за implementation.
+
+## Какво е добро в Popitai.Lom и си струва да се пренесе
+
+1. Ясно разделение:
+   - вход;
+   - регистрация;
+   - профил;
+   - възстановяване на достъп;
+   - отделен Admin/Moderator panel.
+
+2. Form discipline:
+   - реални label-и;
+   - inline validation;
+   - конкретни error messages;
+   - show/hide password controls когато има password;
+   - consent към условия/поверителност;
+   - правилни autocomplete полета;
+   - accessibility states.
+
+3. Role routing:
+   - нормалният профил може да показва admin entry само при staff role;
+   - самият admin route независимо проверява auth + DB-backed role;
+   - blocked staff няма достъп.
+
+4. Admin не е consumer profile с още бутони.
+   Admin panel е отделна working environment.
+
+## Rodeni — Ordinary User flow
+
+### A. Вход
+Трябва да е максимално кратък.
+
+Полета/действия:
+- email;
+- избраният auth mechanism;
+- основен CTA „Влез“ / „Изпрати линк“;
+- „Нямаш профил? Присъедини се“;
+- privacy/support link.
+
+Текущият magic-link модел може да се запази, ако бъде потвърден като финален auth UX. Не се сменя автоматично с password само защото Popitai използва password.
+
+### B. Регистрация — Step 1: Identity + safety
+Само полета, без които не можем да създадем безопасен и разбираем профил:
+- display name / прякор;
+- email/auth;
+- възраст/age eligibility или необходимото launch safety решение;
+- съгласие с условия и privacy;
+- държава.
+
+Не се поставят всички Context Engine полета тук.
+
+### C. Onboarding — Step 2: първите полезни сигнали
+Веднага след регистрацията:
+- „Откъде си?“ → settlement/root;
+- „Къде си сега?“ → city + country.
+
+След това Context Engine трябва да опита да даде стойност веднага.
+
+### D. Progressive enrichment
+Само ако отключва конкретна полза:
+- school;
+- profession category + exact profession;
+- willing_to_help;
+- open_to_strangers;
+- travel;
+- photo.
+
+Всеки optional prompt обяснява:
+**какво ще стане по-добре, ако го добавиш.**
+
+### E. Contact method
+Остава отделно и private.
+Не е public profile field.
+Показва се само при правилния approved/accepted relationship.
+
+## Rodeni — Profile / „Ти“
+
+Профилът не е само списък с полета.
+
+Той е control center за човека:
+- снимка;
+- display name;
+- root;
+- current location;
+- school;
+- profession;
+- helper/open toggles;
+- travel;
+- connections;
+- pending requests;
+- notification preferences;
+- privacy visibility;
+- blocked users;
+- service requests, ако има активни;
+- edit;
+- account delete.
+
+Sensitive/private fields се разграничават ясно от public fields.
+
+## Rodeni — Admin / Owner вход
+
+Admin няма public registration flow.
+
+Отделен staff route/login:
+- служебен email/account;
+- избраният силен auth mechanism;
+- след auth задължителна DB-backed role проверка;
+- само role = Admin/Owner отваря пълния Owner Control Center;
+- future Moderator влиза през staff route, но вижда по-нисък разрешен scope;
+- ordinary user → access denied;
+- blocked staff → access denied.
+
+Admin login не трябва да разчита на таен URL.
+Няма public „регистрирай се като Admin“.
+
+## Admin Control Center entry state
+
+След успешен Admin вход първият екран не е профилът, а:
+**„Какво чака твоето действие?“**
+
+След това:
+- service requests;
+- moderation;
+- safety/reports;
+- users;
+- providers/executors;
+- system;
+- audit;
+- statistics secondary.
+
+## Какво НЕ копираме от Popitai.Lom
+
+- не копираме публичния shell/навигация 1:1;
+- не приемаме password auth автоматично;
+- не копираме Popitai business modules;
+- не поставяме Admin entry като обикновен consumer CTA;
+- не правим огромна registration form с всички Rodeni context fields;
+- не смесваме user profile и operational Admin workspace.
+
+## Ключов принцип
+
+**Auth създава идентичност. Onboarding създава контекст. Context Engine превръща контекста в полезност. Admin Control Center затваря процесите, които изискват човешка намеса.**
+
+Тези четири слоя не трябва да бъдат смесвани в една форма.
