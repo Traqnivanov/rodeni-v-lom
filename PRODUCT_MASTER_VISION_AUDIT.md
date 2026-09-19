@@ -3520,3 +3520,87 @@ V1 няма да въвежда отделна child-safety архитектур
 При implementation това правило трябва да се налага не само в UI, а и server-side/RLS/RPC/constraint слоя според избраната архитектура.
 
 Frontend скриване на бутона не е достатъчно.
+
+
+# 52. [ОДОБРЕНО][P0] Connection pair integrity + отделен safety block
+
+**Дата:** 19.09.2026  
+**Одобрено от:** Admin/Owner  
+**Статус:** ОДОБРЕНО  
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО
+
+## Каноничен relationship invariant
+
+Между двама потребители може да има **максимум една активна connection relationship**, независимо от посоката.
+
+Не се допуска паралелно:
+- A → B
+- B → A
+
+като отделни активни редове.
+
+## Connection lifecycle
+
+### pending
+- пази requester и recipient;
+- recipient може accept/decline;
+- requester може withdraw според отделния UI flow;
+- ако recipient вече има incoming pending от requester и сам натисне „Свържи се“, не се създава втори ред — relationship става \`accepted\`.
+
+### accepted
+- между двойката няма нов connection request;
+- private chat е позволен;
+- съществуващата relationship е единственият connection source of truth за двойката.
+
+### decline
+- отказът остава тих;
+- pending relationship се премахва/затваря според финалната DB реализация;
+- cooldown/retry policy остава отделно решение.
+
+## Safety block — отделен механизъм
+
+Block НЕ трябва да използва същия connection state като единствен source of truth.
+
+Причина:
+сегашната реализация пази \`blocked\` в \`connections\` и RLS позволява и двете страни по blocked row да го delete-нат. Това позволява блокираният потребител технически да премахне block-а.
+
+Канонично:
+- „A блокира B“ и „B блокира A“ са независими safety действия;
+- трябва да се знае кой е blocker;
+- само blocker-ът може да премахне собствения си block;
+- ако съществува поне един active block между двама:
+  - няма matching;
+  - няма new connection request;
+  - няма private chat;
+  - няма automatic opportunity между тях;
+- unblock не възстановява автоматично стара accepted connection;
+- след unblock евентуален нов контакт започва от нулата.
+
+## Atomic actions / backend enforcement
+
+Connection/block lifecycle не трябва да разчита само на поредица browser \`insert/update/delete\`.
+
+При implementation трябва да има малки защитени atomic DB/RPC actions, които валидират поне:
+
+- authenticated identity;
+- 18+ policy;
+- self-contact prohibition;
+- active block;
+- \`open_to_strangers\` inbound permission;
+- current unordered pair state;
+- allowed transition.
+
+Цел:
+- no race condition;
+- no duplicate opposite requests;
+- no frontend-only security;
+- no direct API bypass на продуктовите правила.
+
+## Какво заменя
+
+Заменя текущия модел:
+- directed UNIQUE \`(from_registration_id, to_registration_id)\`;
+- frontend auto-resolution на A→B + B→A;
+- block като \`connections.status='blocked'\`.
+
+Текущата DB/код реализация остава непроменена до отделна одобрена implementation стъпка.
