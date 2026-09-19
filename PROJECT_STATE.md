@@ -31,6 +31,8 @@
 
 ## 3. Текущи важни решения
 
+- Performance/quality invariant: пазим сайта лек, но не жертваме видимо качество. Ако осезаемо по-добър вариант е умерено по-тежък, tradeoff-ът се докладва предварително и Admin/Owner решава на място.
+
 - Connection pair integrity: максимум една active relationship за unordered pair A+B. Block е отделен safety механизъм; само blocker може да unblock. Atomic backend/RPC enforcement е задължително при implementation.
 
 - `open_to_strangers` = разрешение за нов входящ contact. OFF спира нови входящи connection requests, но не прекратява accepted/pending state и не пречи user сам да изпрати заявка.
