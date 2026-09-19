@@ -1905,3 +1905,138 @@ Service layer не трябва да променя гласа към по-аг�
 
 **Community доверието не трябва да се използва за усилване на натиска. Напротив — колкото по-близо е услугата до общността, толкова по-тихо, доказуемо и уважително трябва да говори.**
 
+
+
+# 38. [ПРЕДЛОЖЕНИЕ][P1] Цялостна продуктова формулировка след включване на Ivanov Remonti
+
+## Работна теза
+
+След световна competitive проверка не трябва да описваме продукта като:
+- diaspora social app;
+- карта на ломчани;
+- marketplace за услуги;
+- remote property management;
+- local community app.
+
+Всеки от тези модели вече съществува самостоятелно.
+
+По-силната синтеза е:
+
+**„Родени в Лом“ е тиха мрежа, изградена върху общ корен, която свързва хората когато има конкретна причина — и когато дистанцията създава реален проблем у дома, може да превърне доверието в проверимо действие на място.**
+
+Работно продуктово понятие:
+**Root-to-Home Network / Hometown Operating Network**
+НЕ е финално публично име.
+
+## Пет взаимосвързани слоя
+
+### 1. Root Graph — кой си и откъде си
+- Лом/населено място;
+- училище;
+- общ локален корен.
+
+### 2. Context Graph — къде си и защо някой е релевантен сега
+- текущ град/държава;
+- професия;
+- готовност за помощ;
+- пътуване/завръщане;
+- конкретен moment/need.
+
+### 3. Quiet connection layer
+Системата не кара човека да browse-ва безкрайно.
+Тя показва човек/сигнал, когато има конкретна причина:
+- същият град;
+- същото село/училище;
+- обща професия;
+- помощ за новодошъл;
+- припокриващи се дати за връщане;
+- бъдещ relevant-person notification.
+
+### 4. Home bridge — връзката не само с хората, а и с дома
+Когато потребителят е далеч и има реален проблем в Лом:
+- имот;
+- родители/близки;
+- оглед;
+- теч;
+- ремонт;
+- проверка;
+- задача, която изисква човек на място;
+
+платформата може да осигури trust-preserving route към реално изпълнение.
+
+### 5. Execution layer
+Ivanov Remonti е първият реално съществуващ operational engine за строителния/home-maintenance сегмент:
+- оглед;
+- диагностика;
+- оферта;
+- договор;
+- плащане/аванс;
+- изпълнение;
+- координация на проверени специалисти;
+- photo/video proof;
+- гаранция;
+- собствен operational software и analytics.
+
+По-късно execution layer може да включва и други проверени локални специалисти, но само при реална нужда и след отделен trust/safety model.
+
+## [КЛЮЧОВ ИЗВОД]
+
+Потенциалната различимост НЕ е в отделна функция.
+
+Тя е в затворения цикъл:
+
+**корен → причина → човек → доверие → реална нужда → действие на място → доказуем резултат → по-силно доверие в мрежата**
+
+Това е по-различно от:
+- social network, който приключва при чата;
+- directory, който приключва при контакта;
+- marketplace, който започва само от транзакцията;
+- property manager, който няма social/root graph.
+
+## [ФАКТ] Competitive reality check
+
+Към 19.09.2026 са намерени близки семейства продукти:
+- Origins: shared origin + current city + map + connections + local directory;
+- Diasporalia / Howfr: diaspora community + services/marketplace;
+- Diaspora Connect: trusted operating layer for services/support/investments back home;
+- Squch: diaspora purchasing and verified local services/property management with execution proof;
+- Roots/Braai: community-first, calmer alternatives to generic social media.
+
+Не е намерен очевиден продукт, който ясно съчетава:
+**fine-grained hometown root graph + explainable contextual people matching + quiet/no-feed behavior + moment-based relevance + future-match notifications + back-home execution layer + real local operator infrastructure.**
+
+Това НЕ е доказателство, че такъв продукт никъде не съществува.
+Това е текущият резултат от broad competitive review и трябва периодично да се проверява наново.
+
+## [ПРИНЦИП] Ivanov Remonti не е рекламният слой
+
+Ivanov Remonti не трябва да влиза в продукта като banner или „препоръчана фирма“.
+
+По-умната роля е:
+**execution capability, който се появява само когато възникне релевантна нужда.**
+
+Community layer остава community-first.
+Commercial identity и ownership се разкриват ясно на service boundary.
+Няма скрито самопрепоръчване.
+
+## [ПРЕДЛОЖЕНИЕ] Възможен бъдещ economic loop
+
+Ако моделът заработи:
+- social/root layer остава полезен без покупка;
+- service layer носи приходи само когато има реално изпълнена задача;
+- приходът може да финансира платформата;
+- не е необходимо продуктът да зависи от ads, pay-to-win ranking или продажба на community attention.
+
+Това може да създаде рядка комбинация:
+**community utility + real-world execution + sustainable local economics.**
+
+## [ЗА РЕШЕНИЕ]
+
+Преди прототип трябва отделно да се специфицира:
+1. как човек преминава от community context към service need без усещане за реклама;
+2. кои нужди влизат в MVP и кои не;
+3. как се избира Ivanov Remonti срещу външен специалист;
+4. кой носи отговорността;
+5. как се доказва изпълнението;
+6. как се пазят community и commercial данните разделени;
+7. как се измерва usefulness, без продуктът да се превърне във funnel.
