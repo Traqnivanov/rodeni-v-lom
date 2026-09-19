@@ -83,13 +83,12 @@ Security Advisor:
 End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine е одобрен на 19.09.2026**.
 
 Остават:
-- ordinary-user auth модел;
 - security remediation plan;
 - точните ranking/cooldown правила на Context Engine.
 
 ## 6. NEXT EXACT STEP
 
-**P0-7 analysis checkpoint:** предложен е Minimum Context → Context Loop → Opportunity модел. НЕ е одобрен. Критични открити зависимости: canonical city identity, visibility contract, Next Best Question logic и ranking thresholds.
+**P0-7 analysis checkpoint:** предложени са Minimum Context → Context Loop → Opportunity и детайлна Signal Contract Matrix. НЕ са одобрени. Текущата препоръка е first screen = display name + primary Lom root + current country + canonical current locality. Photo/school/profession/help/travel идват адаптивно след първа стойност. Критични зависимости остават visibility contract, canonical locality strategy и notification/cooldown.
 
 
 **P0-7: да се затвори post-confirmation onboarding / първият екран след регистрация.**

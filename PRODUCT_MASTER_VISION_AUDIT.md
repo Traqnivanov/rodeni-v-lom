@@ -4201,3 +4201,350 @@ private/system layer → legal/contact/service/internal data.
 6. threshold/ranking/cooldown rules;
 7. кога точно се пита \`open_to_strangers\`;
 8. exact Next Best Question decision tree.
+
+
+# 59. [АНАЛИЗ][ПРЕДЛОЖЕНИЕ][P0-7] Signal Contract Matrix — моторът на post-confirmation onboarding
+
+**Дата:** 19.09.2026  
+**Статус:** ПРЕДЛОЖЕНИЕ — НЕ Е ОДОБРЕНО  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB ПРОМЕНИ
+
+Тази секция конкретизира Section 58. Целта не е да се съберат повече данни, а да се определи **кои сигнали имат продуктова стойност, кога се питат, какво отключват и кога трябва да бъдат скрити/изтекли.**
+
+## 1. Основен договор за всеки сигнал
+
+Всеки сигнал трябва да има:
+1. human question;
+2. canonical stored value;
+3. purpose;
+4. visibility scope;
+5. matching/relevance role;
+6. event trigger;
+7. expiry/staleness rule;
+8. user control;
+9. validation relationship с други сигнали.
+
+Ако липсва някой от тези елементи, сигналът не е готов за production Context Engine.
+
+## 2. Йерархия
+
+### T0 — Eligibility / legal / safety
+Не е matching.
+- verified auth identity;
+- email verified;
+- 18+ product gate;
+- Terms/Privacy acceptance;
+- account active/not restricted.
+
+Това е Gate и не се показва като "profile completeness".
+
+### T1 — Minimum Context / anchors
+Това са първите задължителни контекстови сигнали след потвърждение:
+- display name;
+- primary Lom-root locality;
+- current country;
+- current locality.
+
+Те дават Identity + Root + Now и са минималната основа за първа Opportunity.
+
+### T2 — Permission / contact intent
+- open_to_strangers.
+
+Default: OFF, докато user изрично не го включи.
+
+Препоръка: да не се иска в първия Minimum Context screen. Да се поиска след като user види как работи matching-ът или точно преди да стане contactable:
+**„Искаш ли други регистрирани ломчани, с които имаш реална обща връзка, да могат да ти изпращат заявка?“**
+
+OFF не пречи user сам да изпраща заявки.
+
+### T3 — Trust
+- photo.
+
+Photo не участва в relevance ranking.
+То подобрява human trust/recognition и затова се предлага:
+- след първата върната стойност;
+- или преди първия outbound connection request;
+- или при profile polishing.
+
+Не е задължително за matching.
+
+### T4 — Root enhancers
+- school;
+- евентуално secondary root по-късно.
+
+School е силен "things in common" signal, но не е нужен за всеки user.
+Пита се адаптивно, когато:
+- Minimum Context не дава достатъчно силна причина;
+- има смисъл да различим хора със сходен Root;
+- user изрично търси стари познати/училищна връзка.
+
+School трябва в бъдеще да има canonical institution identity + aliases/historical names, а не само свободен string.
+
+### T5 — Capability / practical context
+- profession category;
+- exact profession;
+- willing_to_help.
+
+Profession не означава автоматично „предлагам платена услуга“.
+То е context/capability signal.
+
+\`willing_to_help\` е отделно explicit intent/capability:
+„Мога да помогна на ломчанин около мен/в моя град“.
+
+Не се превръща автоматично в commercial provider status.
+
+### T6 — Moment
+- structured return trip;
+- бъдещи временни moments само при отделно одобрение.
+
+Moment signal:
+- има start/end;
+- има expiry;
+- не става постоянен profile факт;
+- временно може да повиши relevance.
+
+### T7 — Explicit need
+Не се иска като profile field.
+User сам стартира действие:
+- „Трябва ми човек на място в Лом“;
+- „Търся помощ“;
+- друг future explicit need.
+
+Explicit need е по-силен от пасивно сходство, защото има ясно намерение и next action.
+
+## 3. Точен first post-confirmation screen — препоръка
+
+Работен heading:
+**„Нека Родени в Лом разбере кои хора са релевантни за теб“**
+
+Само:
+
+1. **Как да те виждат другите?**
+   - display name / прякор;
+   - задължително.
+
+2. **Кое място в Ломско е твоето?**
+   - primary root locality;
+   - задължително;
+   - V1: една primary root стойност.
+
+3. **Къде живееш сега?**
+   - country;
+   - current locality (град/населено място);
+   - задължително за active matching.
+
+4. Primary CTA:
+   **„Продължи“**
+
+Photo не е в този minimum screen.
+School/profession/help/contact/travel не са в този screen.
+
+## 4. "Current city" се заменя концептуално с "Current locality"
+
+Текущото \`city_abroad\` е твърде тясно:
+- не всеки живее в чужбина;
+- не всеки живее в голям град;
+- България също е валиден current context;
+- малко населено място може да е важен match.
+
+Новият model трябва да мисли:
+**current_country + current_locality_id/key + display label**
+
+а не:
+**free text city abroad**.
+
+## 5. Data-quality invariant
+
+Свързаните сигнали трябва да са валидни като комбинация.
+
+Открит реален тестов пример в текущия DB:
+- country_code = IT;
+- city_abroad = „Мюнхен“.
+
+Това е валиден запис според сегашната schema, но семантично е противоречив.
+
+Следователно:
+- locality selection трябва да е scoped от country;
+- canonical locality трябва да носи country identity;
+- server/backend validation трябва да отхвърля несъвместима комбинация;
+- frontend autocomplete сам по себе си НЕ е достатъчна защита.
+
+## 6. Derived signals — не са profile fields
+
+Следните неща се изчисляват:
+- same root;
+- same current locality;
+- same school;
+- same profession;
+- travel overlap;
+- helper compatibility;
+- existing relationship;
+- "new relevant member".
+
+Не се карат users да ги декларират.
+
+## 7. Opportunity strength classes — без скрит сложен score за V1
+
+### A — Actionable
+Може да влезе в „За теб“ и при правилни notification preferences да даде notification.
+
+Работни A bundles:
+- same current locality + same primary root;
+- same current locality + same school;
+- travel overlap + shared root/school;
+- explicit need + eligible relevant helper/provider;
+- нов user, който създава нов A bundle със съществуващ user.
+
+### B — Relevant
+Показва се тихо в product discovery / „За теб“, но по подразбиране не трябва да прави push.
+
+Примери:
+- same root, different current locality;
+- same school, different current locality;
+- same locality + compatible profession/context;
+- helper in same locality без explicit need.
+
+### C — Discovery
+Не се третира като personal opportunity.
+Използва се за browse/map/category exploration.
+
+Примери:
+- same country only;
+- profession only без intent;
+- generic „още ломчани“.
+
+V1 предпочита ясни rule bundles A/B/C вместо непрозрачен numerical score.
+
+## 8. Next Best Question — decision logic
+
+След Minimum Context:
+
+### Rule 1
+Ако има A opportunity:
+- първо покажи стойността;
+- не задавай нов въпрос преди нея.
+
+### Rule 2
+Ако няма A, но има B:
+- покажи най-силната B reason;
+- след това предложи една question, която може реално да усили matching-а.
+
+### Rule 3
+Ако няма A/B:
+- попитай само едно следващо поле.
+
+Working priority:
+1. school, ако Root/social identity е най-логичният next discriminator;
+2. profession/capability, ако network around current locality е слаб или user влиза през practical-help intent;
+3. willing_to_help, когато има контекст защо това е полезно;
+4. photo само за trust/contact readiness;
+5. travel само при реален upcoming return moment.
+
+### Rule 4
+Skip е валиден отговор.
+Ако user пропусне optional signal, системата не трябва веднага да го пита пак.
+
+## 9. Behavior is context, но не hidden surveillance
+
+Може да се използват само ясни продуктови събития за orchestration:
+- profile/context field changed;
+- user explicitly created/cancelled travel;
+- user enabled/disabled contact permission;
+- user enabled/disabled help;
+- user sent/accepted/declined connection;
+- user dismissed an Opportunity;
+- user created an explicit need.
+
+Не използваме private chat content, dwell-time psychological profiling или скрити sensitive inference за matching.
+
+## 10. Reciprocal re-evaluation
+
+Event от B може да създаде Opportunity за A.
+
+Пример:
+- A: Ковачица + Мюнхен;
+- B се регистрира по-късно: Ковачица + Мюнхен.
+
+\`context_created(B)\` трябва да преоцени не само B, а кандидатите, които са засегнати от същите canonical Root/Now keys.
+
+Не се сканира цялата база на всеки browser load.
+
+## 11. Notification hierarchy
+
+Не всяка Opportunity става notification.
+
+Working rule:
+- A + нова/времева причина → notification candidate;
+- B → in-product only;
+- C → browse only.
+
+Notification copy трябва винаги да казва защо:
+**„Появи се човек от Ковачица, който също живее в Мюнхен.“**
+
+Не:
+**„Имаш ново предложение!“**
+
+## 12. User feedback loop
+
+При dismiss може по желание да има кратка причина:
+- не е релевантно;
+- не искам такива предложения;
+- вече познавам човека;
+- друг reason.
+
+Това не е social score.
+Използва се за:
+- suppression/cooldown;
+- по-малко повторения;
+- прозрачна настройка на бъдещи opportunities.
+
+## 13. Contact data
+
+Сегашното free-text \`contact_method\` не трябва да е основен public/profile signal.
+
+Working recommendation:
+- първият контакт е през connection request + private chat;
+- външен телефон/Viber/Facebook не се публикува автоматично;
+- след accepted connection users могат сами да решат какво да споделят.
+
+## 14. Exact age
+
+След одобрения 18+ Gate exact age не е нужен за core Context Engine и не трябва да остава по подразбиране като matching/public field без отделна доказана цел.
+
+## 15. Performance / weight
+
+Предложението не изисква тежък frontend или AI.
+
+Lean implementation direction:
+- canonical normalized data in Supabase;
+- targeted DB queries/indexes;
+- event-driven generation/update of small Opportunity records;
+- frontend получава готов малък списък.
+
+По-голямата backend структура е оправдана, защото:
+- намалява browser work;
+- подобрява data quality;
+- прави notifications/expiry/cooldown надеждни;
+- избягва сканиране на всички users при page load.
+
+## 16. Research grounding
+
+Тази посока е съвместима с:
+- progressive disclosure: първо най-важното, secondary options по-късно;
+- cold-start elicitation: малко на брой информативни и адаптивни въпроси вместо фиксирана дълга анкета;
+- експериментални данни, че показването на конкретни общи неща като hometown, city, education/work може да подпомогне friendship formation;
+- GDPR data minimisation / privacy by design: събиране и показване според конкретна цел.
+
+Тези източници подкрепят принципите, но не доказват автоматично, че конкретният Rodeni ranking е оптимален. Той трябва да се валидира с реална употреба.
+
+## 17. Какво още НЕ заключваме
+
+- final public vs registered vs connected field visibility;
+- exact location dataset/provider;
+- exact school canonical registry;
+- exact notification cadence/cooldown;
+- exact UI copy;
+- exact database schema;
+- future multi-root support.
+
+Това са отделни решения преди implementation.
