@@ -3981,3 +3981,223 @@ Ordinary-user auth използва email + password.
 ## Principle
 
 **Регистрацията трябва да е кратка и разбираема. Контекстът за профила се събира след нея, а не се натъпква в първата форма.**
+
+
+# 58. [АНАЛИЗ][ПРЕДЛОЖЕНИЕ][P0-7] Minimum Context → Context Loop → Opportunity
+
+**Дата:** 19.09.2026  
+**Статус:** ПРЕДЛОЖЕНИЕ — НЕ Е ОДОБРЕНО  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB ПРОМЕНИ
+
+## Защо това е критично
+
+Post-confirmation onboarding не е обикновена profile form.
+
+Той е първият input слой на Context Engine. Всяко ранно поле трябва да има ясен договор:
+**какво научаваме → къде го пазим → какъв gate/relevance/action отключва → каква стойност връщаме на user-а.**
+
+Поле без такава роля не трябва да товари първия onboarding.
+
+## Препоръчан Minimum Viable Context
+
+След email confirmation първият контекстов екран трябва да събира само:
+
+1. \`display_name\` — как user иска да бъде виждан;
+2. \`primary_root\` — основна връзка/населено място в Ломския контекст;
+3. \`current_country\`;
+4. \`current_city\`.
+
+Photo е trust signal, не matching signal, и е кандидат да бъде предложена след първата върната стойност вместо да бъде задължителна част от Minimum Context.
+
+## Данни, които НЕ трябва да са в първата стъпка
+
+- school;
+- profession/category;
+- willing_to_help;
+- open_to_strangers;
+- travel;
+- contact method;
+- exact age;
+- повторен 18+ consent;
+- повторно Terms/Privacy acceptance.
+
+Те имат различна роля и трябва да се събират само когато са нужни.
+
+## Категории сигнали
+
+### Identity
+display name, photo.
+
+### Root
+primary settlement/root; по-късно евентуално допълнителни roots/school.
+
+### Now
+current country + canonical current city.
+
+### Capability
+profession, willing_to_help.
+
+### Intent / Permission
+open_to_strangers и други user-controlled permissions.
+
+### Moment
+structured travel и други временни сигнали.
+
+### Trust / Safety
+18+, block, account state, connection state, privacy.
+
+Derived reasons като "same city + same root" НЕ се записват като user-declared факт. Те са резултат на Context Engine.
+
+## Критично: canonical location identity
+
+Свободният текст \`city_abroad\` е недостатъчен за надежден matching.
+
+\`Мюнхен\`, \`Munich\` и \`München\` не трябва да стават три различни места.
+
+При implementation трябва да има canonical city identity:
+- стабилен city/location key или ID;
+- display label;
+- country code;
+- aliases/normalization където е нужно.
+
+UI може да изглежда като лек autocomplete; архитектурата не изисква тежка карта или framework.
+
+## Context Loop — препоръчано продуктово поведение
+
+1. User дава Minimum Context.
+2. Context Engine прави Gate.
+3. Генерира candidate reasons.
+4. Ако има достатъчно силна Opportunity — връща стойност ПРЕДИ да иска още данни.
+5. Ако няма силна Opportunity — избира само една следваща полезна question/prompt.
+6. Нов отговор/промяна става context event.
+7. Engine преоценява само релевантния user + засегнатите съществуващи users.
+8. При нова реална причина създава/обновява Opportunity.
+9. Opportunity обяснява: защо това, защо сега, какво следва.
+
+Така onboarding не е фиксирана анкета. Той става адаптивен обмен:
+**дай минимален сигнал → получи стойност → дай следващ сигнал само ако има смисъл.**
+
+## Next Best Question — принцип
+
+Не се пита "какво още можем да съберем", а:
+**"Кое едно липсващо нещо най-вероятно ще подобри следващата полезна Opportunity?"**
+
+Примерна логика:
+- ако Root + Now вече дават силен match → първо покажи match;
+- ако липсва различителен root signal → school може да е следващ prompt;
+- ако local network е слаб → profession може да отвори по-широка релевантност;
+- willing_to_help се иска като capability/intent, не като задължителен profile detail;
+- photo се предлага за trust около първия контакт, не защото engine я изисква;
+- travel се активира само при реално предстоящо прибиране.
+
+## Event-driven reciprocal behavior
+
+Системата не работи само за човека, който току-що редактира профила.
+
+Пример:
+- A вече е от Ковачица и живее в Мюнхен;
+- след седмица B въвежда Ковачица + Мюнхен;
+- новият event трябва да може да създаде Opportunity и за A, и за B, според Gate/permission правилата.
+
+Това е ключова част от orchestration-а.
+
+## Gate hierarchy
+
+Преди relevance:
+1. account/safety eligibility;
+2. 18+;
+3. block/restriction;
+4. privacy/visibility;
+5. open-to-contact permission за inbound request;
+6. self / existing connection / pending state;
+7. expiry/cooldown.
+
+Само след това се оценяват shared signals.
+
+## Relevance hierarchy — работна, не финална ranking формула
+
+Най-силни са независими комбинирани причини, не единични съвпадения.
+
+Примери за силни bundles:
+- same current city + same primary root;
+- same current city + same school;
+- travel overlap + shared root;
+- explicit help need + suitable helper in same locality/context.
+
+Единичен weak signal може да е browse/discovery reason, но не трябва автоматично да става push/contact recommendation.
+
+Moment signal може временно да повиши релевантността, защото има expiry.
+
+## Storage boundary — препоръчана посока
+
+Не се прави един огромен \`registrations\` record за всичко.
+
+Текущият \`registrations\` може да остане базовата core-profile основа, но концептуално се разделят:
+- core profile / stable context;
+- privacy/contact permissions;
+- legal acceptance records;
+- moment tables като \`travel_plans\`;
+- relationship/safety state;
+- generated \`opportunities\`;
+- минимални \`context_events\` за event-driven re-evaluation.
+
+Не е нужно да се пази пълна историческа стойност на всяко старо profile поле. За engine може да е достатъчно event type + actor + timestamp + affected signal, ако старата стойност няма законова/оперативна нужда.
+
+## Opportunity persistence
+
+За V1 е по-добре generated opportunities да се пазят server-side, вместо всеки page load да сканира всички users в browser-а.
+
+Opportunity трябва да може да пази:
+- recipient;
+- subject/target;
+- type;
+- reason codes;
+- source event;
+- state;
+- primary action;
+- created_at;
+- expires_at;
+- dismissed/cooldown state.
+
+Human-readable explanation се генерира от reason codes; не се показва hidden numerical score.
+
+Това позволява:
+- лек frontend;
+- ясни notifications;
+- без повторно показване на едно и също;
+- expiry;
+- traceability защо е показано.
+
+## Privacy / visibility — P0 зависимост
+
+Текущият \`public.public_registrations\` излага индивидуални profile fields през public-facing view. Това не трябва автоматично да се пренася в новия модел.
+
+Преди implementation трябва да се затвори visibility contract:
+- какво вижда anonymous visitor;
+- какво вижда registered 18+ user;
+- какво е system-only;
+- какво се използва само за Context Engine.
+
+Работна препоръка:
+anonymous public layer → aggregates/counts;
+registered eligible layer → разрешени profile fields;
+private/system layer → legal/contact/service/internal data.
+
+## Основен кандидат за уникално продуктово поведение
+
+Не "повече profile fields", а комбинацията:
+
+**Minimum Context + adaptive Next Best Question + reciprocal event re-evaluation + explainable Opportunity + one clear action.**
+
+Това може да се реализира deterministic и леко върху Supabase; не изисква AI, graph database или тежък frontend framework.
+
+## Нерешени преди одобрение
+
+1. точният first post-confirmation screen;
+2. дали photo е на първия screen или след първата стойност;
+3. exact wording/meaning на primary root;
+4. canonical city source/normalization strategy;
+5. visibility contract;
+6. threshold/ranking/cooldown rules;
+7. кога точно се пита \`open_to_strangers\`;
+8. exact Next Best Question decision tree.

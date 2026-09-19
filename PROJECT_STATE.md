@@ -89,6 +89,9 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
+**P0-7 analysis checkpoint:** предложен е Minimum Context → Context Loop → Opportunity модел. НЕ е одобрен. Критични открити зависимости: canonical city identity, visibility contract, Next Best Question logic и ranking thresholds.
+
+
 **P0-7: да се затвори post-confirmation onboarding / първият екран след регистрация.**
 
 P0-6 затваря само първата регистрационна форма и email confirmation. Следва отделно решение какво вижда потребителят веднага след потвърждението и кои минимални profile/context данни са нужни, за да получи първа реална стойност.
