@@ -2748,3 +2748,133 @@ Notification се изпраща само за:
 - Empty/failure state.
 
 Ако едно поле липсва, механизмът не е готов.
+
+
+# 42. [ПРЕДЛОЖЕНИЕ][P0] Owner / Moderator Control Center — задължителен слой преди прототип
+
+Този слой не е „по-късен admin panel“. Той е част от основната продуктова архитектура, защото затваря всички процеси, които изискват човешко решение, модерация, безопасност или реално изпълнение.
+
+## Роля на собственика
+
+Собственикът/главният оператор трябва да има един централен Control Center, от който вижда:
+
+### 1. Community moderation
+- нови/съмнителни регистрации;
+- reports;
+- блокирания/сигнали;
+- рискови профили;
+- съдържание/полета, които изискват ръчна проверка;
+- бъдещи moderation queues.
+
+### 2. Connection / safety oversight
+Без да чете лични чатове по подразбиране:
+- проблемни заявки за връзка;
+- reports;
+- abuse flags;
+- safety events;
+- account restrictions;
+- системни грешки при connections.
+
+### 3. Service / Ivanov Remonti requests
+Всички explicit service needs трябва да влизат в отделна operational queue.
+
+Примерен lifecycle:
+**Нова заявка → чака преглед → уточняване → назначен изпълнител → чака оглед → оглед готов → чака оферта → чака одобрение от клиента → изпълнява се → отчет → приключено / отказано**
+
+Owner вижда:
+- кой е поискал помощ;
+- какъв е типът проблем;
+- кога е подаден;
+- какво чака;
+- кой е assigned;
+- кога последно е имало действие;
+- има ли overdue / stuck case;
+- има ли нужда от негово решение.
+
+### 4. Owner Inbox / Action Queue
+Не само статистика.
+
+Най-горе трябва да има:
+**„Изисква твоето действие“**
+
+Примери:
+- 3 нови service заявки;
+- 1 report за преглед;
+- 2 профила за проверка;
+- 1 оферта чака изпращане;
+- 1 активна задача няма update 48 часа.
+
+Това е operational equivalent на потребителското „За теб“.
+
+### 5. Status model
+Всяка queue item трябва да има:
+- type;
+- owner/assignee;
+- current status;
+- priority;
+- created_at;
+- last_activity_at;
+- next_action;
+- due/expected time, ако има;
+- notes/internal context;
+- public/user-facing status отделно от internal status.
+
+Не показвай internal notes на потребителя.
+
+### 6. Notifications към собственика
+Owner notification се изпраща само ако:
+- има нова заявка;
+- има safety/report event;
+- task е stuck/overdue;
+- клиентът е отговорил и чака действие;
+- service lifecycle е стигнал decision point.
+
+Не се праща шум за всяко дребно събитие.
+
+### 7. Иванов Ремонти integration boundary
+Когато service request е за ремонт/home-maintenance:
+- заявката се появява в Owner Control Center;
+- може да бъде поета от Ivanov Remonti;
+- може да бъде assigned към проверен външен специалист;
+- клиентът вижда кой е provider-ът;
+- owner вижда целия operational state;
+- community profile data не се копира автоматично в business CRM извън минимално необходимото и explicit consent.
+
+### 8. Dashboard sections — работна IA
+Не финален UI:
+
+- **Действия** — всичко, което чака собственика;
+- **Заявки** — service/operational queue;
+- **Модерация** — profiles/reports/safety;
+- **Хора** — account/admin lookup;
+- **Изпълнители** — Ivanov Remonti / future providers;
+- **Система** — health, failed jobs, notifications, audit log;
+- **Статистика** — по-късно, вторична спрямо action queue.
+
+### 9. Ключов принцип
+Owner dashboard не е „аналитично табло“ на първо място.
+
+Той е:
+**работна конзола за решения и изпълнение.**
+
+Първият въпрос при отваряне е:
+**„Какво чака мен?“**
+
+Не:
+**„Колко графики имаме?“**
+
+### 10. Връзка с Context Engine
+
+Същият принцип работи и за Owner:
+
+User Context Engine → „какво е релевантно за този човек“
+Owner Operations Engine → „какво изисква действие от оператора“
+
+И двете системи трябва да използват:
+- event;
+- status;
+- next_action;
+- priority;
+- explanation.
+
+Така продуктът остава свързан и от двете страни — user-facing и operational.
