@@ -3765,3 +3765,118 @@ Admin/Owner може да достъпва съдържание на конкр�
 - privacy notice трябва ясно да обяснява тази възможност преди потребителят да използва private messaging.
 
 **Целта е едновременно: реален Owner control + законност + прозрачност + минимизация на достъпа.**
+
+
+# 55. [ОДОБРЕНО][P0] Admin/Owner ↔ Moderator role matrix V1
+
+**Дата:** 19.09.2026  
+**Одобрено от:** Admin/Owner  
+**Статус:** ОДОБРЕНО  
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО
+
+## Admin/Owner
+
+Admin/Owner е най-високата роля и собственик на системата.
+
+Има право да:
+- вижда целия Admin Control Center;
+- обработва всички reports и safety cases;
+- управлява ordinary user accounts;
+- налага/премахва staff-level restrictions;
+- извършва permanent/hard delete;
+- назначава/премахва Moderator;
+- управлява staff роли и права;
+- управлява service requests;
+- назначава Ivanov Remonti или друг provider;
+- управлява providers;
+- вижда нужните operational/service данни;
+- вижда system failures/security events;
+- управлява critical settings;
+- вижда пълния audit log;
+- извършва recovery/critical actions;
+- има case-specific exceptional access до private messages според одобреното privacy/safety правило.
+
+Критичните действия изискват confirmation + audit trail.
+
+## Moderator
+
+Moderator е community/safety operational role.
+
+Може да:
+- преглежда user reports;
+- преглежда сигнализирани профили;
+- скрива временно проблемен профил;
+- налага обратима account restriction на ordinary user в разрешения scope;
+- премахва restriction в разрешения scope;
+- обработва moderation queue;
+- маркира case resolved/escalated;
+- ескалира към Admin/Owner.
+
+Не може да:
+- назначава/премахва Admin или Moderator;
+- променя роли;
+- hard-delete user;
+- блокира/ограничава Admin/Owner;
+- управлява Supabase/schema/RLS/RPC/secrets/infrastructure;
+- управлява service requests;
+- вижда service адреси, оферти, финансови или contractor данни;
+- назначава providers;
+- управлява providers;
+- вижда system/security configuration;
+- променя critical settings;
+- има свободен достъп до private chats;
+- чете internal Admin/service notes извън moderation case;
+- модерира собствен профил или собствен case;
+- редактира/трие audit history.
+
+## User block ≠ Staff restriction
+
+User block е лична safety граница между двама users.
+
+Staff restriction е moderation/account control действие от staff.
+
+Moderator не може да премахва личен block, поставен от потребител.
+
+## Private messages
+
+- Moderator няма general chat access.
+- Admin/Owner няма routine browse-all-chats workflow.
+- Admin/Owner може case-specific да прегледа минимално необходимото съдържание при report/dispute/safety/security/legal case.
+- Достъпът се audit-ва.
+
+## Service layer
+
+За V1 само Admin/Owner управлява service/business слоя.
+
+Moderator няма business причина да вижда:
+- адреси;
+- телефони/contact;
+- имотни данни;
+- снимки по service case;
+- оферти;
+- финансови/договорни данни;
+- provider assignment.
+
+## Staff login
+
+Admin и Moderator могат да използват един защитен staff entry point, но след authentication DB-backed role определя разрешения scope.
+
+Admin/Owner → full Control Center.  
+Moderator → само разрешения moderation/safety scope.
+
+URL knowledge не дава достъп.
+
+## Audit
+
+Всички staff actions пазят поне:
+- actor;
+- role;
+- action;
+- target;
+- timestamp;
+- reason при критични случаи;
+- before/after при критични status changes.
+
+## Каноничен принцип
+
+**Admin управлява системата. Moderator пази community средата. Moderator не е „малък Admin“.**

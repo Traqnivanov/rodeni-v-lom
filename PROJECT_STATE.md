@@ -31,6 +31,8 @@
 
 ## 3. Текущи важни решения
 
+- Role matrix V1: Admin управлява системата; Moderator пази community/safety средата и не е „малък Admin“. Service/business, role management, infrastructure, hard delete и exceptional chat access са Admin/Owner scope.
+
 - Owner access must remain technically possible: архитектурата не трябва необратимо да заключва Admin/Owner извън private messages при реален dispute/safety/security/legal case. Достъпът остава case-specific, минимален, прозрачно описан и audit-ван.
 
 - Admin/Owner exceptional chat access: няма рутинно четене, но при конкретен report/dispute/safety/security/legal case Owner може да прегледа минимално необходимото съдържание; причината и достъпът се audit-ват. Moderator няма общ такъв достъп.
@@ -77,17 +79,25 @@ Security Advisor:
 End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine е одобрен на 19.09.2026**.
 
 Остават:
-- точната Admin/Owner role matrix (с вече одобрено exceptional chat-access правило);
 - ordinary-user auth модел;
 - security remediation plan;
 - точните ranking/cooldown правила на Context Engine.
 
 ## 6. NEXT EXACT STEP
 
-**P0-5: да се затвори точната Admin/Owner ↔ Moderator role matrix.**
+**P0-6: да се затвори ordinary-user auth + registration flow.**
 
-Трябва да е еднозначно кой вижда и кой може да действа по:
-community reports, users, blocks/restrictions, service requests, providers, audit, system/security и необратими действия.
+Трябва да има едно канонично решение за:
+- magic link / auth mechanism;
+- първа регистрация;
+- връщащ се потребител;
+- confirmation states;
+- recovery/access problems;
+- 18+ gate;
+- progressive onboarding;
+- profile creation vs auth identity;
+- BG emails/messages;
+- session expiry.
 
 Без код и без DB промени преди изрично одобрение.
 
@@ -115,4 +125,4 @@ community reports, users, blocks/restrictions, service requests, providers, audi
 Открити са четири P0 несъответствия преди implementation:
 `open_to_strangers`, minors/14+, connection pair integrity и structured travel.
 
-**P0-1: 18+ — затворено. P0-2: inbound contact gate — затворено. P0-3: unordered pair + separate safety block — затворено. P0-4: structured travel — затворено. Следва P0-5: role matrix.**
+**P0-1: 18+ — затворено. P0-2: inbound contact gate — затворено. P0-3: unordered pair + separate safety block — затворено. P0-4: structured travel — затворено. P0-5: role matrix — затворено. Следва P0-6: auth/registration.**
