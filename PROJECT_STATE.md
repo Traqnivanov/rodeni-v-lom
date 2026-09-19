@@ -92,6 +92,8 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. NEXT EXACT STEP
 
+- **P0-7 Community Guidance Signal — ОДОБРЕН:** user-facing семантика „Информация, съвет и насока“. Въпрос: „Би ли споделил информация, съвет или насока, когато можеш?“ Това е community capability, не платена услуга, не каталог и никога не участва в Service Engine. Използва се само при реална обща причина/explicit need и не заобикаля `open_to_strangers`. Няма implementation още.
+
 - **P0-7 Onboarding Block 3 — ОДОБРЕН:** „Къде си сега?“ + подсказка „Избери къде живееш в момента. Така можем да ти показваме хора наблизо.“ + полета Държава → Населено място. Root и Current Location са отделни сигнали. С това minimum onboarding V1 е затворен като 1 mobile-first екран: Име/прякор → Откъде си? → Къде си сега? Няма implementation още.
 
 - **ОДОБРЕНО за бъдещия слой „Услуги“:** архитектурата е национално подготвена, но услугите се активират по населено място/район; първоначално само Лом е ON. Community и Services activation са независими. Няма implementation сега.
