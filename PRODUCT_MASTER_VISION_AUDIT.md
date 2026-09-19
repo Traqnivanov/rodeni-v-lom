@@ -4729,3 +4729,129 @@ Post-confirmation onboarding трябва да бъде валидиран пъ�
 - desktop може да е по-плътен, но не по-неясен.
 
 **При конфликт между "събира повече на екрана" и "чете се по-лесно" — печели яснотата.**
+
+
+# 63. [АНАЛИЗ][ПРЕДЛОЖЕНИЕ][P0-7] Hybrid locality resolution
+
+**Дата:** 19.09.2026  
+**Статус:** ПРЕДЛОЖЕНИЕ — НЕ Е ОДОБРЕНО  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB ПРОМЕНИ
+
+## Цел
+
+Да се запази текущата добра работа по \`countries.js\` + \`cities.js\`, но Context Engine да получава надеждна location identity дори когато населеното място липсва в локалния списък.
+
+## Одит на текущото
+
+Плюсове:
+- държавите са ISO-coded;
+- градовете са групирани по държава;
+- UI е лек и работи без тежка външна карта;
+- предложенията са на български;
+- текущият списък дава бърз mobile UX.
+
+Слабости:
+- \`city_abroad\` остава свободен текст;
+- липсват много малки населени места;
+- могат да се запишат несъвместими country/city комбинации;
+- spelling/language variants могат да раздробят едно реално място на няколко стойности;
+- текущият тестов DB вече има семантично грешна комбинация IT + Мюнхен.
+
+## Препоръчана V1 архитектура
+
+### Layer A — fast local suggestions
+Запазваме \`countries.js\` и \`cities.js\` като първи, бърз, локален слой.
+
+Няма външна заявка при нормален избор от списъка.
+
+### Layer B — "Не намирам населеното място"
+Ако locality липсва:
+- user натиска explicit fallback;
+- въвежда име;
+- backend търси само в вече избраната държава;
+- търсят се populated places, не arbitrary POI;
+- връщат се малко кандидати;
+- user избира правилния.
+
+За fallback provider работната препоръка е GeoNames, защото:
+- има global populated-place coverage;
+- връща stable \`geonameId\`;
+- поддържа country restriction;
+- има alternate names;
+- може да се кешира локално.
+
+Не се ползва публичният OSM Nominatim за autocomplete — публичната му usage policy забранява client-side autocomplete.
+
+### Layer C — cache / localities
+Веднъж потвърдено външно място се записва локално в Rodeni locality registry и следващия път вече не зависи от външна заявка.
+
+Минимална концептуална стойност:
+- provider;
+- provider_place_id;
+- country_code;
+- canonical_name;
+- display_name_bg/local;
+- feature type;
+- verification status.
+
+### Layer D — last-resort pending place
+Ако външното търсене не намери мястото или услугата е временно недостъпна:
+- onboarding НЕ се блокира;
+- user може да запише text label;
+- locality се маркира \`pending/unverified\`;
+- не се използва за A-level exact-same-locality Opportunity, докато не бъде resolved;
+- може да се ползва за display и по-слаби country-level резултати.
+
+## Защита от грешки
+
+1. Country се избира преди locality.
+2. Locality resolution винаги е scoped към country.
+3. Backend валидира, че resolved place принадлежи към избраната държава.
+4. Exact locality matching използва stable locality id/key, не raw text.
+5. Raw user text се пази само за display/review, не като единствен identity key.
+6. Pending place не създава high-confidence locality match.
+
+## User correction
+
+User трябва да може да промени "Къде живея сега".
+
+Промяната:
+- не пренаписва стара Opportunity безконтролно;
+- създава context-change event;
+- старите location-based opportunities се expire/suppress;
+- Context Engine генерира нови релевантни възможности.
+
+## External dependency / performance
+
+GeoNames не се използва на всеки keypress и не се зарежда като тежка библиотека.
+
+Работен модел:
+- локалният списък първо;
+- външна заявка само при explicit "не намирам";
+- backend proxy + cache;
+- малко резултати;
+- no live map.
+
+GeoNames free web services към текущата проверка имат username-based quotas и CC-BY attribution; затова трябва да се ползват контролирано и cached, не като единствен критичен runtime dependency.
+
+## Защо не Google Places по подразбиране
+
+Google Places може да реши locality identity, но вкарва billing/external dependency за задача, която текущата локална база + controlled fallback могат да решат по-леко.
+
+Ако GeoNames coverage/quality се окаже недостатъчно при реален тест, provider може да се смени зад backend boundary без промяна в onboarding UX.
+
+## Human UX
+
+User вижда просто:
+- Държава
+- Населено място
+- предложения
+- "Не намирам моето място"
+
+Не вижда:
+- provider IDs;
+- verification state;
+- normalization internals.
+
+Принцип:
+**Свобода отпред, надеждна identity отзад.**
