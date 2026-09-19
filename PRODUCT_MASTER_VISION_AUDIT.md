@@ -3880,3 +3880,23 @@ URL knowledge не дава достъп.
 ## Каноничен принцип
 
 **Admin управлява системата. Moderator пази community средата. Moderator не е „малък Admin“.**
+
+
+# 56. [OWNER DIRECTION][P0-6] Ordinary-user auth baseline — password model from Popitai.Lom
+
+**Дата:** 19.09.2026  
+**Статус:** ЗАКЛЮЧЕНА ПОСОКА; детайлният P0-6 contract още се финализира  
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО
+
+Admin/Owner отхвърли magic-link като основен ordinary-user login модел.
+
+Каноничната посока за „Родени в Лом“ е:
+- email + password като основен sign-in;
+- UX базата се взема от доказания auth flow на Popitai.Lom;
+- запазват се show/hide password („око“), password confirmation, inline validation, clear BG states, email confirmation, forgot-password/reset flow и duplicate-submit protection;
+- моделът НЕ се копира 1:1 — доразвива се според privacy, 18+, community и security нуждите на „Родени в Лом“;
+- password auth не означава кратка/слаба политика; финалната password policy трябва да бъде определена по актуална security практика;
+- Admin/Owner и бъдещ Moderator имат отделни по-строги staff security изисквания.
+
+Процесна корекция:
+при избор между auth модели не се оптимизира автоматично за най-малко UI/код. Първо се оценява най-добрият дългосрочен UX + security модел за конкретния продукт, след това performance/weight.
