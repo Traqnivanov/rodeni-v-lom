@@ -499,7 +499,9 @@ Screen 1, Точка 3 — context panel и „Къде си сега?“ — е
 
 Screen 1, Точка 4 — „Откъде си?“ и Root selection — е **ОДОБРЕНА** в Master §95. Стъпката пази Current summary, използва national canonical Root search, не се hardcode-ва Lom-only и визуално показва `Сега`/`Откъде си` без подвеждаща route линия.
 
-Следва **Screen 1 — Точка 5: privacy-safe preview — aggregate result, 0–4, safe broadening и „Виж какво има за теб“**.
+Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е **ОДОБРЕНА** в Master §96. Показва се един допустим aggregate result; exact `Root + Current` изисква threshold 5, 0–4 са общо privacy състояние, а safe broadening е само към едно предварително определено смислено community ниво. CTA остава **„Виж какво има за теб“** и не обещава конкретни хора.
+
+Следва **Screen 1 — Точка 6: loading/network/error, retry и recovery states за context избора и privacy-safe preview**.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 

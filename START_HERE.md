@@ -281,7 +281,9 @@ Screen 1, Точка 3 — context panel и първият въпрос „Къ�
 
 Screen 1, Точка 4 — „Откъде си?“ и Root selection — е одобрена в Master §95.
 
-Текущ NEXT е **Screen 1 — Точка 5: privacy-safe preview — aggregate result, 0–4, safe broadening и „Виж какво има за теб“**.
+Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е одобрена в Master §96.
+
+Текущ NEXT е **Screen 1 — Точка 6: loading/network/error, retry и recovery states за context избора и privacy-safe preview**.
 
 Не започвай общ одит отначало, освен ако има конкретен конфликт, нов риск или изрично искане от Admin/Owner.
 

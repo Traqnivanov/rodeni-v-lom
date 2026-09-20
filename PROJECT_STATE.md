@@ -61,6 +61,8 @@
 
 - **Screen 1 — Точка 4 ОДОБРЕНА:** стъпка 2 остава в същия panel и показва Current summary + `Промени`, **„Откъде си?“**, national canonical Root search, benefit/privacy hints и CTA **„Виж какво показва картата“**. Лом е priority, не hard limit. Unverified Root не създава exact result и не блокира по-широк допустим Current result. Картата показва различими `Сега`/`Откъде си` markers без подвеждаща route линия. Visual и uniqueness отчетите са в Master §95. Няма implementation.
 
+- **Screen 1 — Точка 5 ОДОБРЕНА:** preview-ът остава върху видимата карта и показва context summary + един допустим result. Exact `Root + Current` се показва само при threshold 5 чрез bands `5+`, `10+`, `25+`, `50+`, `100+`; 0–4 използват едно общо privacy състояние. Допуска се само едно предварително определено смислено safe broadening ниво, което самостоятелно покрива прага; за пилота е „Лом и региона“. CTA винаги е **„Виж какво има за теб“** и не обещава конкретни хора. Visual и uniqueness отчетите са в Master §96. Няма implementation.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -231,7 +233,8 @@ Public → registered continuity:
 - Screen 1, Точка 2 — първоначално публично състояние и първите 3 секунди: **ОДОБРЕНА**.
 - Screen 1, Точка 3 — context panel и „Къде си сега?“: **ОДОБРЕНА**.
 - Screen 1, Точка 4 — „Откъде си?“ и Root selection: **ОДОБРЕНА**.
-- Следва **Screen 1 — Точка 5: privacy-safe preview — aggregate result, 0–4, safe broadening и „Виж какво има за теб“**.
+- Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening: **ОДОБРЕНА**.
+- Следва **Screen 1 — Точка 6: loading/network/error, retry и recovery states за context избора и privacy-safe preview**.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;
