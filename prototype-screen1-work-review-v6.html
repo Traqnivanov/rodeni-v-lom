@@ -102,13 +102,17 @@ body.flow-active .map-note{display:none}
 .country{fill:#182744;stroke:#07101f;stroke-width:.7;vector-effect:non-scaling-stroke;transition:fill .18s ease}
 .country.has-signal{fill:#314464}
 .country.is-focused{fill:#53647e;stroke:var(--gold2);stroke-width:1.8}
-.signal{pointer-events:none}
+.signal{pointer-events:none;transition:opacity .18s ease}
+.signal.context-muted{opacity:.14}
+.signal.context-hidden{opacity:0}
+.signal.context-selected{opacity:1}
+.signal.context-selected .badge-circle{stroke-width:3;filter:drop-shadow(0 8px 14px rgba(233,184,79,.28))}
 .signal .leader{stroke:rgba(244,205,114,.72);stroke-width:1.4;vector-effect:non-scaling-stroke}
 .signal .anchor{fill:var(--gold2);stroke:#07101f;stroke-width:1.4;vector-effect:non-scaling-stroke}
 .signal .badge-circle{fill:#121f37;stroke:var(--gold);stroke-width:2;vector-effect:non-scaling-stroke;filter:drop-shadow(0 7px 10px rgba(0,0,0,.35))}
 .signal .band{fill:var(--gold2);font-size:15px;font-weight:850;text-anchor:middle;dominant-baseline:central}
 .signal .country-name{fill:#f6f7fb;font-size:13px;font-weight:780;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:3px;stroke-linejoin:round}
-.personal text{fill:#fff;font-size:15px;font-weight:820;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:4px;stroke-linejoin:round}
+.personal text{fill:#fff;font-size:17px;font-weight:860;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:5px;stroke-linejoin:round}
 .personal.current circle{fill:#17305a;stroke:var(--blue)}
 .personal.root circle{fill:#3b2a10;stroke:var(--gold2)}
 .personal circle{stroke-width:3;vector-effect:non-scaling-stroke}
@@ -410,19 +414,19 @@ body.flow-active .map-note{display:none}
           <path class="country" data-code="SS" d="M560.1 245.7L557.8 243.7L557.1 242.4L555.7 243.1L554.5 242.9L553.8 243.4L552.6 243.0L551.0 240.5L550.6 239.6L548.6 238.4L548.0 236.6L546.9 235.3L545.1 233.7L545.1 232.7L543.6 231.5L541.8 230.4L542.6 230.0L543.5 229.5L544.1 226.8L544.8 225.4L546.7 225.0L547.1 225.8L548.5 227.5L549.2 227.8L550.1 227.3L552.0 227.4L552.4 228.0L554.9 228.0L555.0 227.4L556.3 226.8L556.6 225.9L557.5 225.3L559.8 227.1L561.1 226.8L562.3 224.6L563.7 223.0L563.4 221.1L562.8 220.3L564.3 220.1L564.5 219.4L565.7 219.6L565.4 221.9L565.8 224.0L567.2 225.2L567.5 226.3L567.5 227.8L567.9 227.8L568.0 230.2L567.6 231.1L566.2 231.2L565.4 232.9L567.0 233.1L568.3 234.5L568.8 235.8L570.0 236.4L571.6 239.7L569.8 241.7L568.3 243.5L566.7 244.9L564.9 244.9L562.8 245.6L561.1 244.9L560.1 245.7Z"/>
         </g>
         <g id="signalLayer" aria-hidden="true">
-          <g class="signal" data-x="474.7" data-y="94.2" data-dx="-42" data-dy="-28">
+          <g class="signal" data-code="GB" data-x="474.7" data-y="94.2" data-dx="-42" data-dy="-28">
             <line class="leader"/><circle class="anchor" r="3.5"/>
             <g class="badge"><circle class="badge-circle" r="20"/><text class="band">10+</text><text class="country-name" y="37">Великобритания</text></g>
           </g>
-          <g class="signal" data-x="503.5" data-y="102.8" data-dx="38" data-dy="-25">
+          <g class="signal" data-code="DE" data-x="503.5" data-y="102.8" data-dx="38" data-dy="-25">
             <line class="leader"/><circle class="anchor" r="3.5"/>
             <g class="badge"><circle class="badge-circle" r="20"/><text class="band">25+</text><text class="country-name" y="37">Германия</text></g>
           </g>
-          <g class="signal" data-x="471.1" data-y="135.0" data-dx="-39" data-dy="31">
+          <g class="signal" data-code="ES" data-x="471.1" data-y="135.0" data-dx="-39" data-dy="31">
             <line class="leader"/><circle class="anchor" r="3.5"/>
             <g class="badge"><circle class="badge-circle" r="20"/><text class="band">5+</text><text class="country-name" y="37">Испания</text></g>
           </g>
-          <g class="signal" data-x="509.8" data-y="127.2" data-dx="39" data-dy="32">
+          <g class="signal" data-code="IT" data-x="509.8" data-y="127.2" data-dx="39" data-dy="32">
             <line class="leader"/><circle class="anchor" r="3.5"/>
             <g class="badge"><circle class="badge-circle" r="20"/><text class="band">5+</text><text class="country-name" y="37">Италия</text></g>
           </g>
@@ -692,7 +696,7 @@ body.flow-active .map-note{display:none}
       }
     })
   }
-  function drawMap(){clamp();mapBase.setAttribute('transform','translate('+view.tx+' '+view.ty+') scale('+view.scale+')');drawSignals();updatePersonalMarkers()}
+  function drawMap(){clamp();mapBase.setAttribute('transform','translate('+view.tx+' '+view.ty+') scale('+view.scale+')');drawSignals();updatePersonalMarkers();updateSignalPriority()}
   function setMapView(point,scale){
     if(!point)return;
     view.scale=Math.max(1,Math.min(4,scale||1));
@@ -750,6 +754,25 @@ body.flow-active .map-note{display:none}
   svg.addEventListener('pointerup',function(e){drag=false;last=null;svg.classList.remove('dragging');try{svg.releasePointerCapture(e.pointerId)}catch(_){}});
   svg.addEventListener('wheel',function(e){e.preventDefault();var box=svg.getBoundingClientRect();var x=(e.clientX-box.left)*(960/box.width),y=(e.clientY-box.top)*(520/box.height);zoomAt(e.deltaY<0?1.15:1/1.15,x,y)},{passive:false});
 
+  function updateSignalPriority(){
+    var hasCountry=!!state.country;
+    var hasCity=!!state.city;
+    var hasRoot=!!state.root;
+    var contextDeep=(state.view==='root'||state.view==='loading'||state.view==='error'||state.view==='result'||hasRoot);
+    signals.forEach(function(g){
+      var isSelected=hasCountry&&g.dataset.code===state.country;
+      g.classList.remove('context-muted','context-hidden','context-selected');
+      if(!hasCountry)return;
+      if(contextDeep){
+        g.classList.add('context-hidden');
+      }else if(hasCity){
+        g.classList.add(isSelected?'context-selected':'context-hidden');
+      }else{
+        g.classList.add(isSelected?'context-selected':'context-muted');
+      }
+    })
+  }
+
   function updatePersonalMarkers(){
     personalLayer.innerHTML='';
     document.querySelectorAll('#mapBase .country').forEach(function(el){el.classList.toggle('is-focused',!!state.country&&el.dataset.code===state.country)});
@@ -757,23 +780,24 @@ body.flow-active .map-note{display:none}
     if(state.country&&state.city){
       var c=countryData[state.country];
       var cp=cityXY[state.country+'|'+state.city]||c.xy;
-      items.push({type:'current',label:state.city,x:cp[0],y:cp[1]});
+      items.push({type:'current',label:'Сега · '+state.city,x:cp[0],y:cp[1]});
       chips.push('<span class="context-chip current">Сега · '+esc(state.city+', '+c.name)+'</span>')
     }
     if(state.root&&rootData[state.root]){
       var r=rootData[state.root];
-      items.push({type:'root',label:state.root,x:r.xy[0],y:r.xy[1]});
+      items.push({type:'root',label:'Откъде · '+state.root,x:r.xy[0],y:r.xy[1]});
       chips.push('<span class="context-chip root">Откъде · '+esc(r.label)+'</span>')
     }
     items.forEach(function(it){
       var p=transformPoint(it.x,it.y);
       var g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','personal '+it.type);g.setAttribute('transform','translate('+p[0]+' '+p[1]+')');
       var circle=document.createElementNS('http://www.w3.org/2000/svg','circle');circle.setAttribute('r','9');g.appendChild(circle);
-      var text=document.createElementNS('http://www.w3.org/2000/svg','text');text.setAttribute('y','-16');text.textContent=it.label;g.appendChild(text);
+      var text=document.createElementNS('http://www.w3.org/2000/svg','text');text.setAttribute('y','-19');text.textContent=it.label;g.appendChild(text);
       personalLayer.appendChild(g)
     });
     mapContext.innerHTML=chips.join('');
-    mapContext.hidden=!chips.length
+    mapContext.hidden=!chips.length;
+    updateSignalPriority()
   }
   drawMap();
 })();
