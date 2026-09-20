@@ -485,7 +485,7 @@ button{color:inherit}
   }
   function cityOptions(){
     if(!state.country)return '<option value="">Първо избери държава</option>';
-    var out='<option value="">Избери населено място</option>';
+    var out='<option value="">Избери град или село</option>';
     countryData[state.country].cities.forEach(function(city){out+='<option'+(state.city===city?' selected':'')+'>'+esc(city)+'</option>'});
     return out
   }
@@ -510,7 +510,7 @@ button{color:inherit}
       '<h2>Къде си сега?</h2>'+
       '<p class="helper">Избери къде живееш сега. Така ще видиш общността около теб — без да показваме лични профили.</p>'+
       '<div class="field"><label for="country">Държава</label><select id="country">'+countryOptions()+'</select></div>'+
-      '<div class="field"><label for="city">Населено място</label><select id="city" '+(!state.country?'disabled':'')+'>'+cityOptions()+'</select><p class="field-hint">Изборът остава само в този прототип.</p></div>'+
+      '<div class="field"><label for="city">Град / село</label><select id="city" '+(!state.country?'disabled':'')+'>'+cityOptions()+'</select><p class="field-hint">Изборът остава само в този прототип.</p></div>'+
       '<div id="currentError" class="error" hidden></div>'+
       '<div class="sheet-actions"><button class="primary" id="toRoot" type="button">Продължи към „Откъде си?“</button></div>';
     var country=document.getElementById('country'),city=document.getElementById('city');
@@ -530,7 +530,7 @@ button{color:inherit}
       '<div class="summary"><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
       '<h2>Откъде си?</h2>'+
       '<p class="helper">Избери населеното място в България, което приемаш за свое. Така свързваме откъде си с мястото, където живееш сега.</p>'+
-      '<div class="field"><label for="root">Населено място в България</label><select id="root">'+rootOptions()+'</select><p class="field-hint">Изборът още не се публикува и не се брои в картата.</p></div>'+
+      '<div class="field"><label for="root">Град или село в България</label><select id="root">'+rootOptions()+'</select><p class="field-hint">Изборът още не се публикува и не се брои в картата.</p></div>'+
       '<div id="rootError" class="error" hidden></div>'+
       '<div class="sheet-actions"><button class="primary" id="showResult" type="button">Виж какво показва картата</button><button class="secondary" id="backCurrent" type="button">Назад</button></div>';
     document.getElementById('root').addEventListener('change',function(){state.root=this.value;save();updatePersonalMarkers()});
