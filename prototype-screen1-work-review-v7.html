@@ -78,17 +78,24 @@ body.flow-active .map-note{display:none}
   margin:0 12px 18px;overflow:hidden;border:1px solid var(--line2);border-radius:22px;
   background:linear-gradient(180deg,#132541,#091426);box-shadow:0 18px 50px rgba(0,0,0,.28)
 }
-.map-actions{position:absolute;z-index:6;top:10px;right:10px;display:flex;gap:8px}
+.map-actions{
+  position:absolute;z-index:6;top:10px;right:10px;display:flex;gap:0;
+  border:1px solid rgba(255,255,255,.12);border-radius:14px;overflow:hidden;
+  background:rgba(7,16,31,.66);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
+}
 .map-overlay-title{
-  position:absolute;z-index:6;top:12px;left:12px;max-width:calc(100% - 132px);
-  padding:7px 10px;border:1px solid var(--line);border-radius:999px;
-  background:rgba(7,16,31,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  color:var(--soft);font-size:15px;line-height:1.2;font-weight:800
+  position:absolute;z-index:6;top:12px;left:12px;max-width:calc(100% - 126px);
+  padding:7px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;
+  background:rgba(7,16,31,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:var(--text);font-size:15px;line-height:1.2;font-weight:820
 }
+.map-overlay-title .map-band{color:var(--gold2)}
 .map-control{
-  width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line);
-  border-radius:14px;cursor:pointer;background:rgba(255,255,255,.04);font-size:24px;font-weight:700
+  width:48px;height:48px;display:grid;place-items:center;border:0;border-radius:0;
+  cursor:pointer;background:transparent;font-size:21px;font-weight:760;color:var(--soft)
 }
+.map-control + .map-control{border-left:1px solid rgba(255,255,255,.1)}
+.map-control:active{background:rgba(255,255,255,.06)}
 .map-wrap{
   position:relative;height:clamp(240px,36dvh,300px);min-height:240px;
   background:
@@ -101,7 +108,7 @@ body.flow-active .map-note{display:none}
 #worldMap.dragging{cursor:grabbing}
 .country{fill:#182744;stroke:#07101f;stroke-width:.7;vector-effect:non-scaling-stroke;transition:fill .18s ease}
 .country.has-signal{fill:#314464}
-.country.is-focused{fill:#53647e;stroke:var(--gold2);stroke-width:1.8}
+.country.is-focused{fill:#314865;stroke:rgba(244,205,114,.72);stroke-width:1.1}
 .signal{pointer-events:none;transition:opacity .18s ease}
 .signal.context-muted{opacity:.14}
 .signal.context-hidden{opacity:0}
@@ -112,21 +119,17 @@ body.flow-active .map-note{display:none}
 .signal .badge-circle{fill:#121f37;stroke:var(--gold);stroke-width:2;vector-effect:non-scaling-stroke;filter:drop-shadow(0 7px 10px rgba(0,0,0,.35))}
 .signal .band{fill:var(--gold2);font-size:15px;font-weight:850;text-anchor:middle;dominant-baseline:central}
 .signal .country-name{fill:#f6f7fb;font-size:13px;font-weight:780;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:3px;stroke-linejoin:round}
-.personal text{fill:#fff;font-size:17px;font-weight:860;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:5px;stroke-linejoin:round}
-.personal.current circle{fill:#17305a;stroke:var(--blue)}
-.personal.root circle{fill:#3b2a10;stroke:var(--gold2)}
-.personal circle{stroke-width:3;vector-effect:non-scaling-stroke}
-.map-context{
-  position:absolute;z-index:6;left:10px;right:10px;bottom:10px;
-  display:flex;flex-wrap:wrap;gap:7px;pointer-events:none
-}
-.context-chip{
-  max-width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:999px;
-  background:rgba(7,16,31,.86);color:var(--text);font-size:15px;line-height:1.25;font-weight:800;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-}
-.context-chip.current{border-color:rgba(155,194,255,.48)}
-.context-chip.root{border-color:rgba(244,205,114,.48)}
+.personal .marker-halo{fill:rgba(7,16,31,.76);stroke-width:2;vector-effect:non-scaling-stroke}
+.personal .marker-dot{stroke:#07101f;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.personal .marker-box{stroke-width:1.2;vector-effect:non-scaling-stroke}
+.personal .marker-label{fill:#fff;font-size:16px;font-weight:860;text-anchor:middle;dominant-baseline:central}
+.personal.current .marker-halo{stroke:var(--blue)}
+.personal.current .marker-dot{fill:var(--blue)}
+.personal.current .marker-box{fill:rgba(10,28,53,.94);stroke:rgba(155,194,255,.72)}
+.personal.root .marker-halo{stroke:var(--gold2)}
+.personal.root .marker-dot{fill:var(--gold2)}
+.personal.root .marker-box{fill:rgba(45,34,13,.94);stroke:rgba(244,205,114,.78)}
+.map-context{display:none!important}
 .map-note{padding:11px 14px 13px;border-top:1px solid var(--line);color:var(--muted);font-size:15px;line-height:1.45}
 .loading-box{
   display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:16px;
@@ -674,6 +677,8 @@ body.flow-active .map-note{display:none}
   var personalLayer=document.getElementById('personalLayer');
   var mapContext=document.getElementById('mapContext');
   var signals=Array.prototype.slice.call(document.querySelectorAll('#signalLayer .signal'));
+  var mapTitle=document.getElementById('mapTitle');
+  var countryBands={GB:'10+',DE:'25+',ES:'5+',IT:'5+'};
   var view={scale:1,tx:0,ty:0},drag=false,last=null;
 
   function clamp(){
@@ -754,7 +759,23 @@ body.flow-active .map-note{display:none}
   svg.addEventListener('pointerup',function(e){drag=false;last=null;svg.classList.remove('dragging');try{svg.releasePointerCapture(e.pointerId)}catch(_){}});
   svg.addEventListener('wheel',function(e){e.preventDefault();var box=svg.getBoundingClientRect();var x=(e.clientX-box.left)*(960/box.width),y=(e.clientY-box.top)*(520/box.height);zoomAt(e.deltaY<0?1.15:1/1.15,x,y)},{passive:false});
 
+  function updateMapTitle(){
+    if(!mapTitle)return;
+    if(!document.body.classList.contains('flow-active')||!state.country){
+      mapTitle.textContent='Общности по света';
+      return
+    }
+    if(state.root){
+      mapTitle.textContent='Твоите места';
+      return
+    }
+    var place=state.city ? state.city+', '+countryData[state.country].name : countryData[state.country].name;
+    var band=countryBands[state.country];
+    mapTitle.innerHTML=esc(place)+(band?' <span class="map-band">· '+esc(band)+'</span>':'')
+  }
+
   function updateSignalPriority(){
+    updateMapTitle();
     if(!document.body.classList.contains('flow-active')){
       signals.forEach(function(g){g.classList.remove('context-muted','context-hidden','context-selected')});
       return
@@ -767,10 +788,8 @@ body.flow-active .map-note{display:none}
       var isSelected=hasCountry&&g.dataset.code===state.country;
       g.classList.remove('context-muted','context-hidden','context-selected');
       if(!hasCountry)return;
-      if(contextDeep){
+      if(contextDeep||hasCity){
         g.classList.add('context-hidden');
-      }else if(hasCity){
-        g.classList.add(isSelected?'context-selected':'context-hidden');
       }else{
         g.classList.add(isSelected?'context-selected':'context-muted');
       }
@@ -784,23 +803,43 @@ body.flow-active .map-note{display:none}
     if(state.country&&state.city){
       var c=countryData[state.country];
       var cp=cityXY[state.country+'|'+state.city]||c.xy;
-      items.push({type:'current',label:'Сега · '+state.city,x:cp[0],y:cp[1]});
+      items.push({type:'current',label:state.city,x:cp[0],y:cp[1]});
       chips.push('<span class="context-chip current">Сега · '+esc(state.city+', '+c.name)+'</span>')
     }
     if(state.root&&rootData[state.root]){
       var r=rootData[state.root];
-      items.push({type:'root',label:'Откъде · '+state.root,x:r.xy[0],y:r.xy[1]});
+      items.push({type:'root',label:state.root,x:r.xy[0],y:r.xy[1]});
       chips.push('<span class="context-chip root">Откъде · '+esc(r.label)+'</span>')
     }
     items.forEach(function(it){
       var p=transformPoint(it.x,it.y);
-      var g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','personal '+it.type);g.setAttribute('transform','translate('+p[0]+' '+p[1]+')');
-      var circle=document.createElementNS('http://www.w3.org/2000/svg','circle');circle.setAttribute('r','9');g.appendChild(circle);
-      var text=document.createElementNS('http://www.w3.org/2000/svg','text');text.setAttribute('y','-19');text.textContent=it.label;g.appendChild(text);
-      personalLayer.appendChild(g)
+      var g=document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.setAttribute('class','personal '+it.type);
+      g.setAttribute('transform','translate('+p[0]+' '+p[1]+')');
+
+      var halo=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      halo.setAttribute('class','marker-halo');halo.setAttribute('r','11');g.appendChild(halo);
+
+      var dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      dot.setAttribute('class','marker-dot');dot.setAttribute('r','5');g.appendChild(dot);
+
+      var text=document.createElementNS('http://www.w3.org/2000/svg','text');
+      text.setAttribute('class','marker-label');text.setAttribute('y','-29');text.textContent=it.label;g.appendChild(text);
+
+      personalLayer.appendChild(g);
+
+      var w=0;
+      try{w=text.getComputedTextLength()}catch(_){w=it.label.length*8.5}
+      w=Math.max(62,Math.min(176,w+20));
+      var box=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      box.setAttribute('class','marker-box');
+      box.setAttribute('x',String(-w/2));box.setAttribute('y','-42');
+      box.setAttribute('width',String(w));box.setAttribute('height','26');
+      box.setAttribute('rx','13');box.setAttribute('ry','13');
+      g.insertBefore(box,text)
     });
-    mapContext.innerHTML=chips.join('');
-    mapContext.hidden=!chips.length;
+    mapContext.innerHTML='';
+    mapContext.hidden=true;
     updateSignalPriority()
   }
   drawMap();
