@@ -110,6 +110,8 @@
 | Public hook | „А ти къде си на картата?“ → „Къде си сега?“ → „Откъде си?“ | privacy threshold, registration, onboarding continuity |
 | Public aggregate | Реално community присъствие, включително `open_to_strangers=OFF`; не обещава самоличности | threshold 5, размерни нива, fixed filters, non-real-time update |
 | Aggregate privacy | 0–4 се скриват в едно общо състояние; при 5+ се показват `5+`, `10+`, `25+`, `50+`, `100+` | всяка подгрупа отделно; без exact zero и arbitrary differencing |
+| Aggregate eligibility | Само confirmed-email, completed-onboarding, confirmed-18+, canonical user-confirmed profiles; без pending/unresolved/deleted/suspended/banned/test | един account веднъж; OFF остава; stable snapshot; threshold се прилага след eligibility |
+| Aggregate freshness | Root не изтича; Current Location участва до 12 месеца от последното user потвърждение | Travel не променя Current Location; expired current location се връща след reconfirmation и следващ snapshot |
 | Public CTA | „Виж какво има за теб“ | не обещава „Виж кои са“; води към registration → onboarding → „За теб“ |
 | Registration | Email + password, минимум 12 знака, 18+, Terms + Privacy, email confirmation | Context Bridge, auth errors, existing account, session state |
 | V1 age/safety | Registration, personalized matching, contact и chat са само за 18+ | backend enforcement; legacy `age >= 14` не е валидният launch contract |

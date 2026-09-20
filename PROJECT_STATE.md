@@ -45,6 +45,8 @@
 
 - **Pre-prototype точка 4 — ОДОБРЕНА 20.09.2026:** post-registration no-result contract-ът важи само след registration, email confirmation и завършен minimum onboarding. „Няма допустим непознат“ не означава празно „За теб“. Редът е waiting actions → active need/Travel → релевантни accepted хора → допустими strangers → privacy-safe context → една човешка следваща стъпка. Активна нужда/Travel получава собствен status card и управление, без generic повторен въпрос. Нерелевантни accepted хора и слаби strangers не се използват като filler. Първото истинско no-result състояние обяснява разликата между общност и допустим човек и предлага **„Посочи нужда“**; при следващи влизания без ново действие се използва спокойно състояние, без повтаряне на registration hook-а.
 
+- **Pre-prototype точка 5 — ОДОБРЕНА 20.09.2026:** public aggregate брои веднъж само confirmed-email, completed-onboarding, confirmed-18+, canonical и user-confirmed community profiles, които не са deleted/suspended/banned/test. Pending context и unresolved locality не участват. `open_to_strangers`, снимка, професия, guidance/help, connections, block и decline не влияят на community count. Travel не променя Current Location. Root не изтича; Current Location изтича за current-location aggregates 12 месеца след последното user потвърждение. Всички промени се отразяват при следващия стабилен snapshot, след което отново се прилагат threshold 5 и размерните нива.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -210,7 +212,8 @@ Public → registered continuity:
 - Точка 3 — „Контекстов мост“ през registration и email confirmation: **ОДОБРЕНА**.
 - Преди точка 4 е създаден и задължително се използва `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`; т.4 не се решава само като изолиран empty state.
 - Точка 4 — post-registration no-result contract: **ОДОБРЕНА**.
-- Следва: dependency проверка дали остава друг реален pre-prototype blocker. Ако няма, започва screen-by-screen contract-ът.
+- Точка 5 — Aggregate Eligibility Contract: **ОДОБРЕНА**.
+- Следва: последна dependency проверка дали остава друг реален pre-prototype blocker. Ако няма, започва screen-by-screen contract-ът.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;

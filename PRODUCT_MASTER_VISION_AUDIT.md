@@ -6717,7 +6717,7 @@ Pending context е удобство за continuity, не trusted identity ил�
 - НЯМА implementation сега.
 - НЯМА UI промяна сега.
 - НЯМА Supabase/DB промяна сега.
-- Следва pre-prototype точка 4: цялостният post-registration no-result contract след проверка на waiting actions, active needs, Travel, accepted connections, stranger eligibility, permissions и privacy. Точката не се решава като изолиран empty state.
+- Post-registration no-result contract-ът е затворен в секция #87.
 
 
 # 86. [ОДОБРЕНО][PROCESS] Задължителна карта на функциите и dependency проверка преди решение
@@ -6946,4 +6946,113 @@ Registration hook-ът не се повтаря при всяко отварян
 - НЯМА implementation сега.
 - НЯМА UI промяна сега.
 - НЯМА Supabase/DB промяна сега.
-- Следва dependency проверка дали остава друг реален pre-prototype blocker. Ако няма, продължава screen-by-screen contract-ът.
+- Aggregate eligibility и freshness contract-ът е затворен в секция #88.
+
+
+# 88. [ОДОБРЕНО][PRE-PROTOTYPE] Aggregate Eligibility Contract — кой участва в публичните бройки
+
+**Дата на одобрение:** 20.09.2026
+**Одобрено от:** Admin/Owner
+**Статус:** ОДОБРЕНО ПРОДУКТОВО/PRIVACY/DATA QUALITY РЕШЕНИЕ
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО
+
+## Проблем
+
+Privacy прагът и размерните нива от секция #84 определят как се показва публичният резултат, но сами не определят кои записи имат право да участват в него.
+
+Без eligibility contract публично ниво като **„5+ души“** може да бъде privacy-safe, но да е невярно или подвеждащо, ако включва:
+
+- непотвърдени регистрации;
+- незавършен onboarding;
+- pending context;
+- невалидни или неразпознати местоположения;
+- изтрити, спрени, забранени или тестови акаунти;
+- остаряло Current Location.
+
+## Одобрено решение
+
+Един човек участва в конкретен публичен aggregate само когато едновременно:
+
+1. email-ът му е потвърден;
+2. minimum onboarding е завършен;
+3. 18+ eligibility е потвърдена;
+4. Root и съответното Current Location са избрани и потвърдени от user-а;
+5. използваните местоположения имат canonical identity;
+6. акаунтът не е изтрит, спрян, забранен или тестов;
+7. акаунтът се брои само веднъж в конкретния aggregate snapshot.
+
+## Pending и unresolved данни
+
+- pending context от „Контекстов мост“ никога не участва в aggregate;
+- непотвърден onboarding не участва;
+- неразпознато/unresolved населено място не участва в тесен locality aggregate;
+- стойността може да участва едва след canonical resolution и user потвърждение.
+
+## Какво НЕ влияе на community броенето
+
+Ако останалите eligibility условия са изпълнени, човекът участва независимо от:
+
+- `open_to_strangers=ON/OFF`;
+- наличие или липса на снимка;
+- професия;
+- guidance/help signal;
+- брой accepted connections;
+- личен block или decline между конкретна двойка.
+
+Публичният aggregate измерва потвърдено community присъствие, не contact availability.
+
+## Travel граница
+
+Travel е временен Moment signal и не променя Current Location.
+
+Човек, който пътува временно, не се преброява като жител на destination мястото само заради Travel статуса си.
+
+## Freshness
+
+### Root
+
+Root не изтича автоматично. User може да го промени/коригира чрез одобрения control flow.
+
+### Current Location
+
+Current Location се счита за актуално до **12 месеца от последното user потвърждение**.
+
+След изтичането:
+
+- човекът се изключва само от current-location агрегатите;
+- Root/community принадлежността му остава;
+- при следващо подходящо влизане системата иска потвърждение или промяна;
+- след потвърждението участието се възстановява при следващия aggregate snapshot.
+
+## Snapshot правило
+
+- един eligible account се брои веднъж в конкретната клетка/комбинация;
+- добавяне, изключване или промяна се отразяват при следващия стабилен snapshot;
+- публичният брой не се променя в реално време;
+- след eligibility филтъра всяка показвана група отново трябва самостоятелно да покрива threshold 5 и одобрените размерни нива.
+
+## Човешка полза и уникалност
+
+`5+` означава реални, потвърдени и достатъчно актуални членове на общността — не непременно хора, достъпни за контакт.
+
+Механизмът свързва:
+
+**потвърдена самоличност → потвърден canonical контекст → freshness → privacy-safe snapshot → лична стойност само през отделния Visibility Contract**
+
+Така публичната карта остава честна, без да смесва community presence с contact permission.
+
+## Какво уточнява
+
+Уточнява секции #79, #80, #83 и #84. Не променя:
+
+- threshold 5;
+- размерните нива `5+`, `10+`, `25+`, `50+`, `100+`;
+- включването на `open_to_strangers=OFF` в aggregate;
+- отделните правила за показване на конкретен човек.
+
+## Scope
+
+- НЯМА implementation сега.
+- НЯМА UI промяна сега.
+- НЯМА Supabase/DB промяна сега.
+- Следва последна dependency проверка дали остава друг реален pre-prototype blocker. Ако няма, продължава screen-by-screen contract-ът.
