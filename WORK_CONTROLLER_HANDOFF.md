@@ -380,7 +380,10 @@ Travel се показва само при конкретна причина.
 Връща се реален privacy-safe aggregate.
 
 CTA:
-**„Виж кои са“**
+**„Виж какво има за теб“**
+
+Кратко privacy обяснение:
+**„Конкретен човек се показва само когато имате ясна обща причина и той позволява нови заявки.“**
 
 При липса:
 **„Добави се“**
@@ -389,7 +392,7 @@ Root + Current Location се пренасят след регистрацият�
 
 ---
 
-# 13. ПОСЛЕДНО ОДОБРЕНО — LOGGED-IN NAVIGATION CONTRACT
+# 13. ОДОБРЕН LOGGED-IN NAVIGATION CONTRACT
 
 Master секция **#81**.
 
@@ -449,7 +452,7 @@ Chat НЕ е постоянен tab.
 → Къде си сега?  
 → Откъде си?  
 → реален preview  
-→ „Виж кои са“ / „Добави се“  
+→ „Виж какво има за теб“ / „Добави се“  
 → registration  
 → onboarding  
 → „За теб“**
@@ -464,12 +467,15 @@ Chat НЕ е постоянен tab.
 
 Няма Supabase/DB migration по новия contract.
 
-Последно е затворен:
-**общият logged-in architecture/navigation contract**.
+Затворени са:
+- общият logged-in architecture/navigation contract;
+- pre-prototype точка 1: public aggregate → personal value contract.
 
 ## NEXT EXACT STEP
 
-Следва **SCREEN-BY-SCREEN CONTRACT**.
+Следва **pre-prototype точка 2: точният privacy праг за тесни public aggregates**.
+
+След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 
 За всеки основен екран трябва да се затвори:
 - ролята му;
