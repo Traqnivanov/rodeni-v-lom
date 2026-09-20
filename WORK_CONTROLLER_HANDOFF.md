@@ -491,7 +491,9 @@ Chat НЕ е постоянен tab.
 
 Допълнителните pre-prototype blockers са **ЗАТВОРЕНИ**.
 
-Следва **SCREEN-BY-SCREEN CONTRACT — Screen 1: Public map entry / „А ти къде си на картата?“**.
+Screen 1, Точка 1 — reuse boundary и основен flow — е **ОДОБРЕНА** в Master §91. Запазва се картата и минималната рамка; не се пренасят публичната директория, самоличностите, exact counts/zero, старите people tabs или старият direct registration hook.
+
+Следва **Screen 1 — Точка 2: първоначалното публично състояние — какво човек вижда и разбира за 3 секунди преди да активира куката**.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 

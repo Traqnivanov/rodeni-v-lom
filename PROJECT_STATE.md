@@ -53,6 +53,8 @@
 
 - **Pre-prototype точка 6 — ОДОБРЕН SCOPE LOCK 20.09.2026:** текущият screen-by-screen contract и prototype са community-only. Няма Services tab, service request, automatic service opportunity, Ivanov Remonti transition, commercial recommendation или transfer към business layer. Community Guidance остава отделно. National-ready/local-activation Services архитектурата се пази само като future constraint. Старите Services въпроси са задължителни преди бъдещия Services prototype/implementation, не преди текущия community prototype.
 
+- **Screen 1 — Точка 1 ОДОБРЕНА:** от сегашния публичен екран се запазват световната карта като водещ entry point, минималният header, map interaction и тъмносиньо-златистата посока без финален visual lock. Не се пренасят ticker, profile cards, public people tabs, exact counts/zero, direct people browse, country people panel, „Присъедини се, за да пишеш“, директният hook → auth преход или public `select('*')`. Одобреният flow е карта → два context въпроса → privacy-safe aggregate → „Виж какво има за теб“ → registration/confirmation/onboarding/„За теб“. Няма implementation.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -217,7 +219,8 @@ Public → registered continuity:
 - Точка 5 — Aggregate Eligibility Contract: **ОДОБРЕНА**.
 - Точка 6 — Services scope lock за текущия community prototype: **ОДОБРЕНА**.
 - Допълнителните pre-prototype blockers са **ЗАТВОРЕНИ**.
-- Следва **SCREEN-BY-SCREEN CONTRACT — Screen 1: Public map entry / „А ти къде си на картата?“**.
+- Screen 1, Точка 1 — reuse boundary и основен flow: **ОДОБРЕНА**.
+- Следва **Screen 1 — Точка 2: първоначалното публично състояние — какво човек вижда и разбира за 3 секунди преди да активира куката**.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;
