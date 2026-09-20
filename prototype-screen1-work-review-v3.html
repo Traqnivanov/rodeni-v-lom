@@ -139,6 +139,7 @@ button{color:inherit}
   transform:translateY(103%);visibility:hidden;transition:transform .22s ease,visibility 0s linear .22s
 }
 .sheet.open{transform:none;visibility:visible;transition-delay:0s}
+.sheet.map-visible{max-height:min(54dvh,620px)}
 .handle{width:44px;height:4px;border-radius:99px;background:rgba(255,255,255,.25);margin:0 auto 8px}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px}
 .step{margin:0;color:var(--muted);font-size:15px;font-weight:760}
@@ -472,7 +473,17 @@ button{color:inherit}
 
   function save(){try{sessionStorage.setItem(STORAGE,JSON.stringify(state))}catch(e){}}
   function open(){sheet.classList.add('open');scrim.classList.add('show')}
-  function close(){sheet.classList.remove('open');scrim.classList.remove('show')}
+  function close(){sheet.classList.remove('open','map-visible');scrim.classList.remove('show')}
+  function keepMapVisible(){
+    sheet.classList.add('map-visible');
+    var mapCard=document.querySelector('.map-card');
+    if(!mapCard)return;
+    window.setTimeout(function(){
+      var top=window.scrollY+mapCard.getBoundingClientRect().top-72;
+      window.scrollTo({top:Math.max(0,top),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})
+    },20)
+  }
+  function useFullSheet(){sheet.classList.remove('map-visible')}
   startFlow.addEventListener('click',function(){state.view=state.country&&state.city?'root':'current';render();open()});
   closeSheet.addEventListener('click',close);
   scrim.addEventListener('click',close);
@@ -494,7 +505,7 @@ button{color:inherit}
     return out
   }
   function rootOptions(){
-    var out='<option value="">Избери населено място</option>';
+    var out='<option value="">Избери град или село</option>';
     Object.keys(rootData).forEach(function(name){out+='<option'+(state.root===name?' selected':'')+'>'+esc(name)+'</option>'});
     return out
   }
@@ -509,6 +520,7 @@ button{color:inherit}
   }
 
   function renderCurrent(){
+    useFullSheet();
     stepLabel.textContent='Стъпка 1 от 2';
     body.innerHTML=
       '<h2>Къде си сега?</h2>'+
@@ -528,6 +540,7 @@ button{color:inherit}
   }
 
   function renderRoot(){
+    keepMapVisible();
     stepLabel.textContent='Стъпка 2 от 2';
     var now=state.city+', '+countryData[state.country].name;
     body.innerHTML=
@@ -559,6 +572,7 @@ button{color:inherit}
   }
 
   function renderLoading(){
+    keepMapVisible();
     stepLabel.textContent='Проверяваме картата';
     var now=state.city+', '+countryData[state.country].name;
     body.innerHTML=
@@ -570,6 +584,7 @@ button{color:inherit}
   }
 
   function renderError(){
+    keepMapVisible();
     stepLabel.textContent='Резултатът не е зареден';
     var now=state.city+', '+countryData[state.country].name;
     var canContinue=state.retryCount>0;
@@ -598,6 +613,7 @@ button{color:inherit}
   }
 
   function renderResult(){
+    keepMapVisible();
     stepLabel.textContent='Твоят контекст';
     var result=bandFor();
     var now=state.city+', '+countryData[state.country].name;
@@ -612,6 +628,7 @@ button{color:inherit}
       '<div class="sheet-actions"><button class="primary" id="nextBoundary" type="button">Виж какво има за теб</button><button class="secondary" id="changePlaces" type="button">Промени</button></div>';
     document.getElementById('changePlaces').addEventListener('click',function(){state.retryCount=0;state.view='current';render()});
     document.getElementById('nextBoundary').addEventListener('click',function(){
+      useFullSheet();
       body.innerHTML='<h2>Следва създаване на профил</h2><p class="helper">Така ще запазиш тези два избора и ще видиш какво има за теб. След потвърждение ще можеш да ги прегледаш и промениш.</p><div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div><div class="sheet-actions"><button class="secondary" id="backResult" type="button">Назад към резултата</button></div>';
       document.getElementById('backResult').addEventListener('click',function(){state.view='result';render()})
     })
