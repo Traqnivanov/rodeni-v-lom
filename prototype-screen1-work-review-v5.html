@@ -538,7 +538,7 @@ body.flow-active .map-note{display:none}
   }
 
   function renderCurrent(){
-    useFullSheet();
+    keepMapVisible();
     stepLabel.textContent='Стъпка 1 от 2';
     body.innerHTML=
       '<h2>Къде си сега?</h2>'+
@@ -548,13 +548,22 @@ body.flow-active .map-note{display:none}
       '<div id="currentError" class="error" hidden></div>'+
       '<div class="sheet-actions"><button class="primary" id="toRoot" type="button">Продължи към „Откъде си?“</button></div>';
     var country=document.getElementById('country'),city=document.getElementById('city');
-    country.addEventListener('change',function(){state.country=this.value;state.city='';save();renderCurrent();updatePersonalMarkers()});
-    city.addEventListener('change',function(){state.city=this.value;save();updatePersonalMarkers()});
+    country.addEventListener('change',function(){
+      state.country=this.value;state.city='';save();renderCurrent();
+      if(state.country)focusCountrySelection();else resetMapView()
+    });
+    city.addEventListener('change',function(){
+      state.city=this.value;save();
+      if(state.city)focusCitySelection();else focusCountrySelection()
+    });
     document.getElementById('toRoot').addEventListener('click',function(){
       var err=document.getElementById('currentError');
       if(!state.country||!state.city){err.textContent='Избери държава и град или село, за да продължиш.';err.hidden=false;return}
       state.view='root';render()
-    })
+    });
+    if(state.city)focusCitySelection();
+    else if(state.country)focusCountrySelection();
+    else resetMapView()
   }
 
   function renderRoot(){
@@ -568,13 +577,16 @@ body.flow-active .map-note{display:none}
       '<div class="field"><label for="root">Град или село в България</label><select id="root">'+rootOptions()+'</select><p class="field-hint">Изборът още не се публикува и не се брои в картата.</p></div>'+
       '<div id="rootError" class="error" hidden></div>'+
       '<div class="sheet-actions"><button class="primary" id="showResult" type="button">Виж какво показва картата</button><button class="secondary" id="backCurrent" type="button">Назад</button></div>';
-    document.getElementById('root').addEventListener('change',function(){state.root=this.value;save();updatePersonalMarkers()});
+    document.getElementById('root').addEventListener('change',function(){
+      state.root=this.value;save();focusContextSelection()
+    });
     document.getElementById('showResult').addEventListener('click',function(){
       var err=document.getElementById('rootError');
       if(!state.root){err.textContent='Избери град или село, за да видиш резултата.';err.hidden=false;return}
       startLookup()
     });
-    document.getElementById('backCurrent').addEventListener('click',function(){state.view='current';render()})
+    document.getElementById('backCurrent').addEventListener('click',function(){state.view='current';render()});
+    focusContextSelection()
   }
 
   var lookupTimer=null;
@@ -636,14 +648,15 @@ body.flow-active .map-note{display:none}
     var result=bandFor();
     var now=state.city+', '+countryData[state.country].name;
     var resultHtml=result
-      ? '<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">'+esc(result.text)+'</p><p class="result-context">Това е общностен диапазон, не списък с хора.</p></div>'
-      : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за публичен резултат за тази комбинация.</p><p class="result-context">Когато групата е твърде малка, не показваме точен брой.</p></div>';
+      ? '<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">Има общност за тази комбинация.</p><p class="result-context">Показваме диапазон, не списък с хора.</p></div>'
+      : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за тази комбинация.</p><p class="result-context">Показваме резултат само когато общността е достатъчно голяма.</p></div>';
     body.innerHTML=
       '<h2>Ето какво показва картата</h2>'+
       '<div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
       resultHtml+
-      '<p class="lockline">Конкретен човек се показва само когато имате ясна обща причина и той позволява нови заявки.</p>'+
+      '<p class="lockline">Лични профили се показват само при ясна обща причина и разрешение.</p>'+
       '<div class="sheet-actions"><button class="primary" id="nextBoundary" type="button">Виж какво има за теб</button><button class="secondary" id="changePlaces" type="button">Промени</button></div>';
+    focusContextSelection();
     document.getElementById('changePlaces').addEventListener('click',function(){state.retryCount=0;state.view='current';render()});
     document.getElementById('nextBoundary').addEventListener('click',function(){
       useFullSheet();
@@ -680,6 +693,51 @@ body.flow-active .map-note{display:none}
     })
   }
   function drawMap(){clamp();mapBase.setAttribute('transform','translate('+view.tx+' '+view.ty+') scale('+view.scale+')');drawSignals();updatePersonalMarkers()}
+  function setMapView(point,scale){
+    if(!point)return;
+    view.scale=Math.max(1,Math.min(4,scale||1));
+    view.tx=480-point[0]*view.scale;
+    view.ty=260-point[1]*view.scale;
+    drawMap()
+  }
+  function resetMapView(){
+    view.scale=1;view.tx=0;view.ty=0;drawMap()
+  }
+  function currentCityPoint(){
+    if(!state.country)return null;
+    if(state.city&&cityXY[state.country+'|'+state.city])return cityXY[state.country+'|'+state.city];
+    var example=cityExample();
+    return cityXY[state.country+'|'+example]||countryData[state.country].xy
+  }
+  function focusCountrySelection(){
+    var point=currentCityPoint();
+    if(point)setMapView(point,2.35)
+  }
+  function focusCitySelection(){
+    var point=currentCityPoint();
+    if(point)setMapView(point,3.05)
+  }
+  function fitMapPoints(points){
+    points=points.filter(Boolean);
+    if(!points.length){resetMapView();return}
+    if(points.length===1){setMapView(points[0],2.8);return}
+    var minX=Math.min.apply(null,points.map(function(p){return p[0]}));
+    var maxX=Math.max.apply(null,points.map(function(p){return p[0]}));
+    var minY=Math.min.apply(null,points.map(function(p){return p[1]}));
+    var maxY=Math.max.apply(null,points.map(function(p){return p[1]}));
+    var dx=Math.max(58,maxX-minX),dy=Math.max(42,maxY-minY);
+    var scale=Math.min(3.35,Math.max(1.25,Math.min(650/dx,300/dy)));
+    var center=[(minX+maxX)/2,(minY+maxY)/2];
+    setMapView(center,scale)
+  }
+  function focusContextSelection(){
+    var current=currentCityPoint();
+    var root=state.root&&rootData[state.root]?[rootData[state.root].xy[0],rootData[state.root].xy[1]]:null;
+    if(root)fitMapPoints([current,root]);
+    else if(current)focusCitySelection();
+    else resetMapView()
+  }
+
   function zoomAt(factor,cx,cy){
     var old=view.scale,next=Math.max(1,Math.min(4,old*factor));if(next===old)return;
     var wx=(cx-view.tx)/old,wy=(cy-view.ty)/old;
