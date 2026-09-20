@@ -505,6 +505,8 @@ Screen 1, Точка 6 — loading/network/error, retry и recovery — е **О�
 
 **Screen 1 contract е ЗАВЪРШЕН, а interactive review prototype-ът е РЕАЛИЗИРАН И ПУБЛИКУВАН.** Следва **Owner mobile visual/flow review → конкретни корекции или изрично одобрение**. Не се преминава към `index.html`, production/Supabase implementation или Screen 2 без ново Owner решение.
 
+Първият mobile visual pass е **ОТХВЪРЛЕН**: част от текстовете са реално нечетими, а главната кука **„А ти къде си на картата?“** няма нужната визуална тежест. Master §99 въвежда задължителен Prototype Release Gate. Текущата работа е само initial mobile correction candidate; `technical pass`, `mobile visual pass` и `Owner approved` не се смесват.
+
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 
 За всеки основен екран трябва да се затвори:

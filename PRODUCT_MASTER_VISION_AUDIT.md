@@ -8007,3 +8007,39 @@ Mobile-first CSS, bottom-sheet поведението, touch target размер
 - не започва production/Supabase implementation;
 - не започва Screen 2;
 - коригират се само конкретни проблеми, намерени при Owner review.
+
+
+# 99. [ОДОБРЕНО][PROCESS][PROTOTYPE RELEASE GATE]
+
+**Дата:** 20.09.2026
+
+**Одобрено от:** Admin/Owner след първата реална mobile проверка на Screen 1
+
+**Причина:** технически коректен responsive CSS не е доказателство за реална четимост и правилна визуална йерархия. Първият Screen 1 candidate е допуснал прекалено малки mobile текстове и недостатъчно силна главна кука въпреки вече одобрения Visual Hierarchy Contract.
+
+## Задължителен release gate
+
+Нито един следващ prototype candidate не може да бъде обявен като „проверен“ или „готов за Owner review“, докато не мине едновременно:
+
+1. **Hierarchy card преди код:** човешка полза, главна кука/CTA, уникален механизъм, първи viewport, secondary елементи и точни type роли.
+2. **Hard mobile floors:** основна кука `19–20px` и минимум `60px` touch height; основен въпрос `24px`; нормален текст/обяснение минимум `17px`; privacy/helper минимум `16px`; metadata минимум `15px`. User-facing текст `10–13px` не се допуска. Ненужен текст се премахва, не се смалява.
+3. **Viewport matrix:** `360px`, `390px`, `412px`, high-resolution/coarse-pointer mobile и desktop. Width-only breakpoint не може да превърне реален телефон в desktop layout.
+4. **State matrix:** initial, input, loading, exact, safe-broader, suppressed, error и recovery според приложимия screen contract.
+5. **Three-second test:** веднага ли се разбира ползата, вижда ли се главното действие, конкурира ли го вторичен елемент и личи ли естественият уникален механизъм.
+6. **Readability evidence:** computed font/touch sizes плюс реално визуално доказателство; технически test без visual pass не е достатъчен.
+7. **Independent WORK CONTROLLER pass:** implementation резултатът се проверява отново срещу Master/State/Dependency Map, все едно е направен от друг изпълнител.
+8. **Статус дисциплина:** `technical pass` ≠ `mobile visual pass` ≠ `Owner approved`. Всеки статус се докладва точно и не се прескача.
+
+## Корективен Screen 1 checkpoint
+
+Първата корекция се прави точка по точка:
+
+1. initial mobile hierarchy и главната кука **„А ти къде си на картата?“**;
+2. след Owner approval — context panel и двата въпроса;
+3. след Owner approval — result/privacy/error states.
+
+До приключване на съответния gate няма promotion към `index.html`, production implementation или следващ screen.
+
+## NEXT
+
+Коригира се само initial mobile state: breakpoint защитата, четимостта и визуалната сила на главната кука. След technical pass резултатът остава **candidate**, докато Admin/Owner не го потвърди на реален телефон.

@@ -67,6 +67,8 @@
 
 - **Screen 1 review prototype — РЕАЛИЗИРАН 20.09.2026; ОЧАКВА OWNER REVIEW:** `prototype-screen1.html` покрива одобрения contract от Master §§91–97 с demo data, mobile bottom sheet/desktop side panel, exact/safe-broader/suppressed резултати и error/retry recovery. Това е отделен review артефакт; `index.html`, Supabase и DB не са променяни. „Няма implementation“ в историческите Screen 1 approval записи означава, че няма production implementation; актуалният review-prototype status е този запис и Master §98.
 
+- **Prototype Release Gate — ОДОБРЕН 20.09.2026:** първият Screen 1 candidate не минава mobile visual approval заради дребни текстове и слаба визуална тежест на главната кука. Master §99 вече изисква hard mobile floors, `360/390/412` + high-resolution mobile проверка, state matrix, three-second test, visual evidence и независим controller pass. Текущият status е **CORRECTION CANDIDATE**, не „mobile verified“.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -240,8 +242,8 @@ Public → registered continuity:
 - Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening: **ОДОБРЕНА**.
 - Screen 1, Точка 6 — loading/network/error, retry и recovery: **ОДОБРЕНА**.
 - **Screen 1 contract: ЗАВЪРШЕН.**
-- **Screen 1 interactive review prototype: РЕАЛИЗИРАН И ПУБЛИКУВАН; ОЧАКВА OWNER MOBILE VISUAL/FLOW REVIEW.**
-- Следва **Owner review → само конкретни корекции или изрично одобрение**. Без промяна на `index.html`, production/Supabase implementation или Screen 2 преди това.
+- **Screen 1 interactive review prototype: ПУБЛИКУВАН, НО ПЪРВИЯТ MOBILE VISUAL PASS Е ОТХВЪРЛЕН.**
+- Следва **initial mobile correction candidate → реална Owner phone проверка на Точка 1 → одобрение или конкретна корекция**. Без промяна на `index.html`, production/Supabase implementation или Screen 2 преди това.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;
@@ -268,7 +270,7 @@ Public → registered continuity:
 
 Дребни технически промени остават в Git history и се групират в checkpoint, вместо да се пълнят документите.
 
-Текущият значим checkpoint е Master §98: отделният Screen 1 review prototype е публикуван и технически проверен; следва Owner mobile visual/flow review.
+Текущият значим checkpoint е Master §99: Release Gate е одобрен, а initial mobile state се коригира след отхвърления първи visual pass. Technical pass не означава mobile/Owner approval.
 
 ## 8. Последен значим checkpoint
 

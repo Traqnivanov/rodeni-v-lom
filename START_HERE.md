@@ -287,6 +287,8 @@ Screen 1, Точка 6 — loading/network/error, retry и recovery — е од�
 
 **Screen 1 contract е завършен и отделният interactive review prototype е реализиран в `prototype-screen1.html` (Master §98).** Текущият NEXT е **Owner mobile visual/flow review → конкретни корекции по Owner feedback или изрично одобрение**. До това решение prototype-ът не заменя `index.html`, не започва production/Supabase implementation и не се преминава към Screen 2.
 
+След първата mobile проверка е задължителен и **Prototype Release Gate** от Master §99: hierarchy card преди код, hard mobile font/touch floors, viewport и state matrices, three-second test, реално визуално доказателство и независим WORK CONTROLLER pass. `Technical pass`, `mobile visual pass` и `Owner approved` са различни статуси и не могат да се заменят един с друг.
+
 Не започвай общ одит отначало, освен ако има конкретен конфликт, нов риск или изрично искане от Admin/Owner.
 
 

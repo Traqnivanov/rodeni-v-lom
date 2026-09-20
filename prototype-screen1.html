@@ -97,7 +97,7 @@
   .country:hover{fill:#405475}
   .map-signal{pointer-events:none}
   .map-signal circle{fill:#121f37;stroke:var(--gold);stroke-width:2;vector-effect:non-scaling-stroke;filter:drop-shadow(0 7px 10px rgba(0,0,0,.35))}
-  .map-signal text{fill:var(--gold-strong);font-weight:850;font-size:13px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+  .map-signal text{fill:var(--gold-strong);font-weight:850;font-size:15px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
   .personal-marker circle{stroke-width:3;vector-effect:non-scaling-stroke;filter:drop-shadow(0 8px 11px rgba(0,0,0,.45))}
   .personal-marker.current circle{fill:#162a4c;stroke:#9cc1ff}
   .personal-marker.root circle{fill:#3e2b10;stroke:var(--gold-strong)}
@@ -246,7 +246,7 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   @keyframes view-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  @media (min-width:760px){
+  @media (min-width:960px){
     .site-header{padding:12px 28px;min-height:78px}
     .privacy-link{display:inline-flex}
     .prototype-flag{top:90px;right:24px}
@@ -271,17 +271,40 @@
     .entry-card{left:6vw}
   }
 
-  @media (max-width:390px){
+  @media (max-width:959px){
     .brand-sub{display:none}
-    .site-header{min-height:66px;padding:9px 12px}
+    .site-header{min-height:68px;padding:10px 12px}
     .brand-mark{width:40px;height:40px}
-    .header-link{padding:0 8px}
-    .prototype-flag{top:72px}
-    .hero{padding-top:22px}
-    .hero h1{font-size:29px}
-    .hero-text{font-size:15px;margin-top:10px}
-    .entry-card{left:9px;right:9px;padding:12px}
+    .brand-name{font-size:18px}
+    .header-link{padding:0 10px;font-size:16px}
+    .prototype-flag{display:none}
+    .review-tools{right:12px;top:82px}
+    .review-button{min-height:48px;padding:0 15px;font-size:15px}
+    .review-menu{top:56px}
+    .review-menu h2{font-size:18px}
+    .review-menu p{font-size:15px;line-height:1.5}
+    .review-grid button{min-height:48px;font-size:15px}
+    .hero{padding:72px 18px 0}
+    .eyebrow{font-size:15px;letter-spacing:.08em}
+    .hero h1{font-size:clamp(36px,10vw,50px);line-height:1.04}
+    .hero-text{font-size:17px;line-height:1.5;margin-top:12px}
+    .entry-card{left:10px;right:10px;padding:16px}
+    #openFlow{min-height:60px;font-size:19px;font-weight:850;border-radius:16px}
+    .entry-card .privacy-note{font-size:16px;line-height:1.45;margin-top:12px}
+    .entry-card .privacy-note svg{width:20px;height:20px}
+    .map-caption{left:14px;bottom:calc(var(--safe-bottom) + 154px);font-size:15px}
+    .map-loading{font-size:16px}
     .context-panel{padding-left:15px;padding-right:15px}
+  }
+
+  @media (max-width:390px){
+    .site-header{padding-left:10px;padding-right:10px}
+    .brand{gap:9px}
+    .brand-mark{width:38px;height:38px}
+    .header-link{padding:0 8px}
+    .hero{padding-left:15px;padding-right:15px}
+    .entry-card{left:8px;right:8px;padding:14px}
+    .map-caption{bottom:calc(var(--safe-bottom) + 176px)}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -350,7 +373,7 @@
     </aside>
 
     <div class="review-tools">
-      <button class="review-button" id="reviewToggle" type="button" aria-expanded="false" aria-controls="reviewMenu">Преглед на прототипа</button>
+      <button class="review-button" id="reviewToggle" type="button" aria-expanded="false" aria-controls="reviewMenu">ДЕМО · Преглед</button>
       <div class="review-menu" id="reviewMenu" hidden>
         <h2>Демонстрационни състояния</h2>
         <p>Тези контроли са само за Owner review и не са част от продукта.</p>
