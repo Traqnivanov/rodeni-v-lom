@@ -61,6 +61,8 @@
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
 
+- **Visual Hierarchy Contract — ОДОБРЕН:** всеки screen contract и prototype използва ясни mobile type роли (`26–30px` основно послание, `22–24px` въпрос, `18–20px` section title, минимум `16px` body/CTA, `14–15px` helper), семантични color roles, минимум `4.5:1` нормален и `3:1` голям текст, `48px` важни touch targets, видим focus и системни spacing нива. Подсказките обясняват полза/privacy/следващо действие и стоят до свързания елемент. Всяко предложение има отделен visual hierarchy report. Пълният contract е в `START_HERE.md` и Master §93.
+
 - P0-6 ordinary-user registration V1: email + password, show/hide, минимум 12 знака с кратка подсказка, 18+, Terms/Privacy, email confirmation. Без profile/context полета в първата регистрационна форма.
 
 - P0-6 auth direction: email + password е основният ordinary-user модел. Взема се доказаният password UX от Popitai.Lom (show/hide, confirm, inline BG validation, email confirmation, forgot/reset) и се доразвива специално за Rodeni; magic link не е основният login.

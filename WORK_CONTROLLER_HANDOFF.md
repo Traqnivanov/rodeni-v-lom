@@ -514,6 +514,8 @@ Screen 1, Точка 2 — първоначално публично състо�
 
 Задължителният ред за всеки screen-by-screen анализ е: контекст/зависимости → роля → човешка полза → вход и първи 3 секунди → водещо действие/изход → пълен flow → всички states → privacy/safety/security/законност → mobile UX/четимост → filler → естествена уникалност → техническа цена. Всяко предложение съдържа отделен видим отчет за уникалност: какво е различимото и полезното, към кой по-широк механизъм допринася или че няма естествена уникалност и не се добавя нищо насила. Пълната дефиниция е в `START_HERE.md` §4B и Master §90.
 
+Visual Hierarchy Contract-ът е задължителен и е записан в `START_HERE.md` и Master §93. Всяко screen предложение съдържа отделен визуален отчет: type hierarchy, primary/secondary/color roles, helper/privacy copy, mobile first viewport, touch, focus, contrast и връзка с естествената уникалност. Точната font family и финалните tokens се заключват с prototype-а, не по предположение.
+
 Още:
 - без финален visual design;
 - без prototype;

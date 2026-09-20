@@ -52,6 +52,7 @@
 - privacy, safety и security by design;
 - mobile-first;
 - clarity-first и human-readability;
+- Visual Hierarchy Contract: mobile type/color/touch/focus/spacing роли и отделен визуален отчет за всяко screen предложение (`START_HERE.md`, Master §93);
 - едно ясно водещо действие;
 - explainability: „защо това“, „защо сега“, „какво мога да направя“;
 - loading, empty, error, success, permission denied, blocked и recovery states;
