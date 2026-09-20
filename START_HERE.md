@@ -224,11 +224,11 @@ Moderator е бъдеща по-ниска оперативна роля.
 
 ## 8. Текущи P0 отворени решения
 
-Затворени: 18+ launch policy, inbound-contact gate, unordered connection pair + separate block, structured travel, Admin/Moderator role matrix, ordinary-user registration/auth direction.
+Затворени: 18+ launch policy, inbound-contact gate, unordered connection pair + separate block, structured travel, Admin/Moderator role matrix, ordinary-user registration/auth direction, post-confirmation Minimum Context, Visibility Contract, logged-in navigation и pre-prototype точки 1–6.
 
-Остават:
-- P0-7 post-confirmation onboarding / Minimum Context;
-- visibility contract;
+Допълнителните UX/logic/privacy/flow blockers преди текущия community screen-by-screen contract са затворени.
+
+Остават преди full implementation:
 - exact Context Engine ranking/cooldown + Next Best Question logic;
 - security remediation plan;
 - implementation alignment на стария magic-link/14+/free-text travel код с одобрените правила.
@@ -236,6 +236,8 @@ Moderator е бъдеща по-ниска оперативна роля.
 ## 9. NEXT
 
 След като прочетеш `PROJECT_STATE.md`, продължи от неговия **NEXT EXACT STEP**.
+
+Текущ NEXT е **SCREEN-BY-SCREEN CONTRACT — Screen 1: Public map entry / „А ти къде си на картата?“**.
 
 Не започвай общ одит отначало, освен ако има конкретен конфликт, нов риск или изрично искане от Admin/Owner.
 

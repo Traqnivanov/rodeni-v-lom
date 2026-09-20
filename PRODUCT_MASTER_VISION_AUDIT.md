@@ -2030,9 +2030,11 @@ Commercial identity и ownership се разкриват ясно на service b
 Това може да създаде рядка комбинация:
 **community utility + real-world execution + sustainable local economics.**
 
-## [ЗА РЕШЕНИЕ]
+## [ОТЛОЖЕНО ДО FUTURE SERVICES ЕТАП]
 
-Преди прототип трябва отделно да се специфицира:
+Този списък НЕ е блокер за текущия community prototype.
+
+Преди бъдещ Services prototype/implementation трябва отделно да се специфицира:
 1. как човек преминава от community context към service need без усещане за реклама;
 2. кои нужди влизат в MVP и кои не;
 3. как се избира Ivanov Remonti срещу външен специалист;
@@ -2040,6 +2042,8 @@ Commercial identity и ownership се разкриват ясно на service b
 5. как се доказва изпълнението;
 6. как се пазят community и commercial данните разделени;
 7. как се измерва usefulness, без продуктът да се превърне във funnel.
+
+По-новите одобрени секции #66, #81 и #89 определят актуалния scope: настоящият prototype е community-only, без Services UI, service request flow или commercial entry.
 
 
 # 39. [ПРИНЦИП][P1] Истинската различимост: свързани механизми, а не списък от функции
@@ -7055,4 +7059,107 @@ Current Location се счита за актуално до **12 месеца о
 - НЯМА implementation сега.
 - НЯМА UI промяна сега.
 - НЯМА Supabase/DB промяна сега.
-- Следва последна dependency проверка дали остава друг реален pre-prototype blocker. Ако няма, продължава screen-by-screen contract-ът.
+- Services scope conflict-ът е затворен в секция #89. Следва screen-by-screen contract за текущия community продукт.
+
+
+# 89. [ОДОБРЕНО][PRE-PROTOTYPE][SCOPE LOCK] Services не влиза в текущия community prototype
+
+**Дата на одобрение:** 20.09.2026
+**Одобрено от:** Admin/Owner
+**Статус:** ОДОБРЕН SCOPE LOCK
+**Implementation status:** ПРИЛАГА СЕ КЪМ ТЕКУЩИЯ SCREEN-BY-SCREEN CONTRACT И ПРОТОТИП
+
+## Проблем
+
+Стара Master секция съдържа инструкция седем Services въпроса да се затворят „преди прототип“.
+
+По-новите одобрени решения определят:
+
+- Services като бъдещ отделен слой;
+- national-ready архитектура с локално активиране;
+- Community Guidance като отделно от Services;
+- текуща главна навигация **За теб / Карта / Хора / Ти** без Services tab.
+
+Ако старият текст остане активен за настоящия етап, може погрешно да разшири scope-а с service request flow, Ivanov Remonti или commercial UX и да промени community прототипа.
+
+## Одобрено решение
+
+Настоящият screen-by-screen contract и следващият интерактивен prototype са **community-only**.
+
+В текущия prototype няма:
+
+- основен или вторичен раздел „Услуги“;
+- service request форма;
+- automatic service opportunity;
+- автоматичен преход към Ivanov Remonti;
+- commercial recommendation;
+- provider selection;
+- service offer/contract/payment flow;
+- прехвърляне на community data към business layer.
+
+## Community Guidance граница
+
+**„Информация, съвет и насока“** остава community capability.
+
+То:
+
+- не е платена услуга;
+- не е provider listing;
+- не е реклама;
+- не влиза в Service Engine;
+- не създава автоматично commercial lead.
+
+## Какво се запазва за бъдещето
+
+Не се отменя секция #66:
+
+- Services архитектурата остава national-ready;
+- activation остава контролирано по населено място/район;
+- първоначално Лом е планиран като ON, когато Services етапът бъде изрично започнат;
+- community и Services activation остават независими.
+
+Това са бъдещи constraints, не текущи prototype функции.
+
+## Отложени задължителни решения
+
+Преди бъдещ Services prototype/implementation задължително се затварят:
+
+1. преходът от community context към explicit service need без усещане за реклама;
+2. MVP обхватът на нуждите;
+3. изборът Ivanov Remonti срещу външен специалист;
+4. отговорността;
+5. доказването на изпълнение;
+6. разделянето на community и commercial данните;
+7. измерването на usefulness без превръщане във funnel.
+
+## Текущ prototype scope
+
+Screen-by-screen contract-ът продължава само за:
+
+- public map entry и privacy-safe preview;
+- registration и email confirmation;
+- minimum onboarding и Context Bridge;
+- **За теб**;
+- **Карта**;
+- **Хора / Твоите хора**;
+- **Ти**;
+- connection request / accept / decline / block;
+- structured Travel в двете посоки;
+- accepted-only private chat;
+- нужните loading/empty/error/success/permission/blocked/recovery states.
+
+## Проверка по критерия за човешка полза
+
+Scope lock-ът пази първия prototype фокусиран върху основната човешка стойност:
+
+**правилният човек → по конкретна причина → в правилния момент**
+
+Services няма да влиза само защото е потенциално полезен бъдещ слой.
+
+## Scope
+
+- НЯМА implementation сега.
+- НЯМА UI промяна сега.
+- НЯМА Supabase/DB промяна сега.
+- Допълнителните pre-prototype blockers са затворени.
+- Следва **SCREEN-BY-SCREEN CONTRACT — Screen 1: Public map entry / „А ти къде си на картата?“**.

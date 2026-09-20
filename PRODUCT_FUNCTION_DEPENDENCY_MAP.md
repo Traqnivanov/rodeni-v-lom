@@ -152,7 +152,7 @@
 | Travel matching | Маршрут → дата → допълнителна помощ → community context при равни кандидати | отделно travel permission; без превоз на хора |
 | Community Guidance | Информация, съвет и насока | не е платена услуга и не влиза автоматично в Services |
 | Notifications | По-строги от in-product показването | отделно permission; не се обещава push без разрешение |
-| Future Services layer | National-ready, активира се локално; първоначално само Лом е ON | explicit user need, отделен Service Engine, minimum necessary transfer + explicit consent |
+| Future Services layer | National-ready, активира се локално; първоначално само Лом е ON, когато future Services етапът бъде изрично започнат | ИЗВЪН текущия community prototype; explicit user need, отделен Service Engine, minimum necessary transfer + explicit consent |
 | Service request | `new → review → clarification → assigned provider → inspection → offer → client decision → execution → report → closed/declined` | Admin/Owner Action Queue; provider identity; community data не се копира автоматично |
 | Admin/Owner | Най-висока application роля; управлява system/service/roles/infrastructure | protected staff auth, DB-backed role, audit |
 | Moderator | По-ниска community/safety operational роля | няма role management, service/business, hard delete, infrastructure или general chat access |
@@ -210,6 +210,8 @@
 - окончателният notification delivery contract.
 
 Тези точки не се попълват по предположение.
+
+Те не блокират текущия screen-by-screen community prototype contract. Services UI/flow също не е текущ blocker, защото е изрично отложен до future Services етап.
 
 ## 8. Legacy поведение, което не управлява новите решения
 

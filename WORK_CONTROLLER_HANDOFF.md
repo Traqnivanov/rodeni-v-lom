@@ -484,11 +484,14 @@ Chat НЕ е постоянен tab.
 - pre-prototype точка 2: privacy праг 5 + адаптивна публична видимост чрез нива `5+`, `10+`, `25+`, `50+`, `100+`; общо състояние за 0–4; безопасно разширяване само към по-широка група, която отделно покрива прага; без точни тесни бройки и без real-time публично обновяване;
 - pre-prototype точка 3: „Контекстов мост“ — Root + Current Location преминават като private unconfirmed pending context през registration/email confirmation; не участват в aggregates/matching/security; след confirmation user ги потвърждава или променя; едва тогава се записват като реален контекст и pending копието се изчиства;
 - pre-prototype точка 4: registered-only no-result resolver — waiting actions → active need/Travel → релевантни accepted хора → допустими strangers → privacy-safe context → една човешка следваща стъпка. Не се използват irrelevant accepted хора или weak strangers като filler;
-- pre-prototype точка 5: Aggregate Eligibility Contract — aggregate брои само потвърдени 18+ completed-onboarding accounts с canonical user-confirmed context; pending/unresolved/deleted/suspended/banned/test не участват; OFF остава включен; Root не изтича; Current Location freshness е 12 месеца; всички промени минават през stable snapshot и отново през threshold 5.
+- pre-prototype точка 5: Aggregate Eligibility Contract — aggregate брои само потвърдени 18+ completed-onboarding accounts с canonical user-confirmed context; pending/unresolved/deleted/suspended/banned/test не участват; OFF остава включен; Root не изтича; Current Location freshness е 12 месеца; всички промени минават през stable snapshot и отново през threshold 5;
+- pre-prototype точка 6: текущият screen-by-screen contract и prototype са community-only; Services/Ivanov Remonti/commercial flows са отложени до отделно изрично започнат future Services етап.
 
 ## NEXT EXACT STEP
 
-Следва **последна dependency проверка дали остава друг реален pre-prototype blocker**. Ако няма, продължава **SCREEN-BY-SCREEN CONTRACT** за вече одобрената архитектура.
+Допълнителните pre-prototype blockers са **ЗАТВОРЕНИ**.
+
+Следва **SCREEN-BY-SCREEN CONTRACT — Screen 1: Public map entry / „А ти къде си на картата?“**.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 

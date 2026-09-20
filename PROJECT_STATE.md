@@ -47,6 +47,8 @@
 
 - **Pre-prototype точка 5 — ОДОБРЕНА 20.09.2026:** public aggregate брои веднъж само confirmed-email, completed-onboarding, confirmed-18+, canonical и user-confirmed community profiles, които не са deleted/suspended/banned/test. Pending context и unresolved locality не участват. `open_to_strangers`, снимка, професия, guidance/help, connections, block и decline не влияят на community count. Travel не променя Current Location. Root не изтича; Current Location изтича за current-location aggregates 12 месеца след последното user потвърждение. Всички промени се отразяват при следващия стабилен snapshot, след което отново се прилагат threshold 5 и размерните нива.
 
+- **Pre-prototype точка 6 — ОДОБРЕН SCOPE LOCK 20.09.2026:** текущият screen-by-screen contract и prototype са community-only. Няма Services tab, service request, automatic service opportunity, Ivanov Remonti transition, commercial recommendation или transfer към business layer. Community Guidance остава отделно. National-ready/local-activation Services архитектурата се пази само като future constraint. Старите Services въпроси са задължителни преди бъдещия Services prototype/implementation, не преди текущия community prototype.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -149,14 +151,10 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 **P0-7 approved:** Hybrid locality resolution е одобрено: запазват се local country/city lists; при липсващо място има explicit fallback към controlled external lookup; избраното място има canonical identity; last-resort ръчно добавено място остава pending/unverified и не създава A-level exact-locality match. Не е реализирано.
 
-**P0-7 analysis checkpoint:** предложени са Minimum Context → Context Loop → Opportunity и детайлна Signal Contract Matrix. Explain-while-asking UX принципът е ОДОБРЕН: всеки въпрос обяснява защо се иска, каква стойност отключва и какво следва; CTA подсказва реалната следваща стъпка, а не е кухо „Продължи“. Текущата препоръка е first screen = display name + national canonical Root locality + current country + canonical current locality. Photo/school/profession/help/travel идват адаптивно след първа стойност. Критични зависимости остават visibility contract, canonical locality strategy и notification/cooldown.
+**P0-7 current checkpoint:** Explain-while-asking UX принципът е ОДОБРЕН. Minimum Context, visibility contract, canonical locality strategy, public continuity и pre-prototype privacy/flow blockers са затворени като продуктови решения. Photo/school/profession/help/travel идват адаптивно след първа стойност. Точните ranking/cooldown, notification delivery и DB/RLS механизми остават преди implementation, но не блокират screen-by-screen prototype contract-а.
 
 
-**P0-7: да се затвори post-confirmation onboarding / първият екран след регистрация.**
-
-P0-6 затваря само първата регистрационна форма и email confirmation. Следва отделно решение какво вижда потребителят веднага след потвърждението и кои минимални profile/context данни са нужни, за да получи първа реална стойност.
-
-Без код и без DB промени преди изрично одобрение.
+**P0-7 post-confirmation onboarding е ЗАТВОРЕН като продуктов contract:** след email confirmation minimum onboarding е Име/прякор → Root → Current Location; pre-registration Root/Current се пренасят като private pending context и се потвърждават/редактират, без повторно попълване от нулата. Няма implementation още.
 
 
 ## 6A. PRE-PROTOTYPE CHECKPOINT — 20.09.2026
@@ -213,7 +211,9 @@ Public → registered continuity:
 - Преди точка 4 е създаден и задължително се използва `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`; т.4 не се решава само като изолиран empty state.
 - Точка 4 — post-registration no-result contract: **ОДОБРЕНА**.
 - Точка 5 — Aggregate Eligibility Contract: **ОДОБРЕНА**.
-- Следва: последна dependency проверка дали остава друг реален pre-prototype blocker. Ако няма, започва screen-by-screen contract-ът.
+- Точка 6 — Services scope lock за текущия community prototype: **ОДОБРЕНА**.
+- Допълнителните pre-prototype blockers са **ЗАТВОРЕНИ**.
+- Следва **SCREEN-BY-SCREEN CONTRACT — Screen 1: Public map entry / „А ти къде си на картата?“**.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;
