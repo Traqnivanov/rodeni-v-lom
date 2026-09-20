@@ -142,6 +142,51 @@ P0-6 затваря само първата регистрационна фор�
 
 Без код и без DB промени преди изрично одобрение.
 
+
+## 6A. PRE-PROTOTYPE CHECKPOINT — 20.09.2026
+
+### Заключено преди прототипа
+
+Вече са одобрени и не се отварят отначало без конкретен конфликт:
+- minimum onboarding: Име/прякор → Откъде си? → Къде си сега?;
+- Root hierarchy;
+- „За теб“ priority model;
+- „Твоите хора“;
+- „Ти“ като лек control center;
+- accepted-connection behavior;
+- connection-request permission model;
+- travel model;
+- Community Guidance;
+- „Жив контекст“;
+- public hook върху картата: **„А ти къде си на картата?“**;
+- pre-registration preview с Current Location + Root и реален privacy-safe aggregate;
+- visibility contract с 3 нива: public aggregate → contextual stranger card → accepted relationship + communication.
+
+### Важно: НЕ е още заключено
+
+Следните точки НЕ трябва да се приемат автоматично само защото са предложени или присъстват в по-стари документи:
+- окончателната persistent navigation за logged-in user;
+- дали точните 4 главни секции ще бъдат **„За теб / Карта / Хора / Ти“**;
+- окончателният визуален/екранен layout;
+- точният privacy threshold за много тесни public aggregates;
+- точните DB/RLS/schema промени за новия contract.
+
+### NEXT EXACT STEP ПРЕДИ ПРОТОТИПА
+
+Първо се затваря **общата logged-in архитектура/navigation contract**:
+- кои са постоянните главни секции;
+- къде живеят Travel и Chat;
+- кой е default екранът след onboarding;
+- как public map преминава към registered experience;
+- без UI детайли и без код.
+
+След изрично Owner одобрение:
+1. записва се архитектурата;
+2. минава се screen-by-screen;
+3. чак тогава се прави пълен интерактивен mobile-first prototype.
+
+Не започвай prototype implementation преди това.
+
 ## 7. Source-of-truth правило
 
 При голяма промяна на вече одобрена логика не се оставят два противоречащи варианта.
