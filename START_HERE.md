@@ -279,7 +279,9 @@ Screen 1, Точка 2 — първоначално публично състо�
 
 Screen 1, Точка 3 — context panel и първият въпрос „Къде си сега?“ — е одобрена в Master §94.
 
-Текущ NEXT е **Screen 1 — Точка 4: „Откъде си?“ — Root избор, подсказка, връзка с картата и изход към privacy-safe preview**.
+Screen 1, Точка 4 — „Откъде си?“ и Root selection — е одобрена в Master §95.
+
+Текущ NEXT е **Screen 1 — Точка 5: privacy-safe preview — aggregate result, 0–4, safe broadening и „Виж какво има за теб“**.
 
 Не започвай общ одит отначало, освен ако има конкретен конфликт, нов риск или изрично искане от Admin/Owner.
 

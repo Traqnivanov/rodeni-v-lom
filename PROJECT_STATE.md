@@ -59,6 +59,8 @@
 
 - **Screen 1 — Точка 3 ОДОБРЕНА:** hook-ът отваря mobile bottom sheet/desktop side panel върху същата видима карта, не registration. Стъпка 1 е **„Къде си сега?“** с privacy/benefit hint, canonical `Държава` → `Населено място`, controlled lookup fallback, без GPS/IP и без URL/analytics/public write. След валиден избор картата потвърждава чрез country focus/selected state, без public count; CTA **„Продължи към „Откъде си?““** отваря стъпка 2. Visual и uniqueness отчетите са затворени в Master §94. Няма implementation.
 
+- **Screen 1 — Точка 4 ОДОБРЕНА:** стъпка 2 остава в същия panel и показва Current summary + `Промени`, **„Откъде си?“**, national canonical Root search, benefit/privacy hints и CTA **„Виж какво показва картата“**. Лом е priority, не hard limit. Unverified Root не създава exact result и не блокира по-широк допустим Current result. Картата показва различими `Сега`/`Откъде си` markers без подвеждаща route линия. Visual и uniqueness отчетите са в Master §95. Няма implementation.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -228,7 +230,8 @@ Public → registered continuity:
 - Screen 1, Точка 1 — reuse boundary и основен flow: **ОДОБРЕНА**.
 - Screen 1, Точка 2 — първоначално публично състояние и първите 3 секунди: **ОДОБРЕНА**.
 - Screen 1, Точка 3 — context panel и „Къде си сега?“: **ОДОБРЕНА**.
-- Следва **Screen 1 — Точка 4: „Откъде си?“ — Root избор, подсказка, връзка с картата и изход към privacy-safe preview**.
+- Screen 1, Точка 4 — „Откъде си?“ и Root selection: **ОДОБРЕНА**.
+- Следва **Screen 1 — Точка 5: privacy-safe preview — aggregate result, 0–4, safe broadening и „Виж какво има за теб“**.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;

@@ -497,7 +497,9 @@ Screen 1, Точка 2 — първоначално публично състо�
 
 Screen 1, Точка 3 — context panel и „Къде си сега?“ — е **ОДОБРЕНА** в Master §94. Hook-ът остава върху картата; няма direct auth. Current Location се избира canonical без GPS/IP, остава private session context и визуално фокусира избраната държава без public count.
 
-Следва **Screen 1 — Точка 4: „Откъде си?“ — Root избор, подсказка, връзка с картата и изход към privacy-safe preview**.
+Screen 1, Точка 4 — „Откъде си?“ и Root selection — е **ОДОБРЕНА** в Master §95. Стъпката пази Current summary, използва national canonical Root search, не се hardcode-ва Lom-only и визуално показва `Сега`/`Откъде си` без подвеждаща route линия.
+
+Следва **Screen 1 — Точка 5: privacy-safe preview — aggregate result, 0–4, safe broadening и „Виж какво има за теб“**.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 
