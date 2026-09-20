@@ -8030,6 +8030,18 @@ Mobile-first CSS, bottom-sheet поведението, touch target размер
 7. **Independent WORK CONTROLLER pass:** implementation резултатът се проверява отново срещу Master/State/Dependency Map, все едно е направен от друг изпълнител.
 8. **Статус дисциплина:** `technical pass` ≠ `mobile visual pass` ≠ `Owner approved`. Всеки статус се докладва точно и не се прескача.
 
+## Допълнение след втория отхвърлен candidate
+
+Вторият candidate е зареден с новия код, но Android/WebView средата на Owner продължава да докладва desktop viewport и активира desktop layout. Това доказва, че width-only breakpoint корекцията не е достатъчна.
+
+Задължителната responsive архитектура за prototype-а вече е:
+
+- mobile layout е базовият layout;
+- desktop layout е opt-in и се прилага само когато устройството не е маркирано като mobile/touch среда;
+- Android/iOS/mobile user agent и съвместими touch/coarse/no-hover сигнали активират `force-mobile`;
+- Owner review режимът показва видимо `Mobile` или `Desktop` плюс viewport/pointer/touch диагностика;
+- не се прави трета breakpoint корекция без доказателство кой режим реално е активен на Owner устройството.
+
 ## Корективен Screen 1 checkpoint
 
 Първата корекция се прави точка по точка:
@@ -8042,4 +8054,4 @@ Mobile-first CSS, bottom-sheet поведението, touch target размер
 
 ## NEXT
 
-Коригира се само initial mobile state: breakpoint защитата, четимостта и визуалната сила на главната кука. След technical pass резултатът остава **candidate**, докато Admin/Owner не го потвърди на реален телефон.
+Коригира се само initial mobile state чрез mobile-base/desktop-opt-in архитектура, четимост и визуална сила на главната кука. След technical pass резултатът остава **candidate**, докато видимият режим и резултатът не бъдат потвърдени на реалния Owner телефон.

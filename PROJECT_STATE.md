@@ -67,7 +67,7 @@
 
 - **Screen 1 review prototype — РЕАЛИЗИРАН 20.09.2026; ОЧАКВА OWNER REVIEW:** `prototype-screen1.html` покрива одобрения contract от Master §§91–97 с demo data, mobile bottom sheet/desktop side panel, exact/safe-broader/suppressed резултати и error/retry recovery. Това е отделен review артефакт; `index.html`, Supabase и DB не са променяни. „Няма implementation“ в историческите Screen 1 approval записи означава, че няма production implementation; актуалният review-prototype status е този запис и Master §98.
 
-- **Prototype Release Gate — ОДОБРЕН 20.09.2026:** първият Screen 1 candidate не минава mobile visual approval заради дребни текстове и слаба визуална тежест на главната кука. Master §99 вече изисква hard mobile floors, `360/390/412` + high-resolution mobile проверка, state matrix, three-second test, visual evidence и независим controller pass. Текущият status е **CORRECTION CANDIDATE**, не „mobile verified“.
+- **Prototype Release Gate — ОДОБРЕН 20.09.2026:** първият Screen 1 candidate не минава mobile visual approval заради дребни текстове и слаба визуална тежест на главната кука. Вторият candidate също е отхвърлен: новият код е зареден, но Android/WebView продължава да активира desktop layout, което доказва недостатъчност на width-only breakpoint-а. Master §99 вече изисква mobile-base/desktop-opt-in архитектура, hard mobile floors, viewport/device diagnostics, state matrix, three-second test, visual evidence и независим controller pass. Текущият status е **DEVICE-AWARE CORRECTION CANDIDATE**, не „mobile verified“.
 
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
@@ -270,7 +270,7 @@ Public → registered continuity:
 
 Дребни технически промени остават в Git history и се групират в checkpoint, вместо да се пълнят документите.
 
-Текущият значим checkpoint е Master §99: Release Gate е одобрен, а initial mobile state се коригира след отхвърления първи visual pass. Technical pass не означава mobile/Owner approval.
+Текущият значим checkpoint е Master §99: Release Gate е одобрен, първите два mobile candidates са отхвърлени и initial state се коригира чрез mobile-base/desktop-opt-in архитектура с видим device report. Technical pass не означава mobile/Owner approval.
 
 ## 8. Последен значим checkpoint
 

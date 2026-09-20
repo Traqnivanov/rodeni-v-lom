@@ -507,6 +507,8 @@ Screen 1, Точка 6 — loading/network/error, retry и recovery — е **О�
 
 Първият mobile visual pass е **ОТХВЪРЛЕН**: част от текстовете са реално нечетими, а главната кука **„А ти къде си на картата?“** няма нужната визуална тежест. Master §99 въвежда задължителен Prototype Release Gate. Текущата работа е само initial mobile correction candidate; `technical pass`, `mobile visual pass` и `Owner approved` не се смесват.
 
+Вторият candidate също е **ОТХВЪРЛЕН**: cache-busted страницата доказва новия код чрез `ДЕМО · Преглед`, но Owner Android/WebView пак активира desktop layout. Следващата корекция е структурна, не ново местене на breakpoint: mobile е base, desktop е opt-in само извън `force-mobile`, а review контролът показва реалния режим и viewport/pointer/touch диагностиката.
+
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 
 За всеки основен екран трябва да се затвори:
