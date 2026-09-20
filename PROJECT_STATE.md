@@ -57,6 +57,8 @@
 
 - **Screen 1 — Точка 2 ОДОБРЕНА:** анонимният първи viewport съдържа `Родени в Лом`, едно ясно обяснение, world map с community signal само при privacy-safe aggregate 5+, водещо **„А ти къде си на картата?“**, privacy опора **„Показваме общности, не лични профили.“**, вторични `Вход` и `Поверителност`. Няма public identities, exact counts/zero или ticker. Първият изглед не се насилва да бъде уникален; той е вход към отличителния map → context → privacy → Context Bridge → „За теб“ механизъм. Няма implementation.
 
+- **Screen 1 — Точка 3 ОДОБРЕНА:** hook-ът отваря mobile bottom sheet/desktop side panel върху същата видима карта, не registration. Стъпка 1 е **„Къде си сега?“** с privacy/benefit hint, canonical `Държава` → `Населено място`, controlled lookup fallback, без GPS/IP и без URL/analytics/public write. След валиден избор картата потвърждава чрез country focus/selected state, без public count; CTA **„Продължи към „Откъде си?““** отваря стъпка 2. Visual и uniqueness отчетите са затворени в Master §94. Няма implementation.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -225,7 +227,8 @@ Public → registered continuity:
 - Допълнителните pre-prototype blockers са **ЗАТВОРЕНИ**.
 - Screen 1, Точка 1 — reuse boundary и основен flow: **ОДОБРЕНА**.
 - Screen 1, Точка 2 — първоначално публично състояние и първите 3 секунди: **ОДОБРЕНА**.
-- Следва **Screen 1 — Точка 3: активиране на „А ти къде си на картата?“ — context panel и първият въпрос „Къде си сега?“**.
+- Screen 1, Точка 3 — context panel и „Къде си сега?“: **ОДОБРЕНА**.
+- Следва **Screen 1 — Точка 4: „Откъде си?“ — Root избор, подсказка, връзка с картата и изход към privacy-safe preview**.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;

@@ -495,7 +495,9 @@ Screen 1, Точка 1 — reuse boundary и основен flow — е **ОДО
 
 Screen 1, Точка 2 — първоначално публично състояние и първите 3 секунди — е **ОДОБРЕНА** в Master §92. Първият viewport има ясна map цел, едно водещо действие и privacy опора; няма public identities, exact counts/zero или ticker. Отделният uniqueness отчет е част от одобрението.
 
-Следва **Screen 1 — Точка 3: активиране на „А ти къде си на картата?“ — context panel и първият въпрос „Къде си сега?“**.
+Screen 1, Точка 3 — context panel и „Къде си сега?“ — е **ОДОБРЕНА** в Master §94. Hook-ът остава върху картата; няма direct auth. Current Location се избира canonical без GPS/IP, остава private session context и визуално фокусира избраната държава без public count.
+
+Следва **Screen 1 — Точка 4: „Откъде си?“ — Root избор, подсказка, връзка с картата и изход към privacy-safe preview**.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 
