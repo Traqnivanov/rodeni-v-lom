@@ -385,8 +385,8 @@ CTA:
 Кратко privacy обяснение:
 **„Конкретен човек се показва само когато имате ясна обща причина и той позволява нови заявки.“**
 
-При липса:
-**„Добави се“**
+При privacy-suppressed резултат CTA остава:
+**„Виж какво има за теб“**
 
 Root + Current Location се пренасят след регистрацията и не се питат повторно от нулата.
 
@@ -452,7 +452,7 @@ Chat НЕ е постоянен tab.
 → Къде си сега?  
 → Откъде си?  
 → реален preview  
-→ „Виж какво има за теб“ / „Добави се“  
+→ „Виж какво има за теб“
 → registration  
 → onboarding  
 → „За теб“**
@@ -469,11 +469,12 @@ Chat НЕ е постоянен tab.
 
 Затворени са:
 - общият logged-in architecture/navigation contract;
-- pre-prototype точка 1: public aggregate → personal value contract.
+- pre-prototype точка 1: public aggregate → personal value contract;
+- pre-prototype точка 2: privacy праг 5 + адаптивна публична видимост чрез нива `5+`, `10+`, `25+`, `50+`, `100+`; общо състояние за 0–4; безопасно разширяване само към по-широка група, която отделно покрива прага; без точни тесни бройки и без real-time публично обновяване.
 
 ## NEXT EXACT STEP
 
-Следва **pre-prototype точка 2: точният privacy праг за тесни public aggregates**.
+Следва **pre-prototype точка 3: безопасното и непрекъснато пренасяне на въведените Root + Current Location през registration и email confirmation**.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 
