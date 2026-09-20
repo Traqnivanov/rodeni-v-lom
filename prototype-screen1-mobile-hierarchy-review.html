@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Mobile hierarchy review · Родени в Лом</title>
+<style>
+  :root{
+    --bg:#070d19;
+    --bg-2:#0b1426;
+    --panel:#101d33;
+    --panel-2:#14243e;
+    --text:#fbf8f1;
+    --soft:#d7deea;
+    --muted:#aeb8c9;
+    --gold:#e9b84f;
+    --gold-strong:#f4cd72;
+    --gold-ink:#251a07;
+    --line:rgba(255,255,255,.14);
+    --line-strong:rgba(255,255,255,.24);
+    --blue:#9bc2ff;
+    --shadow:0 24px 70px rgba(0,0,0,.4);
+    --radius:22px;
+    --safe-bottom:max(18px,env(safe-area-inset-bottom));
+  }
+
+  *{box-sizing:border-box}
+  html{background:var(--bg);font-size:16px}
+  body{
+    margin:0;
+    min-height:100dvh;
+    color:var(--text);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:
+      radial-gradient(circle at 85% 5%,rgba(68,105,167,.2),transparent 30%),
+      linear-gradient(165deg,var(--bg-2),var(--bg) 72%);
+  }
+  button,a{font:inherit;-webkit-tap-highlight-color:transparent}
+  button{color:inherit}
+  a{color:inherit}
+  [hidden]{display:none!important}
+
+  .page{
+    width:min(100%,760px);
+    min-height:100dvh;
+    margin:0 auto;
+    padding-bottom:var(--safe-bottom);
+  }
+
+  .header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    min-height:64px;
+    padding:8px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    border-bottom:1px solid var(--line);
+    background:rgba(7,13,25,.9);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+  }
+  .brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .brand-mark{
+    width:42px;
+    height:42px;
+    flex:0 0 auto;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(233,184,79,.44);
+    border-radius:15px;
+    background:linear-gradient(145deg,rgba(233,184,79,.19),rgba(233,184,79,.045));
+  }
+  .brand-mark svg{width:26px;height:26px;stroke:var(--gold-strong)}
+  .brand-name{margin:0;font-size:19px;line-height:1.1;font-weight:820;letter-spacing:-.02em}
+  .login{
+    min-height:48px;
+    padding:0 13px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:13px;
+    text-decoration:none;
+    color:var(--soft);
+    font-size:16px;
+    font-weight:780;
+  }
+  .login:focus-visible,.primary:focus-visible,.map-control:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+  .intro{
+    padding:22px 16px 12px;
+  }
+  .intro h1{
+    margin:0;
+    max-width:620px;
+    font-size:clamp(30px,8.2vw,38px);
+    line-height:1.05;
+    letter-spacing:-.04em;
+    font-weight:860;
+  }
+  .intro p{
+    margin:12px 0 0;
+    max-width:640px;
+    color:var(--soft);
+    font-size:18px;
+    line-height:1.5;
+  }
+
+  .action-card{
+    margin:0 12px 14px;
+    padding:14px;
+    border:1px solid var(--line-strong);
+    border-radius:20px;
+    background:linear-gradient(160deg,rgba(20,36,62,.96),rgba(11,20,38,.96));
+    box-shadow:var(--shadow);
+  }
+  .primary{
+    width:100%;
+    min-height:62px;
+    padding:10px 18px;
+    border:0;
+    border-radius:16px;
+    cursor:pointer;
+    background:linear-gradient(180deg,var(--gold-strong),var(--gold));
+    color:var(--gold-ink);
+    font-size:20px;
+    line-height:1.2;
+    font-weight:880;
+    box-shadow:0 12px 28px rgba(233,184,79,.18);
+  }
+  .primary:active{transform:translateY(1px)}
+  .privacy{
+    margin:12px 2px 0;
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    color:var(--soft);
+    font-size:16px;
+    line-height:1.45;
+  }
+  .privacy svg{width:21px;height:21px;flex:0 0 auto;stroke:var(--gold-strong);margin-top:1px}
+
+  .map-card{
+    margin:0 12px 18px;
+    overflow:hidden;
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    background:linear-gradient(180deg,#132541,#091426);
+    box-shadow:0 18px 50px rgba(0,0,0,.28);
+  }
+  .map-head{
+    padding:14px 14px 10px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .map-head h2{margin:0;font-size:19px;line-height:1.25;font-weight:820}
+  .map-head p{margin:5px 0 0;color:var(--muted);font-size:16px;line-height:1.4}
+  .map-actions{display:flex;gap:8px;flex:0 0 auto}
+  .map-control{
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--line);
+    border-radius:14px;
+    cursor:pointer;
+    background:rgba(255,255,255,.04);
+    color:var(--text);
+    font-size:24px;
+    font-weight:700;
+  }
+  .map-wrap{
+    position:relative;
+    height:clamp(230px,35dvh,310px);
+    min-height:230px;
+    border-top:1px solid var(--line);
+    background:
+      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(180deg,#11223c,#091426);
+    background-size:36px 36px,36px 36px,auto;
+  }
+  #worldMap{width:100%;height:100%;display:block;touch-action:none}
+  .country{fill:#263a59;stroke:#081222;stroke-width:.8;vector-effect:non-scaling-stroke}
+  .country.has-signal{fill:#344b6d}
+  .signal circle{fill:#142541;stroke:var(--gold-strong);stroke-width:2.2}
+  .signal .band{fill:var(--gold-strong);font-size:16px;font-weight:900;text-anchor:middle;dominant-baseline:central}
+  .signal .name{fill:#fff;font-size:15px;font-weight:800;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:4px;stroke-linejoin:round}
+  .map-status{
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    padding:20px;
+    text-align:center;
+    color:var(--soft);
+    font-size:16px;
+    line-height:1.45;
+    background:rgba(8,16,31,.72);
+  }
+  .map-note{
+    padding:11px 14px 13px;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.45;
+  }
+
+  .review-note{
+    margin:0 14px 10px;
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.5;
+  }
+  .review-note strong{color:var(--soft)}
+
+  .demo-sheet{
+    position:fixed;
+    z-index:40;
+    left:12px;
+    right:12px;
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    max-width:520px;
+    margin:0 auto;
+    padding:18px;
+    border:1px solid var(--line-strong);
+    border-radius:22px;
+    background:linear-gradient(165deg,#172844,#0b1528);
+    box-shadow:0 26px 80px rgba(0,0,0,.55);
+  }
+  .demo-sheet h2{margin:0;font-size:24px;line-height:1.15}
+  .demo-sheet p{margin:10px 0 16px;color:var(--soft);font-size:17px;line-height:1.5}
+  .demo-sheet button{
+    width:100%;
+    min-height:52px;
+    border:1px solid var(--line-strong);
+    border-radius:14px;
+    cursor:pointer;
+    background:rgba(255,255,255,.05);
+    color:var(--text);
+    font-size:17px;
+    font-weight:800;
+  }
+
+  @media (min-width:760px){
+    body{padding:22px}
+    .page{min-height:calc(100dvh - 44px);border:1px solid var(--line);border-radius:28px;overflow:hidden;background:rgba(7,13,25,.62);box-shadow:var(--shadow)}
+    .header{position:relative}
+    .intro{padding:28px 26px 14px}
+    .action-card,.map-card{margin-left:24px;margin-right:24px}
+    .map-wrap{height:320px}
+    .review-note{margin-left:26px;margin-right:26px}
+  }
+
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="header">
+    <div class="brand" aria-label="Родени в Лом">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v15"/><path d="M8.5 6.5h7"/><path d="M5 13c1.3 4 3.7 6 7 6s5.7-2 7-6"/><path d="M5 13H2.8"/><path d="M21.2 13H19"/></svg>
+      </span>
+      <p class="brand-name">Родени в Лом</p>
+    </div>
+    <a class="login" href="#login" aria-label="Вход">Вход</a>
+  </header>
+
+  <section class="intro" aria-labelledby="mainQuestion">
+    <h1 id="mainQuestion">А ти къде си на картата?</h1>
+    <p>Посочи къде живееш сега и откъде си. Виж каква общност има около теб.</p>
+  </section>
+
+  <section class="action-card" aria-label="Основно действие">
+    <button class="primary" id="startDemo" type="button">Провери за себе си</button>
+    <p class="privacy">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <span>Показваме общности, не лични профили.</span>
+    </p>
+  </section>
+
+  <section class="map-card" aria-labelledby="mapTitle">
+    <div class="map-head">
+      <div>
+        <h2 id="mapTitle">Общности по света</h2>
+        <p>Разгледай картата. Числото остава свързано с мястото и при увеличение.</p>
+      </div>
+      <div class="map-actions" aria-label="Управление на картата">
+        <button class="map-control" id="zoomOut" type="button" aria-label="Намали картата">−</button>
+        <button class="map-control" id="zoomIn" type="button" aria-label="Увеличи картата">+</button>
+      </div>
+    </div>
+    <div class="map-wrap">
+      <svg id="worldMap" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Световна карта с общностни сигнали"></svg>
+      <div class="map-status" id="mapStatus">Зареждаме картата…</div>
+    </div>
+    <div class="map-note">Публичните сигнали са само privacy-safe диапазони: 5+, 10+, 25+, 50+, 100+.</div>
+  </section>
+
+  <p class="review-note"><strong>Review scope:</strong> само новата мобилна йерархия на началния екран. Следващите стъпки „Къде си сега?“ и „Откъде си?“ не се променят в този кандидат.</p>
+</main>
+
+<div class="demo-sheet" id="demoSheet" hidden role="dialog" aria-modal="true" aria-labelledby="demoTitle">
+  <h2 id="demoTitle">Тук започва одобреният context flow</h2>
+  <p>Този отделен кандидат спира точно преди „Къде си сега?“, за да може Work да оцени само началната мобилна йерархия.</p>
+  <button type="button" id="closeSheet">Затвори</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+(function(){
+  var start=document.getElementById('startDemo');
+  var sheet=document.getElementById('demoSheet');
+  var close=document.getElementById('closeSheet');
+  start.addEventListener('click',function(){sheet.hidden=false;close.focus();});
+  close.addEventListener('click',function(){sheet.hidden=true;start.focus();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!sheet.hidden){sheet.hidden=true;start.focus();}});
+
+  var svg=d3.select('#worldMap');
+  var status=document.getElementById('mapStatus');
+  var width=960,height=520;
+  var projection=d3.geoNaturalEarth1();
+  var path=d3.geoPath(projection);
+  var mapLayer=svg.append('g').attr('class','map-layer');
+  var signalLayer=svg.append('g').attr('class','signal-layer');
+  var currentTransform=d3.zoomIdentity;
+
+  var numericToAlpha2={276:'DE',826:'GB',724:'ES',380:'IT',100:'BG'};
+  var signals=[
+    {code:'DE',name:'Германия',band:'25+',coords:[10.45,51.16]},
+    {code:'GB',name:'Великобритания',band:'10+',coords:[-3.4,55.3]},
+    {code:'ES',name:'Испания',band:'5+',coords:[-3.7,40.3]},
+    {code:'IT',name:'Италия',band:'5+',coords:[12.6,42.8]}
+  ];
+
+  function drawSignals(){
+    var groups=signalLayer.selectAll('g.signal').data(signals,function(d){return d.code;}).join(function(enter){
+      var g=enter.append('g').attr('class','signal');
+      g.append('circle').attr('r',24);
+      g.append('text').attr('class','band').text(function(d){return d.band;});
+      g.append('text').attr('class','name').attr('y',42).text(function(d){return d.name;});
+      return g;
+    });
+    groups.attr('transform',function(d){
+      var p=projection(d.coords);
+      var screen=currentTransform.apply(p);
+      return 'translate('+screen[0]+','+screen[1]+')';
+    });
+  }
+
+  function applyZoom(transform){
+    currentTransform=transform;
+    mapLayer.attr('transform',transform);
+    drawSignals();
+  }
+
+  var zoom=d3.zoom()
+    .scaleExtent([1,5])
+    .translateExtent([[0,0],[width,height]])
+    .extent([[0,0],[width,height]])
+    .on('zoom',function(event){applyZoom(event.transform);});
+  svg.call(zoom);
+
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+    .then(function(r){if(!r.ok)throw new Error('map');return r.json();})
+    .then(function(topology){
+      var world=topojson.feature(topology,topology.objects.countries);
+      projection.fitExtent([[28,28],[932,492]],world);
+      mapLayer.selectAll('path.country').data(world.features).join('path')
+        .attr('class',function(d){var code=numericToAlpha2[+d.id];return 'country'+(signals.some(function(s){return s.code===code;})?' has-signal':'');})
+        .attr('d',path);
+      drawSignals();
+      status.hidden=true;
+    })
+    .catch(function(){status.textContent='Картата не успя да се зареди. Основното действие остава достъпно.';});
+
+  document.getElementById('zoomIn').addEventListener('click',function(){svg.transition().duration(180).call(zoom.scaleBy,1.35);});
+  document.getElementById('zoomOut').addEventListener('click',function(){svg.transition().duration(180).call(zoom.scaleBy,1/1.35);});
+})();
+</script>
+</body>
+</html>
