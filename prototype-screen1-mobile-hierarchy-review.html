@@ -48,7 +48,7 @@ button{color:inherit}
 }
 .intro{padding:22px 16px 12px}
 .intro h1{
-  margin:0;max-width:640px;font-size:clamp(30px,8.2vw,38px);line-height:1.05;
+  margin:0;max-width:640px;font-size:clamp(30px,8vw,32px);line-height:1.05;
   letter-spacing:-.04em;font-weight:860
 }
 .intro p{margin:12px 0 0;max-width:650px;color:var(--soft);font-size:18px;line-height:1.5}
@@ -71,16 +71,19 @@ button{color:inherit}
   margin:0 12px 18px;overflow:hidden;border:1px solid var(--line2);border-radius:22px;
   background:linear-gradient(180deg,#132541,#091426);box-shadow:0 18px 50px rgba(0,0,0,.28)
 }
-.map-head{padding:14px 14px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-.map-head h2{margin:0;font-size:19px;line-height:1.25;font-weight:820}
-.map-head p{margin:5px 0 0;color:var(--muted);font-size:16px;line-height:1.4}
-.map-actions{display:flex;gap:8px;flex:0 0 auto}
+.map-actions{position:absolute;z-index:6;top:10px;right:10px;display:flex;gap:8px}
+.map-overlay-title{
+  position:absolute;z-index:6;top:12px;left:12px;max-width:calc(100% - 132px);
+  padding:7px 10px;border:1px solid var(--line);border-radius:999px;
+  background:rgba(7,16,31,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:var(--soft);font-size:15px;line-height:1.2;font-weight:800
+}
 .map-control{
   width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line);
   border-radius:14px;cursor:pointer;background:rgba(255,255,255,.04);font-size:24px;font-weight:700
 }
 .map-wrap{
-  position:relative;height:clamp(230px,35dvh,310px);min-height:230px;border-top:1px solid var(--line);
+  position:relative;height:clamp(240px,36dvh,300px);min-height:240px;
   background:
     linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
@@ -100,9 +103,28 @@ button{color:inherit}
 .personal.current circle{fill:#17305a;stroke:var(--blue)}
 .personal.root circle{fill:#3b2a10;stroke:var(--gold2)}
 .personal circle{stroke-width:3;vector-effect:non-scaling-stroke}
+.map-context{
+  position:absolute;z-index:6;left:10px;right:10px;bottom:10px;
+  display:flex;flex-wrap:wrap;gap:7px;pointer-events:none
+}
+.context-chip{
+  max-width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:999px;
+  background:rgba(7,16,31,.86);color:var(--text);font-size:15px;line-height:1.25;font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.context-chip.current{border-color:rgba(155,194,255,.48)}
+.context-chip.root{border-color:rgba(244,205,114,.48)}
 .map-note{padding:11px 14px 13px;border-top:1px solid var(--line);color:var(--muted);font-size:15px;line-height:1.45}
-.review-note{margin:0 14px 10px;color:var(--muted);font-size:15px;line-height:1.5}
-.review-note strong{color:var(--soft)}
+.loading-box{
+  display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:16px;
+  border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)
+}
+.spinner{width:26px;height:26px;flex:0 0 auto;border:3px solid rgba(255,255,255,.16);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+.loading-box p{margin:0;font-size:17px;line-height:1.45;font-weight:760}
+.error-box{margin:0 0 14px;padding:16px;border:1px solid rgba(255,184,176,.36);border-radius:16px;background:rgba(164,50,50,.16)}
+.error-box h3{margin:0;font-size:19px}
+.error-box p{margin:8px 0 0;color:#f3d9d6;font-size:16px;line-height:1.5}
+@keyframes spin{to{transform:rotate(360deg)}}
 .scrim{
   position:fixed;z-index:30;inset:0;background:rgba(2,6,14,.55);
   opacity:0;pointer-events:none;transition:opacity .18s ease
@@ -191,17 +213,12 @@ button{color:inherit}
   </section>
 
   <section class="map-card" aria-labelledby="mapTitle">
-    <div class="map-head">
-      <div>
-        <h2 id="mapTitle">Общности по света</h2>
-        <p>Разгледай картата. Сигналите остават четими и при увеличение.</p>
-      </div>
-      <div class="map-actions">
+    <div class="map-wrap">
+      <div class="map-overlay-title" id="mapTitle">Общности по света</div>
+      <div class="map-actions" aria-label="Управление на картата">
         <button class="map-control" id="zoomOut" type="button" aria-label="Намали картата">−</button>
         <button class="map-control" id="zoomIn" type="button" aria-label="Увеличи картата">+</button>
       </div>
-    </div>
-    <div class="map-wrap">
       <svg id="worldMap" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Световна карта с общностни сигнали">
         <g id="mapBase">
           <path class="continent" d="M57 119C96 72 164 58 224 80c38 14 62 35 90 43 35 10 59 1 82 22 18 16 10 39-16 48-31 11-52 2-76 12-24 10-35 31-50 48-17 19-38 29-58 16-19-12-17-33-36-42-22-10-51 2-75-9-34-16-50-65-28-99z"/>
@@ -221,11 +238,11 @@ button{color:inherit}
         </g>
         <g id="personalLayer" aria-hidden="true"></g>
       </svg>
+      <div class="map-context" id="mapContext" hidden></div>
     </div>
     <div class="map-note">Публичните сигнали са privacy-safe диапазони: 5+, 10+, 25+, 50+, 100+.</div>
   </section>
 
-  <p class="review-note"><strong>Отделен review прототип:</strong> функционален Screen 1 по последната mobile йерархия. Не използва Supabase и не променя main.</p>
 </main>
 
 <div class="scrim" id="scrim"></div>
@@ -266,7 +283,7 @@ button{color:inherit}
     'Пловдив':{label:'Пловдив, България',xy:[540,218]},
     'Видин':{label:'Видин, България',xy:[523,201]}
   };
-  var state={view:'current',country:'',city:'',root:''};
+  var state={view:'current',country:'',city:'',root:'',retryCount:0};
   try{var saved=JSON.parse(sessionStorage.getItem(STORAGE)||'null');if(saved)state=Object.assign(state,saved)}catch(e){}
 
   function save(){try{sessionStorage.setItem(STORAGE,JSON.stringify(state))}catch(e){}}
@@ -298,6 +315,8 @@ button{color:inherit}
     save();updatePersonalMarkers();
     if(state.view==='current')renderCurrent();
     else if(state.view==='root')renderRoot();
+    else if(state.view==='loading')renderLoading();
+    else if(state.view==='error')renderError();
     else renderResult()
   }
 
@@ -334,9 +353,51 @@ button{color:inherit}
     document.getElementById('showResult').addEventListener('click',function(){
       var err=document.getElementById('rootError');
       if(!state.root){err.textContent='Избери населено място, за да видиш резултата.';err.hidden=false;return}
-      state.view='result';render()
+      startLookup()
     });
     document.getElementById('backCurrent').addEventListener('click',function(){state.view='current';render()})
+  }
+
+  var lookupTimer=null;
+  function startLookup(){
+    if(lookupTimer)clearTimeout(lookupTimer);
+    state.view='loading';save();render();
+    lookupTimer=setTimeout(function(){
+      var mode=new URLSearchParams(location.search).get('demo');
+      var shouldFail=(mode==='hard-error')||(mode==='error'&&state.retryCount===0);
+      state.view=shouldFail?'error':'result';
+      save();render();
+    },650)
+  }
+
+  function renderLoading(){
+    stepLabel.textContent='Проверяваме картата';
+    var now=state.city+', '+countryData[state.country].name;
+    body.innerHTML=
+      '<h2>Проверяваме твоя контекст</h2>'+
+      '<div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
+      '<div class="loading-box"><span class="spinner" aria-hidden="true"></span><p>Търсим допустимия общностен резултат, без да разкриваме лични профили.</p></div>'+
+      '<div class="sheet-actions"><button class="secondary" id="changeWhileLoading" type="button">Промени местата</button></div>';
+    document.getElementById('changeWhileLoading').addEventListener('click',function(){if(lookupTimer)clearTimeout(lookupTimer);state.view='current';render()})
+  }
+
+  function renderError(){
+    stepLabel.textContent='Резултатът не е зареден';
+    var now=state.city+', '+countryData[state.country].name;
+    var canContinue=state.retryCount>0;
+    body.innerHTML=
+      '<h2>Не успяхме да проверим резултата</h2>'+
+      '<div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
+      '<div class="error-box"><h3>Изборите ти са запазени.</h3><p>Техническа грешка не означава, че няма хора. Опитай пак — ще повторим само проверката на резултата.</p></div>'+
+      '<div class="sheet-actions"><button class="primary" id="retryLookup" type="button">Опитай отново</button>'+
+      (canContinue?'<button class="secondary" id="continueWithout" type="button">Продължи без публичен резултат</button>':'')+
+      '<button class="secondary" id="changeAfterError" type="button">Промени местата</button></div>';
+    document.getElementById('retryLookup').addEventListener('click',function(){state.retryCount+=1;startLookup()});
+    document.getElementById('changeAfterError').addEventListener('click',function(){state.view='current';render()});
+    if(canContinue)document.getElementById('continueWithout').addEventListener('click',function(){
+      body.innerHTML='<h2>Контекстът ти е запазен</h2><p class="helper">Продължаваме без да измисляме публичен резултат. В истинския продукт двата избора се пренасят за потвърждение след регистрация.</p><div class="sheet-actions"><button class="secondary" id="backError" type="button">Назад</button></div>';
+      document.getElementById('backError').addEventListener('click',renderError)
+    })
   }
 
   function bandFor(){
@@ -361,7 +422,7 @@ button{color:inherit}
       resultHtml+
       '<p class="lockline">Конкретен човек се показва само когато имате ясна обща причина и той позволява нови заявки.</p>'+
       '<div class="sheet-actions"><button class="primary" id="nextBoundary" type="button">Виж какво има за теб</button><button class="secondary" id="changePlaces" type="button">Промени</button></div>';
-    document.getElementById('changePlaces').addEventListener('click',function(){state.view='current';render()});
+    document.getElementById('changePlaces').addEventListener('click',function(){state.retryCount=0;state.view='current';render()});
     document.getElementById('nextBoundary').addEventListener('click',function(){
       body.innerHTML='<h2>Тук завършва Screen 1</h2><p class="helper">В истинския продукт оттук контекстът продължава към регистрация и после се потвърждава. Този отделен review прототип не пише данни и не използва Supabase.</p><div class="sheet-actions"><button class="secondary" id="backResult" type="button">Назад към резултата</button></div>';
       document.getElementById('backResult').addEventListener('click',function(){state.view='result';render()})
@@ -371,6 +432,7 @@ button{color:inherit}
   var svg=document.getElementById('worldMap');
   var mapBase=document.getElementById('mapBase');
   var personalLayer=document.getElementById('personalLayer');
+  var mapContext=document.getElementById('mapContext');
   var signals=Array.prototype.slice.call(document.querySelectorAll('#signalLayer .signal'));
   var view={scale:1,tx:0,ty:0},drag=false,last=null;
 
@@ -398,16 +460,26 @@ button{color:inherit}
 
   function updatePersonalMarkers(){
     personalLayer.innerHTML='';
-    var items=[];
-    if(state.country&&state.city){var c=countryData[state.country];items.push({type:'current',label:'Сега',x:c.xy[0],y:c.xy[1]})}
-    if(state.root&&rootData[state.root]){var r=rootData[state.root];items.push({type:'root',label:'Откъде си',x:r.xy[0],y:r.xy[1]})}
+    var items=[],chips=[];
+    if(state.country&&state.city){
+      var c=countryData[state.country];
+      items.push({type:'current',label:state.city,x:c.xy[0],y:c.xy[1]});
+      chips.push('<span class="context-chip current">Сега · '+esc(state.city+', '+c.name)+'</span>')
+    }
+    if(state.root&&rootData[state.root]){
+      var r=rootData[state.root];
+      items.push({type:'root',label:state.root,x:r.xy[0],y:r.xy[1]});
+      chips.push('<span class="context-chip root">Откъде · '+esc(r.label)+'</span>')
+    }
     items.forEach(function(it){
       var p=transformPoint(it.x,it.y);
       var g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','personal '+it.type);g.setAttribute('transform','translate('+p[0]+' '+p[1]+')');
       var circle=document.createElementNS('http://www.w3.org/2000/svg','circle');circle.setAttribute('r','9');g.appendChild(circle);
       var text=document.createElementNS('http://www.w3.org/2000/svg','text');text.setAttribute('y','-16');text.textContent=it.label;g.appendChild(text);
       personalLayer.appendChild(g)
-    })
+    });
+    mapContext.innerHTML=chips.join('');
+    mapContext.hidden=!chips.length
   }
   drawMap();
 })();
