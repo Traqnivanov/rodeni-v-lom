@@ -470,11 +470,12 @@ Chat НЕ е постоянен tab.
 Затворени са:
 - общият logged-in architecture/navigation contract;
 - pre-prototype точка 1: public aggregate → personal value contract;
-- pre-prototype точка 2: privacy праг 5 + адаптивна публична видимост чрез нива `5+`, `10+`, `25+`, `50+`, `100+`; общо състояние за 0–4; безопасно разширяване само към по-широка група, която отделно покрива прага; без точни тесни бройки и без real-time публично обновяване.
+- pre-prototype точка 2: privacy праг 5 + адаптивна публична видимост чрез нива `5+`, `10+`, `25+`, `50+`, `100+`; общо състояние за 0–4; безопасно разширяване само към по-широка група, която отделно покрива прага; без точни тесни бройки и без real-time публично обновяване;
+- pre-prototype точка 3: „Контекстов мост“ — Root + Current Location преминават като private unconfirmed pending context през registration/email confirmation; не участват в aggregates/matching/security; след confirmation user ги потвърждава или променя; едва тогава се записват като реален контекст и pending копието се изчиства.
 
 ## NEXT EXACT STEP
 
-Следва **pre-prototype точка 3: безопасното и непрекъснато пренасяне на въведените Root + Current Location през registration и email confirmation**.
+Следва **pre-prototype точка 4: честният post-registration empty/no-match flow, когато публичният aggregate съществува, но няма допустим човек за показване**.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 
