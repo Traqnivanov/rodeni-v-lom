@@ -283,7 +283,9 @@ Screen 1, Точка 4 — „Откъде си?“ и Root selection — е о�
 
 Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е одобрена в Master §96.
 
-Текущ NEXT е **Screen 1 — Точка 6: loading/network/error, retry и recovery states за context избора и privacy-safe preview**.
+Screen 1, Точка 6 — loading/network/error, retry и recovery — е одобрена в Master §97.
+
+**Screen 1 contract е завършен.** Текущ NEXT след изрично Owner разрешение е **mobile-first interactive Screen 1 prototype по Master §§91–97 → mobile verification → desktop adaptation → Owner review link**.
 
 Не започвай общ одит отначало, освен ако има конкретен конфликт, нов риск или изрично искане от Admin/Owner.
 

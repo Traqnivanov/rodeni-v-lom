@@ -501,7 +501,9 @@ Screen 1, Точка 4 — „Откъде си?“ и Root selection — е **�
 
 Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е **ОДОБРЕНА** в Master §96. Показва се един допустим aggregate result; exact `Root + Current` изисква threshold 5, 0–4 са общо privacy състояние, а safe broadening е само към едно предварително определено смислено community ниво. CTA остава **„Виж какво има за теб“** и не обещава конкретни хора.
 
-Следва **Screen 1 — Точка 6: loading/network/error, retry и recovery states за context избора и privacy-safe preview**.
+Screen 1, Точка 6 — loading/network/error, retry и recovery — е **ОДОБРЕНА** в Master §97. Техническа грешка никога не става `0–4`/zero/community result; context draft-ът се пази; retry повтаря само failed операцията; secondary `Продължи без публичен резултат` е допустимо само честно и без измислен aggregate.
+
+**Screen 1 contract е ЗАВЪРШЕН.** След изрично Admin/Owner разрешение следва **mobile-first interactive Screen 1 prototype по Master §§91–97 → mobile verification → desktop adaptation → Owner review link**.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 

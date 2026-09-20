@@ -63,6 +63,8 @@
 
 - **Screen 1 — Точка 5 ОДОБРЕНА:** preview-ът остава върху видимата карта и показва context summary + един допустим result. Exact `Root + Current` се показва само при threshold 5 чрез bands `5+`, `10+`, `25+`, `50+`, `100+`; 0–4 използват едно общо privacy състояние. Допуска се само едно предварително определено смислено safe broadening ниво, което самостоятелно покрива прага; за пилота е „Лом и региона“. CTA винаги е **„Виж какво има за теб“** и не обещава конкретни хора. Visual и uniqueness отчетите са в Master §96. Няма implementation.
 
+- **Screen 1 — Точка 6 ОДОБРЕНА; SCREEN 1 CONTRACT COMPLETE:** техническа грешка никога не се представя като `0–4`, zero или community result. Loading пази map/context; retry повтаря само failed операцията; draft-ът и валидното друго място се запазват. След повторен aggregate failure се допуска secondary **„Продължи без публичен резултат“** с private pending context, без измислена бройка. External lookup failure не означава, че мястото не съществува. Visual, accessibility и uniqueness отчетите са в Master §97. Няма implementation.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -234,7 +236,9 @@ Public → registered continuity:
 - Screen 1, Точка 3 — context panel и „Къде си сега?“: **ОДОБРЕНА**.
 - Screen 1, Точка 4 — „Откъде си?“ и Root selection: **ОДОБРЕНА**.
 - Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening: **ОДОБРЕНА**.
-- Следва **Screen 1 — Точка 6: loading/network/error, retry и recovery states за context избора и privacy-safe preview**.
+- Screen 1, Точка 6 — loading/network/error, retry и recovery: **ОДОБРЕНА**.
+- **Screen 1 contract: ЗАВЪРШЕН.**
+- След изрично Owner разрешение следва **mobile-first interactive Screen 1 prototype по Master §§91–97 → mobile verification → desktop adaptation → Owner review link**.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;

@@ -7460,7 +7460,7 @@ Screen 1 — Точка 3 е затворена в §94. Актуалният NE
 - договорът важи за WORK CONTROLLER, ordinary ChatGPT и всеки следващ чат;
 - няма UI/code/DB implementation сега;
 - текущият checkpoint не се променя;
-- актуалният NEXT се определя от най-новата одобрена Screen 1 секция; след §96 това е **Screen 1 — Точка 6: loading/network/error и recovery states**.
+- актуалният NEXT се определя от най-новата одобрена Screen 1 секция; след §97 **Screen 1 contract е завършен** и следва изрично разрешеният mobile-first prototype pass.
 
 
 # 94. [ОДОБРЕНО][SCREEN 1][ТОЧКА 3] Context panel и първият въпрос „Къде си сега?“
@@ -7799,4 +7799,148 @@ Travel не променя Current Location. Aggregate резултатът ид
 
 ## NEXT
 
-**Screen 1 — Точка 6: loading/network/error, retry и recovery states за context избора и privacy-safe preview.**
+Screen 1 — Точка 6 е затворена в §97. Актуалният NEXT се определя от най-новата одобрена Screen 1 секция.
+
+
+# 97. [ОДОБРЕНО][SCREEN 1][ТОЧКА 6] Loading, network/error, retry и recovery states
+
+**Одобрено от:** Admin/Owner
+
+**Статус:** ОДОБРЕН SCREEN-BY-SCREEN CONTRACT — ТОЧКА 6; SCREEN 1 CONTRACT COMPLETE
+
+**Implementation status:** НЕ Е РЕАЛИЗИРАНО; НЯМА UI, CODE ИЛИ DB ПРОМЕНИ
+
+## Конкретен проблем
+
+Техническа грешка не трябва да изглежда като `0–4`, „няма хора“, невалидно населено място или загуба на въведения контекст. Иначе системата показва невярна community информация и човекът не знае дали трябва да чака, да поправи нещо или да започне отначало.
+
+## Основен recovery contract
+
+**При всяка временна грешка системата пази контекста, казва какво точно не е станало и дава едно ясно следващо действие.**
+
+Техническа грешка никога не се преобразува в privacy-suppressed result, public zero или измислен aggregate.
+
+## Одобрени състояния и copy
+
+| Състояние | User-facing текст | Водещо действие |
+|---|---|---|
+| Aggregate loading | **„Проверяваме какво показва картата…“** | бутонът е в loading state; няма повторно изпращане |
+| По-бавно зареждане | **„Проверката отнема малко повече време. Избраните места са запазени.“** | изчакване или отказ без загуба на контекста |
+| Offline | **„Няма връзка с интернет. Избраните места са запазени на това устройство.“** | **„Опитай отново“** |
+| Timeout/server failure | **„Не успяхме да заредим резултата в момента. Избраните места са запазени.“** | **„Опитай отново“** |
+| Controlled external location lookup failure | **„Не успяхме да проверим населеното място в момента.“** | **„Опитай отново“** |
+| Invalid/retired canonical place | **„Това място трябва да бъде избрано отново.“** | връщане само към засегнатото поле |
+| Missing/invalid session draft | **„Не успяхме да възстановим избраните места.“** | повторно се задават само двата минимални въпроса |
+| Aggregate остава unavailable след retry | **„Публичният резултат временно не е достъпен.“** | secondary **„Продължи без публичен резултат“** |
+
+## Loading и duplicate-submit protection
+
+- loading започва след **„Виж какво показва картата“**;
+- бутонът преминава в **„Проверяваме…“**;
+- повторно натискане не изпраща втора паралелна заявка;
+- map, context summary и двата лични session markers остават видими;
+- при по-бавно зареждане човекът може да прекрати само заявката, без да изчиства Root/Current;
+- не се показва skeleton или placeholder число, което може да изглежда като реален aggregate.
+
+## Error и retry правила
+
+- Root и Current Location не се изчистват при временна грешка;
+- retry повтаря само неуспешната операция;
+- когато само едното място е невалидно, другото се запазва;
+- error copy е на разбираем български, без API кодове, provider имена или технически подробности;
+- техническа грешка не използва текста за `0–4`;
+- raw location text не се поставя в URL или analytics;
+- стар клиентски cached count не се показва като актуален след failed request;
+- последен snapshot може да бъде показан само ако backend изрично го върне като все още допустим за публикуване;
+- retry не променя privacy, eligibility, threshold или safe-broadening правилата.
+
+## Controlled external lookup recovery
+
+При временен provider проблем:
+
+- input-ът и написаното остават;
+- показват се **„Опитай отново“** и `Назад към предложенията`;
+- локалният canonical списък продължава да работи;
+- provider failure не се представя като „мястото не съществува“;
+- Current Location продължава да изисква допустим canonical избор според §94; не се измисля exact current locality;
+- непотвърден Root може да продължи само към вече одобрения по-широк Current result според §§95–96; не създава exact Root aggregate и не става trusted Root.
+
+## Продължаване без публичен preview
+
+Ако aggregate услугата остава недостъпна след retry, се допуска вторично действие:
+
+**„Продължи без публичен резултат“**
+
+Това действие:
+
+- не показва и не измисля число;
+- не се използва при липсващ задължителен canonical Current избор;
+- пренася допустимите Root + Current стойности само като private pending context;
+- води към registration, без да твърди, че preview-ът е бил успешен;
+- оставя задължителното потвърждение/редакция след email confirmation.
+
+При error основното действие остава **„Опитай отново“**. **„Продължи без публичен резултат“** е secondary, не е златният primary CTA и не заменя нормалния **„Виж какво има за теб“** success flow.
+
+## Session recovery
+
+- затваряне и повторно отваряне в същата валидна browser session възстановява избраните места;
+- failed request не изтрива draft-а;
+- ако draft-ът липсва, е повреден или е изтекъл, не се възстановява чрез URL, analytics, IP или догадки;
+- задават се повторно само **„Къде си сега?“** и **„Откъде си?“**;
+- pending/unverified данни не участват в aggregate, matching, eligibility или security решения.
+
+## Visual hierarchy и accessibility report
+
+- loading/error main text: минимум `16px`;
+- helper: `14–15px`, минимум `4.5:1` contrast;
+- **„Опитай отново“**: минимум `48px` touch target и ясно водещо действие;
+- error блокът стои до неуспешната операция, не като несвързан global banner;
+- privacy-suppressed state остава неутрален; техническата грешка е различима чрез икона, заглавие и действие, не само чрез червен цвят;
+- focus отива към error summary или конкретното невалидно поле;
+- status/error copy се обявява чрез приложимо `aria-live`;
+- loading indicator спазва reduced-motion;
+- disabled/loading/pressed/focus states са видими без hover;
+- на малък mobile viewport картата, текущият context и recovery действието остават разбираеми и достижими.
+
+## Техническа цена
+
+Ниска към средна:
+
+- ясна state machine;
+- duplicate-submit protection;
+- timeout/cancel/retry;
+- session draft persistence;
+- mapping на техническите грешки към човешки съобщения;
+- backend-authoritative publishable snapshot state.
+
+Prototype-ът не изисква DB промяна. Точният production data/API contract остава за implementation review и не може да отслабва този UX/privacy contract.
+
+## Отчет за уникалност
+
+Error handling-ът сам по себе си не е уникален и не се украсява изкуствено.
+
+Той защитава отличителния механизъм чрез едно последователно поведение:
+
+**при несигурност системата пази личния контекст, но никога не превръща технически проблем във фалшиво твърдение за хора или общност**
+
+Не се добавят decorative recovery cards, gamification или допълнителни действия без реална полза.
+
+## Screen 1 completion checkpoint
+
+С §§91–97 са затворени:
+
+- reuse boundary и основният flow;
+- първоначалното анонимно състояние;
+- Current Location стъпката;
+- Root стъпката;
+- privacy-safe preview, `0–4` и safe broadening;
+- loading/network/error/retry/recovery states;
+- visual hierarchy и uniqueness отчетите за всяка точка.
+
+Няма останал незатворен продуктов, UX, privacy или flow blocker за **първия Screen 1 prototype pass**. Точните visual tokens и marker styling се решават в прототипа в рамките на вече одобрения Visual Hierarchy Contract и подлежат на Owner visual approval.
+
+## NEXT
+
+След изрично разрешение от Admin/Owner:
+
+**mobile-first interactive Screen 1 prototype по §§91–97 → mobile visual/flow verification → desktop adaptation → Owner review link.**
