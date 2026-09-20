@@ -127,6 +127,7 @@
 | „Чака теб“ | Най-високата одобрена група в „За теб“ | incoming requests и други действия, изискващи user решение |
 | „Полезно точно сега“ | Текущи нужди, временен контекст и релевантни моменти | Travel, accepted хора, active need, permissions |
 | „Хора, които има смисъл да познаваш“ | Само при силна, ясна и обяснима причина | Visibility Contract, `open_to_strangers`, block/decline, limits |
+| Post-registration no-result resolver | Registered-only: waiting actions → active need/Travel → релевантни accepted хора → допустими strangers → privacy-safe context → една следваща стъпка | първо vs следващо влизане; safe aggregate vs suppressed 0–4; permissions; без filler; без разкриване кой gate е скрил човек |
 | „Карта“ | Свободно разглеждане на места, общности и агрегати | никога свободен каталог на непознати |
 | „Хора“ / „Твоите хора“ | Само accepted connections; търсене по име, релевантен временен статус и кратък unread indicator | никога discovery на непознати; без generic ranking/feed |
 | „Ти“ | Лек control center за идентичност, Root, Current Location, временен контекст и permissions | не е дълъг dashboard; Travel „Пътувам“ се управлява тук |
@@ -201,7 +202,6 @@
 
 - точният Context Engine ranking/cooldown;
 - точната Next Best Question логика;
-- post-registration empty/no-match contract;
 - окончателният screen-by-screen layout;
 - точните DB/RLS/schema промени;
 - security remediation implementation;

@@ -43,6 +43,8 @@
 
 - **Задължителна dependency проверка — OWNER DIRECTION 20.09.2026:** решенията не се вземат по памет или чрез изолиране на една функция. Преди предложение се проверява `PRODUCT_FUNCTION_DEPENDENCY_MAP.md` спрямо Master/State и всички комбинирани user states: waiting actions, active needs, Travel, accepted connections, permissions, block/decline, privacy, entry/exit и recovery. Картата се актуализира при всяко ново одобрено решение.
 
+- **Pre-prototype точка 4 — ОДОБРЕНА 20.09.2026:** post-registration no-result contract-ът важи само след registration, email confirmation и завършен minimum onboarding. „Няма допустим непознат“ не означава празно „За теб“. Редът е waiting actions → active need/Travel → релевантни accepted хора → допустими strangers → privacy-safe context → една човешка следваща стъпка. Активна нужда/Travel получава собствен status card и управление, без generic повторен въпрос. Нерелевантни accepted хора и слаби strangers не се използват като filler. Първото истинско no-result състояние обяснява разликата между общност и допустим човек и предлага **„Посочи нужда“**; при следващи влизания без ново действие се използва спокойно състояние, без повтаряне на registration hook-а.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -177,8 +179,7 @@ P0-6 затваря само първата регистрационна фор�
 ### Важно: НЕ е още заключено
 
 Следните точки НЕ трябва да се приемат автоматично само защото са предложени или присъстват в по-стари документи:
-- окончателният визуален/екранен layout;
-- точният post-registration empty/no-match flow, когато публичният aggregate съществува, но няма допустим човек за показване;
+- окончателният визуален и screen-by-screen layout;
 - точните DB/RLS/schema промени за новия contract.
 
 ### Logged-in architecture/navigation contract — ОДОБРЕНО 20.09.2026
@@ -208,7 +209,8 @@ Public → registered continuity:
 - Точка 2 — privacy праг и адаптивна публична видимост: **ОДОБРЕНА**.
 - Точка 3 — „Контекстов мост“ през registration и email confirmation: **ОДОБРЕНА**.
 - Преди точка 4 е създаден и задължително се използва `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`; т.4 не се решава само като изолиран empty state.
-- Следва точка 4 — цялостният post-registration no-result contract след проверка на waiting actions, active needs, Travel, accepted connections, stranger eligibility, permissions и privacy.
+- Точка 4 — post-registration no-result contract: **ОДОБРЕНА**.
+- Следва: dependency проверка дали остава друг реален pre-prototype blocker. Ако няма, започва screen-by-screen contract-ът.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;
