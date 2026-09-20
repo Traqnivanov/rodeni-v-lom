@@ -4,260 +4,163 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<title>Mobile hierarchy review · Родени в Лом</title>
+<title>Родени в Лом · Screen 1 mobile review</title>
 <style>
-  :root{
-    --bg:#070d19;
-    --bg-2:#0b1426;
-    --panel:#101d33;
-    --panel-2:#14243e;
-    --text:#fbf8f1;
-    --soft:#d7deea;
-    --muted:#aeb8c9;
-    --gold:#e9b84f;
-    --gold-strong:#f4cd72;
-    --gold-ink:#251a07;
-    --line:rgba(255,255,255,.14);
-    --line-strong:rgba(255,255,255,.24);
-    --blue:#9bc2ff;
-    --shadow:0 24px 70px rgba(0,0,0,.4);
-    --radius:22px;
-    --safe-bottom:max(18px,env(safe-area-inset-bottom));
-  }
-
-  *{box-sizing:border-box}
-  html{background:var(--bg);font-size:16px}
-  body{
-    margin:0;
-    min-height:100dvh;
-    color:var(--text);
-    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
-    background:
-      radial-gradient(circle at 85% 5%,rgba(68,105,167,.2),transparent 30%),
-      linear-gradient(165deg,var(--bg-2),var(--bg) 72%);
-  }
-  button,a{font:inherit;-webkit-tap-highlight-color:transparent}
-  button{color:inherit}
-  a{color:inherit}
-  [hidden]{display:none!important}
-
-  .page{
-    width:min(100%,760px);
-    min-height:100dvh;
-    margin:0 auto;
-    padding-bottom:var(--safe-bottom);
-  }
-
-  .header{
-    position:sticky;
-    top:0;
-    z-index:20;
-    min-height:64px;
-    padding:8px 14px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    border-bottom:1px solid var(--line);
-    background:rgba(7,13,25,.9);
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
-  }
-  .brand{display:flex;align-items:center;gap:10px;min-width:0}
-  .brand-mark{
-    width:42px;
-    height:42px;
-    flex:0 0 auto;
-    display:grid;
-    place-items:center;
-    border:1px solid rgba(233,184,79,.44);
-    border-radius:15px;
-    background:linear-gradient(145deg,rgba(233,184,79,.19),rgba(233,184,79,.045));
-  }
-  .brand-mark svg{width:26px;height:26px;stroke:var(--gold-strong)}
-  .brand-name{margin:0;font-size:19px;line-height:1.1;font-weight:820;letter-spacing:-.02em}
-  .login{
-    min-height:48px;
-    padding:0 13px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:13px;
-    text-decoration:none;
-    color:var(--soft);
-    font-size:16px;
-    font-weight:780;
-  }
-  .login:focus-visible,.primary:focus-visible,.map-control:focus-visible{outline:3px solid #fff;outline-offset:3px}
-
-  .intro{
-    padding:22px 16px 12px;
-  }
-  .intro h1{
-    margin:0;
-    max-width:620px;
-    font-size:clamp(30px,8.2vw,38px);
-    line-height:1.05;
-    letter-spacing:-.04em;
-    font-weight:860;
-  }
-  .intro p{
-    margin:12px 0 0;
-    max-width:640px;
-    color:var(--soft);
-    font-size:18px;
-    line-height:1.5;
-  }
-
-  .action-card{
-    margin:0 12px 14px;
-    padding:14px;
-    border:1px solid var(--line-strong);
-    border-radius:20px;
-    background:linear-gradient(160deg,rgba(20,36,62,.96),rgba(11,20,38,.96));
-    box-shadow:var(--shadow);
-  }
-  .primary{
-    width:100%;
-    min-height:62px;
-    padding:10px 18px;
-    border:0;
-    border-radius:16px;
-    cursor:pointer;
-    background:linear-gradient(180deg,var(--gold-strong),var(--gold));
-    color:var(--gold-ink);
-    font-size:20px;
-    line-height:1.2;
-    font-weight:880;
-    box-shadow:0 12px 28px rgba(233,184,79,.18);
-  }
-  .primary:active{transform:translateY(1px)}
-  .privacy{
-    margin:12px 2px 0;
-    display:flex;
-    align-items:flex-start;
-    gap:9px;
-    color:var(--soft);
-    font-size:16px;
-    line-height:1.45;
-  }
-  .privacy svg{width:21px;height:21px;flex:0 0 auto;stroke:var(--gold-strong);margin-top:1px}
-
-  .map-card{
-    margin:0 12px 18px;
-    overflow:hidden;
-    border:1px solid var(--line-strong);
-    border-radius:var(--radius);
-    background:linear-gradient(180deg,#132541,#091426);
-    box-shadow:0 18px 50px rgba(0,0,0,.28);
-  }
-  .map-head{
-    padding:14px 14px 10px;
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:12px;
-  }
-  .map-head h2{margin:0;font-size:19px;line-height:1.25;font-weight:820}
-  .map-head p{margin:5px 0 0;color:var(--muted);font-size:16px;line-height:1.4}
-  .map-actions{display:flex;gap:8px;flex:0 0 auto}
-  .map-control{
-    width:48px;
-    height:48px;
-    display:grid;
-    place-items:center;
-    border:1px solid var(--line);
-    border-radius:14px;
-    cursor:pointer;
-    background:rgba(255,255,255,.04);
-    color:var(--text);
-    font-size:24px;
-    font-weight:700;
-  }
-  .map-wrap{
-    position:relative;
-    height:clamp(230px,35dvh,310px);
-    min-height:230px;
-    border-top:1px solid var(--line);
-    background:
-      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
-      linear-gradient(180deg,#11223c,#091426);
-    background-size:36px 36px,36px 36px,auto;
-  }
-  #worldMap{width:100%;height:100%;display:block;touch-action:none}
-  .country{fill:#263a59;stroke:#081222;stroke-width:.8;vector-effect:non-scaling-stroke}
-  .country.has-signal{fill:#344b6d}
-  .signal circle{fill:#142541;stroke:var(--gold-strong);stroke-width:2.2}
-  .signal .band{fill:var(--gold-strong);font-size:16px;font-weight:900;text-anchor:middle;dominant-baseline:central}
-  .signal .name{fill:#fff;font-size:15px;font-weight:800;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:4px;stroke-linejoin:round}
-  .map-status{
-    position:absolute;
-    inset:0;
-    display:grid;
-    place-items:center;
-    padding:20px;
-    text-align:center;
-    color:var(--soft);
-    font-size:16px;
-    line-height:1.45;
-    background:rgba(8,16,31,.72);
-  }
-  .map-note{
-    padding:11px 14px 13px;
-    border-top:1px solid var(--line);
-    color:var(--muted);
-    font-size:15px;
-    line-height:1.45;
-  }
-
-  .review-note{
-    margin:0 14px 10px;
-    color:var(--muted);
-    font-size:15px;
-    line-height:1.5;
-  }
-  .review-note strong{color:var(--soft)}
-
-  .demo-sheet{
-    position:fixed;
-    z-index:40;
-    left:12px;
-    right:12px;
-    bottom:calc(12px + env(safe-area-inset-bottom));
-    max-width:520px;
-    margin:0 auto;
-    padding:18px;
-    border:1px solid var(--line-strong);
-    border-radius:22px;
-    background:linear-gradient(165deg,#172844,#0b1528);
-    box-shadow:0 26px 80px rgba(0,0,0,.55);
-  }
-  .demo-sheet h2{margin:0;font-size:24px;line-height:1.15}
-  .demo-sheet p{margin:10px 0 16px;color:var(--soft);font-size:17px;line-height:1.5}
-  .demo-sheet button{
-    width:100%;
-    min-height:52px;
-    border:1px solid var(--line-strong);
-    border-radius:14px;
-    cursor:pointer;
-    background:rgba(255,255,255,.05);
-    color:var(--text);
-    font-size:17px;
-    font-weight:800;
-  }
-
-  @media (min-width:760px){
-    body{padding:22px}
-    .page{min-height:calc(100dvh - 44px);border:1px solid var(--line);border-radius:28px;overflow:hidden;background:rgba(7,13,25,.62);box-shadow:var(--shadow)}
-    .header{position:relative}
-    .intro{padding:28px 26px 14px}
-    .action-card,.map-card{margin-left:24px;margin-right:24px}
-    .map-wrap{height:320px}
-    .review-note{margin-left:26px;margin-right:26px}
-  }
-
-  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+:root{
+  --bg:#070d19;--bg2:#0b1426;--panel:#111f36;--panel2:#0b1629;
+  --text:#fbf8f1;--soft:#d6deeb;--muted:#aab5c7;
+  --gold:#e9b84f;--gold2:#f4cd72;--goldink:#251a07;
+  --line:rgba(255,255,255,.14);--line2:rgba(255,255,255,.24);
+  --blue:#9bc2ff;--shadow:0 24px 70px rgba(0,0,0,.42);
+  --safe:max(18px,env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box}
+html{background:var(--bg);font-size:16px}
+body{
+  margin:0;min-height:100dvh;color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 82% 8%,rgba(66,103,165,.22),transparent 31%),
+    linear-gradient(165deg,var(--bg2),var(--bg) 72%);
+}
+button,input,select{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+button{color:inherit}
+[hidden]{display:none!important}
+.page{width:min(100%,760px);min-height:100dvh;margin:0 auto;padding-bottom:var(--safe)}
+.header{
+  position:sticky;top:0;z-index:20;min-height:64px;padding:8px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--line);background:rgba(7,13,25,.9);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-mark{
+  width:42px;height:42px;display:grid;place-items:center;flex:0 0 auto;
+  border:1px solid rgba(233,184,79,.44);border-radius:15px;
+  background:linear-gradient(145deg,rgba(233,184,79,.19),rgba(233,184,79,.045))
+}
+.brand-mark svg{width:26px;height:26px;stroke:var(--gold2)}
+.brand-name{margin:0;font-size:19px;line-height:1.1;font-weight:820;letter-spacing:-.02em}
+.login{
+  min-height:48px;padding:0 13px;display:inline-flex;align-items:center;justify-content:center;
+  border-radius:13px;text-decoration:none;color:var(--soft);font-size:16px;font-weight:780
+}
+.intro{padding:22px 16px 12px}
+.intro h1{
+  margin:0;max-width:640px;font-size:clamp(30px,8.2vw,38px);line-height:1.05;
+  letter-spacing:-.04em;font-weight:860
+}
+.intro p{margin:12px 0 0;max-width:650px;color:var(--soft);font-size:18px;line-height:1.5}
+.action-card{
+  margin:0 12px 14px;padding:14px;border:1px solid var(--line2);border-radius:20px;
+  background:linear-gradient(160deg,rgba(20,36,62,.96),rgba(11,20,38,.96));box-shadow:var(--shadow)
+}
+.primary{
+  width:100%;min-height:62px;padding:10px 18px;border:0;border-radius:16px;cursor:pointer;
+  background:linear-gradient(180deg,var(--gold2),var(--gold));color:var(--goldink);
+  font-size:20px;line-height:1.2;font-weight:880;box-shadow:0 12px 28px rgba(233,184,79,.18)
+}
+.primary:active{transform:translateY(1px)}
+.privacy{
+  margin:12px 2px 0;display:flex;align-items:flex-start;gap:9px;
+  color:var(--soft);font-size:16px;line-height:1.45
+}
+.privacy svg{width:21px;height:21px;flex:0 0 auto;stroke:var(--gold2);margin-top:1px}
+.map-card{
+  margin:0 12px 18px;overflow:hidden;border:1px solid var(--line2);border-radius:22px;
+  background:linear-gradient(180deg,#132541,#091426);box-shadow:0 18px 50px rgba(0,0,0,.28)
+}
+.map-head{padding:14px 14px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.map-head h2{margin:0;font-size:19px;line-height:1.25;font-weight:820}
+.map-head p{margin:5px 0 0;color:var(--muted);font-size:16px;line-height:1.4}
+.map-actions{display:flex;gap:8px;flex:0 0 auto}
+.map-control{
+  width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line);
+  border-radius:14px;cursor:pointer;background:rgba(255,255,255,.04);font-size:24px;font-weight:700
+}
+.map-wrap{
+  position:relative;height:clamp(230px,35dvh,310px);min-height:230px;border-top:1px solid var(--line);
+  background:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(180deg,#11223c,#091426);
+  background-size:36px 36px,36px 36px,auto
+}
+#worldMap{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#worldMap.dragging{cursor:grabbing}
+.continent{fill:#2c4262;stroke:#081222;stroke-width:2;vector-effect:non-scaling-stroke}
+.continent.island{fill:#365071}
+.signal circle{fill:#142541;stroke:var(--gold2);stroke-width:2.2;vector-effect:non-scaling-stroke}
+.signal .band{fill:var(--gold2);font-size:16px;font-weight:900;text-anchor:middle;dominant-baseline:central}
+.signal .name,.personal text{
+  fill:#fff;font-size:15px;font-weight:820;text-anchor:middle;
+  paint-order:stroke;stroke:#07101f;stroke-width:4px;stroke-linejoin:round
+}
+.personal.current circle{fill:#17305a;stroke:var(--blue)}
+.personal.root circle{fill:#3b2a10;stroke:var(--gold2)}
+.personal circle{stroke-width:3;vector-effect:non-scaling-stroke}
+.map-note{padding:11px 14px 13px;border-top:1px solid var(--line);color:var(--muted);font-size:15px;line-height:1.45}
+.review-note{margin:0 14px 10px;color:var(--muted);font-size:15px;line-height:1.5}
+.review-note strong{color:var(--soft)}
+.scrim{
+  position:fixed;z-index:30;inset:0;background:rgba(2,6,14,.55);
+  opacity:0;pointer-events:none;transition:opacity .18s ease
+}
+.scrim.show{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;z-index:40;left:0;right:0;bottom:0;max-height:min(82dvh,760px);overflow:auto;
+  padding:10px 16px calc(20px + var(--safe));border-top:1px solid var(--line2);border-radius:26px 26px 0 0;
+  background:linear-gradient(180deg,#13213a,#091326);box-shadow:0 -28px 70px rgba(0,0,0,.55);
+  transform:translateY(103%);visibility:hidden;transition:transform .22s ease,visibility 0s linear .22s
+}
+.sheet.open{transform:none;visibility:visible;transition-delay:0s}
+.handle{width:44px;height:4px;border-radius:99px;background:rgba(255,255,255,.25);margin:0 auto 8px}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px}
+.step{margin:0;color:var(--muted);font-size:15px;font-weight:760}
+.close{
+  width:48px;height:48px;border:0;border-radius:50%;background:transparent;cursor:pointer;
+  font-size:28px;line-height:1;color:var(--soft)
+}
+.sheet h2{margin:6px 0 0;font-size:24px;line-height:1.15;letter-spacing:-.025em}
+.helper{margin:10px 0 18px;color:var(--soft);font-size:17px;line-height:1.5}
+.field{margin:0 0 15px}
+.field label{display:block;margin:0 0 8px;font-size:16px;font-weight:780}
+.field input,.field select{
+  width:100%;min-height:54px;padding:0 14px;border:1px solid var(--line2);border-radius:14px;
+  background:#0a1428;color:var(--text);font-size:17px;outline:none
+}
+.field input:focus,.field select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(233,184,79,.14)}
+.field-hint{margin:7px 2px 0;color:var(--muted);font-size:15px;line-height:1.4}
+.error{margin:7px 2px 0;color:#ffb8b0;font-size:15px;line-height:1.4}
+.sheet-actions{display:grid;gap:10px;margin-top:18px}
+.secondary{
+  width:100%;min-height:52px;border:1px solid var(--line2);border-radius:14px;
+  background:rgba(255,255,255,.04);color:var(--text);font-size:17px;font-weight:800;cursor:pointer
+}
+.summary{
+  display:grid;gap:8px;margin:8px 0 16px;padding:14px;border:1px solid var(--line);
+  border-radius:14px;background:rgba(255,255,255,.035)
+}
+.summary-row{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--soft);font-size:16px}
+.summary-row b{color:var(--text);text-align:right}
+.result{
+  margin:0 0 14px;padding:18px;border:1px solid rgba(233,184,79,.3);
+  border-radius:18px;background:linear-gradient(145deg,rgba(233,184,79,.12),rgba(255,255,255,.025))
+}
+.result-band{margin:0;color:var(--gold2);font-size:40px;line-height:1;font-weight:900;letter-spacing:-.045em}
+.result-main{margin:10px 0 0;font-size:18px;line-height:1.45;font-weight:760}
+.result-context{margin:9px 0 0;color:var(--soft);font-size:16px;line-height:1.5}
+.result.suppressed{border-color:var(--line2);background:rgba(255,255,255,.035)}
+.lockline{margin:12px 0 0;color:var(--soft);font-size:16px;line-height:1.5}
+@media (min-width:760px){
+  body{padding:22px}
+  .page{min-height:calc(100dvh - 44px);border:1px solid var(--line);border-radius:28px;overflow:hidden;background:rgba(7,13,25,.62);box-shadow:var(--shadow)}
+  .header{position:relative}.intro{padding:28px 26px 14px}.action-card,.map-card{margin-left:24px;margin-right:24px}.map-wrap{height:320px}.review-note{margin-left:26px;margin-right:26px}
+  .sheet{left:auto;right:22px;top:22px;bottom:22px;width:min(450px,calc(100vw - 44px));max-height:none;border:1px solid var(--line2);border-radius:26px;padding:14px 22px 24px;transform:translateX(calc(100% + 40px))}
+  .sheet.open{transform:none}.handle{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -265,11 +168,13 @@
   <header class="header">
     <div class="brand" aria-label="Родени в Лом">
       <span class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v15"/><path d="M8.5 6.5h7"/><path d="M5 13c1.3 4 3.7 6 7 6s5.7-2 7-6"/><path d="M5 13H2.8"/><path d="M21.2 13H19"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v15"/><path d="M8.5 6.5h7"/><path d="M5 13c1.3 4 3.7 6 7 6s5.7-2 7-6"/><path d="M5 13H2.8"/><path d="M21.2 13H19"/>
+        </svg>
       </span>
       <p class="brand-name">Родени в Лом</p>
     </div>
-    <a class="login" href="#login" aria-label="Вход">Вход</a>
+    <a class="login" href="#login">Вход</a>
   </header>
 
   <section class="intro" aria-labelledby="mainQuestion">
@@ -277,8 +182,8 @@
     <p>Посочи къде живееш сега и откъде си. Виж каква общност има около теб.</p>
   </section>
 
-  <section class="action-card" aria-label="Основно действие">
-    <button class="primary" id="startDemo" type="button">Провери за себе си</button>
+  <section class="action-card">
+    <button class="primary" id="startFlow" type="button">Провери за себе си</button>
     <p class="privacy">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
       <span>Показваме общности, не лични профили.</span>
@@ -289,100 +194,222 @@
     <div class="map-head">
       <div>
         <h2 id="mapTitle">Общности по света</h2>
-        <p>Разгледай картата. Числото остава свързано с мястото и при увеличение.</p>
+        <p>Разгледай картата. Сигналите остават четими и при увеличение.</p>
       </div>
-      <div class="map-actions" aria-label="Управление на картата">
+      <div class="map-actions">
         <button class="map-control" id="zoomOut" type="button" aria-label="Намали картата">−</button>
         <button class="map-control" id="zoomIn" type="button" aria-label="Увеличи картата">+</button>
       </div>
     </div>
     <div class="map-wrap">
-      <svg id="worldMap" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Световна карта с общностни сигнали"></svg>
-      <div class="map-status" id="mapStatus">Зареждаме картата…</div>
+      <svg id="worldMap" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Световна карта с общностни сигнали">
+        <g id="mapBase">
+          <path class="continent" d="M57 119C96 72 164 58 224 80c38 14 62 35 90 43 35 10 59 1 82 22 18 16 10 39-16 48-31 11-52 2-76 12-24 10-35 31-50 48-17 19-38 29-58 16-19-12-17-33-36-42-22-10-51 2-75-9-34-16-50-65-28-99z"/>
+          <path class="continent" d="M289 284c28-11 65 1 79 26 13 24 5 53-6 81-10 26-20 57-42 77-17 16-37 20-50 5-12-14-4-36-11-55-7-18-27-31-27-53 0-31 26-68 57-81z"/>
+          <path class="continent" d="M433 118c27-21 69-29 103-17 26 9 44 27 71 31 22 3 43-5 65-2 40 5 75 30 113 42 26 8 62 5 81 27 14 16 9 39-11 49-22 11-51 1-74 9-17 6-30 22-48 27-31 9-62-13-93-8-30 5-53 34-84 31-25-3-38-26-62-33-21-6-47 3-65-10-23-18-25-52-4-72 15-14 39-16 46-34 8-18-10-31-38-40z"/>
+          <path class="continent" d="M471 267c29-11 67 5 83 31 17 29 12 72 3 105-8 31-20 65-46 84-17 12-37 13-52 0-19-17-15-45-28-66-14-23-39-39-42-68-4-37 39-73 82-86z"/>
+          <path class="continent" d="M748 383c31-18 77-15 105 7 20 16 26 42 10 59-16 18-44 15-68 19-27 4-58 17-78-1-19-17-12-49 3-67 8-9 17-13 28-17z"/>
+          <path class="continent island" d="M845 128c18-10 45-7 60 8 10 11 9 27-2 35-14 9-37 4-51-6-14-10-22-28-7-37z"/>
+          <path class="continent island" d="M389 147c11-8 26-6 33 3 6 8 2 18-7 23-11 5-26 2-31-7-4-7-2-14 5-19z"/>
+          <path class="continent island" d="M596 348c10-7 24-6 31 1 7 7 5 17-4 22-11 7-26 4-31-4-4-7-2-14 4-19z"/>
+        </g>
+        <g id="signalLayer" aria-hidden="true">
+          <g class="signal" data-x="443" data-y="153"><circle r="24"/><text class="band">10+</text><text class="name" y="43">Великобритания</text></g>
+          <g class="signal" data-x="492" data-y="171"><circle r="24"/><text class="band">25+</text><text class="name" y="43">Германия</text></g>
+          <g class="signal" data-x="461" data-y="207"><circle r="24"/><text class="band">5+</text><text class="name" y="43">Испания</text></g>
+          <g class="signal" data-x="505" data-y="211"><circle r="24"/><text class="band">5+</text><text class="name" y="43">Италия</text></g>
+        </g>
+        <g id="personalLayer" aria-hidden="true"></g>
+      </svg>
     </div>
-    <div class="map-note">Публичните сигнали са само privacy-safe диапазони: 5+, 10+, 25+, 50+, 100+.</div>
+    <div class="map-note">Публичните сигнали са privacy-safe диапазони: 5+, 10+, 25+, 50+, 100+.</div>
   </section>
 
-  <p class="review-note"><strong>Review scope:</strong> само новата мобилна йерархия на началния екран. Следващите стъпки „Къде си сега?“ и „Откъде си?“ не се променят в този кандидат.</p>
+  <p class="review-note"><strong>Отделен review прототип:</strong> функционален Screen 1 по последната mobile йерархия. Не използва Supabase и не променя main.</p>
 </main>
 
-<div class="demo-sheet" id="demoSheet" hidden role="dialog" aria-modal="true" aria-labelledby="demoTitle">
-  <h2 id="demoTitle">Тук започва одобреният context flow</h2>
-  <p>Този отделен кандидат спира точно преди „Къде си сега?“, за да може Work да оцени само началната мобилна йерархия.</p>
-  <button type="button" id="closeSheet">Затвори</button>
-</div>
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" aria-live="polite" aria-label="Контекст">
+  <div class="handle"></div>
+  <div class="sheet-head">
+    <p class="step" id="stepLabel">Стъпка 1 от 2</p>
+    <button class="close" id="closeSheet" type="button" aria-label="Затвори">×</button>
+  </div>
+  <div id="sheetBody"></div>
+</section>
 
-<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
 (function(){
-  var start=document.getElementById('startDemo');
-  var sheet=document.getElementById('demoSheet');
-  var close=document.getElementById('closeSheet');
-  start.addEventListener('click',function(){sheet.hidden=false;close.focus();});
-  close.addEventListener('click',function(){sheet.hidden=true;start.focus();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!sheet.hidden){sheet.hidden=true;start.focus();}});
+  var STORAGE='rodeni_mobile_review_v2';
+  var sheet=document.getElementById('sheet');
+  var scrim=document.getElementById('scrim');
+  var body=document.getElementById('sheetBody');
+  var stepLabel=document.getElementById('stepLabel');
+  var startFlow=document.getElementById('startFlow');
+  var closeSheet=document.getElementById('closeSheet');
 
-  var svg=d3.select('#worldMap');
-  var status=document.getElementById('mapStatus');
-  var width=960,height=520;
-  var projection=d3.geoNaturalEarth1();
-  var path=d3.geoPath(projection);
-  var mapLayer=svg.append('g').attr('class','map-layer');
-  var signalLayer=svg.append('g').attr('class','signal-layer');
-  var currentTransform=d3.zoomIdentity;
+  var countryData={
+    'DE':{name:'Германия',xy:[492,171],cities:['Мюнхен','Берлин','Хамбург','Кьолн','Франкфурт','Нюрнберг']},
+    'GB':{name:'Великобритания',xy:[443,153],cities:['Лондон','Манчестър','Бирмингам','Лийдс']},
+    'ES':{name:'Испания',xy:[461,207],cities:['Мадрид','Барселона','Валенсия']},
+    'IT':{name:'Италия',xy:[505,211],cities:['Рим','Милано','Торино']},
+    'FR':{name:'Франция',xy:[468,184],cities:['Париж','Лион','Марсилия']},
+    'AT':{name:'Австрия',xy:[500,184],cities:['Виена','Грац','Залцбург']},
+    'NL':{name:'Нидерландия',xy:[478,160],cities:['Амстердам','Ротердам','Айндховен']},
+    'BG':{name:'България',xy:[535,208],cities:['Лом','София','Пловдив','Варна','Монтана']}
+  };
+  var rootData={
+    'Лом':{label:'Лом, България',xy:[531,205]},
+    'Ковачица':{label:'Ковачица, България',xy:[527,204]},
+    'Монтана':{label:'Монтана, България',xy:[533,207]},
+    'София':{label:'София, България',xy:[526,214]},
+    'Пловдив':{label:'Пловдив, България',xy:[540,218]},
+    'Видин':{label:'Видин, България',xy:[523,201]}
+  };
+  var state={view:'current',country:'',city:'',root:''};
+  try{var saved=JSON.parse(sessionStorage.getItem(STORAGE)||'null');if(saved)state=Object.assign(state,saved)}catch(e){}
 
-  var numericToAlpha2={276:'DE',826:'GB',724:'ES',380:'IT',100:'BG'};
-  var signals=[
-    {code:'DE',name:'Германия',band:'25+',coords:[10.45,51.16]},
-    {code:'GB',name:'Великобритания',band:'10+',coords:[-3.4,55.3]},
-    {code:'ES',name:'Испания',band:'5+',coords:[-3.7,40.3]},
-    {code:'IT',name:'Италия',band:'5+',coords:[12.6,42.8]}
-  ];
+  function save(){try{sessionStorage.setItem(STORAGE,JSON.stringify(state))}catch(e){}}
+  function open(){sheet.classList.add('open');scrim.classList.add('show')}
+  function close(){sheet.classList.remove('open');scrim.classList.remove('show')}
+  startFlow.addEventListener('click',function(){state.view=state.country&&state.city?'root':'current';render();open()});
+  closeSheet.addEventListener('click',close);
+  scrim.addEventListener('click',close);
 
-  function drawSignals(){
-    var groups=signalLayer.selectAll('g.signal').data(signals,function(d){return d.code;}).join(function(enter){
-      var g=enter.append('g').attr('class','signal');
-      g.append('circle').attr('r',24);
-      g.append('text').attr('class','band').text(function(d){return d.band;});
-      g.append('text').attr('class','name').attr('y',42).text(function(d){return d.name;});
-      return g;
-    });
-    groups.attr('transform',function(d){
-      var p=projection(d.coords);
-      var screen=currentTransform.apply(p);
-      return 'translate('+screen[0]+','+screen[1]+')';
-    });
+  function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]})}
+  function countryOptions(){
+    var out='<option value="">Избери държава</option>';
+    Object.keys(countryData).forEach(function(code){out+='<option value="'+code+'"'+(state.country===code?' selected':'')+'>'+esc(countryData[code].name)+'</option>'});
+    return out
+  }
+  function cityOptions(){
+    if(!state.country)return '<option value="">Първо избери държава</option>';
+    var out='<option value="">Избери населено място</option>';
+    countryData[state.country].cities.forEach(function(city){out+='<option'+(state.city===city?' selected':'')+'>'+esc(city)+'</option>'});
+    return out
+  }
+  function rootOptions(){
+    var out='<option value="">Избери населено място</option>';
+    Object.keys(rootData).forEach(function(name){out+='<option'+(state.root===name?' selected':'')+'>'+esc(name)+'</option>'});
+    return out
   }
 
-  function applyZoom(transform){
-    currentTransform=transform;
-    mapLayer.attr('transform',transform);
-    drawSignals();
+  function render(){
+    save();updatePersonalMarkers();
+    if(state.view==='current')renderCurrent();
+    else if(state.view==='root')renderRoot();
+    else renderResult()
   }
 
-  var zoom=d3.zoom()
-    .scaleExtent([1,5])
-    .translateExtent([[0,0],[width,height]])
-    .extent([[0,0],[width,height]])
-    .on('zoom',function(event){applyZoom(event.transform);});
-  svg.call(zoom);
-
-  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
-    .then(function(r){if(!r.ok)throw new Error('map');return r.json();})
-    .then(function(topology){
-      var world=topojson.feature(topology,topology.objects.countries);
-      projection.fitExtent([[28,28],[932,492]],world);
-      mapLayer.selectAll('path.country').data(world.features).join('path')
-        .attr('class',function(d){var code=numericToAlpha2[+d.id];return 'country'+(signals.some(function(s){return s.code===code;})?' has-signal':'');})
-        .attr('d',path);
-      drawSignals();
-      status.hidden=true;
+  function renderCurrent(){
+    stepLabel.textContent='Стъпка 1 от 2';
+    body.innerHTML=
+      '<h2>Къде си сега?</h2>'+
+      '<p class="helper">Избери къде живееш сега. Така ще видиш общността около теб — без да показваме лични профили.</p>'+
+      '<div class="field"><label for="country">Държава</label><select id="country">'+countryOptions()+'</select></div>'+
+      '<div class="field"><label for="city">Населено място</label><select id="city" '+(!state.country?'disabled':'')+'>'+cityOptions()+'</select><p class="field-hint">Изборът остава само в този прототип.</p></div>'+
+      '<div id="currentError" class="error" hidden></div>'+
+      '<div class="sheet-actions"><button class="primary" id="toRoot" type="button">Продължи към „Откъде си?“</button></div>';
+    var country=document.getElementById('country'),city=document.getElementById('city');
+    country.addEventListener('change',function(){state.country=this.value;state.city='';save();renderCurrent();updatePersonalMarkers()});
+    city.addEventListener('change',function(){state.city=this.value;save();updatePersonalMarkers()});
+    document.getElementById('toRoot').addEventListener('click',function(){
+      var err=document.getElementById('currentError');
+      if(!state.country||!state.city){err.textContent='Избери държава и населено място, за да продължиш.';err.hidden=false;return}
+      state.view='root';render()
     })
-    .catch(function(){status.textContent='Картата не успя да се зареди. Основното действие остава достъпно.';});
+  }
 
-  document.getElementById('zoomIn').addEventListener('click',function(){svg.transition().duration(180).call(zoom.scaleBy,1.35);});
-  document.getElementById('zoomOut').addEventListener('click',function(){svg.transition().duration(180).call(zoom.scaleBy,1/1.35);});
+  function renderRoot(){
+    stepLabel.textContent='Стъпка 2 от 2';
+    var now=state.city+', '+countryData[state.country].name;
+    body.innerHTML=
+      '<div class="summary"><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
+      '<h2>Откъде си?</h2>'+
+      '<p class="helper">Избери населеното място в България, което приемаш за свое. Така свързваме откъде си с мястото, където живееш сега.</p>'+
+      '<div class="field"><label for="root">Населено място в България</label><select id="root">'+rootOptions()+'</select><p class="field-hint">Изборът още не се публикува и не се брои в картата.</p></div>'+
+      '<div id="rootError" class="error" hidden></div>'+
+      '<div class="sheet-actions"><button class="primary" id="showResult" type="button">Виж какво показва картата</button><button class="secondary" id="backCurrent" type="button">Назад</button></div>';
+    document.getElementById('root').addEventListener('change',function(){state.root=this.value;save();updatePersonalMarkers()});
+    document.getElementById('showResult').addEventListener('click',function(){
+      var err=document.getElementById('rootError');
+      if(!state.root){err.textContent='Избери населено място, за да видиш резултата.';err.hidden=false;return}
+      state.view='result';render()
+    });
+    document.getElementById('backCurrent').addEventListener('click',function(){state.view='current';render()})
+  }
+
+  function bandFor(){
+    if(!state.country||!state.root)return null;
+    if(state.country==='DE'&&state.root==='Лом')return {band:'25+',text:'Има видима общност, свързана с Лом и живееща в Германия.'};
+    if(state.country==='GB'&&state.root==='Лом')return {band:'10+',text:'Има видима общност, свързана с Лом и живееща във Великобритания.'};
+    if(state.country==='ES'||state.country==='IT')return {band:'5+',text:'Има достатъчно хора за privacy-safe публичен сигнал за тази комбинация.'};
+    if(state.country==='BG')return {band:'10+',text:'Има достатъчно хора за privacy-safe публичен сигнал в България.'};
+    return null
+  }
+
+  function renderResult(){
+    stepLabel.textContent='Твоят контекст';
+    var result=bandFor();
+    var now=state.city+', '+countryData[state.country].name;
+    var resultHtml=result
+      ? '<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">'+esc(result.text)+'</p><p class="result-context">Това е общностен диапазон, не списък с хора.</p></div>'
+      : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за публичен резултат за тази комбинация.</p><p class="result-context">Не показваме точен брой, когато групата е под privacy прага.</p></div>';
+    body.innerHTML=
+      '<h2>Ето какво показва картата</h2>'+
+      '<div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
+      resultHtml+
+      '<p class="lockline">Конкретен човек се показва само когато имате ясна обща причина и той позволява нови заявки.</p>'+
+      '<div class="sheet-actions"><button class="primary" id="nextBoundary" type="button">Виж какво има за теб</button><button class="secondary" id="changePlaces" type="button">Промени</button></div>';
+    document.getElementById('changePlaces').addEventListener('click',function(){state.view='current';render()});
+    document.getElementById('nextBoundary').addEventListener('click',function(){
+      body.innerHTML='<h2>Тук завършва Screen 1</h2><p class="helper">В истинския продукт оттук контекстът продължава към регистрация и после се потвърждава. Този отделен review прототип не пише данни и не използва Supabase.</p><div class="sheet-actions"><button class="secondary" id="backResult" type="button">Назад към резултата</button></div>';
+      document.getElementById('backResult').addEventListener('click',function(){state.view='result';render()})
+    })
+  }
+
+  var svg=document.getElementById('worldMap');
+  var mapBase=document.getElementById('mapBase');
+  var personalLayer=document.getElementById('personalLayer');
+  var signals=Array.prototype.slice.call(document.querySelectorAll('#signalLayer .signal'));
+  var view={scale:1,tx:0,ty:0},drag=false,last=null;
+
+  function clamp(){
+    var minX=960-960*view.scale,minY=520-520*view.scale;
+    view.tx=Math.min(0,Math.max(minX,view.tx));
+    view.ty=Math.min(0,Math.max(minY,view.ty))
+  }
+  function transformPoint(x,y){return [view.tx+x*view.scale,view.ty+y*view.scale]}
+  function drawSignals(){
+    signals.forEach(function(g){var p=transformPoint(+g.dataset.x,+g.dataset.y);g.setAttribute('transform','translate('+p[0]+' '+p[1]+')')})
+  }
+  function drawMap(){clamp();mapBase.setAttribute('transform','translate('+view.tx+' '+view.ty+') scale('+view.scale+')');drawSignals();updatePersonalMarkers()}
+  function zoomAt(factor,cx,cy){
+    var old=view.scale,next=Math.max(1,Math.min(4,old*factor));if(next===old)return;
+    var wx=(cx-view.tx)/old,wy=(cy-view.ty)/old;
+    view.scale=next;view.tx=cx-wx*next;view.ty=cy-wy*next;drawMap()
+  }
+  document.getElementById('zoomIn').addEventListener('click',function(){zoomAt(1.3,480,260)});
+  document.getElementById('zoomOut').addEventListener('click',function(){zoomAt(1/1.3,480,260)});
+  svg.addEventListener('pointerdown',function(e){drag=true;last=[e.clientX,e.clientY];svg.classList.add('dragging');svg.setPointerCapture(e.pointerId)});
+  svg.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-last[0],dy=e.clientY-last[1];last=[e.clientX,e.clientY];var box=svg.getBoundingClientRect();view.tx+=dx*(960/box.width);view.ty+=dy*(520/box.height);drawMap()});
+  svg.addEventListener('pointerup',function(e){drag=false;last=null;svg.classList.remove('dragging');try{svg.releasePointerCapture(e.pointerId)}catch(_){}});
+  svg.addEventListener('wheel',function(e){e.preventDefault();var box=svg.getBoundingClientRect();var x=(e.clientX-box.left)*(960/box.width),y=(e.clientY-box.top)*(520/box.height);zoomAt(e.deltaY<0?1.15:1/1.15,x,y)},{passive:false});
+
+  function updatePersonalMarkers(){
+    personalLayer.innerHTML='';
+    var items=[];
+    if(state.country&&state.city){var c=countryData[state.country];items.push({type:'current',label:'Сега',x:c.xy[0],y:c.xy[1]})}
+    if(state.root&&rootData[state.root]){var r=rootData[state.root];items.push({type:'root',label:'Откъде си',x:r.xy[0],y:r.xy[1]})}
+    items.forEach(function(it){
+      var p=transformPoint(it.x,it.y);
+      var g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','personal '+it.type);g.setAttribute('transform','translate('+p[0]+' '+p[1]+')');
+      var circle=document.createElementNS('http://www.w3.org/2000/svg','circle');circle.setAttribute('r','9');g.appendChild(circle);
+      var text=document.createElementNS('http://www.w3.org/2000/svg','text');text.setAttribute('y','-16');text.textContent=it.label;g.appendChild(text);
+      personalLayer.appendChild(g)
+    })
+  }
+  drawMap();
 })();
 </script>
 </body>
