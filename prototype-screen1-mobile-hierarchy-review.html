@@ -96,8 +96,11 @@ button{color:inherit}
 .country.has-signal{fill:#314464}
 .country.is-focused{fill:#53647e;stroke:var(--gold2);stroke-width:1.8}
 .signal{pointer-events:none}
-.signal circle{fill:#121f37;stroke:var(--gold);stroke-width:2;vector-effect:non-scaling-stroke;filter:drop-shadow(0 7px 10px rgba(0,0,0,.35))}
+.signal .leader{stroke:rgba(244,205,114,.72);stroke-width:1.4;vector-effect:non-scaling-stroke}
+.signal .anchor{fill:var(--gold2);stroke:#07101f;stroke-width:1.4;vector-effect:non-scaling-stroke}
+.signal .badge-circle{fill:#121f37;stroke:var(--gold);stroke-width:2;vector-effect:non-scaling-stroke;filter:drop-shadow(0 7px 10px rgba(0,0,0,.35))}
 .signal .band{fill:var(--gold2);font-size:15px;font-weight:850;text-anchor:middle;dominant-baseline:central}
+.signal .country-name{fill:#f6f7fb;font-size:13px;font-weight:780;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:3px;stroke-linejoin:round}
 .personal text{fill:#fff;font-size:15px;font-weight:820;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:4px;stroke-linejoin:round}
 .personal.current circle{fill:#17305a;stroke:var(--blue)}
 .personal.root circle{fill:#3b2a10;stroke:var(--gold2)}
@@ -399,16 +402,28 @@ button{color:inherit}
           <path class="country" data-code="SS" d="M560.1 245.7L557.8 243.7L557.1 242.4L555.7 243.1L554.5 242.9L553.8 243.4L552.6 243.0L551.0 240.5L550.6 239.6L548.6 238.4L548.0 236.6L546.9 235.3L545.1 233.7L545.1 232.7L543.6 231.5L541.8 230.4L542.6 230.0L543.5 229.5L544.1 226.8L544.8 225.4L546.7 225.0L547.1 225.8L548.5 227.5L549.2 227.8L550.1 227.3L552.0 227.4L552.4 228.0L554.9 228.0L555.0 227.4L556.3 226.8L556.6 225.9L557.5 225.3L559.8 227.1L561.1 226.8L562.3 224.6L563.7 223.0L563.4 221.1L562.8 220.3L564.3 220.1L564.5 219.4L565.7 219.6L565.4 221.9L565.8 224.0L567.2 225.2L567.5 226.3L567.5 227.8L567.9 227.8L568.0 230.2L567.6 231.1L566.2 231.2L565.4 232.9L567.0 233.1L568.3 234.5L568.8 235.8L570.0 236.4L571.6 239.7L569.8 241.7L568.3 243.5L566.7 244.9L564.9 244.9L562.8 245.6L561.1 244.9L560.1 245.7Z"/>
         </g>
         <g id="signalLayer" aria-hidden="true">
-          <g class="signal" data-x="474.7" data-y="94.2"><circle r="22"/><text class="band">10+</text></g>
-          <g class="signal" data-x="503.5" data-y="102.8"><circle r="22"/><text class="band">25+</text></g>
-          <g class="signal" data-x="471.1" data-y="135.0"><circle r="22"/><text class="band">5+</text></g>
-          <g class="signal" data-x="509.8" data-y="127.2"><circle r="22"/><text class="band">5+</text></g>
+          <g class="signal" data-x="474.7" data-y="94.2" data-dx="-42" data-dy="-28">
+            <line class="leader"/><circle class="anchor" r="3.5"/>
+            <g class="badge"><circle class="badge-circle" r="20"/><text class="band">10+</text><text class="country-name" y="37">Великобритания</text></g>
+          </g>
+          <g class="signal" data-x="503.5" data-y="102.8" data-dx="38" data-dy="-25">
+            <line class="leader"/><circle class="anchor" r="3.5"/>
+            <g class="badge"><circle class="badge-circle" r="20"/><text class="band">25+</text><text class="country-name" y="37">Германия</text></g>
+          </g>
+          <g class="signal" data-x="471.1" data-y="135.0" data-dx="-39" data-dy="31">
+            <line class="leader"/><circle class="anchor" r="3.5"/>
+            <g class="badge"><circle class="badge-circle" r="20"/><text class="band">5+</text><text class="country-name" y="37">Испания</text></g>
+          </g>
+          <g class="signal" data-x="509.8" data-y="127.2" data-dx="39" data-dy="32">
+            <line class="leader"/><circle class="anchor" r="3.5"/>
+            <g class="badge"><circle class="badge-circle" r="20"/><text class="band">5+</text><text class="country-name" y="37">Италия</text></g>
+          </g>
         </g>
         <g id="personalLayer" aria-hidden="true"></g>
       </svg>
       <div class="map-context" id="mapContext" hidden></div>
     </div>
-    <div class="map-note">Публичните сигнали са privacy-safe диапазони: 5+, 10+, 25+, 50+, 100+.</div>
+    <div class="map-note">Показваме само общности от 5+ души, без лични профили.</div>
   </section>
 
 </main>
@@ -612,7 +627,18 @@ button{color:inherit}
   }
   function transformPoint(x,y){return [view.tx+x*view.scale,view.ty+y*view.scale]}
   function drawSignals(){
-    signals.forEach(function(g){var p=transformPoint(+g.dataset.x,+g.dataset.y);g.setAttribute('transform','translate('+p[0]+' '+p[1]+')')})
+    signals.forEach(function(g){
+      var p=transformPoint(+g.dataset.x,+g.dataset.y);
+      var dx=+g.dataset.dx||0,dy=+g.dataset.dy||0;
+      g.setAttribute('transform','translate('+p[0]+' '+p[1]+')');
+      var badge=g.querySelector('.badge');
+      if(badge)badge.setAttribute('transform','translate('+dx+' '+dy+')');
+      var leader=g.querySelector('.leader');
+      if(leader){
+        leader.setAttribute('x1','0');leader.setAttribute('y1','0');
+        leader.setAttribute('x2',String(dx*.64));leader.setAttribute('y2',String(dy*.64));
+      }
+    })
   }
   function drawMap(){clamp();mapBase.setAttribute('transform','translate('+view.tx+' '+view.ty+') scale('+view.scale+')');drawSignals();updatePersonalMarkers()}
   function zoomAt(factor,cx,cy){
