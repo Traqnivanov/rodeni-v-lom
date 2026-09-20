@@ -220,13 +220,13 @@
   .loading-card p{margin:0;font-size:16px;font-weight:750}
   .loading-card span{display:block;margin-top:4px;color:var(--muted);font-size:14px;font-weight:500}
 
-  .review-tools{position:fixed;z-index:50;right:12px;bottom:148px}
+  .review-tools{position:fixed;z-index:50;right:12px;top:118px}
   .review-button{
     min-height:44px;padding:0 13px;border:1px solid rgba(143,180,246,.36);border-radius:12px;
     background:rgba(10,20,40,.92);color:#d4e3ff;font-size:12px;font-weight:850;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.3)
   }
   .review-menu{
-    position:absolute;left:0;bottom:52px;width:min(310px,calc(100vw - 24px));padding:12px;border:1px solid var(--line-strong);
+    position:absolute;right:0;top:52px;width:min(310px,calc(100vw - 24px));padding:12px;border:1px solid var(--line-strong);
     border-radius:16px;background:#101b31;box-shadow:var(--shadow)
   }
   .review-menu h2{margin:0 0 5px;font-size:15px}
@@ -263,7 +263,7 @@
     .context-panel.is-open{transform:translateX(0)}
     .sheet-handle{display:none}
     .scrim{background:linear-gradient(90deg,transparent 30%,rgba(2,6,14,.38))}
-    .review-tools{right:24px;bottom:24px}
+    .review-tools{right:24px;top:136px}
   }
 
   @media (min-width:1100px){
@@ -685,6 +685,7 @@
       panelProgress.textContent = 'Твоят контекст';
       panelContent.innerHTML = previewTemplate(state.resultMode || deriveResultMode());
       bindPreviewView();
+      announce(state.resultMode === 'suppressed' ? 'Няма достатъчно хора за публичен резултат.' : 'Резултатът е зареден.');
     } else if (state.view === 'error' || state.view === 'offline'){
       panelProgress.textContent = 'Резултатът не е зареден';
       panelContent.innerHTML = errorTemplate(state.view === 'offline');
