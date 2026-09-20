@@ -80,6 +80,12 @@ Owner има последната дума за:
 3. последните одобрени секции в `PRODUCT_MASTER_VISION_AUDIT.md`
 4. `CLAUDE.md` само за исторически и технически контекст
 
+Преди всяко конкретно продуктово/UX/privacy/flow решение прочети и провери:
+
+5. `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`
+
+Този файл е задължителният индекс на вече одобрените функции, комбинираните user states и зависимостите между тях. Не вземай решение по памет или само по изолираната точка.
+
 Важно:
 
 `CLAUDE.md` съдържа по-стара продуктова логика.
@@ -105,6 +111,8 @@ Owner има последната дума за:
 За съществена продуктова/UX/архитектурна задача:
 
 **разбиране → анализ → конкретно предложение → Owner одобрение → запис в source of truth → prototype/implementation → verification**
+
+Преди „анализ“ е задължителна dependency проверка по `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`. Тя включва поне waiting actions, active needs, Travel, accepted connections, permissions, block/decline, privacy, entry/exit и recovery states.
 
 Не обръщай този ред.
 
@@ -138,6 +146,9 @@ Owner има последната дума за:
 
 ## `CLAUDE.md`
 Технически и исторически контекст. Част от продуктовото описание е legacy.
+
+## `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`
+Задължителният оперативен индекс на всички одобрени функции, комбинирани user states и зависимости. Проверява се преди всяко продуктово/UX/privacy/flow решение и се актуализира при ново одобрение. Не заменя Master/State.
 
 При голямо Owner решение:
 - записва се;
@@ -475,7 +486,7 @@ Chat НЕ е постоянен tab.
 
 ## NEXT EXACT STEP
 
-Следва **pre-prototype точка 4: честният post-registration empty/no-match flow, когато публичният aggregate съществува, но няма допустим човек за показване**.
+Следва **pre-prototype точка 4: цялостният post-registration no-result contract** след задължителна проверка на waiting actions, active needs, Travel, accepted connections, stranger eligibility, permissions и privacy.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 

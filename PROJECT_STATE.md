@@ -41,6 +41,8 @@
 
 - **Pre-prototype точка 3 — ОДОБРЕНА 20.09.2026:** Root + Current Location от public preview се пренасят през registration/email confirmation като частен и непотвърден pending context. Пазят се само canonical IDs + време + version; не се поставят в URL/analytics/public table и не участват в aggregates, matching, RLS или eligibility. След email confirmation minimum onboarding показва стойностите за потвърждение/редакция с водещо действие **„Потвърди и продължи“**. Едва след това се валидират, записват като реален контекст и pending копието се изчиства. При липсваща/невалидна/изтекла чернова се задават отново само двата минимални въпроса, без блокиране.
 
+- **Задължителна dependency проверка — OWNER DIRECTION 20.09.2026:** решенията не се вземат по памет или чрез изолиране на една функция. Преди предложение се проверява `PRODUCT_FUNCTION_DEPENDENCY_MAP.md` спрямо Master/State и всички комбинирани user states: waiting actions, active needs, Travel, accepted connections, permissions, block/decline, privacy, entry/exit и recovery. Картата се актуализира при всяко ново одобрено решение.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -205,7 +207,8 @@ Public → registered continuity:
 - Точка 1 — public aggregate → personal value contract: **ОДОБРЕНА**.
 - Точка 2 — privacy праг и адаптивна публична видимост: **ОДОБРЕНА**.
 - Точка 3 — „Контекстов мост“ през registration и email confirmation: **ОДОБРЕНА**.
-- Следва точка 4 — честният post-registration empty/no-match flow, когато публичният aggregate съществува, но няма допустим човек за показване.
+- Преди точка 4 е създаден и задължително се използва `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`; т.4 не се решава само като изолиран empty state.
+- Следва точка 4 — цялостният post-registration no-result contract след проверка на waiting actions, active needs, Travel, accepted connections, stranger eligibility, permissions и privacy.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;
