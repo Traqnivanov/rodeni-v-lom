@@ -755,6 +755,10 @@ body.flow-active .map-note{display:none}
   svg.addEventListener('wheel',function(e){e.preventDefault();var box=svg.getBoundingClientRect();var x=(e.clientX-box.left)*(960/box.width),y=(e.clientY-box.top)*(520/box.height);zoomAt(e.deltaY<0?1.15:1/1.15,x,y)},{passive:false});
 
   function updateSignalPriority(){
+    if(!document.body.classList.contains('flow-active')){
+      signals.forEach(function(g){g.classList.remove('context-muted','context-hidden','context-selected')});
+      return
+    }
     var hasCountry=!!state.country;
     var hasCity=!!state.city;
     var hasRoot=!!state.root;
