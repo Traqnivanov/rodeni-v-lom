@@ -105,11 +105,8 @@
   .map-loading{
     position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;pointer-events:none
   }
-  .map-loading::before{
-    content:"";width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.15);border-top-color:var(--gold);
-    animation:spin .85s linear infinite;margin-right:10px
-  }
-  .map-loading-inner{display:flex;align-items:center}
+  .map-loading-inner{display:flex;align-items:center;gap:10px}
+  .map-load-spinner{width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,.15);border-top-color:var(--gold);animation:spin .85s linear infinite}
   .map-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--muted)}
 
   .map-caption{
@@ -223,7 +220,7 @@
   .loading-card p{margin:0;font-size:16px;font-weight:750}
   .loading-card span{display:block;margin-top:4px;color:var(--muted);font-size:14px;font-weight:500}
 
-  .review-tools{position:fixed;z-index:50;left:12px;bottom:12px}
+  .review-tools{position:fixed;z-index:50;right:12px;bottom:148px}
   .review-button{
     min-height:44px;padding:0 13px;border:1px solid rgba(143,180,246,.36);border-radius:12px;
     background:rgba(10,20,40,.92);color:#d4e3ff;font-size:12px;font-weight:850;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.3)
@@ -266,7 +263,7 @@
     .context-panel.is-open{transform:translateX(0)}
     .sheet-handle{display:none}
     .scrim{background:linear-gradient(90deg,transparent 30%,rgba(2,6,14,.38))}
-    .review-tools{left:24px;bottom:24px}
+    .review-tools{right:24px;bottom:24px}
   }
 
   @media (min-width:1100px){
@@ -318,7 +315,7 @@
         <title id="mapTitle">Карта на общности, свързани с Лом и региона</title>
         <desc id="mapDesc">Показва само групови сигнали от поне пет души и не показва лични профили.</desc>
       </svg>
-      <div class="map-loading" id="mapLoading"><div class="map-loading-inner">Зареждаме картата…</div></div>
+      <div class="map-loading" id="mapLoading"><div class="map-loading-inner"><span class="map-load-spinner" aria-hidden="true"></span>Зареждаме картата…</div></div>
       <div class="map-fallback" id="mapFallback" hidden>Картата не се зареди. Основният контекстов flow остава достъпен.</div>
       <div class="map-caption">Сигнал се показва само при 5+</div>
     </section>
