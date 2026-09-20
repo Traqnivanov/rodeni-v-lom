@@ -483,11 +483,13 @@ button{color:inherit}
     Object.keys(countryData).forEach(function(code){out+='<option value="'+code+'"'+(state.country===code?' selected':'')+'>'+esc(countryData[code].name)+'</option>'});
     return out
   }
-  function cityOptions(){
+  function cityExample(){
     var examples={DE:'Мюнхен',GB:'Лондон',ES:'Мадрид',IT:'Рим',FR:'Париж',AT:'Виена',NL:'Амстердам',BG:'София'};
+    return state.country ? (examples[state.country]||countryData[state.country].cities[0]) : ''
+  }
+  function cityOptions(){
     if(!state.country)return '<option value="">Избери град или село</option>';
-    var example=examples[state.country]||countryData[state.country].cities[0];
-    var out='<option value="">Например '+esc(example)+'</option>';
+    var out='<option value="">Избери град или село</option>';
     countryData[state.country].cities.forEach(function(city){out+='<option'+(state.city===city?' selected':'')+'>'+esc(city)+'</option>'});
     return out
   }
@@ -512,7 +514,7 @@ button{color:inherit}
       '<h2>Къде си сега?</h2>'+
       '<p class="helper">Избери къде живееш сега. Така ще видиш общността около теб — без да показваме лични профили.</p>'+
       '<div class="field"><label for="country">Държава</label><select id="country">'+countryOptions()+'</select></div>'+
-      '<div class="field"><label for="city">Град / село</label><select id="city" '+(!state.country?'disabled':'')+'>'+cityOptions()+'</select><p class="field-hint">Изборът остава само в този прототип.</p></div>'+
+      '<div class="field"><label for="city">Град / село</label><select id="city" '+(!state.country?'disabled':'')+'>'+cityOptions()+'</select>'+(state.country?'<p class="field-hint">Например '+esc(cityExample())+'</p>':'')+'</div>'+
       '<div id="currentError" class="error" hidden></div>'+
       '<div class="sheet-actions"><button class="primary" id="toRoot" type="button">Продължи към „Откъде си?“</button></div>';
     var country=document.getElementById('country'),city=document.getElementById('city');
@@ -520,7 +522,7 @@ button{color:inherit}
     city.addEventListener('change',function(){state.city=this.value;save();updatePersonalMarkers()});
     document.getElementById('toRoot').addEventListener('click',function(){
       var err=document.getElementById('currentError');
-      if(!state.country||!state.city){err.textContent='Избери държава и населено място, за да продължиш.';err.hidden=false;return}
+      if(!state.country||!state.city){err.textContent='Избери държава и град или село, за да продължиш.';err.hidden=false;return}
       state.view='root';render()
     })
   }
