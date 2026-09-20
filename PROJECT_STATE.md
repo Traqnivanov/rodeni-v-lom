@@ -55,6 +55,8 @@
 
 - **Screen 1 — Точка 1 ОДОБРЕНА:** от сегашния публичен екран се запазват световната карта като водещ entry point, минималният header, map interaction и тъмносиньо-златистата посока без финален visual lock. Не се пренасят ticker, profile cards, public people tabs, exact counts/zero, direct people browse, country people panel, „Присъедини се, за да пишеш“, директният hook → auth преход или public `select('*')`. Одобреният flow е карта → два context въпроса → privacy-safe aggregate → „Виж какво има за теб“ → registration/confirmation/onboarding/„За теб“. Няма implementation.
 
+- **Screen 1 — Точка 2 ОДОБРЕНА:** анонимният първи viewport съдържа `Родени в Лом`, едно ясно обяснение, world map с community signal само при privacy-safe aggregate 5+, водещо **„А ти къде си на картата?“**, privacy опора **„Показваме общности, не лични профили.“**, вторични `Вход` и `Поверителност`. Няма public identities, exact counts/zero или ticker. Първият изглед не се насилва да бъде уникален; той е вход към отличителния map → context → privacy → Context Bridge → „За теб“ механизъм. Няма implementation.
+
 - Human-readability е основно UX правило: важният текст и действията са достатъчно големи, ясни и контрастни; mobile се проверява първо; не се жертва разбираемост заради по-голяма плътност.
 
 - Mobile-first е основно продуктово правило: първо се проектира и проверява mobile; desktop може да е по-плътен и да използва повече пространство, но не променя логиката/йерархията. При конфликт mobile UX има приоритет.
@@ -220,7 +222,8 @@ Public → registered continuity:
 - Точка 6 — Services scope lock за текущия community prototype: **ОДОБРЕНА**.
 - Допълнителните pre-prototype blockers са **ЗАТВОРЕНИ**.
 - Screen 1, Точка 1 — reuse boundary и основен flow: **ОДОБРЕНА**.
-- Следва **Screen 1 — Точка 2: първоначалното публично състояние — какво човек вижда и разбира за 3 секунди преди да активира куката**.
+- Screen 1, Точка 2 — първоначално публично състояние и първите 3 секунди: **ОДОБРЕНА**.
+- Следва **Screen 1 — Точка 3: активиране на „А ти къде си на картата?“ — context panel и първият въпрос „Къде си сега?“**.
 
 След затварянето на тези ограничени точки се довършва **screen-by-screen contract** за вече одобрената архитектура:
 - каква е ролята на всеки екран;

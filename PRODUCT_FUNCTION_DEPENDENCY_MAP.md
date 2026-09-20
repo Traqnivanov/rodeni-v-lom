@@ -117,6 +117,7 @@
 | Aggregate freshness | Root не изтича; Current Location участва до 12 месеца от последното user потвърждение | Travel не променя Current Location; expired current location се връща след reconfirmation и следващ snapshot |
 | Public CTA | „Виж какво има за теб“ | не обещава „Виж кои са“; води към registration → onboarding → „За теб“ |
 | Screen 1 reuse boundary | Запазва world map entry, minimal header и map interaction; премахва public people directory, ticker, exact counts/zero, people tabs и direct hook → auth | Master §91; няма public identities; само privacy-safe aggregate → Context Bridge |
+| Screen 1 initial public state | `Родени в Лом` → ясно map обяснение → privacy-safe world map → „А ти къде си на картата?“ → „Показваме общности, не лични профили.“ | Master §92; anonymous first viewport; secondary `Вход`/`Поверителност`; no forced uniqueness |
 | Registration | Email + password, минимум 12 знака, 18+, Terms + Privacy, email confirmation | Context Bridge, auth errors, existing account, session state |
 | V1 age/safety | Registration, personalized matching, contact и chat са само за 18+ | backend enforcement; legacy `age >= 14` не е валидният launch contract |
 | Контекстов мост | Root + Current Location преминават като private unconfirmed pending context | browser session, email confirmation, validation, cleanup, fallback |
