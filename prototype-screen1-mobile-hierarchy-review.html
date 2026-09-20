@@ -484,8 +484,10 @@ button{color:inherit}
     return out
   }
   function cityOptions(){
-    if(!state.country)return '<option value="">Първо избери държава</option>';
-    var out='<option value="">Избери град или село</option>';
+    var examples={DE:'Мюнхен',GB:'Лондон',ES:'Мадрид',IT:'Рим',FR:'Париж',AT:'Виена',NL:'Амстердам',BG:'София'};
+    if(!state.country)return '<option value="">Избери град или село</option>';
+    var example=examples[state.country]||countryData[state.country].cities[0];
+    var out='<option value="">Например '+esc(example)+'</option>';
     countryData[state.country].cities.forEach(function(city){out+='<option'+(state.city===city?' selected':'')+'>'+esc(city)+'</option>'});
     return out
   }
