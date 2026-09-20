@@ -7944,3 +7944,66 @@ Error handling-ът сам по себе си не е уникален и не �
 След изрично разрешение от Admin/Owner:
 
 **mobile-first interactive Screen 1 prototype по §§91–97 → mobile visual/flow verification → desktop adaptation → Owner review link.**
+
+
+# 98. [РЕАЛИЗИРАНО ЗА REVIEW][SCREEN 1][PROTOTYPE CHECKPOINT]
+
+**Дата:** 20.09.2026
+
+**Разрешено от:** Admin/Owner с изричното „Започваме съществената част“ след завършването на §§91–97
+
+**Статус:** ИНТЕРАКТИВЕН REVIEW PROTOTYPE Е ПУБЛИКУВАН; ОЧАКВА OWNER VISUAL/FLOW ОДОБРЕНИЕ
+
+## Реализиран артефакт
+
+- файл: `prototype-screen1.html`;
+- отделен review URL в GitHub Pages;
+- `index.html` и текущият live product flow не са заменени;
+- няма Supabase import, DB/RLS/schema промяна или production data write;
+- всички aggregate числа в prototype-а са ясно маркирани като demo data.
+
+## Покрит одобрен contract
+
+Prototype-ът реализира §§91–97 като един mobile-first interactive flow:
+
+- анонимно map състояние без публични самоличности, ticker, exact counts или people directory;
+- **„А ти къде си на картата?“** → **„Къде си сега?“** → **„Откъде си?“**;
+- canonical локални избори и controlled demo fallback;
+- private session draft и различими `Сега` / `Откъде си` markers без route линия;
+- exact, safe-broader и общо privacy-suppressed `0–4` състояние;
+- loading, technical error, retry и **„Продължи без публичен резултат“**;
+- CTA **„Виж какво има за теб“** завършва Screen 1 на ясна prototype boundary, без да симулира завършена регистрация;
+- Owner review toolbar за директно отваряне на ключовите състояния; toolbar-ът е изрично означен като извън продукта.
+
+## Verification checkpoint
+
+Потвърдени са:
+
+- валиден inline JavaScript и чист `git diff --check`;
+- успешно GitHub Pages публикуване;
+- world map render с 177 country paths;
+- normal flow и двата context inputs;
+- safe broadening и privacy-suppressed result;
+- техническа грешка, отделна от `0–4`, retry без загуба на Root/Current и успешно recovery;
+- accessibility announcements за зареден и suppressed result;
+- липса на page runtime errors при live browser pass;
+- desktop side-panel layout без застъпване на primary CTA, privacy note, map caption или review controls.
+
+Mobile-first CSS, bottom-sheet поведението, touch target размерите и малките viewport правила са реализирани. Финалната реална handset visual/flow проверка и визуалното одобрение са част от Owner review и още не са маркирани като одобрени.
+
+## Отчет за визуализация и уникалност
+
+- визуализацията пази одобрената тъмносиньо-златиста посока, ясен primary CTA, различими helper/privacy роли, видим focus и reduced-motion режим;
+- отличителната стойност не е декоративната карта сама по себе си, а последователността **две реални места → privacy-safe community signal → Context Bridge към лична стойност**;
+- не са добавени route animation, profile carousel, gamification или други елементи само за „уникалност“.
+
+## NEXT
+
+**Admin/Owner отваря review URL първо на mobile и проверява Screen 1 като реален човек.**
+
+До изрично Owner решение:
+
+- prototype-ът не се промотира към `index.html`;
+- не започва production/Supabase implementation;
+- не започва Screen 2;
+- коригират се само конкретни проблеми, намерени при Owner review.

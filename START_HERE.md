@@ -285,7 +285,7 @@ Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е
 
 Screen 1, Точка 6 — loading/network/error, retry и recovery — е одобрена в Master §97.
 
-**Screen 1 contract е завършен.** Текущ NEXT след изрично Owner разрешение е **mobile-first interactive Screen 1 prototype по Master §§91–97 → mobile verification → desktop adaptation → Owner review link**.
+**Screen 1 contract е завършен и отделният interactive review prototype е реализиран в `prototype-screen1.html` (Master §98).** Текущият NEXT е **Owner mobile visual/flow review → конкретни корекции по Owner feedback или изрично одобрение**. До това решение prototype-ът не заменя `index.html`, не започва production/Supabase implementation и не се преминава към Screen 2.
 
 Не започвай общ одит отначало, освен ако има конкретен конфликт, нов риск или изрично искане от Admin/Owner.
 

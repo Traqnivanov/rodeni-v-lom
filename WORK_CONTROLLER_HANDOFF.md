@@ -472,9 +472,9 @@ Chat НЕ е постоянен tab.
 
 # 16. КЪДЕ СМЕ СЕГА
 
-Проектът е **преди прототипа**.
+Проектът е **на Owner review checkpoint за първия Screen 1 prototype**.
 
-Няма нов UI implementation по одобрената архитектура.
+Има отделен interactive review артефакт `prototype-screen1.html` по Master §§91–98. Той не е production implementation и не заменя `index.html`.
 
 Няма Supabase/DB migration по новия contract.
 
@@ -503,7 +503,7 @@ Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е
 
 Screen 1, Точка 6 — loading/network/error, retry и recovery — е **ОДОБРЕНА** в Master §97. Техническа грешка никога не става `0–4`/zero/community result; context draft-ът се пази; retry повтаря само failed операцията; secondary `Продължи без публичен резултат` е допустимо само честно и без измислен aggregate.
 
-**Screen 1 contract е ЗАВЪРШЕН.** След изрично Admin/Owner разрешение следва **mobile-first interactive Screen 1 prototype по Master §§91–97 → mobile verification → desktop adaptation → Owner review link**.
+**Screen 1 contract е ЗАВЪРШЕН, а interactive review prototype-ът е РЕАЛИЗИРАН И ПУБЛИКУВАН.** Следва **Owner mobile visual/flow review → конкретни корекции или изрично одобрение**. Не се преминава към `index.html`, production/Supabase implementation или Screen 2 без ново Owner решение.
 
 След затварянето на ограничените pre-prototype точки продължава **SCREEN-BY-SCREEN CONTRACT**.
 
@@ -525,10 +525,10 @@ Screen 1, Точка 6 — loading/network/error, retry и recovery — е **О�
 Visual Hierarchy Contract-ът е задължителен и е записан в `START_HERE.md` и Master §93. Всяко screen предложение съдържа отделен визуален отчет: type hierarchy, primary/secondary/color roles, helper/privacy copy, mobile first viewport, touch, focus, contrast и връзка с естествената уникалност. Точната font family и финалните tokens се заключват с prototype-а, не по предположение.
 
 Още:
-- без финален visual design;
-- без prototype;
-- без код;
-- без DB.
+- без Owner-approved final visual design;
+- без production UI implementation;
+- без промяна на живия `index.html`;
+- без Supabase/DB промяна.
 
 След Owner approval:
 
