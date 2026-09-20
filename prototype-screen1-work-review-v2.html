@@ -533,14 +533,14 @@ button{color:inherit}
     body.innerHTML=
       '<div class="summary"><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
       '<h2>Откъде си?</h2>'+
-      '<p class="helper">Избери населеното място в България, което приемаш за свое. Така свързваме откъде си с мястото, където живееш сега.</p>'+
+      '<p class="helper">Избери своя град или село в България. Така свързваме откъде си с мястото, където живееш сега.</p>'+
       '<div class="field"><label for="root">Град или село в България</label><select id="root">'+rootOptions()+'</select><p class="field-hint">Изборът още не се публикува и не се брои в картата.</p></div>'+
       '<div id="rootError" class="error" hidden></div>'+
       '<div class="sheet-actions"><button class="primary" id="showResult" type="button">Виж какво показва картата</button><button class="secondary" id="backCurrent" type="button">Назад</button></div>';
     document.getElementById('root').addEventListener('change',function(){state.root=this.value;save();updatePersonalMarkers()});
     document.getElementById('showResult').addEventListener('click',function(){
       var err=document.getElementById('rootError');
-      if(!state.root){err.textContent='Избери населено място, за да видиш резултата.';err.hidden=false;return}
+      if(!state.root){err.textContent='Избери град или село, за да видиш резултата.';err.hidden=false;return}
       startLookup()
     });
     document.getElementById('backCurrent').addEventListener('click',function(){state.view='current';render()})
@@ -592,8 +592,8 @@ button{color:inherit}
     if(!state.country||!state.root)return null;
     if(state.country==='DE'&&state.root==='Лом')return {band:'25+',text:'Има видима общност, свързана с Лом и живееща в Германия.'};
     if(state.country==='GB'&&state.root==='Лом')return {band:'10+',text:'Има видима общност, свързана с Лом и живееща във Великобритания.'};
-    if(state.country==='ES'||state.country==='IT')return {band:'5+',text:'Има достатъчно хора за privacy-safe публичен сигнал за тази комбинация.'};
-    if(state.country==='BG')return {band:'10+',text:'Има достатъчно хора за privacy-safe публичен сигнал в България.'};
+    if(state.country==='ES'||state.country==='IT')return {band:'5+',text:'Картата показва общност от 5+ души за тази комбинация.'};
+    if(state.country==='BG')return {band:'10+',text:'Картата показва общност от 10+ души в България.'};
     return null
   }
 
@@ -603,7 +603,7 @@ button{color:inherit}
     var now=state.city+', '+countryData[state.country].name;
     var resultHtml=result
       ? '<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">'+esc(result.text)+'</p><p class="result-context">Това е общностен диапазон, не списък с хора.</p></div>'
-      : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за публичен резултат за тази комбинация.</p><p class="result-context">Не показваме точен брой, когато групата е под privacy прага.</p></div>';
+      : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за публичен резултат за тази комбинация.</p><p class="result-context">Когато групата е твърде малка, не показваме точен брой.</p></div>';
     body.innerHTML=
       '<h2>Ето какво показва картата</h2>'+
       '<div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
@@ -612,7 +612,7 @@ button{color:inherit}
       '<div class="sheet-actions"><button class="primary" id="nextBoundary" type="button">Виж какво има за теб</button><button class="secondary" id="changePlaces" type="button">Промени</button></div>';
     document.getElementById('changePlaces').addEventListener('click',function(){state.retryCount=0;state.view='current';render()});
     document.getElementById('nextBoundary').addEventListener('click',function(){
-      body.innerHTML='<h2>Тук завършва Screen 1</h2><p class="helper">В истинския продукт оттук контекстът продължава към регистрация и после се потвърждава. Този отделен review прототип не пише данни и не използва Supabase.</p><div class="sheet-actions"><button class="secondary" id="backResult" type="button">Назад към резултата</button></div>';
+      body.innerHTML='<h2>Следва създаване на профил</h2><p class="helper">Така ще запазиш тези два избора и ще видиш какво има за теб. След потвърждение ще можеш да ги прегледаш и промениш.</p><div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div><div class="sheet-actions"><button class="secondary" id="backResult" type="button">Назад към резултата</button></div>';
       document.getElementById('backResult').addEventListener('click',function(){state.view='result';render()})
     })
   }
