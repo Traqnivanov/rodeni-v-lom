@@ -489,7 +489,7 @@ button{color:inherit}
   }
   function cityOptions(){
     if(!state.country)return '<option value="">Избери град или село</option>';
-    var out='<option value="">Например '+esc(cityExample())+'</option>';
+    var out='<option value="" disabled '+(!state.city?'selected':'')+'>Например '+esc(cityExample())+'</option>';
     countryData[state.country].cities.forEach(function(city){out+='<option'+(state.city===city?' selected':'')+'>'+esc(city)+'</option>'});
     return out
   }
