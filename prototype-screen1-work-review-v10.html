@@ -124,16 +124,21 @@ body.flow-active #mapBase .country.is-root-focused{opacity:1}
 .signal .badge-circle{fill:#121f37;stroke:var(--gold);stroke-width:2;vector-effect:non-scaling-stroke;filter:drop-shadow(0 7px 10px rgba(0,0,0,.35))}
 .signal .band{fill:var(--gold2);font-size:15px;font-weight:850;text-anchor:middle;dominant-baseline:central}
 .signal .country-name{fill:#f6f7fb;font-size:13px;font-weight:780;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:3px;stroke-linejoin:round}
-.personal .marker-halo{fill:rgba(7,16,31,.76);stroke-width:2;vector-effect:non-scaling-stroke}
-.personal .marker-dot{stroke:#07101f;stroke-width:1.5;vector-effect:non-scaling-stroke}
-.personal .marker-box{stroke-width:1.2;vector-effect:non-scaling-stroke}
-.personal .marker-label{fill:#fff;font-size:16px;font-weight:860;text-anchor:middle;dominant-baseline:central}
-.personal.current .marker-halo{stroke:var(--blue)}
-.personal.current .marker-dot{fill:var(--blue)}
-.personal.current .marker-box{fill:rgba(10,28,53,.94);stroke:rgba(155,194,255,.72)}
-.personal.root .marker-halo{stroke:var(--gold2)}
-.personal.root .marker-dot{fill:var(--gold2)}
-.personal.root .marker-box{fill:rgba(45,34,13,.94);stroke:rgba(244,205,114,.78)}
+.map-marker-layer{position:absolute;z-index:7;inset:0;pointer-events:none;overflow:hidden}
+.map-pin{position:absolute;width:0;height:0}
+.map-pin .pin-dot{
+  position:absolute;left:0;top:0;width:14px;height:14px;border-radius:50%;
+  transform:translate(-50%,-50%);border:3px solid #07101f;box-shadow:0 0 0 2px rgba(255,255,255,.12)
+}
+.map-pin .pin-label{
+  position:absolute;left:0;white-space:nowrap;transform:translateX(-50%);
+  padding:5px 9px;border-radius:999px;font-size:16px;line-height:1.1;font-weight:850;
+  box-shadow:0 6px 16px rgba(0,0,0,.28);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)
+}
+.map-pin.current .pin-dot{background:var(--blue)}
+.map-pin.current .pin-label{bottom:13px;color:#fff;background:rgba(10,28,53,.94);border:1px solid rgba(155,194,255,.72)}
+.map-pin.root .pin-dot{background:var(--gold2)}
+.map-pin.root .pin-label{top:13px;color:#fff;background:rgba(45,34,13,.94);border:1px solid rgba(244,205,114,.78)}
 .map-context{display:none!important}
 .map-note{padding:11px 14px 13px;border-top:1px solid var(--line);color:var(--muted);font-size:15px;line-height:1.45}
 .loading-box{
@@ -451,6 +456,7 @@ body.flow-active .scrim{
         </g>
         <g id="personalLayer" aria-hidden="true"></g>
       </svg>
+      <div class="map-marker-layer" id="mapMarkerLayer" aria-hidden="true"></div>
       <div class="map-context" id="mapContext" hidden></div>
     </div>
     <div class="map-note">Показваме само общности от 5+ души, без лични профили.</div>
@@ -674,8 +680,7 @@ body.flow-active .scrim{
       ? '<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">Има общност за тази комбинация.</p><p class="result-context">Показваме диапазон, не списък с хора.</p></div>'
       : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за тази комбинация.</p><p class="result-context">Показваме резултат само когато общността е достатъчно голяма.</p></div>';
     body.innerHTML=
-      '<h2>Ето какво показват двата ти избора</h2>'+
-      '<div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
+      '<h2>Резултат за твоите две места</h2>'+
       resultHtml+
       '<p class="lockline">Лични профили се показват само при ясна обща причина и разрешение.</p>'+
       '<div class="sheet-actions"><button class="primary" id="nextBoundary" type="button">Виж какво има за теб</button><button class="secondary" id="changePlaces" type="button">Промени</button></div>';
@@ -691,6 +696,7 @@ body.flow-active .scrim{
   var svg=document.getElementById('worldMap');
   var mapBase=document.getElementById('mapBase');
   var personalLayer=document.getElementById('personalLayer');
+  var mapMarkerLayer=document.getElementById('mapMarkerLayer');
   var mapContext=document.getElementById('mapContext');
   var signals=Array.prototype.slice.call(document.querySelectorAll('#signalLayer .signal'));
   var mapTitle=document.getElementById('mapTitle');
@@ -811,6 +817,7 @@ body.flow-active .scrim{
 
   function updatePersonalMarkers(){
     personalLayer.innerHTML='';
+    mapMarkerLayer.innerHTML='';
     var flowActive=document.body.classList.contains('flow-active');
     document.querySelectorAll('#mapBase .country').forEach(function(el){
       el.classList.toggle('is-focused',flowActive&&!!state.country&&el.dataset.code===state.country);
@@ -822,44 +829,31 @@ body.flow-active .scrim{
       updateSignalPriority();
       return
     }
-    var items=[],chips=[];
+    var items=[];
     if(state.country&&state.city){
-      var c=countryData[state.country];
-      var cp=cityXY[state.country+'|'+state.city]||c.xy;
-      items.push({type:'current',label:'Сега · '+state.city,x:cp[0],y:cp[1]});
-      chips.push('<span class="context-chip current">Сега · '+esc(state.city+', '+c.name)+'</span>')
+      var currentCountry=countryData[state.country];
+      var cp=cityXY[state.country+'|'+state.city]||currentCountry.xy;
+      items.push({type:'current',label:'Сега · '+state.city,x:cp[0],y:cp[1]})
     }
     if(state.root&&rootData[state.root]){
-      var r=rootData[state.root];
-      items.push({type:'root',label:'Откъде · '+state.root,x:r.xy[0],y:r.xy[1]});
-      chips.push('<span class="context-chip root">Откъде · '+esc(r.label)+'</span>')
+      var rootPlace=rootData[state.root];
+      items.push({type:'root',label:'Откъде · '+state.root,x:rootPlace.xy[0],y:rootPlace.xy[1]})
     }
     items.forEach(function(it){
       var p=transformPoint(it.x,it.y);
-      var g=document.createElementNS('http://www.w3.org/2000/svg','g');
-      g.setAttribute('class','personal '+it.type);
-      g.setAttribute('transform','translate('+p[0]+' '+p[1]+')');
-
-      var halo=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      halo.setAttribute('class','marker-halo');halo.setAttribute('r','11');g.appendChild(halo);
-
-      var dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      dot.setAttribute('class','marker-dot');dot.setAttribute('r','5');g.appendChild(dot);
-
-      var text=document.createElementNS('http://www.w3.org/2000/svg','text');
-      text.setAttribute('class','marker-label');text.setAttribute('y','-29');text.textContent=it.label;g.appendChild(text);
-
-      personalLayer.appendChild(g);
-
-      var w=0;
-      try{w=text.getComputedTextLength()}catch(_){w=it.label.length*8.5}
-      w=Math.max(82,Math.min(218,w+22));
-      var box=document.createElementNS('http://www.w3.org/2000/svg','rect');
-      box.setAttribute('class','marker-box');
-      box.setAttribute('x',String(-w/2));box.setAttribute('y','-42');
-      box.setAttribute('width',String(w));box.setAttribute('height','26');
-      box.setAttribute('rx','13');box.setAttribute('ry','13');
-      g.insertBefore(box,text)
+      if(p[0]<-30||p[0]>990||p[1]<-30||p[1]>550)return;
+      var pin=document.createElement('div');
+      pin.className='map-pin '+it.type;
+      pin.style.left=(p[0]/960*100)+'%';
+      pin.style.top=(p[1]/520*100)+'%';
+      var label=document.createElement('span');
+      label.className='pin-label';
+      label.textContent=it.label;
+      var dot=document.createElement('span');
+      dot.className='pin-dot';
+      pin.appendChild(label);
+      pin.appendChild(dot);
+      mapMarkerLayer.appendChild(pin)
     });
     mapContext.innerHTML='';
     mapContext.hidden=true;
