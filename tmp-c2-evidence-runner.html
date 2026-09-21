@@ -2,7 +2,7 @@
 <style>html,body{margin:0;min-height:100%;background:#080f1d}body{display:flex;justify-content:center;align-items:flex-start}iframe{border:0;display:block;background:#080f1d}</style>
 <iframe id="f" title="C2 evidence"></iframe>
 <script>
-const q=new URLSearchParams(location.search),state=q.get('state')||'initial',width=Number(q.get('w')||390),f=document.getElementById('f');
+sessionStorage.clear();const q=new URLSearchParams(location.search),state=q.get('state')||'initial',width=Number(q.get('w')||390),f=document.getElementById('f');
 f.style.width=width+'px';f.style.height='844px';f.src='./prototype-screen1-work-c2.html?evidence='+encodeURIComponent(state);
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function pick(d,k,name){const i=d.getElementById(k);i.focus();i.value=name;i.dispatchEvent(new Event('input',{bubbles:true}));await wait(40);const o=[...d.querySelectorAll('#'+k+'Options [role=option]')].find(x=>x.textContent===name);if(!o)throw new Error('missing '+k+':'+name);o.click();await wait(40)}
