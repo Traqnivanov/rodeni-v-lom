@@ -65,7 +65,7 @@ Exact, broader, Current-only and suppressed remain separately labelled. No list 
 
 ### PASS
 
-Independent Chromium/Playwright browser matrix on the C2 DOM/CSS/JS:
+Independent Chromium/Playwright browser matrix on the C2 DOM/CSS/JS was re-run after the focus-race correction: **23 PASS / 0 FAIL**:
 - 360, 390 and 412 CSS px: inline combobox is below the field, no horizontal overflow, noninteractive heading has no gold outline.
 - Mobile/touch emulation: tap selection works.
 - Adaptive map state: 170 → 170 → 240 px; at review 200% text the two-place map is 300 px.
@@ -123,14 +123,14 @@ Evidence uses the full C2 file from the review branch, rendered in Opera through
 - The published C1 review site was not updated.
 - Main, production, Supabase, C1, V13, registration, onboarding and Screen 2 were not changed.
 
-## 5. Intended final diff from the base commit
+## 5. Final diff verified from the base commit
 
-Only:
+Final compare against `21b068f1992a4e583ed6118dff1a773fb58d1558` contains only:
 - `prototype-screen1-work-c2.html`
 - `prototype-screen1-work-c2.test.cjs`
 - `SCREEN1_WORK_C2_REVIEW.md`
 - screenshot evidence under `review-evidence/screen1-c2/`
 
-The temporary `qa-screen1-c2-harness.html` used only to obtain browser evidence must not remain in the final diff.
+The temporary browser-evidence harnesses were removed. No QA harness remains in the final diff.
 
 No merge and no publish are performed. C2 is returned to WORK CONTROLLER for independent audit.
