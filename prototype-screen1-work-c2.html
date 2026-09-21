@@ -27,7 +27,7 @@ const KEY='rodeni-work-screen1-c2',blank=()=>({country:'',current:'',root:'',pen
 try{const d=JSON.parse(sessionStorage.getItem(KEY)||'null');if(d&&d.version===1&&Date.now()-d.updated<86400000&&Date.now()>=d.updated&&(!d.current||find(d.current)?.country===d.country)&&(!d.root||find(d.root)?.country==='BG')&&(!d.country||countries[d.country])){state={country:d.country||'',current:d.current||'',root:d.root||'',pending:typeof d.pending==='string'?d.pending.slice(0,100):'',view:'current'};if(state.root)state.pending=''}else if(d){sessionStorage.removeItem(KEY);recovered=true}}catch{storageOK=false}
 function save(){try{sessionStorage.setItem(KEY,JSON.stringify({...state,version:1,updated:Date.now()}))}catch{storageOK=false}}
 function cancel(){generation++;if(timer)clearTimeout(timer);timer=null}
-function focusQuestion(){requestAnimationFrame(()=>{$('question')?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'})})}
+function focusQuestion(){const q=$('question');if(!q)return;q.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'})}
 function closeFlow(){cancel();active=false;document.body.classList.remove('flow');$('panel').hidden=true;drawMap();$('start').focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'})}
 function openFlow(){cancel();active=true;state.view=state.current?'root':'current';document.body.classList.add('flow');$('panel').hidden=false;render()}
 function change(view){cancel();attempt=0;state.view=view;save();render()}
