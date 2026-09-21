@@ -1,0 +1,36 @@
+<!doctype html><meta charset="utf-8"><title>C2 QA harness</title>
+<style>
+html,body{margin:0;background:#20242b;color:#fff;font:16px system-ui,sans-serif}
+.wrap{display:flex;gap:14px;align-items:flex-start;padding:10px}
+.case{background:#111722;padding:6px;border-radius:8px}
+.case b{display:block;margin:0 0 5px}
+iframe{display:block;border:1px solid #596579;background:#080f1d;height:844px}
+</style>
+<div class="wrap">
+  <div class="case"><b>360 × 844 CSS px</b><iframe id="f360" width="360" src="./prototype-screen1-work-c2.html"></iframe></div>
+  <div class="case"><b>390 × 844 CSS px</b><iframe id="f390" width="390" src="./prototype-screen1-work-c2.html"></iframe></div>
+  <div class="case"><b>412 × 844 CSS px</b><iframe id="f412" width="412" src="./prototype-screen1-work-c2.html"></iframe></div>
+</div>
+<script>
+const scenario=new URLSearchParams(location.search).get('scenario')||'suggestions';
+function fire(el,type){el.dispatchEvent(new Event(type,{bubbles:true}))}
+function apply(frame){
+  const w=frame.contentWindow,d=frame.contentDocument;
+  if(!d||!d.getElementById('start')) return;
+  if(scenario==='suggestions'){
+    d.getElementById('start').click();
+    const c=d.getElementById('country'); c.value='DE'; fire(c,'change');
+    const i=d.getElementById('current'); i.focus(); i.value='Мюн'; fire(i,'input');
+  } else if(scenario==='amsterdam'){
+    w.eval("active=true;state.country='NL';state.current='NL|Амстердам';state.root='BG|Лом';state.pending='';state.view='result';document.body.classList.add('flow');document.getElementById('panel').hidden=false;render()");
+  } else if(scenario==='pair200'){
+    w.eval("active=true;state.country='DE';state.current='DE|Мюнхен';state.root='BG|Лом';state.pending='';state.view='root';document.body.classList.add('flow');document.getElementById('panel').hidden=false;render();document.documentElement.style.fontSize='200%';document.documentElement.classList.add('text-zoom');drawMap()");
+  } else if(scenario==='error'){
+    w.eval("active=true;state.country='DE';state.current='DE|Мюнхен';state.root='BG|Лом';state.pending='';state.view='error';attempt=1;document.body.classList.add('flow');document.getElementById('panel').hidden=false;render()");
+  }
+}
+for(const id of ['f360','f390','f412']){
+  const f=document.getElementById(id);
+  f.addEventListener('load',()=>setTimeout(()=>apply(f),60));
+}
+</script>
