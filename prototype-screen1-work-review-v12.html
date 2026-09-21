@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <title>Родени в Лом · Screen 1 mobile review</title>
+<script>
+(function(){
+  var ua=navigator.userAgent||'';
+  var mobileUA=/Android|iPhone|iPad|iPod|Mobile|IEMobile|Opera Mini/i.test(ua);
+  var touch=(navigator.maxTouchPoints||0)>0;
+  var coarse=window.matchMedia&&matchMedia('(pointer:coarse)').matches;
+  var noHover=window.matchMedia&&matchMedia('(hover:none)').matches;
+  if(mobileUA||touch||coarse||noHover)document.documentElement.classList.add('force-mobile');
+})();
+</script>
 <style>
 :root{
   --bg:#070d19;--bg2:#0b1426;--panel:#111f36;--panel2:#0b1629;
@@ -26,7 +36,16 @@ body{
 button,input,select{font:inherit}
 button,a{-webkit-tap-highlight-color:transparent}
 button{color:inherit}
+:where(button,a,input,select):focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
 [hidden]{display:none!important}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.privacy-link{display:inline-flex;min-height:48px;align-items:center;margin:2px 0 0 31px;color:var(--soft);font-size:16px;font-weight:760;text-underline-offset:3px}
+.text-action{min-height:48px;padding:0;border:0;background:transparent;color:var(--blue);font-size:16px;font-weight:780;text-align:left;cursor:pointer}
+.lookup-box{margin-top:8px;padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
+.lookup-box label{display:block;margin-bottom:8px;font-size:16px;font-weight:780}
+.lookup-box input{width:100%;min-height:54px;padding:0 14px;border:1px solid var(--line2);border-radius:14px;background:#0a1428;color:var(--text);font-size:17px}
+.lookup-box .secondary{margin-top:10px}
+.lookup-error{margin:8px 0 0;color:#ffb8b0;font-size:15px;line-height:1.4}
 .page{width:min(100%,760px);min-height:100dvh;margin:0 auto;padding-bottom:var(--safe)}
 .header{
   position:sticky;top:0;z-index:20;min-height:64px;padding:8px 14px;
@@ -124,7 +143,7 @@ body.flow-active #mapBase .country.is-root-focused{opacity:1}
 .signal .anchor{fill:var(--gold2);stroke:#07101f;stroke-width:1.4;vector-effect:non-scaling-stroke}
 .signal .badge-circle{fill:#121f37;stroke:var(--gold);stroke-width:2;vector-effect:non-scaling-stroke;filter:drop-shadow(0 7px 10px rgba(0,0,0,.35))}
 .signal .band{fill:var(--gold2);font-size:15px;font-weight:850;text-anchor:middle;dominant-baseline:central}
-.signal .country-name{fill:#f6f7fb;font-size:13px;font-weight:780;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:3px;stroke-linejoin:round}
+.signal .country-name{fill:#f6f7fb;font-size:15px;font-weight:780;text-anchor:middle;paint-order:stroke;stroke:#07101f;stroke-width:3px;stroke-linejoin:round}
 .map-marker-layer{position:absolute;z-index:7;inset:0;pointer-events:none;overflow:hidden}
 .map-pin{position:absolute;width:0;height:0}
 .map-pin .pin-dot{
@@ -217,12 +236,18 @@ body.flow-active .scrim{
 .result-context{margin:9px 0 0;color:var(--soft);font-size:16px;line-height:1.5}
 .result.suppressed{border-color:var(--line2);background:rgba(255,255,255,.035)}
 .lockline{margin:12px 0 0;color:var(--soft);font-size:16px;line-height:1.5}
-@media (min-width:760px){
-  body{padding:22px}
-  .page{min-height:calc(100dvh - 44px);border:1px solid var(--line);border-radius:28px;overflow:hidden;background:rgba(7,13,25,.62);box-shadow:var(--shadow)}
-  .header{position:relative}.intro{padding:28px 26px 14px}.action-card,.map-card{margin-left:24px;margin-right:24px}.map-wrap{height:320px}.review-note{margin-left:26px;margin-right:26px}
-  .sheet{left:auto;right:22px;top:22px;bottom:22px;width:min(450px,calc(100vw - 44px));max-height:none;border:1px solid var(--line2);border-radius:26px;padding:14px 22px 24px;transform:translateX(calc(100% + 40px))}
-  .sheet.open{transform:none}.handle{display:none}
+@media (min-width:760px) and (hover:hover) and (pointer:fine){
+  html:not(.force-mobile) body{padding:22px}
+  html:not(.force-mobile) .page{min-height:calc(100dvh - 44px);border:1px solid var(--line);border-radius:28px;overflow:hidden;background:rgba(7,13,25,.62);box-shadow:var(--shadow)}
+  html:not(.force-mobile) .header{position:relative}
+  html:not(.force-mobile) .intro{padding:28px 26px 14px}
+  html:not(.force-mobile) .action-card,
+  html:not(.force-mobile) .map-card{margin-left:24px;margin-right:24px}
+  html:not(.force-mobile) .map-wrap{height:320px}
+  html:not(.force-mobile) .review-note{margin-left:26px;margin-right:26px}
+  html:not(.force-mobile) .sheet{left:auto;right:22px;top:22px;bottom:22px;width:min(450px,calc(100vw - 44px));max-height:none;border:1px solid var(--line2);border-radius:26px;padding:14px 22px 24px;transform:translateX(calc(100% + 40px))}
+  html:not(.force-mobile) .sheet.open{transform:none}
+  html:not(.force-mobile) .handle{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -252,6 +277,7 @@ body.flow-active .scrim{
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
       <span>Показваме общности, не лични профили.</span>
     </p>
+    <a class="privacy-link" href="poveritelnost.html">Поверителност</a>
   </section>
 
   <section class="map-card" aria-labelledby="mapTitle">
@@ -497,19 +523,64 @@ body.flow-active .scrim{
     'FR':{name:'Франция',xy:[468,184],cities:['Париж','Лион','Марсилия']},
     'AT':{name:'Австрия',xy:[500,184],cities:['Виена','Грац','Залцбург']},
     'NL':{name:'Нидерландия',xy:[478,160],cities:['Амстердам','Ротердам','Айндховен']},
-    'BG':{name:'България',xy:[535,208],cities:['Лом','София','Пловдив','Варна','Монтана']}
+    'BG':{name:'България',xy:[535,208],cities:['Лом','София','Пловдив','Варна','Монтана']},
+    'BE':{name:'Белгия',xy:[489.9,103.5],cities:['Брюксел']},
+    'CH':{name:'Швейцария',xy:[499.9,113.7],cities:['Цюрих']},
+    'PT':{name:'Португалия',xy:[458.8,139.4],cities:['Лисабон']},
+    'GR':{name:'Гърция',xy:[536.0,141.4],cities:['Атина']},
+    'CZ':{name:'Чехия',xy:[513.6,105.7],cities:['Прага']},
+    'DK':{name:'Дания',xy:[508.9,89.2],cities:['Копенхаген']},
+    'SE':{name:'Швеция',xy:[521.7,78.4],cities:['Стокхолм']},
+    'NO':{name:'Норвегия',xy:[504.4,76.7],cities:['Осло']},
+    'IE':{name:'Ирландия',xy:[464.8,96.2],cities:['Дъблин']},
+    'PL':{name:'Полша',xy:[528.9,99.3],cities:['Варшава']},
+    'RO':{name:'Румъния',xy:[541.3,122.3],cities:['Букурещ']},
+    'HU':{name:'Унгария',xy:[524.5,113.3],cities:['Будапеща']}
   };
-  var cityXY={"DE|Мюнхен":[506.6,111.4],"DE|Берлин":[510,98.7],"DE|Хамбург":[502.3,95.8],"GB|Лондон":[479.7,101.6],"GB|Манчестър":[475,96],"GB|Бирмингам":[475.8,98.8],"GB|Лийдс":[476.6,95.1],"ES|Мадрид":[471.1,134.4],"ES|Барселона":[485.2,131.5],"ES|Валенсия":[479.1,137.2],"IT|Рим":[509.7,129.9],"IT|Милано":[501.5,119.3],"IT|Торино":[498,120.5],"FR|Париж":[485.4,109.3],"FR|Лион":[491.3,118.4],"FR|Марсилия":[492.7,125.8],"AT|Виена":[517.7,111.2],"AT|Грац":[515.7,114.6],"AT|Залцбург":[510.1,112.4],"NL|Амстердам":[491,99.2],"NL|Ротердам":[490.1,100.4],"NL|Айндховен":[492.3,101.8],"BG|Лом":[534.7,124.2],"BG|София":[535.2,127.5],"BG|Пловдив":[538.7,129.2],"BG|Варна":[545.9,126],"BG|Монтана":[534.8,125.4]};
+  var cityXY={"DE|Мюнхен":[506.6,111.4],"DE|Берлин":[510,98.7],"DE|Хамбург":[502.3,95.8],"GB|Лондон":[479.7,101.6],"GB|Манчестър":[475,96],"GB|Бирмингам":[475.8,98.8],"GB|Лийдс":[476.6,95.1],"ES|Мадрид":[471.1,134.4],"ES|Барселона":[485.2,131.5],"ES|Валенсия":[479.1,137.2],"IT|Рим":[509.7,129.9],"IT|Милано":[501.5,119.3],"IT|Торино":[498,120.5],"FR|Париж":[485.4,109.3],"FR|Лион":[491.3,118.4],"FR|Марсилия":[492.7,125.8],"AT|Виена":[517.7,111.2],"AT|Грац":[515.7,114.6],"AT|Залцбург":[510.1,112.4],"NL|Амстердам":[491,99.2],"NL|Ротердам":[490.1,100.4],"NL|Айндховен":[492.3,101.8],"BG|Лом":[534.7,124.2],"BG|София":[535.2,127.5],"BG|Пловдив":[538.7,129.2],"BG|Варна":[545.9,126],"BG|Монтана":[534.8,125.4],
+"BE|Брюксел":[489.9,103.5],"CH|Цюрих":[499.9,113.7],"PT|Лисабон":[458.8,139.4],"GR|Атина":[536.0,141.4],"CZ|Прага":[513.6,105.7],"DK|Копенхаген":[508.9,89.2],"SE|Стокхолм":[521.7,78.4],"NO|Осло":[504.4,76.7],"IE|Дъблин":[464.8,96.2],"PL|Варшава":[528.9,99.3],"RO|Букурещ":[541.3,122.3],"HU|Будапеща":[524.5,113.3]};
   var rootData={
     'Лом':{label:'Лом, България',xy:[534.7,124.2]},
     'Ковачица':{label:'Ковачица, България',xy:[534.5,124.4]},
     'Монтана':{label:'Монтана, България',xy:[534.8,125.4]},
     'София':{label:'София, България',xy:[535.2,127.5]},
     'Пловдив':{label:'Пловдив, България',xy:[538.7,129.2]},
-    'Видин':{label:'Видин, България',xy:[533.8,123.7]}
+    'Видин':{label:'Видин, България',xy:[533.8,123.7]},
+    'Берковица':{label:'Берковица, България',xy:[534.3,125.9]},
+    'Враца':{label:'Враца, България',xy:[535.3,125.9]},
+    'Козлодуй':{label:'Козлодуй, България',xy:[535.7,124.3]},
+    'Плевен':{label:'Плевен, България',xy:[537.8,125.3]},
+    'Вършец':{label:'Вършец, България',xy:[534.7,126.0]},
+    'Варна':{label:'Варна, България',xy:[545.9,126.0]}
+  };
+  var fallbackCurrent={
+    'DE|Щутгарт':{name:'Щутгарт',xy:[501.3,109.6]},
+    'FR|Тулуза':{name:'Тулуза',xy:[483.4,124.9]},
+    'AT|Линц':{name:'Линц',xy:[513.3,111.0]},
+    'NL|Утрехт':{name:'Утрехт',xy:[491.6,99.8]},
+    'GB|Глазгоу':{name:'Глазгоу',xy:[469.4,88.8]},
+    'ES|Севиля':{name:'Севиля',xy:[466.2,143.3]},
+    'IT|Болоня':{name:'Болоня',xy:[506.6,122.2]},
+    'BG|Враца':{name:'Враца',xy:[535.3,125.9]}
+  };
+  var fallbackRoot={
+    'Русе':{label:'Русе, България',xy:[540.9,124.1]},
+    'Бургас':{label:'Бургас, България',xy:[544.5,128.0]},
+    'Добрич':{label:'Добрич, България',xy:[545.3,124.8]},
+    'Благоевград':{label:'Благоевград, България',xy:[534.3,129.5]},
+    'Велико Търново':{label:'Велико Търново, България',xy:[540.2,126.3]},
+    'Стара Загора':{label:'Стара Загора, България',xy:[540.3,128.2]},
+    'Сливен':{label:'Сливен, България',xy:[541.9,127.5]},
+    'Шумен':{label:'Шумен, България',xy:[543.3,125.7]},
+    'Ямбол':{label:'Ямбол, България',xy:[542.3,128.1]}
   };
   var state={view:'current',country:'',city:'',root:'',retryCount:0};
   try{var saved=JSON.parse(sessionStorage.getItem(STORAGE)||'null');if(saved)state=Object.assign(state,saved)}catch(e){}
+  if(state.city&&fallbackCurrent[state.country+'|'+state.city]){
+    if(countryData[state.country].cities.indexOf(state.city)<0)countryData[state.country].cities.push(state.city);
+    cityXY[state.country+'|'+state.city]=fallbackCurrent[state.country+'|'+state.city].xy
+  }
+  if(state.root&&fallbackRoot[state.root])rootData[state.root]=fallbackRoot[state.root];
 
   function save(){try{sessionStorage.setItem(STORAGE,JSON.stringify(state))}catch(e){}}
   function open(){
@@ -561,6 +632,24 @@ body.flow-active .scrim{
     Object.keys(rootData).forEach(function(name){out+='<option'+(state.root===name?' selected':'')+'>'+esc(name)+'</option>'});
     return out
   }
+  function normalizePlace(s){return String(s||'').trim().replace(/s+/g,' ').toLocaleLowerCase('bg')}
+  function findFallbackCurrent(country,name){
+    var target=normalizePlace(name),found=null;
+    Object.keys(fallbackCurrent).some(function(key){
+      var item=fallbackCurrent[key],parts=key.split('|');
+      if(parts[0]===country&&normalizePlace(item.name)===target){found=item;return true}
+      return false
+    });
+    return found
+  }
+  function findFallbackRoot(name){
+    var target=normalizePlace(name),found=null,keyName='';
+    Object.keys(fallbackRoot).some(function(key){
+      if(normalizePlace(key)===target){found=fallbackRoot[key];keyName=key;return true}
+      return false
+    });
+    return found?{name:keyName,data:found}:null
+  }
 
   function render(){
     sheet.classList.remove('boundary-view');
@@ -579,7 +668,9 @@ body.flow-active .scrim{
       '<h2>Къде си сега?</h2>'+
       '<p class="helper">Избери къде живееш сега. Така ще видиш общността около теб — без да показваме лични профили.</p>'+
       '<div class="field"><label for="country">Държава</label><select id="country">'+countryOptions()+'</select></div>'+
-      '<div class="field"><label for="city">Град / село</label><select id="city" '+(!state.country?'disabled':'')+'>'+cityOptions()+'</select></div>'+
+      '<div class="field"><label for="city">Град / село</label><select id="city" '+(!state.country?'disabled':'')+'>'+cityOptions()+'</select>'+
+      (state.country?'<button class="text-action" id="toggleCurrentFallback" type="button">Не намираш мястото?</button><div class="lookup-box" id="currentFallback" hidden><label for="currentFallbackInput">Потърси друго място в '+esc(countryData[state.country].name)+'</label><input id="currentFallbackInput" autocomplete="off" placeholder="Въведи град или село"><button class="secondary" id="useCurrentFallback" type="button">Провери мястото</button><p class="lookup-error" id="currentFallbackError" hidden></p></div>':'')+
+      '</div>'+
       '<div id="currentError" class="error" hidden></div>'+
       '<div class="sheet-actions"><button class="primary" id="toRoot" type="button">Продължи към „Откъде си?“</button></div>';
     var country=document.getElementById('country'),city=document.getElementById('city');
@@ -590,6 +681,26 @@ body.flow-active .scrim{
     city.addEventListener('change',function(){
       state.city=this.value;save();
       if(state.city)focusCitySelection();else focusCountrySelection()
+    });
+    var toggle=document.getElementById('toggleCurrentFallback');
+    if(toggle)toggle.addEventListener('click',function(){
+      var box=document.getElementById('currentFallback');
+      box.hidden=!box.hidden;
+      if(!box.hidden)document.getElementById('currentFallbackInput').focus()
+    });
+    var useFallback=document.getElementById('useCurrentFallback');
+    if(useFallback)useFallback.addEventListener('click',function(){
+      var input=document.getElementById('currentFallbackInput');
+      var err=document.getElementById('currentFallbackError');
+      var found=findFallbackCurrent(state.country,input.value);
+      if(!found){
+        err.textContent='Не успяхме да потвърдим това място. Провери изписването.';
+        err.hidden=false;return
+      }
+      state.city=found.name;
+      if(countryData[state.country].cities.indexOf(found.name)<0)countryData[state.country].cities.push(found.name);
+      cityXY[state.country+'|'+found.name]=found.xy;
+      save();renderCurrent();focusCitySelection()
     });
     document.getElementById('toRoot').addEventListener('click',function(){
       var err=document.getElementById('currentError');
@@ -609,11 +720,31 @@ body.flow-active .scrim{
       '<div class="context-status"><span>Сега</span><b>'+esc(now)+'</b></div>'+
       '<h2>Откъде си?</h2>'+
       '<p class="helper">Избери своя град или село в България.</p>'+
-      '<div class="field"><label for="root">Град или село в България</label><select id="root">'+rootOptions()+'</select><p class="field-hint">Изборът още не се публикува и не се брои в картата.</p></div>'+
+      '<div class="field"><label for="root">Град или село в България</label><select id="root">'+rootOptions()+'</select>'+
+      '<button class="text-action" id="toggleRootFallback" type="button">Не намираш мястото?</button>'+
+      '<div class="lookup-box" id="rootFallback" hidden><label for="rootFallbackInput">Потърси друго място в България</label><input id="rootFallbackInput" autocomplete="off" placeholder="Въведи град или село"><button class="secondary" id="useRootFallback" type="button">Провери мястото</button><p class="lookup-error" id="rootFallbackError" hidden></p></div>'+
+      '<p class="field-hint">Изборът още не се публикува и не се брои в картата.</p></div>'+
       '<div id="rootError" class="error" hidden></div>'+
-      '<div class="sheet-actions"><button class="primary" id="showResult" type="button">Виж какво показва картата</button><button class="secondary" id="backCurrent" type="button">Назад</button></div>';
+      '<div class="sheet-actions"><button class="primary" id="showResult" type="button">Виж какво показва картата</button><button class="secondary" id="backCurrent" type="button">Промени „Сега“</button></div>';
     document.getElementById('root').addEventListener('change',function(){
       state.root=this.value;save();focusContextSelection()
+    });
+    document.getElementById('toggleRootFallback').addEventListener('click',function(){
+      var box=document.getElementById('rootFallback');
+      box.hidden=!box.hidden;
+      if(!box.hidden)document.getElementById('rootFallbackInput').focus()
+    });
+    document.getElementById('useRootFallback').addEventListener('click',function(){
+      var input=document.getElementById('rootFallbackInput');
+      var err=document.getElementById('rootFallbackError');
+      var found=findFallbackRoot(input.value);
+      if(!found){
+        err.textContent='Не успяхме да потвърдим това място. Провери изписването.';
+        err.hidden=false;return
+      }
+      rootData[found.name]=found.data;
+      state.root=found.name;
+      save();renderRoot();focusContextSelection()
     });
     document.getElementById('showResult').addEventListener('click',function(){
       var err=document.getElementById('rootError');
@@ -663,39 +794,64 @@ body.flow-active .scrim{
     document.getElementById('retryLookup').addEventListener('click',function(){state.retryCount+=1;startLookup()});
     document.getElementById('changeAfterError').addEventListener('click',function(){state.view='current';render()});
     if(canContinue)document.getElementById('continueWithout').addEventListener('click',function(){
-      body.innerHTML='<h2>Контекстът ти е запазен</h2><p class="helper">Продължаваме без да измисляме публичен резултат. В истинския продукт двата избора се пренасят за потвърждение след регистрация.</p><div class="sheet-actions"><button class="secondary" id="backError" type="button">Назад</button></div>';
+      body.innerHTML='<h2>Контекстът ти е запазен</h2><p class="helper">Продължаваме без да измисляме публичен резултат. Двата избора остават запазени и ще ги потвърдиш след създаване на профил.</p><div class="sheet-actions"><button class="secondary" id="backError" type="button">Назад</button></div>';
       document.getElementById('backError').addEventListener('click',renderError)
     })
   }
 
-  function bandFor(){
-    if(!state.country||!state.root)return null;
-    if(state.country==='DE'&&state.root==='Лом')return {band:'25+',text:'Има видима общност, свързана с Лом и живееща в Германия.'};
-    if(state.country==='GB'&&state.root==='Лом')return {band:'10+',text:'Има видима общност, свързана с Лом и живееща във Великобритания.'};
-    if(state.country==='ES'||state.country==='IT')return {band:'5+',text:'Картата показва общност от 5+ души за тази комбинация.'};
-    if(state.country==='BG')return {band:'10+',text:'Картата показва общност от 10+ души в България.'};
-    return null
+  var demoExact={
+    'DE|Мюнхен|Лом':'25+',
+    'GB|Лондон|Лом':'10+',
+    'ES|Мадрид|Лом':'5+',
+    'IT|Милано|Лом':'5+',
+    'FR|Лион|Лом':'5+',
+    'AT|Грац|Лом':'5+',
+    'BG|София|Лом':'10+'
+  };
+  var demoBroader={
+    'DE|Берлин':'10+',
+    'FR|Париж':'5+',
+    'ES|Барселона':'5+',
+    'AT|Виена':'5+',
+    'NL|Амстердам':'5+',
+    'BE|Брюксел':'5+'
+  };
+  function aggregateFor(){
+    if(!state.country||!state.city||!state.root)return {type:'suppressed'};
+    var exactKey=state.country+'|'+state.city+'|'+state.root;
+    if(demoExact[exactKey])return {type:'exact',band:demoExact[exactKey]};
+    var broadKey=state.country+'|'+state.city;
+    if(demoBroader[broadKey])return {type:'broader',band:demoBroader[broadKey]};
+    return {type:'suppressed'}
   }
 
   function renderResult(){
     keepMapVisible();
     stepLabel.textContent='Твоят контекст';
-    var result=bandFor();
+    var result=aggregateFor();
     var now=state.city+', '+countryData[state.country].name;
-    var resultHtml=result
-      ? '<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">Има общност за тази комбинация.</p><p class="result-context">Показваме диапазон, не списък с хора.</p></div>'
-      : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за тази комбинация.</p><p class="result-context">Показваме резултат само когато общността е достатъчно голяма.</p></div>';
+    var rootLabel=rootData[state.root].label;
+    var rootShort=state.root;
+    var resultHtml='';
+    if(result.type==='exact'){
+      resultHtml='<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">В '+esc(state.city)+' има '+result.band+' души, свързани с '+esc(rootShort)+'.</p><p class="result-context">Показваме диапазон, не точен брой и не списък с хора.</p></div>'
+    }else if(result.type==='broader'){
+      resultHtml='<div class="result"><p class="result-main">За '+esc(rootShort)+' в '+esc(state.city)+' няма достатъчно хора за публичен резултат.</p><p class="result-band">'+result.band+'</p><p class="result-context">В '+esc(state.city)+' има '+result.band+' души от Лом и региона.</p></div>'
+    }else{
+      resultHtml='<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за публичен резултат за тази комбинация.</p><p class="result-context">Това не означава непременно, че няма хора — малките групи не се показват публично.</p></div>'
+    }
     body.innerHTML=
       '<h2>Резултат за твоите две места</h2>'+
+      '<p class="sr-only">Откъде си: '+esc(rootLabel)+'. Сега: '+esc(now)+'.</p>'+
       resultHtml+
-      '<p class="lockline">Лични профили се показват само при ясна обща причина и разрешение.</p>'+
+      '<p class="lockline">Конкретен човек се показва само когато имате ясна обща причина и той позволява нови заявки.</p>'+
       '<div class="sheet-actions"><button class="primary" id="nextBoundary" type="button">Виж какво има за теб</button><button class="secondary" id="changePlaces" type="button">Промени</button></div>';
     focusContextSelection();
     document.getElementById('changePlaces').addEventListener('click',function(){state.retryCount=0;state.view='current';render()});
     document.getElementById('nextBoundary').addEventListener('click',function(){
       useFullSheet();
       sheet.classList.add('boundary-view');
-      body.innerHTML='<h2>Следва създаване на профил</h2><p class="helper">Така ще запазиш тези два избора и ще видиш какво има за теб. След потвърждение ще можеш да ги прегледаш и промениш.</p><div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div><div class="sheet-actions"><button class="secondary" id="backResult" type="button">Назад към резултата</button></div>';
+      body.innerHTML='<h2>Следва създаване на профил</h2><p class="helper">Така ще запазиш тези два избора и ще видиш какво има за теб. След потвърждение ще можеш да ги прегледаш и промениш.</p><div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootLabel)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div><div class="sheet-actions"><button class="secondary" id="backResult" type="button">Назад към резултата</button></div>';
       document.getElementById('backResult').addEventListener('click',function(){state.view='result';render()})
     })
   }
