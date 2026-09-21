@@ -1,5 +1,19 @@
 # WORK CONTROLLER HANDOFF — „Родени в Лом“
 
+## АКТУАЛЕН HANDOFF — 21.09.2026 — ПРОЧЕТИ ПЪРВО
+
+Owner уточни след одита: V13 е малко демо от времето без WORK; взимаме най-добрите решения за официалния прототип. Не поправяй демото по инерция и не го merge-вай механично.
+
+WORK CONTROLLER прие посоката в Master §100: човешки въпрос/CTA водят mobile, картата следва контекста, Сега/Откъде остават четими, result е компактен и семантично верен. Обновени са критериите за ефективен размер, контрапримери и отделни acceptance статуси.
+
+Работен documentation branch: `review/work-screen1-approved-direction`, чисто от main `7b1af9840f0054b477f1a2fb5ec33b709c8002de`. Main/production/Supabase не са променени. Демото остава в отделния ordinary review branch; няма merge на неговата история.
+
+NEXT: официален Screen 1 candidate по Master §100 → §99 technical + visual evidence → Owner final approval. Към този checkpoint candidate не е реализиран. Одобрението на посоката не означава одобрение на бъдещия визуален резултат.
+
+За всяка задача предавай точен scope, критерии и доказателства. Не добавяй blanket PASS при непроверен viewport/state. Не започвай Screen 2. По-старите „първа задача“ и NEXT записи по-долу са исторически спрямо този checkpoint; постоянните роли и privacy правила остават.
+
+---
+
 **Дата:** 20.09.2026  
 **Проект:** `Traqnivanov/rodeni-v-lom`  
 **Branch:** `main`  

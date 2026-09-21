@@ -1,5 +1,25 @@
 # PRODUCT FUNCTION DEPENDENCY MAP — „Родени в Лом“
 
+## SCREEN 1 — АКТУАЛИЗАЦИЯ 21.09.2026 / Master §100
+
+Този индекс следва приетия след одит contract от Master §100 в `review/work-screen1-approved-direction`; main още не е обновен.
+
+| Решение | Зависимости и проверка |
+|---|---|
+| Въпрос/лична полза/CTA пред картата | Initial viewport, реална четимост, §99; не се смалява текст заради геометрията на картата |
+| Контекстна карта след start | Hide public signals, Current→Root, back/close/reopen; началото не показва наследени лични маркери |
+| Фиксирани Сега/Откъде надписи | Единна проекция, точни координати, fit на двете места, дълги имена, 200% текст, screen-reader context |
+| Compact result | Двете места остават разбираеми; exact/broader/suppressed се различават честно |
+| Safe broader | Current locality + допустима Root принадлежност; никакъв универсален Lom fallback за несвързан Root |
+| Hybrid fallback | Controlled lookup representation, unverified Root, допустим Current-only result, retry/recovery; demo не е production resolver |
+| Close/loading и session | Закъснял резултат не възстановява затворен flow; черновата се валидира; context bridge остава частен |
+| Път към registration | Boundary само в Screen 1; потвърждение и review преди реален профил; няма Screen 2 implementation |
+| Приемане на демо идея | Отделно от code quality, visual PASS и final Owner approval; чист promotion path |
+
+Privacy eligibility/threshold, OFF aggregate inclusion, stranger visibility и community-only scope остават непроменени. Новият критерий за собствено преживяване е разбираемият преход „Сега + Откъде → допустим резултат за моя контекст“, не декларация за световна уникалност.
+
+---
+
 **Дата:** 20.09.2026
 **Статус:** ЗАДЪЛЖИТЕЛЕН ОПЕРАТИВЕН ИНДЕКС НА ОДОБРЕНИТЕ ФУНКЦИИ
 **Обхват:** продуктова логика, UX, privacy, safety, flow и зависимости преди решение

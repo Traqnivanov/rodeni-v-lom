@@ -1,5 +1,17 @@
 # PROJECT STATE — „Родени в Лом“
 
+## ТЕКУЩО СЪСТОЯНИЕ — 21.09.2026 — Master §100
+
+- Owner уточни: V13 е малко демо за изследване, не готовият официален прототип.
+- WORK CONTROLLER одобри избраната посока след одит: водещ въпрос/CTA, контекстна карта, четими Сега/Откъде маркери, компактен result и outcome-based release проверки.
+- Новият contract е Master §100. Той заменя по-старите Screen 1 NEXT указания за поредна initial breakpoint поправка; останалите privacy/flow/architecture contracts се запазват.
+- Решенията са документирани в `review/work-screen1-approved-direction`, чист клон от main `7b1af9840f0054b477f1a2fb5ec33b709c8002de`. Main не е обновен с тези документи.
+- Официалният candidate по §100: НЕ Е РЕАЛИЗИРАН. Technical/visual/final Owner approval: ПРЕДСТОЯТ.
+- NEXT EXACT STEP: изграждане на официалния Screen 1 candidate по §100, последвано от матрицата по §99 и Owner review. Не се изисква поправяне/merge на V13 като предпоставка.
+- Без Screen 2, production или Supabase промени. Историческите checkpoints по-долу не са текущи NEXT инструкции.
+
+---
+
 **Актуализирано:** 20.09.2026  
 **Branch:** `main`  
 **Роля на този файл:** кратък текущ handoff. Не е пълна история и не заменя Master-а.  
