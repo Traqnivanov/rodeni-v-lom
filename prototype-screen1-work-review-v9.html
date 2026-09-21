@@ -61,7 +61,7 @@ body.flow-active .action-card{display:none}
 body.flow-active .header{min-height:58px}
 body.flow-active .brand-mark{width:38px;height:38px}
 body.flow-active .map-card{margin-top:10px;margin-bottom:8px}
-body.flow-active .map-wrap{height:210px;min-height:210px}
+body.flow-active .map-wrap{height:224px;min-height:224px}
 body.flow-active .map-note{display:none}
 body.flow-active .map-actions{display:none}
 .primary{
@@ -100,17 +100,20 @@ body.flow-active .map-actions{display:none}
 .map-wrap{
   position:relative;height:clamp(240px,36dvh,300px);min-height:240px;
   background:
-    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(180deg,#11223c,#091426);
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(180deg,#132641,#0b1729);
   background-size:36px 36px,36px 36px,auto
 }
 #worldMap{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #worldMap.dragging{cursor:grabbing}
-.country{fill:#182744;stroke:#07101f;stroke-width:.7;vector-effect:non-scaling-stroke;transition:fill .18s ease}
-.country.has-signal{fill:#314464}
-.country.is-focused{fill:#324b69;stroke:rgba(155,194,255,.58);stroke-width:1.05}
-.country.is-root-focused{fill:#3a3425;stroke:rgba(244,205,114,.56);stroke-width:1.05}
+.country{fill:#223754;stroke:#0b1728;stroke-width:.58;vector-effect:non-scaling-stroke;transition:fill .18s ease,opacity .18s ease}
+.country.has-signal{fill:#385373}
+.country.is-focused{fill:#3d6388;stroke:rgba(155,194,255,.7);stroke-width:1.05}
+.country.is-root-focused{fill:#50472f;stroke:rgba(244,205,114,.68);stroke-width:1.05}
+body.flow-active #mapBase .country{opacity:.82}
+body.flow-active #mapBase .country.is-focused,
+body.flow-active #mapBase .country.is-root-focused{opacity:1}
 .signal{pointer-events:none;transition:opacity .18s ease}
 .signal.context-muted{opacity:.14}
 .signal.context-hidden{opacity:0}
@@ -148,6 +151,9 @@ body.flow-active .map-actions{display:none}
   opacity:0;pointer-events:none;transition:opacity .18s ease
 }
 .scrim.show{opacity:1;pointer-events:auto}
+body.flow-active .scrim{
+  background:linear-gradient(180deg,rgba(2,6,14,.06) 0%,rgba(2,6,14,.08) 30%,rgba(2,6,14,.28) 58%,rgba(2,6,14,.46) 100%)
+}
 .sheet{
   position:fixed;z-index:40;left:0;right:0;bottom:0;max-height:min(82dvh,760px);overflow:auto;
   padding:10px 16px calc(20px + var(--safe));border-top:1px solid var(--line2);border-radius:26px 26px 0 0;
@@ -185,6 +191,13 @@ body.flow-active .map-actions{display:none}
 }
 .summary-row{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--soft);font-size:16px}
 .summary-row b{color:var(--text);text-align:right}
+.context-status{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin:2px 0 14px;padding:10px 12px;border:1px solid rgba(155,194,255,.22);
+  border-radius:999px;background:rgba(13,31,56,.55);font-size:16px;line-height:1.3
+}
+.context-status span{color:var(--muted);font-weight:760}
+.context-status b{color:var(--text);font-weight:820;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .result{
   margin:0 0 14px;padding:18px;border:1px solid rgba(233,184,79,.3);
   border-radius:18px;background:linear-gradient(145deg,rgba(233,184,79,.12),rgba(255,255,255,.025))
@@ -477,12 +490,12 @@ body.flow-active .map-actions{display:none}
   };
   var cityXY={"DE|Мюнхен":[506.6,111.4],"DE|Берлин":[510,98.7],"DE|Хамбург":[502.3,95.8],"GB|Лондон":[479.7,101.6],"GB|Манчестър":[475,96],"GB|Бирмингам":[475.8,98.8],"GB|Лийдс":[476.6,95.1],"ES|Мадрид":[471.1,134.4],"ES|Барселона":[485.2,131.5],"ES|Валенсия":[479.1,137.2],"IT|Рим":[509.7,129.9],"IT|Милано":[501.5,119.3],"IT|Торино":[498,120.5],"FR|Париж":[485.4,109.3],"FR|Лион":[491.3,118.4],"FR|Марсилия":[492.7,125.8],"AT|Виена":[517.7,111.2],"AT|Грац":[515.7,114.6],"AT|Залцбург":[510.1,112.4],"NL|Амстердам":[491,99.2],"NL|Ротердам":[490.1,100.4],"NL|Айндховен":[492.3,101.8],"BG|Лом":[534.7,124.2],"BG|София":[535.2,127.5],"BG|Пловдив":[538.7,129.2],"BG|Варна":[545.9,126],"BG|Монтана":[534.8,125.4]};
   var rootData={
-    'Лом':{label:'Лом, България',xy:[531,205]},
-    'Ковачица':{label:'Ковачица, България',xy:[527,204]},
-    'Монтана':{label:'Монтана, България',xy:[533,207]},
-    'София':{label:'София, България',xy:[526,214]},
-    'Пловдив':{label:'Пловдив, България',xy:[540,218]},
-    'Видин':{label:'Видин, България',xy:[523,201]}
+    'Лом':{label:'Лом, България',xy:[534.7,124.2]},
+    'Ковачица':{label:'Ковачица, България',xy:[534.5,124.4]},
+    'Монтана':{label:'Монтана, България',xy:[534.8,125.4]},
+    'София':{label:'София, България',xy:[535.2,127.5]},
+    'Пловдив':{label:'Пловдив, България',xy:[538.7,129.2]},
+    'Видин':{label:'Видин, България',xy:[533.8,123.7]}
   };
   var state={view:'current',country:'',city:'',root:'',retryCount:0};
   try{var saved=JSON.parse(sessionStorage.getItem(STORAGE)||'null');if(saved)state=Object.assign(state,saved)}catch(e){}
@@ -497,6 +510,7 @@ body.flow-active .map-actions{display:none}
     sheet.classList.remove('open','map-visible');
     scrim.classList.remove('show');
     document.body.classList.remove('flow-active');
+    resetMapView();
     window.scrollTo({top:0,behavior:'auto'})
   }
   function keepMapVisible(){
@@ -580,7 +594,7 @@ body.flow-active .map-actions{display:none}
     stepLabel.textContent='Стъпка 2 от 2';
     var now=state.city+', '+countryData[state.country].name;
     body.innerHTML=
-      '<div class="summary"><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
+      '<div class="context-status"><span>Сега</span><b>'+esc(now)+'</b></div>'+
       '<h2>Откъде си?</h2>'+
       '<p class="helper">Избери своя град или село в България.</p>'+
       '<div class="field"><label for="root">Град или село в България</label><select id="root">'+rootOptions()+'</select><p class="field-hint">Изборът още не се публикува и не се брои в картата.</p></div>'+
@@ -660,7 +674,7 @@ body.flow-active .map-actions{display:none}
       ? '<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">Има общност за тази комбинация.</p><p class="result-context">Показваме диапазон, не списък с хора.</p></div>'
       : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за тази комбинация.</p><p class="result-context">Показваме резултат само когато общността е достатъчно голяма.</p></div>';
     body.innerHTML=
-      '<h2>Ето какво показва картата</h2>'+
+      '<h2>Ето какво има между твоите две места</h2>'+
       '<div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
       resultHtml+
       '<p class="lockline">Лични профили се показват само при ясна обща причина и разрешение.</p>'+
@@ -722,23 +736,23 @@ body.flow-active .map-actions{display:none}
   }
   function focusCountrySelection(){
     var point=currentCityPoint();
-    if(point)setMapView(point,3.0)
+    if(point)setMapView(point,3.35)
   }
   function focusCitySelection(){
     var point=currentCityPoint();
-    if(point)setMapView(point,4.25)
+    if(point)setMapView(point,4.75)
   }
   function fitMapPoints(points){
     points=points.filter(Boolean);
     if(!points.length){resetMapView();return}
-    if(points.length===1){setMapView(points[0],4.1);return}
+    if(points.length===1){setMapView(points[0],4.6);return}
     var minX=Math.min.apply(null,points.map(function(p){return p[0]}));
     var maxX=Math.max.apply(null,points.map(function(p){return p[0]}));
     var minY=Math.min.apply(null,points.map(function(p){return p[1]}));
     var maxY=Math.max.apply(null,points.map(function(p){return p[1]}));
-    var dx=Math.max(34,maxX-minX),dy=Math.max(26,maxY-minY);
-    var usableW=960*.64,usableH=520*.52;
-    var scale=Math.min(5.0,Math.max(1.45,Math.min(usableW/dx,usableH/dy)));
+    var dx=Math.max(24,maxX-minX),dy=Math.max(18,maxY-minY);
+    var usableW=960*.70,usableH=520*.60;
+    var scale=Math.min(5.15,Math.max(1.65,Math.min(usableW/dx,usableH/dy)));
     var center=[(minX+maxX)/2,(minY+maxY)/2];
     setMapView(center,scale)
   }
@@ -797,10 +811,17 @@ body.flow-active .map-actions{display:none}
 
   function updatePersonalMarkers(){
     personalLayer.innerHTML='';
+    var flowActive=document.body.classList.contains('flow-active');
     document.querySelectorAll('#mapBase .country').forEach(function(el){
-      el.classList.toggle('is-focused',!!state.country&&el.dataset.code===state.country);
-      el.classList.toggle('is-root-focused',!!state.root&&el.dataset.code==='BG')
+      el.classList.toggle('is-focused',flowActive&&!!state.country&&el.dataset.code===state.country);
+      el.classList.toggle('is-root-focused',flowActive&&!!state.root&&el.dataset.code==='BG')
     });
+    if(!flowActive){
+      mapContext.innerHTML='';
+      mapContext.hidden=true;
+      updateSignalPriority();
+      return
+    }
     var items=[],chips=[];
     if(state.country&&state.city){
       var c=countryData[state.country];
