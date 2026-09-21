@@ -674,7 +674,7 @@ body.flow-active .scrim{
       ? '<div class="result"><p class="result-band">'+result.band+'</p><p class="result-main">Има общност за тази комбинация.</p><p class="result-context">Показваме диапазон, не списък с хора.</p></div>'
       : '<div class="result suppressed"><p class="result-main">Все още няма достатъчно хора за тази комбинация.</p><p class="result-context">Показваме резултат само когато общността е достатъчно голяма.</p></div>';
     body.innerHTML=
-      '<h2>Ето какво има между твоите две места</h2>'+
+      '<h2>Ето какво показват двата ти избора</h2>'+
       '<div class="summary"><div class="summary-row"><span>Откъде си</span><b>'+esc(rootData[state.root].label)+'</b></div><div class="summary-row"><span>Сега</span><b>'+esc(now)+'</b></div></div>'+
       resultHtml+
       '<p class="lockline">Лични профили се показват само при ясна обща причина и разрешение.</p>'+
