@@ -61,8 +61,9 @@ body.flow-active .action-card{display:none}
 body.flow-active .header{min-height:58px}
 body.flow-active .brand-mark{width:38px;height:38px}
 body.flow-active .map-card{margin-top:10px;margin-bottom:8px}
-body.flow-active .map-wrap{height:190px;min-height:190px}
+body.flow-active .map-wrap{height:210px;min-height:210px}
 body.flow-active .map-note{display:none}
+body.flow-active .map-actions{display:none}
 .primary{
   width:100%;min-height:62px;padding:10px 18px;border:0;border-radius:16px;cursor:pointer;
   background:linear-gradient(180deg,var(--gold2),var(--gold));color:var(--goldink);
@@ -108,7 +109,8 @@ body.flow-active .map-note{display:none}
 #worldMap.dragging{cursor:grabbing}
 .country{fill:#182744;stroke:#07101f;stroke-width:.7;vector-effect:non-scaling-stroke;transition:fill .18s ease}
 .country.has-signal{fill:#314464}
-.country.is-focused{fill:#314865;stroke:rgba(244,205,114,.72);stroke-width:1.1}
+.country.is-focused{fill:#324b69;stroke:rgba(155,194,255,.58);stroke-width:1.05}
+.country.is-root-focused{fill:#3a3425;stroke:rgba(244,205,114,.56);stroke-width:1.05}
 .signal{pointer-events:none;transition:opacity .18s ease}
 .signal.context-muted{opacity:.14}
 .signal.context-hidden{opacity:0}
@@ -704,7 +706,7 @@ body.flow-active .map-note{display:none}
   function drawMap(){clamp();mapBase.setAttribute('transform','translate('+view.tx+' '+view.ty+') scale('+view.scale+')');drawSignals();updatePersonalMarkers();updateSignalPriority()}
   function setMapView(point,scale){
     if(!point)return;
-    view.scale=Math.max(1,Math.min(4,scale||1));
+    view.scale=Math.max(1,Math.min(5.2,scale||1));
     view.tx=480-point[0]*view.scale;
     view.ty=260-point[1]*view.scale;
     drawMap()
@@ -720,22 +722,23 @@ body.flow-active .map-note{display:none}
   }
   function focusCountrySelection(){
     var point=currentCityPoint();
-    if(point)setMapView(point,2.35)
+    if(point)setMapView(point,3.0)
   }
   function focusCitySelection(){
     var point=currentCityPoint();
-    if(point)setMapView(point,3.05)
+    if(point)setMapView(point,4.25)
   }
   function fitMapPoints(points){
     points=points.filter(Boolean);
     if(!points.length){resetMapView();return}
-    if(points.length===1){setMapView(points[0],2.8);return}
+    if(points.length===1){setMapView(points[0],4.1);return}
     var minX=Math.min.apply(null,points.map(function(p){return p[0]}));
     var maxX=Math.max.apply(null,points.map(function(p){return p[0]}));
     var minY=Math.min.apply(null,points.map(function(p){return p[1]}));
     var maxY=Math.max.apply(null,points.map(function(p){return p[1]}));
-    var dx=Math.max(58,maxX-minX),dy=Math.max(42,maxY-minY);
-    var scale=Math.min(3.35,Math.max(1.25,Math.min(650/dx,300/dy)));
+    var dx=Math.max(34,maxX-minX),dy=Math.max(26,maxY-minY);
+    var usableW=960*.64,usableH=520*.52;
+    var scale=Math.min(5.0,Math.max(1.45,Math.min(usableW/dx,usableH/dy)));
     var center=[(minX+maxX)/2,(minY+maxY)/2];
     setMapView(center,scale)
   }
@@ -748,7 +751,7 @@ body.flow-active .map-note{display:none}
   }
 
   function zoomAt(factor,cx,cy){
-    var old=view.scale,next=Math.max(1,Math.min(4,old*factor));if(next===old)return;
+    var old=view.scale,next=Math.max(1,Math.min(5.2,old*factor));if(next===old)return;
     var wx=(cx-view.tx)/old,wy=(cy-view.ty)/old;
     view.scale=next;view.tx=cx-wx*next;view.ty=cy-wy*next;drawMap()
   }
@@ -761,7 +764,7 @@ body.flow-active .map-note{display:none}
 
   function updateMapTitle(){
     if(!mapTitle)return;
-    if(!document.body.classList.contains('flow-active')||!state.country){
+    if(!document.body.classList.contains('flow-active')){
       mapTitle.textContent='Общности по света';
       return
     }
@@ -769,9 +772,15 @@ body.flow-active .map-note{display:none}
       mapTitle.textContent='Твоите места';
       return
     }
-    var place=state.city ? state.city+', '+countryData[state.country].name : countryData[state.country].name;
-    var band=countryBands[state.country];
-    mapTitle.innerHTML=esc(place)+(band?' <span class="map-band">· '+esc(band)+'</span>':'')
+    if(state.city&&state.country){
+      mapTitle.textContent='Сега · '+state.city+', '+countryData[state.country].name;
+      return
+    }
+    if(state.country){
+      mapTitle.textContent=countryData[state.country].name;
+      return
+    }
+    mapTitle.textContent='Къде си сега?'
   }
 
   function updateSignalPriority(){
@@ -780,35 +789,28 @@ body.flow-active .map-note{display:none}
       signals.forEach(function(g){g.classList.remove('context-muted','context-hidden','context-selected')});
       return
     }
-    var hasCountry=!!state.country;
-    var hasCity=!!state.city;
-    var hasRoot=!!state.root;
-    var contextDeep=(state.view==='root'||state.view==='loading'||state.view==='error'||state.view==='result'||hasRoot);
     signals.forEach(function(g){
-      var isSelected=hasCountry&&g.dataset.code===state.country;
-      g.classList.remove('context-muted','context-hidden','context-selected');
-      if(!hasCountry)return;
-      if(contextDeep||hasCity){
-        g.classList.add('context-hidden');
-      }else{
-        g.classList.add(isSelected?'context-selected':'context-muted');
-      }
+      g.classList.remove('context-muted','context-selected');
+      g.classList.add('context-hidden')
     })
   }
 
   function updatePersonalMarkers(){
     personalLayer.innerHTML='';
-    document.querySelectorAll('#mapBase .country').forEach(function(el){el.classList.toggle('is-focused',!!state.country&&el.dataset.code===state.country)});
+    document.querySelectorAll('#mapBase .country').forEach(function(el){
+      el.classList.toggle('is-focused',!!state.country&&el.dataset.code===state.country);
+      el.classList.toggle('is-root-focused',!!state.root&&el.dataset.code==='BG')
+    });
     var items=[],chips=[];
     if(state.country&&state.city){
       var c=countryData[state.country];
       var cp=cityXY[state.country+'|'+state.city]||c.xy;
-      items.push({type:'current',label:state.city,x:cp[0],y:cp[1]});
+      items.push({type:'current',label:'Сега · '+state.city,x:cp[0],y:cp[1]});
       chips.push('<span class="context-chip current">Сега · '+esc(state.city+', '+c.name)+'</span>')
     }
     if(state.root&&rootData[state.root]){
       var r=rootData[state.root];
-      items.push({type:'root',label:state.root,x:r.xy[0],y:r.xy[1]});
+      items.push({type:'root',label:'Откъде · '+state.root,x:r.xy[0],y:r.xy[1]});
       chips.push('<span class="context-chip root">Откъде · '+esc(r.label)+'</span>')
     }
     items.forEach(function(it){
@@ -830,7 +832,7 @@ body.flow-active .map-note{display:none}
 
       var w=0;
       try{w=text.getComputedTextLength()}catch(_){w=it.label.length*8.5}
-      w=Math.max(62,Math.min(176,w+20));
+      w=Math.max(82,Math.min(218,w+22));
       var box=document.createElementNS('http://www.w3.org/2000/svg','rect');
       box.setAttribute('class','marker-box');
       box.setAttribute('x',String(-w/2));box.setAttribute('y','-42');
