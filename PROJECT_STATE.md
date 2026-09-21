@@ -1,5 +1,15 @@
 # PROJECT STATE — „Родени в Лом“
 
+## АКТУАЛЕН CHECKPOINT — WORK C1 — 21.09.2026
+
+Официалният Screen 1 candidate по §100 вече е реализиран като `prototype-screen1-work-c1.html` в `review/work-screen1-approved-direction`.
+Blob: `3645bf8c1554f38f5b272493faa690e9c085fb47`. 18 функционални/статични групи проверки: PASS. Пълен technical release gate: PARTIAL; browser visual PASS и Owner final approval: НЕ СА ПОЛУЧЕНИ.
+Виж `SCREEN1_WORK_C1_VERIFICATION.md` за доказателствата и ограниченията.
+NEXT: разрешен изолиран preview → визуална матрица/поправки → Owner final approval. Локалният browser preview е блокиран от URL policy; няма заобикаляне и няма твърдение за визуална проверка.
+Main/production/Supabase/Screen 2 остават непроменени. Предходните записи „candidate не е реализиран“ и NEXT „изграждане“ по-долу са исторически и са заменени от този checkpoint. §100 продуктовият contract остава в сила.
+
+---
+
 ## ТЕКУЩО СЪСТОЯНИЕ — 21.09.2026 — Master §100
 
 - Owner уточни: V13 е малко демо за изследване, не готовият официален прототип.
