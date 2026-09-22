@@ -89,7 +89,7 @@ That means:
 
 ### T1 — Full country selector scope
 **Size: Medium**  
-**Status: DONE — source-backed 10/10 PASS**
+**Status: TECHNICAL CHECKPOINT — selector scope PASS; country-focus correction 9/9 PASS; MT/SG + full mobile visual remain open**
 
 Goal:
 - remove the artificial 20-country C2 gate in the active lab candidate;
