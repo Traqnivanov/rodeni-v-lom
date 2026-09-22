@@ -26,6 +26,7 @@
 <option value="t6longcountry">T6 · long country / UAE</option>
 <option value="t6switch">T6 · country switch / DE → FR</option>
 <option value="t6recovery">T6 · expired session recovery</option>
+<option value="t7perf">T7 · search/switch timing probe</option>
 <option value="root">Root · Мюнхен → Лом</option>
 <option value="rootlatin">Root · Latin search / Lom</option>
 <option value="rootburgas">Root · Бургас → resolver canonical</option>
@@ -108,6 +109,22 @@ async function applyState(){
     const c=doc.getElementById('country');c.value='FR';fire(c,'change');await wait(180);
   }
   if(mode==='t6recovery'){doc.getElementById('start').click();await wait(180);doc.getElementById('panel')?.scrollIntoView({block:'start'});await wait(120)}
+  let perfInfo='';
+  if(mode==='t7perf'){
+    doc.getElementById('start').click();await wait(80);
+    const country=doc.getElementById('country');country.value='US';fire(country,'change');await wait(80);
+    const input=doc.getElementById('current'),samples=[];
+    for(const q of ['а','ан','сан','о','е','и','ар','ла','ч','ф']){
+      input.value=q;
+      const t0=performance.now();fire(input,'input');samples.push(performance.now()-t0);
+    }
+    const optionCount=doc.querySelectorAll('#currentOptions [role="option"]').length;
+    country.value='DE';fire(country,'change');await wait(40);
+    await selectSuggestion(doc,'current','Мюнхен');
+    const t1=performance.now();country.value='FR';fire(country,'change');const switchMs=performance.now()-t1;
+    const max=Math.max(...samples),avg=samples.reduce((a,b)=>a+b,0)/samples.length;
+    perfInfo=' · searchAvg='+avg.toFixed(2)+'ms · searchMax='+max.toFixed(2)+'ms · opts='+optionCount+' · switch='+switchMs.toFixed(2)+'ms';
+  }
   if(mode==='root'){await current(doc,'DE','Мюнхен');await root(doc,'Лом')}
   if(mode==='rootlatin'){await current(doc,'DE','Мюнхен');await rootLatin(doc,'Lom')}
   if(mode==='rootburgas'){await current(doc,'DE','Мюнхен');await root(doc,'Бургас');await wait(300);doc.getElementById('lookup').click();await wait(300)}
@@ -127,7 +144,7 @@ async function applyState(){
   document.body.dataset.reviewReady='true';
   let stored=null;try{stored=JSON.parse(frame.contentWindow.sessionStorage.getItem('rodeni-work-screen1-c2')||'null')}catch{}
   const stateInfo=stored?' · country='+(stored.country||'∅')+' · current='+(stored.current||'∅')+' · currentDraft='+(stored.currentDraft||'∅')+' · root='+(stored.root||'∅')+' · rootDraft='+(stored.rootDraft||'∅')+' · pending='+(stored.pending||'∅'):'';
-  label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'% · готово'+stateInfo;
+  label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'% · готово'+stateInfo+(typeof perfInfo==='string'?perfInfo:'');
 }
 document.getElementById('apply').onclick=applyState;
 const params=new URLSearchParams(location.search);
