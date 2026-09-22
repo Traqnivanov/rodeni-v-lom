@@ -1,9 +1,9 @@
 # Screen 1 T4 — suggestion vs canonical identity boundary proposal
 
 Branch: `review/ordinary-screen1-active-integration`  
-Status: **AUDIT + PROPOSAL ONLY — NOT IMPLEMENTED**  
+Status: **IMPLEMENTED AS ORDINARY PROTOTYPE CHECKPOINT — SEE `SCREEN1_T4_IDENTITY_BOUNDARY_REVIEW.md`**  
 Author: ordinary executor  
-Owner approval: **PENDING**
+Owner status: **authorized prototype implementation/testing; not Owner-originated canonical rule**
 
 ## Problem found in the ordinary implementation
 
