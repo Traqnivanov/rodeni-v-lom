@@ -21,6 +21,11 @@
 <option value="munich">Current · Германия / Мюнхен</option>
 <option value="draft">Current · list-only / Дрезден</option>
 <option value="root">Root · Мюнхен → Лом</option>
+<option value="rootlatin">Root · Latin search / Lom</option>
+<option value="rootburgas">Root · Бургас → resolver canonical</option>
+<option value="rootunknown">Root · Стара Загора → unverified option</option>
+<option value="rootnear">Map · Ковачица ↔ Лом</option>
+<option value="rootsame">Map · Лом ↔ Лом</option>
 <option value="exact">Result · exact</option>
 <option value="error">Error state</option>
 <option value="mt">MT · без map geometry / без предложения</option>
@@ -56,6 +61,10 @@ async function root(doc,name){
   doc.getElementById('next').click();await wait(80);
   if(name)await selectSuggestion(doc,'root',name);
 }
+async function rootLatin(doc,typed){
+  doc.getElementById('next').click();await wait(80);
+  const input=doc.getElementById('root');input.focus();input.value=typed;fire(input,'input');await wait(100);
+}
 async function applyState(){
   const w=Number(width.value);frame.style.width=w+'px';label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'%';
   frame.src='prototype-screen1-map-interaction-lab.html?review='+Date.now();
@@ -69,6 +78,11 @@ async function applyState(){
   if(mode==='munich'){await current(doc,'DE','Мюнхен')}
   if(mode==='draft'){await current(doc,'DE','Дрезден')}
   if(mode==='root'){await current(doc,'DE','Мюнхен');await root(doc,'Лом')}
+  if(mode==='rootlatin'){await current(doc,'DE','Мюнхен');await rootLatin(doc,'Lom')}
+  if(mode==='rootburgas'){await current(doc,'DE','Мюнхен');await root(doc,'Бургас');doc.getElementById('lookup').click();await wait(140)}
+  if(mode==='rootunknown'){await current(doc,'DE','Мюнхен');await root(doc,'Стара Загора');doc.getElementById('lookup').click();await wait(140)}
+  if(mode==='rootnear'){await current(doc,'BG','Ковачица');await root(doc,'Лом')}
+  if(mode==='rootsame'){await current(doc,'BG','Лом');await root(doc,'Лом')}
   if(mode==='exact'){await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
   if(mode==='error'){doc.getElementById('network').value='fail';fire(doc.getElementById('network'),'change');await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
   if(mode==='mt'){await current(doc,'MT','')}
