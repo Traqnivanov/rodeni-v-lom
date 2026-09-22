@@ -1,7 +1,7 @@
 # Screen 1 registration boundary copy — ordinary review
 
 Branch: `review/ordinary-registration-boundary-copy`  
-Parent checkpoint: `review/ordinary-screen1-matrix-lab` at `ad87d4cc0b1a5fccfec2b5de79132984933c9911`.
+Original fork point: `review/ordinary-screen1-matrix-lab` at `ad87d4cc0b1a5fccfec2b5de79132984933c9911`. Later locality/map/matrix self-audit corrections were mirrored into this branch; it was not rebased.
 
 ## Purpose
 
