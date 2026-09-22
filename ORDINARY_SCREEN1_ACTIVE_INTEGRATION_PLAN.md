@@ -112,7 +112,8 @@ Checkpoint completed. Next active task: T2.
 ---
 
 ### T2 — Full Layer-A locality suggestions
-**Size: Medium**
+**Size: Medium**  
+**Status: DONE — source-backed 17/17 PASS; no prototype logic change required**
 
 Goal:
 - exercise all 1530 existing `cities.js` names through the adapter for their selected country;
@@ -133,7 +134,7 @@ Not included:
 - fuzzy/transliteration/autocorrect;
 - canonicalizing all 1530 names.
 
-Checkpoint required before T3.
+Checkpoint completed. Next active task: T3.
 
 ---
 
