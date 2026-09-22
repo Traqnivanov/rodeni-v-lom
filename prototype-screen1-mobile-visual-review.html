@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Screen 1 · Mobile Visual Review</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#070d18;color:#f8f4e9}
+*{box-sizing:border-box}body{margin:0;padding:16px;background:#070d18}.bar{position:sticky;top:0;z-index:2;background:#0d1829;border:1px solid #33445e;border-radius:14px;padding:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:end;max-width:900px;margin:0 auto 16px}.bar label{display:grid;gap:5px;font-size:14px;color:#cbd5e5}.bar select,.bar button{min-height:44px;border:1px solid #52627a;border-radius:10px;background:#101f35;color:#fff;padding:8px 10px;font:inherit}.bar button{font-weight:700;background:#e9b953;color:#251b09;border:0}.note{max-width:900px;margin:0 auto 12px;color:#aab8cc;font-size:14px;line-height:1.45}.device{margin:0 auto;padding:8px;background:#111f34;border:1px solid #33445e;border-radius:20px;width:max-content;max-width:100%;box-shadow:0 18px 60px #0008}.label{text-align:center;color:#aab8cc;font-size:13px;padding:4px 0 8px}.viewport{overflow:hidden;border-radius:12px;background:#080f1d}.viewport iframe{display:block;border:0;height:812px;background:#080f1d}
+</style>
+</head>
+<body>
+<div class="bar">
+<label>Viewport
+<select id="width"><option value="360">360 px</option><option value="390" selected>390 px</option><option value="412">412 px</option></select>
+</label>
+<label>Сценарий
+<select id="scenario">
+<option value="initial">Начален екран</option>
+<option value="current">Current · празен</option>
+<option value="munich">Current · Германия / Мюнхен</option>
+<option value="root">Root · Мюнхен → Лом</option>
+<option value="exact">Result · exact</option>
+<option value="error">Error state</option>
+<option value="mt">MT · без map geometry</option>
+<option value="sg">SG · без map geometry</option>
+</select>
+</label>
+<label>Текст
+<select id="zoom"><option value="100">100%</option><option value="200">200%</option></select>
+</label>
+<button id="apply">Покажи</button>
+</div>
+<p class="note">Review-only harness. Не променя Screen 1. Зарежда текущия active prototype в фиксиран mobile viewport и автоматично отваря избрания demo state.</p>
+<div class="device">
+<div class="label" id="label"></div>
+<div class="viewport"><iframe id="frame" src="prototype-screen1-map-interaction-lab.html"></iframe></div>
+</div>
+<script>
+const frame=document.getElementById('frame'),width=document.getElementById('width'),scenario=document.getElementById('scenario'),zoom=document.getElementById('zoom'),label=document.getElementById('label');
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function fire(el,type){el.dispatchEvent(new Event(type,{bubbles:true}))}
+async function selectSuggestion(doc,id,name){
+  const input=doc.getElementById(id);input.focus();input.value=name;fire(input,'input');await wait(60);
+  const opt=[...doc.querySelectorAll('#'+id+'Options [role="option"]')].find(x=>(x.dataset.name||'')===name);
+  if(opt){opt.click();await wait(60);return true}return false;
+}
+async function current(doc,country,name){
+  doc.getElementById('start').click();await wait(80);
+  const c=doc.getElementById('country');c.value=country;fire(c,'change');await wait(80);
+  if(name)await selectSuggestion(doc,'current',name);
+}
+async function root(doc,name){
+  doc.getElementById('next').click();await wait(80);
+  if(name)await selectSuggestion(doc,'root',name);
+}
+async function applyState(){
+  const w=Number(width.value);frame.style.width=w+'px';label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'%';
+  frame.src='prototype-screen1-map-interaction-lab.html?review='+Date.now();
+  await new Promise(resolve=>frame.onload=()=>resolve());
+  const doc=frame.contentDocument;
+  const mode=scenario.value;
+  if(mode==='current'){doc.getElementById('start').click();await wait(100)}
+  if(mode==='munich'){await current(doc,'DE','Мюнхен')}
+  if(mode==='root'){await current(doc,'DE','Мюнхен');await root(doc,'Лом')}
+  if(mode==='exact'){await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
+  if(mode==='error'){doc.getElementById('network').value='fail';fire(doc.getElementById('network'),'change');await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
+  if(mode==='mt'){await current(doc,'MT','')}
+  if(mode==='sg'){await current(doc,'SG','')}
+  if(zoom.value==='200'){doc.getElementById('textSize').click();await wait(120)}
+}
+document.getElementById('apply').onclick=applyState;
+applyState();
+</script>
+</body></html>
