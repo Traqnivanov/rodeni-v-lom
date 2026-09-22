@@ -74,6 +74,13 @@ check('adapter remains country scoped in the integration branch', () => {
   assert.deepEqual(adapter.suggest('ES', 'мюнх', sources), []);
 });
 
+check('all 20 C2 offered countries have a local city list', () => {
+  const offered = ['DE','GB','FR','ES','IT','AT','NL','BG','BE','CH','PT','GR','CZ','DK','SE','NO','IE','PL','RO','HU'];
+  assert.equal(offered.length, 20);
+  for (const code of offered) assert(Array.isArray(sources.cities[code]), 'missing city list for ' + code);
+  assert.equal(offered.reduce((sum, code) => sum + sources.cities[code].length, 0), 424);
+});
+
 check('integration caps combined suggestions at 10', () => {
   assert(lab.includes('names.length>=10'));
   assert(lab.includes('localitySuggestions.suggest(code,query).forEach(add)'));
