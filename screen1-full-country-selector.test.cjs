@@ -51,6 +51,12 @@ check('country change still clears current locality before rerender', () => {
   assert(html.includes("state.country=$('country').value;state.current='';attempt=0;resetMapInteractionState();save();render();$('current').focus()"));
 });
 
+check('country focus uses SVG country geometry, not demo locality fixtures', () => {
+  assert(html.includes("const countryShape=active&&!c&&state.country?svg.querySelector('[data-country=\"'+state.country+'\"]'):null"));
+  assert(html.includes("else if(countryShape){const b=countryShape.getBBox?.()"));
+  assert(!html.includes("const countryPoint=active&&!c?places.find(p=>p.country===state.country):null"));
+});
+
 check('Root remains scoped to Bulgaria', () => {
   assert(html.includes("const code=kind==='root'?'BG':state.country"));
   assert(html.includes("inputField('root','Населено място','BG',state.root)"));
