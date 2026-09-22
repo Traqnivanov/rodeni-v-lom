@@ -70,6 +70,10 @@ async function applyState(){
   if(zoom.value==='200'){doc.getElementById('textSize').click();await wait(120)}
 }
 document.getElementById('apply').onclick=applyState;
+const params=new URLSearchParams(location.search);
+if(['360','390','412'].includes(params.get('w')))width.value=params.get('w');
+if([...scenario.options].some(o=>o.value===params.get('s')))scenario.value=params.get('s');
+if(['100','200'].includes(params.get('z')))zoom.value=params.get('z');
 applyState();
 </script>
 </body></html>
