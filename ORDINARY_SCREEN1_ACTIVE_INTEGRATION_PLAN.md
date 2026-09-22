@@ -138,19 +138,38 @@ Checkpoint completed. Next active task: T3.
 
 ---
 
-### T3 — Missing-list / fallback states
+### T3A — Selectable country without map geometry
+**Size: Small**  
+**Status: TECHNICAL CHECKPOINT — source-backed 11/11 PASS; visual/WORK acceptance NOT VERIFIED**
+
+Goal:
+- handle valid selectable countries with no separate SVG country shape;
+- current cases: MT and SG;
+- keep country validity separate from visualization capability;
+- never invent a country centre/point.
+
+Authority:
+- ordinary-executor proposal;
+- Owner agreed it may be tested;
+- not canonical until WORK review.
+
+Checkpoint completed.
+
+---
+
+### T3B — Missing Layer-A list / fallback states
 **Size: Small-to-Medium**
 
 Goal:
-- explicitly verify countries such as MT/LU where the country exists but Layer-A has no list;
+- explicitly verify MT/LU where the country exists but Layer-A has no local list;
 - ensure UI does not look broken or empty without explanation;
 - controlled `Не намираш мястото?` path remains reachable.
 
 Must verify:
 - no fake suggestions;
 - no fake coordinates;
-- no country-centre fallback;
-- no blocked flow caused only by an absent local list.
+- no blocked flow caused only by an absent local list;
+- SG remains a separate case: no geometry, but it does have Layer-A locality data.
 
 If this requires changing approved fallback semantics, stop and ask Owner.
 
