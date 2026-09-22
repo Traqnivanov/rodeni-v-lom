@@ -88,7 +88,8 @@ That means:
 ## 4. Ordered task sequence
 
 ### T1 — Full country selector scope
-**Size: Medium**
+**Size: Medium**  
+**Status: DONE — source-backed 10/10 PASS**
 
 Goal:
 - remove the artificial 20-country C2 gate in the active lab candidate;
@@ -106,7 +107,7 @@ Not included:
 - adding countries not present in `countries.js`;
 - backend or production registration changes.
 
-Checkpoint required before T2.
+Checkpoint completed. Next active task: T2.
 
 ---
 
