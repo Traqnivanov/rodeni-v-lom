@@ -1,7 +1,7 @@
 # Screen 1 geography / viewport matrix — ordinary review
 
 Branch: `review/ordinary-screen1-matrix-lab`  
-Parent checkpoint: `review/ordinary-map-interaction-lab` at `db39669a2a0815589b594a5fe8f1ddcbde092142`.
+Original fork point: `review/ordinary-map-interaction-lab` at `db39669a2a0815589b594a5fe8f1ddcbde092142`. Later map/locality self-audit corrections were mirrored into this branch; it was not rebased.
 
 ## Scope
 
