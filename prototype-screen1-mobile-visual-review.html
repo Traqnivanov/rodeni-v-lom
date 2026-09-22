@@ -23,7 +23,8 @@
 <option value="root">Root · Мюнхен → Лом</option>
 <option value="exact">Result · exact</option>
 <option value="error">Error state</option>
-<option value="mt">MT · без map geometry</option>
+<option value="mt">MT · без map geometry / без предложения</option>
+<option value="lu">LU · има geometry / без предложения</option>
 <option value="sg">SG · без map geometry</option>
 </select>
 </label>
@@ -71,6 +72,7 @@ async function applyState(){
   if(mode==='exact'){await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
   if(mode==='error'){doc.getElementById('network').value='fail';fire(doc.getElementById('network'),'change');await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
   if(mode==='mt'){await current(doc,'MT','')}
+  if(mode==='lu'){await current(doc,'LU','')}
   if(mode==='sg'){await current(doc,'SG','')}
   if(zoom.value==='200'){doc.getElementById('textSize').click();await wait(120)}
 }
