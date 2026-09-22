@@ -160,7 +160,7 @@ Checkpoint completed.
 ### T4 — Suggestion vs canonical identity contract
 **Order note: moved before T3B after dependency audit**  
 **Size: Medium**  
-**Status: IMPLEMENTED CHECKPOINT — source 19/19 PASS; 360px mobile draft/canonical visual PASS; real-device/WORK acceptance NOT VERIFIED**
+**Status: IMPLEMENTED CHECKPOINT — source 24/24 PASS; canonical identity decoupled from optional map coordinates; 360px mobile draft/canonical visual PASS; real-device/WORK acceptance NOT VERIFIED**
 
 Goal:
 - harden the integration boundary so UI scope can grow without coupling every suggestion to the current demo fixture array.
