@@ -112,15 +112,16 @@ async function applyState(){
   let perfInfo='';
   if(mode==='t7perf'){
     doc.getElementById('start').click();await wait(80);
-    const country=doc.getElementById('country');country.value='US';fire(country,'change');await wait(80);
+    let country=doc.getElementById('country');country.value='US';fire(country,'change');await wait(80);
     const input=doc.getElementById('current'),samples=[];
     for(const q of ['а','ан','сан','о','е','и','ар','ла','ч','ф']){
       input.value=q;
       const t0=performance.now();fire(input,'input');samples.push(performance.now()-t0);
     }
     const optionCount=doc.querySelectorAll('#currentOptions [role="option"]').length;
-    country.value='DE';fire(country,'change');await wait(40);
+    country=doc.getElementById('country');country.value='DE';fire(country,'change');await wait(80);
     await selectSuggestion(doc,'current','Мюнхен');
+    country=doc.getElementById('country');
     const t1=performance.now();country.value='FR';fire(country,'change');const switchMs=performance.now()-t1;
     const max=Math.max(...samples),avg=samples.reduce((a,b)=>a+b,0)/samples.length;
     perfInfo=' · searchAvg='+avg.toFixed(2)+'ms · searchMax='+max.toFixed(2)+'ms · opts='+optionCount+' · switch='+switchMs.toFixed(2)+'ms';
