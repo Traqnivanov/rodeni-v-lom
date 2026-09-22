@@ -252,7 +252,8 @@ Checkpoint completed. Next active task: T7.
 ---
 
 ### T7 — Interaction/performance audit
-**Size: Medium**
+**Size: Medium**  
+**Status: COMPLETE CHECKPOINT — source 23/23 PASS; browser timing observed search max 2.70ms / switch max 9.30ms in sampled runs; map interaction engine unchanged; real-device touch/IME NOT VERIFIED**
 
 Goal:
 - confirm expanding 20 → 62 countries and full Layer-A suggestions does not make the UI heavy or interaction confusing.
@@ -268,7 +269,7 @@ Check:
 
 Real-device items remain `NOT VERIFIED` until actually tested.
 
-Checkpoint required before T8.
+Checkpoint completed. Next active task: T8.
 
 ---
 
