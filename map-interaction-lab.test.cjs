@@ -101,4 +101,9 @@ check('context changes reset manual map interaction', () => {
   assert(html.includes("state.pending=input.value.trim().slice(0,100);state.root='';resetMapInteractionState()"));
 });
 
+check('map candidate preserves original C2 empty-query demo choices', () => {
+  assert(html.includes("if(!normalized)return demo.slice(0,7).map(place=>({name:place.name,place}))"));
+  assert(!html.includes("if(!code||!norm(query))return []"));
+});
+
 process.stdout.write('PASS map-interaction-lab.test.cjs — ' + checks + ' checks\n');
