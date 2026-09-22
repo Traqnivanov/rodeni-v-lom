@@ -70,3 +70,27 @@ Prototype functional diff for T2: **none**.
 Only regression evidence/documentation is added because the already-built adapter passed the expanded scope.
 
 Next task: **T3 — missing-list / fallback states**.
+
+
+## Post-audit status correction
+
+Independent end-to-end audit found that the original T2 PASS was too narrow.
+
+The 17/17 checks prove **Layer-A suggestion coverage**, not complete Screen 1 usability.
+
+Current active candidate facts:
+- 1530 Layer-A names exist;
+- 1530/1530 are reachable as country-scoped suggestions;
+- only 29 of those names currently match an existing non-fallback demo identity in `places[]`;
+- 1501 suggestions therefore remain suggestion-only labels and cannot satisfy the current `selectedMatches()` / canonical Current gate.
+
+This is not a data-coverage failure. It is an integration/identity-boundary gap.
+
+Correct T2 status:
+- Layer-A data/search coverage: **TECHNICAL PASS**
+- selected-country isolation / max-10 / spelling: **TECHNICAL PASS**
+- list-only suggestion → canonical Current/Root transition: **INCOMPLETE**
+- full end-to-end UX: **NOT PASS**
+- mobile visual/real-device behavior: **NOT VERIFIED**
+
+The follow-up identity-boundary task must be completed before missing-list fallback states can be judged end-to-end.
