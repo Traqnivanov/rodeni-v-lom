@@ -49,6 +49,21 @@ check('canonical selection clears draft and enables CTA', () => {
   assert(html.includes("if(next)next.disabled=false"));
 });
 
+check('canonical identity is independent from optional map coordinates', () => {
+  assert(html.includes("hasCoords=p=>Number.isFinite(p?.x)&&Number.isFinite(p?.y)"));
+  assert(html.includes("const ps=[c,r].filter(hasCoords)"));
+  assert(html.includes("if(hasCoords(c))tag('Сега · '+c.name"));
+  assert(html.includes("if(hasCoords(r))tag('Откъде · '+r.name"));
+});
+
+check('country focus remains available when canonical Current has no coordinates', () => {
+  assert(html.includes("const countryShape=active&&!hasCoords(c)&&state.country?svg.querySelector"));
+});
+
+check('pair map layout requires two coordinate-bearing localities', () => {
+  assert(html.includes("document.body.classList.toggle('map-pair',active&&state.view!=='current'&&hasCoords(c)&&hasCoords(r))"));
+});
+
 check('Current CTA is disabled until canonical Current exists', () => {
   assert(html.includes('<button class="primary" id="next" '+(c?'':'disabled')+'>Продължи към „Откъде си?“</button>'));
 });
