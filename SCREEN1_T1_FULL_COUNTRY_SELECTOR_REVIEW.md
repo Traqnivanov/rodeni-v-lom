@@ -56,3 +56,35 @@ node screen1-full-country-selector.test.cjs
 This task does not claim that all world countries are selectable. It intentionally uses the current approved/local existing source of 62 countries.
 
 It also does not claim complete locality coverage for those countries. That is handled separately by T2/T3 and the hybrid locality boundary.
+
+
+## Post-audit correction — country focus
+
+Independent audit found that the first T1 implementation expanded the selector to 62 countries, but `drawMap()` still gated country focus through the old demo `places[]` fixtures.
+
+Effect before correction:
+- selector: 62 countries;
+- country geometry exists for 60 of those 62;
+- only the old 20 fixture countries could trigger country-fit focus.
+
+Correction:
+- country focus now queries the selected SVG `data-country` shape directly;
+- it no longer requires a demo locality fixture;
+- the existing selected-country highlight remains unchanged;
+- official WORK C2 remains untouched.
+
+Latest source-backed correction audit: **9/9 PASS**.
+
+Known separate edge state:
+- `MT` and `SG` are selectable but have no matching SVG geometry in the current map source.
+- That behavior is intentionally not solved inside this correction; it belongs to the next bounded missing-geometry/missing-list task.
+
+### T1 status after audit
+
+- country source scope: **technical PASS**
+- geometry-based focus for the 60 drawable selectable countries: **technical PASS**
+- MT/SG missing-geometry behavior: **NOT YET RESOLVED**
+- full mobile visual/real-device selector + focus behavior: **NOT VERIFIED**
+- Owner visual approval: **NOT GIVEN**
+
+Therefore T1 must not be read as a complete UX/release PASS.
