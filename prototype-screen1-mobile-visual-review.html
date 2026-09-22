@@ -70,6 +70,7 @@ async function rootLatin(doc,typed){
   const input=doc.getElementById('root');input.focus();input.value=typed;fire(input,'input');await wait(100);
 }
 async function applyState(){
+  document.body.dataset.reviewReady='false';
   const w=Number(width.value);frame.style.width=w+'px';label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'%';
   frame.src='prototype-screen1-map-interaction-lab.html?review='+Date.now();
   await new Promise(resolve=>frame.onload=()=>resolve());
@@ -93,6 +94,9 @@ async function applyState(){
   if(mode==='lu'){await current(doc,'LU','')}
   if(mode==='sg'){await current(doc,'SG','')}
   if(zoom.value==='200'){doc.getElementById('textSize').click();await wait(120)}
+  await wait(120);
+  document.body.dataset.reviewReady='true';
+  label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'% · готово';
 }
 document.getElementById('apply').onclick=applyState;
 const params=new URLSearchParams(location.search);
