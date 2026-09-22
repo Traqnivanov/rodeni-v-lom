@@ -274,7 +274,8 @@ Checkpoint completed. Next active task: T8.
 ---
 
 ### T8 — Final active-candidate package for WORK
-**Size: Small**
+**Size: Small**  
+**Status: COMPLETE — final self-audit/handoff package created in `SCREEN1_ORDINARY_FINAL_WORK_HANDOFF.md`; no PR/merge/promotion performed**
 
 Produce:
 - exact active HEAD;
