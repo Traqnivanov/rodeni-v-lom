@@ -120,7 +120,7 @@ Replaced normal verification with:
 
 ### Source-backed audit
 
-**19/19 PASS**
+**24/24 PASS**
 
 Verified:
 - separate draft fields;
@@ -140,7 +140,12 @@ Verified:
 - Root pending remains separate;
 - technical identity terminology removed;
 - inline JavaScript parses;
-- official WORK C2 remains unchanged.
+- official WORK C2 remains unchanged;
+- canonical identity is no longer assumed to always have map coordinates;
+- camera bounds use only coordinate-bearing identities;
+- markers render only for coordinate-bearing identities;
+- country focus remains available when canonical Current has no locality coordinates;
+- pair-map layout requires two coordinate-bearing identities.
 
 Runnable regression suite:
 
@@ -163,7 +168,7 @@ A review-harness defect was found and corrected during this pass: scenario state
 ## Evidence boundary
 
 PASS:
-- source/state separation;
+- source/state separation, including canonical identity vs optional map coordinates;
 - 360px mobile visual hierarchy for T4 draft/canonical comparison;
 - 360px 200% reflow observation.
 
