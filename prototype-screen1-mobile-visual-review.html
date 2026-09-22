@@ -59,6 +59,9 @@ async function applyState(){
   const w=Number(width.value);frame.style.width=w+'px';label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'%';
   frame.src='prototype-screen1-map-interaction-lab.html?review='+Date.now();
   await new Promise(resolve=>frame.onload=()=>resolve());
+  frame.contentWindow.sessionStorage.clear();
+  frame.contentWindow.location.reload();
+  await new Promise(resolve=>frame.onload=()=>resolve());
   const doc=frame.contentDocument;
   const mode=scenario.value;
   if(mode==='current'){doc.getElementById('start').click();await wait(100)}
