@@ -1,3 +1,11 @@
+> **SUPERSEDED FOR CURRENT REVIEW — HISTORICAL CHECKPOINT ONLY**
+>
+> This handoff records the earlier locality/map lab sequence before the active 62-country integration work.
+> **WORK CONTROLLER should not use this file as the current package entry point.**
+> Use `SCREEN1_ORDINARY_FINAL_WORK_HANDOFF.md` for the final active candidate package.
+>
+> Historical branch/commit references below are intentionally preserved for audit trail.
+
 # Ordinary Screen 1 locality/map work — handoff to WORK CONTROLLER
 
 ## Review role
