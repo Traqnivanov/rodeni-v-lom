@@ -107,7 +107,7 @@ async function applyState(){
     await current(doc,'DE','Мюнхен');
     const c=doc.getElementById('country');c.value='FR';fire(c,'change');await wait(180);
   }
-  if(mode==='t6recovery'){doc.getElementById('start').click();await wait(180)}
+  if(mode==='t6recovery'){doc.getElementById('start').click();await wait(180);doc.getElementById('panel')?.scrollIntoView({block:'start'});await wait(120)}
   if(mode==='root'){await current(doc,'DE','Мюнхен');await root(doc,'Лом')}
   if(mode==='rootlatin'){await current(doc,'DE','Мюнхен');await rootLatin(doc,'Lom')}
   if(mode==='rootburgas'){await current(doc,'DE','Мюнхен');await root(doc,'Бургас');await wait(300);doc.getElementById('lookup').click();await wait(300)}
