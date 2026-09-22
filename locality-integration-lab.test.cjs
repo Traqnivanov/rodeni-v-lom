@@ -79,12 +79,13 @@ check('integration caps combined suggestions at 10', () => {
   assert(lab.includes('localitySuggestions.suggest(code,query).forEach(add)'));
 });
 
-check('empty query is not expanded into a full local list', () => {
-  assert(lab.includes("if(!code||!norm(query))return []"));
+check('empty query preserves original C2 demo choices without expanding the full local list', () => {
+  assert(lab.includes("if(!normalized)return demo.slice(0,7).map(place=>({name:place.name,place}))"));
+  assert(!lab.includes("if(!code||!norm(query))return []"));
 });
 
 check('C2 demo choices are preserved as a scoped supplement', () => {
-  assert(lab.includes("choices(kind).filter(p=>norm(p.name).includes(norm(query))).forEach(p=>add(p.name))"));
+  assert(lab.includes("demo.filter(p=>norm(p.name).includes(normalized)).forEach(p=>add(p.name))"));
   assert(lab.includes("const code=kind==='root'?'BG':state.country"));
 });
 
