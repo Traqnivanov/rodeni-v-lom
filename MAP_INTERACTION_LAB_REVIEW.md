@@ -1,7 +1,7 @@
 # Map interaction lab — ordinary review
 
 Branch: `review/ordinary-map-interaction-lab`  
-Parent checkpoint: `review/ordinary-locality-integration-lab` at `c5d43d2bbdc19f4a2747db5a9d09e2a80ed1b988`.
+Original fork point: `review/ordinary-locality-integration-lab` at `c5d43d2bbdc19f4a2747db5a9d09e2a80ed1b988`. Post-audit locality corrections were mirrored into this branch afterward; the branch was not rebased.
 
 ## Purpose
 
