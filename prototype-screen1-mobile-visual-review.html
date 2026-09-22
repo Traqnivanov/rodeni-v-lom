@@ -20,6 +20,12 @@
 <option value="current">Current · празен</option>
 <option value="munich">Current · Германия / Мюнхен</option>
 <option value="draft">Current · list-only / Дрезден</option>
+<option value="t6dense">T6 · dense US search / 10 results</option>
+<option value="t6sparse">T6 · sparse SI search / 1 result</option>
+<option value="t6long">T6 · long locality / Canada</option>
+<option value="t6longcountry">T6 · long country / UAE</option>
+<option value="t6switch">T6 · country switch / DE → FR</option>
+<option value="t6recovery">T6 · expired session recovery</option>
 <option value="root">Root · Мюнхен → Лом</option>
 <option value="rootlatin">Root · Latin search / Lom</option>
 <option value="rootburgas">Root · Бургас → resolver canonical</option>
@@ -65,23 +71,43 @@ async function root(doc,name){
   doc.getElementById('next').click();await wait(80);
   if(name)await selectSuggestion(doc,'root',name);
 }
+async function currentQuery(doc,country,query){
+  doc.getElementById('start').click();await wait(80);
+  const c=doc.getElementById('country');c.value=country;fire(c,'change');await wait(100);
+  const input=doc.getElementById('current');input.focus();input.value=query;fire(input,'input');await wait(180);
+}
+
 async function rootLatin(doc,typed){
   doc.getElementById('next').click();await wait(80);
   const input=doc.getElementById('root');input.focus();input.value=typed;fire(input,'input');await wait(100);
 }
 async function applyState(){
   document.body.dataset.reviewReady='false';
+  const mode=scenario.value;
   const w=Number(width.value);frame.style.width=w+'px';label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'%';
   frame.src='prototype-screen1-map-interaction-lab.html?review='+Date.now();
   await new Promise(resolve=>frame.onload=()=>resolve());
   frame.contentWindow.sessionStorage.clear();
+  if(mode==='t6recovery'){
+    frame.contentWindow.sessionStorage.setItem('rodeni-work-screen1-c2',JSON.stringify({
+      version:1,updated:Date.now()-90000000,country:'DE',current:'DE|Мюнхен',currentDraft:'',root:'BG|Лом',rootDraft:'',pending:''
+    }));
+  }
   frame.contentWindow.location.reload();
   await new Promise(resolve=>frame.onload=()=>resolve());
   const doc=frame.contentDocument;
-  const mode=scenario.value;
   if(mode==='current'){doc.getElementById('start').click();await wait(100)}
   if(mode==='munich'){await current(doc,'DE','Мюнхен')}
   if(mode==='draft'){await current(doc,'DE','Дрезден')}
+  if(mode==='t6dense'){await currentQuery(doc,'US','а')}
+  if(mode==='t6sparse'){await currentQuery(doc,'SI','люб')}
+  if(mode==='t6long'){await currentQuery(doc,'CA','сейнт')}
+  if(mode==='t6longcountry'){await current(doc,'AE','')}
+  if(mode==='t6switch'){
+    await current(doc,'DE','Мюнхен');
+    const c=doc.getElementById('country');c.value='FR';fire(c,'change');await wait(180);
+  }
+  if(mode==='t6recovery'){doc.getElementById('start').click();await wait(180)}
   if(mode==='root'){await current(doc,'DE','Мюнхен');await root(doc,'Лом')}
   if(mode==='rootlatin'){await current(doc,'DE','Мюнхен');await rootLatin(doc,'Lom')}
   if(mode==='rootburgas'){await current(doc,'DE','Мюнхен');await root(doc,'Бургас');await wait(300);doc.getElementById('lookup').click();await wait(300)}
@@ -97,7 +123,7 @@ async function applyState(){
   await wait(120);
   document.body.dataset.reviewReady='true';
   let stored=null;try{stored=JSON.parse(frame.contentWindow.sessionStorage.getItem('rodeni-work-screen1-c2')||'null')}catch{}
-  const stateInfo=stored?' · root='+(stored.root||'∅')+' · rootDraft='+(stored.rootDraft||'∅')+' · pending='+(stored.pending||'∅'):'';
+  const stateInfo=stored?' · country='+(stored.country||'∅')+' · current='+(stored.current||'∅')+' · currentDraft='+(stored.currentDraft||'∅')+' · root='+(stored.root||'∅')+' · rootDraft='+(stored.rootDraft||'∅')+' · pending='+(stored.pending||'∅'):'';
   label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'% · готово'+stateInfo;
 }
 document.getElementById('apply').onclick=applyState;
