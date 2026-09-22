@@ -181,8 +181,9 @@ Checkpoint required before T3B.
 ---
 
 ### T3B — Missing Layer-A list / fallback states
-**Dependency: run after T4 identity-boundary checkpoint**
-**Size: Small-to-Medium**
+**Dependency: run after T4 identity-boundary checkpoint**  
+**Size: Small-to-Medium**  
+**Status: IMPLEMENTED CHECKPOINT — source 17/17 PASS; 360px MT/LU mobile visual PASS; 200% LU reflow PASS; real provider/canonical resolution NOT IMPLEMENTED**
 
 Goal:
 - explicitly verify MT/LU where the country exists but Layer-A has no local list;
