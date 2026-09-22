@@ -55,14 +55,15 @@ check('no-list country uses write-first placeholder', () => {
   assert(html.includes("hasList?'Потърси град или село':'Напиши град или село'"));
 });
 
-check('no-list country gives human guidance', () => {
-  assert(html.includes('За тази държава няма готови предложения в демото. Напиши мястото и го провери.'));
+check('no-list country gives one concise human guidance block', () => {
+  assert(html.includes('Няма готови предложения за тази държава. Напиши мястото и го провери.'));
   assert(!html.includes('За тази държава няма локален списък в демото.'));
+  assert(!html.includes('За тази държава няма готови предложения в демото. Напиши мястото и го провери.'));
 });
 
 check('no-list verification block opens immediately', () => {
   assert(html.includes("const draft=!!draftFor(kind),hasList=hasLocalityList(kind),open=draft||!hasList"));
-  assert(html.includes("!hasList?'Напиши населеното място и го провери.'"));
+  assert(html.includes("!hasList?'Няма готови предложения за тази държава. Напиши мястото и го провери.'"));
 });
 
 check('no-list state hides contradictory missing-place link', () => {
