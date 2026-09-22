@@ -96,7 +96,9 @@ async function applyState(){
   if(zoom.value==='200'){doc.getElementById('textSize').click();await wait(120)}
   await wait(120);
   document.body.dataset.reviewReady='true';
-  label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'% · готово';
+  let stored=null;try{stored=JSON.parse(frame.contentWindow.sessionStorage.getItem('rodeni-work-screen1-c2')||'null')}catch{}
+  const stateInfo=stored?' · root='+(stored.root||'∅')+' · rootDraft='+(stored.rootDraft||'∅')+' · pending='+(stored.pending||'∅'):'';
+  label.textContent=w+' px · '+scenario.options[scenario.selectedIndex].text+' · текст '+zoom.value+'% · готово'+stateInfo;
 }
 document.getElementById('apply').onclick=applyState;
 const params=new URLSearchParams(location.search);
