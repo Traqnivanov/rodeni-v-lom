@@ -65,6 +65,8 @@ Source-backed verification against the branch:
 - C2 country ordering remains unchanged;
 - no fetch/Supabase/GeoNames dependency was introduced.
 
+Latest source-backed self-audit after the empty-query regression correction: **11/11 checks PASS**.
+
 The branch also contains the runnable built-in-Node test:
 
 ```bash
