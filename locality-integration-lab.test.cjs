@@ -88,6 +88,12 @@ check('C2 demo choices are preserved as a scoped supplement', () => {
   assert(lab.includes("const code=kind==='root'?'BG':state.country"));
 });
 
+check('C2 country order is preserved while labels come from countries.js', () => {
+  assert(lab.includes("const C2_COUNTRY_CODES=['DE','GB','FR','ES','IT','AT','NL','BG','BE','CH','PT','GR','CZ','DK','SE','NO','IE','PL','RO','HU']"));
+  assert(lab.includes("const countryNames=Object.fromEntries(window.RODENI_COUNTRIES||[])"));
+});
+
+
 check('suggestion-only labels do not become canonical IDs', () => {
   assert(lab.includes("function chooseSuggestion(kind,name,placeId)"));
   assert(lab.includes("state[kind]=''"));
