@@ -37,7 +37,7 @@ Boundary:
 ### 2. Locality integration laboratory
 
 Branch: `review/ordinary-locality-integration-lab`  
-HEAD: `c5d43d2bbdc19f4a2747db5a9d09e2a80ed1b988`
+HEAD: `b9c1147ab134f5b49450002a7368a63314ecc51c`
 
 Purpose:
 - separate C2-derived lab copy;
@@ -48,12 +48,14 @@ Purpose:
 Critical behavior:
 - suggestion-only locality fills the label but does not create canonical state;
 - only an existing mapped C2 demo identity can use the existing confirmation path;
+- empty input preserves the original C2 focus behavior by showing up to 7 scoped demo choices, while the 1530-name local dataset is not expanded until the user types;
+- all 20 countries currently offered by C2 have a corresponding local city list (424 names across those 20 lists);
 - official C2 remains untouched.
 
 ### 3. Map interaction laboratory
 
 Branch: `review/ordinary-map-interaction-lab`  
-HEAD: `db39669a2a0815589b594a5fe8f1ddcbde092142`
+HEAD: `ef0ed212275f2f109658fa5613b337966d403689`
 
 Purpose:
 - add bounded manual map interaction to the isolated lab;
@@ -81,7 +83,7 @@ Not claimed:
 ### 4. Geography / viewport matrix
 
 Branch: `review/ordinary-screen1-matrix-lab`  
-HEAD: `ad87d4cc0b1a5fccfec2b5de79132984933c9911`
+HEAD: `c5394f09aec23b7eb21fa4e06dc517d776f6f81b`
 
 Matrix:
 - Spain–Lom;
@@ -105,7 +107,7 @@ Boundary:
 ### 5. Registration-boundary copy alignment
 
 Branch: `review/ordinary-registration-boundary-copy`  
-HEAD before this handoff document: `e5be78ad57848227133dc68e5db31b090dae72f7`
+HEAD before this handoff refresh: `e8540c0beeac7e968fa3324e362e7f0b0c270190`
 
 Owner-approved scope:
 - copy/continuity alignment only;
@@ -128,6 +130,21 @@ Verification:
 - inline JS parses;
 - diff from matrix checkpoint changes only the lab prototype plus test/report before this handoff file;
 - prototype content change is one replaced generated source line containing the boundary state.
+
+## Post-audit correction before handoff
+
+Independent self-audit found one unintended UX regression in the first integration-lab version: an empty locality input no longer showed the original C2 scoped demo choices on focus.
+
+Correction:
+- the adapter contract itself remains unchanged: empty query returns `[]`;
+- the integration layer now preserves the original C2 behavior by showing up to the first 7 scoped demo choices on empty input;
+- it does not expand the full local dataset on empty input;
+- non-empty input still uses the country-scoped adapter + scoped demo supplement, de-duplicated and capped at 10;
+- the correction and its regression guards were mirrored into all later ordinary branches;
+- later review files explicitly mark their older SHA as an original fork point, not the current corrected upstream head.
+
+Latest source-backed integration self-audit after this correction: **11/11 checks PASS**.
+Latest source-backed map candidate self-audit after this correction: **15/15 checks PASS**.
 
 ## Recommended WORK review order
 
