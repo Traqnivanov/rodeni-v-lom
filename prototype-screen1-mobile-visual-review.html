@@ -84,8 +84,8 @@ async function applyState(){
   if(mode==='draft'){await current(doc,'DE','Дрезден')}
   if(mode==='root'){await current(doc,'DE','Мюнхен');await root(doc,'Лом')}
   if(mode==='rootlatin'){await current(doc,'DE','Мюнхен');await rootLatin(doc,'Lom')}
-  if(mode==='rootburgas'){await current(doc,'DE','Мюнхен');await root(doc,'Бургас');doc.getElementById('lookup').click();await wait(140)}
-  if(mode==='rootunknown'){await current(doc,'DE','Мюнхен');await root(doc,'Стара Загора');doc.getElementById('lookup').click();await wait(140)}
+  if(mode==='rootburgas'){await current(doc,'DE','Мюнхен');await root(doc,'Бургас');await wait(300);doc.getElementById('lookup').click();await wait(300)}
+  if(mode==='rootunknown'){await current(doc,'DE','Мюнхен');await root(doc,'Стара Загора');await wait(300);doc.getElementById('lookup').click();await wait(300)}
   if(mode==='rootnear'){await current(doc,'BG','Ковачица');await root(doc,'Лом')}
   if(mode==='rootsame'){await current(doc,'BG','Лом');await root(doc,'Лом')}
   if(mode==='exact'){await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
