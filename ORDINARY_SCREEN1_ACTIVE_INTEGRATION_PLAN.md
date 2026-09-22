@@ -229,7 +229,8 @@ Checkpoint completed. Next active task: T6.
 ---
 
 ### T6 — Geographic/UI regression matrix at realistic data scope
-**Size: Medium**
+**Size: Medium**  
+**Status: COMPLETE CHECKPOINT — detailed source audit 28/28 PASS; final integrity 18/18 PASS; representative 360/390/412 mobile matrix PASS; 360px dense 200% PASS; real-device/WORK acceptance NOT VERIFIED**
 
 Run representative states, not every 1530-name pair.
 
@@ -246,7 +247,7 @@ Required classes:
 - current/root states;
 - error/fallback/recovery.
 
-Checkpoint required before T7.
+Checkpoint completed. Next active task: T7.
 
 ---
 
