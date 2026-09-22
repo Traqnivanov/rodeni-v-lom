@@ -38,6 +38,12 @@ check('list-only selection opens human verification state', () => {
   assert(html.includes("Провери мястото, за да сме сигурни, че е правилното."));
 });
 
+check('draft verification hides the contradictory missing-place link', () => {
+  assert(html.includes("id=\"missing\" '+(draft?'hidden':'')"));
+  assert(html.includes("if(missing)missing.hidden=true"));
+  assert(html.includes("if(missing)missing.hidden=false"));
+});
+
 check('canonical selection clears draft and enables CTA', () => {
   assert(html.includes("state[kind]=p.id;setDraft(kind,'')"));
   assert(html.includes("if(next)next.disabled=false"));
