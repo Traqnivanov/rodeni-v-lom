@@ -23,8 +23,8 @@ The current C2 offered-country set and order are preserved. Country labels come 
 For the locality combobox:
 - the adapter provides country-scoped local name suggestions;
 - the existing C2 demo choices remain as a scoped supplement so already approved demo flows such as Lom are not lost;
-- the combined list is de-duplicated and capped at 10;
-- an empty query does not expand the whole local list;
+- a non-empty query combines local suggestions with the scoped C2 demo identities, de-duplicated and capped at 10;
+- an empty query preserves the original C2 behavior by showing up to the first 7 scoped demo choices, without expanding the 1530-name local dataset;
 - original list spelling is displayed.
 
 ## Critical identity boundary
@@ -58,7 +58,7 @@ Source-backed verification against the branch:
 - DE suggestion for `мюнх` returns `Мюнхен`;
 - the same query under ES returns no result;
 - combined suggestions are capped at 10;
-- empty query returns no list expansion;
+- empty query preserves the original C2 scoped demo choices and does not expand the full local dataset;
 - suggestion-only label never assigns itself to canonical state;
 - canonical confirmation requires an existing mapped C2 demo identity;
 - C2 country ordering remains unchanged;
