@@ -19,6 +19,7 @@
 <option value="initial">Начален екран</option>
 <option value="current">Current · празен</option>
 <option value="munich">Current · Германия / Мюнхен</option>
+<option value="draft">Current · list-only / Дрезден</option>
 <option value="root">Root · Мюнхен → Лом</option>
 <option value="exact">Result · exact</option>
 <option value="error">Error state</option>
@@ -62,6 +63,7 @@ async function applyState(){
   const mode=scenario.value;
   if(mode==='current'){doc.getElementById('start').click();await wait(100)}
   if(mode==='munich'){await current(doc,'DE','Мюнхен')}
+  if(mode==='draft'){await current(doc,'DE','Дрезден')}
   if(mode==='root'){await current(doc,'DE','Мюнхен');await root(doc,'Лом')}
   if(mode==='exact'){await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
   if(mode==='error'){doc.getElementById('network').value='fail';fire(doc.getElementById('network'),'change');await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
