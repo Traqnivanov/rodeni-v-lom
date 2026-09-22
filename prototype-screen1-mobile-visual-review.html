@@ -119,7 +119,10 @@ async function applyState(){
   if(mode==='mt'){await current(doc,'MT','')}
   if(mode==='lu'){await current(doc,'LU','')}
   if(mode==='sg'){await current(doc,'SG','')}
-  if(zoom.value==='200'){doc.getElementById('textSize').click();await wait(120)}
+  if(zoom.value==='200'){
+    doc.getElementById('textSize').click();await wait(120);
+    if(mode==='t6dense'){doc.getElementById('currentOptions')?.scrollIntoView({block:'center'});await wait(120)}
+  }
   await wait(120);
   document.body.dataset.reviewReady='true';
   let stored=null;try{stored=JSON.parse(frame.contentWindow.sessionStorage.getItem('rodeni-work-screen1-c2')||'null')}catch{}
