@@ -203,7 +203,8 @@ Checkpoint required before T5.
 ---
 
 ### T5 — Root/Bulgaria coverage reality check
-**Size: Medium analysis + bounded implementation only if already authorized**
+**Size: Medium analysis + bounded implementation only if already authorized**  
+**Status: IMPLEMENTED CHECKPOINT — source 26/26 PASS; 360px Root/Latin/resolver/unverified/near/same visual PASS; 200% Root reflow PASS; complete BG registry/provider NOT IMPLEMENTED**
 
 Reason:
 - approved Root is national Bulgaria;
@@ -223,7 +224,7 @@ Scenarios:
 
 If a complete Bulgaria dataset/provider is required to proceed, stop at proposal; do not create a hand-built pseudo-registry.
 
-Checkpoint required before T6.
+Checkpoint completed. Next active task: T6.
 
 ---
 
