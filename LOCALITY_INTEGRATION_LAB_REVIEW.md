@@ -18,7 +18,7 @@ The lab copy `prototype-screen1-locality-integration-lab.html` loads, in order:
 3. `locality-suggestions-adapter.js`
 4. the copied C2 application script
 
-The current C2 offered-country set and order are preserved. Country labels come from `countries.js`.
+The current C2 offered-country set and order are preserved. Country labels come from `countries.js`. All 20 offered C2 countries have a corresponding `cities.js` list; together those 20 lists contain 424 names.
 
 For the locality combobox:
 - the adapter provides country-scoped local name suggestions;
@@ -55,6 +55,7 @@ Source-backed verification against the branch:
 - official C2 blob remains `750eafb4275b8e551325bf372bf70a028ac5c3ab`;
 - all inline lab JavaScript parses;
 - real source inventory remains 62 countries / 60 city-list keys / 1530 names;
+- all 20 countries currently offered by C2 have a local city list (424 names across those 20 lists);
 - DE suggestion for `мюнх` returns `Мюнхен`;
 - the same query under ES returns no result;
 - combined suggestions are capped at 10;
