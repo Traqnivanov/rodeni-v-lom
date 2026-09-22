@@ -1,0 +1,11 @@
+const fs=require('node:fs');
+const assert=require('node:assert/strict');
+const s=fs.readFileSync(__dirname+'/prototype-screen1-work-c2.html','utf8');
+const paths=[...s.matchAll(/<path data-country="([^"]*)" d="([^"]+)"\/>/g)];
+assert.equal(paths.length,177,'All original country geometries must survive');
+const offered=s.match(/const countries=(\{[^;]+\});/)[1];
+const codes=[...offered.matchAll(/([A-Z]{2}):/g)].map(m=>m[1]);
+for(const code of codes)assert(paths.some(p=>p[1]===code&&p[2].length>20),'Missing geometry: '+code);
+for(const code of ['ES','DE','GB','IT','CN-TW','-99'])assert(paths.some(p=>p[1]===code),'Lost original code: '+code);
+assert.equal(paths.filter(p=>p[1]==='-99').length,2);
+console.log('PASS: 177 country paths, all '+codes.length+' offered countries, multi-class and nonstandard-code regressions');
