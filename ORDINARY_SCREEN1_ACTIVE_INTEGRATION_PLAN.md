@@ -158,8 +158,9 @@ Checkpoint completed.
 ---
 
 ### T4 — Suggestion vs canonical identity contract
-**Order note: moved before T3B after dependency audit**
-**Size: Medium**
+**Order note: moved before T3B after dependency audit**  
+**Size: Medium**  
+**Status: AUDITED — concrete proposal recorded; Owner approval pending before implementation**
 
 Goal:
 - harden the integration boundary so UI scope can grow without coupling every suggestion to the current demo fixture array.
@@ -175,7 +176,7 @@ Must verify:
 
 No backend provider implementation.
 
-Checkpoint required before T5.
+Checkpoint required before T3B.
 
 ---
 
@@ -196,7 +197,7 @@ Must verify:
 
 If this requires changing approved fallback semantics, stop and ask Owner.
 
-Checkpoint required before T4.
+Checkpoint required before T5.
 
 ---
 
