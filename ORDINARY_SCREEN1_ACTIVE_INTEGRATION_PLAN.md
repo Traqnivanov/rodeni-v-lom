@@ -113,7 +113,7 @@ Checkpoint completed. Next active task: T2.
 
 ### T2 — Full Layer-A locality suggestions
 **Size: Medium**  
-**Status: DONE — source-backed 17/17 PASS; no prototype logic change required**
+**Status: TECHNICAL DATA-COVERAGE PASS — 17/17; end-to-end identity transition INCOMPLETE; visual NOT VERIFIED**
 
 Goal:
 - exercise all 1530 existing `cities.js` names through the adapter for their selected country;
@@ -157,27 +157,8 @@ Checkpoint completed.
 
 ---
 
-### T3B — Missing Layer-A list / fallback states
-**Size: Small-to-Medium**
-
-Goal:
-- explicitly verify MT/LU where the country exists but Layer-A has no local list;
-- ensure UI does not look broken or empty without explanation;
-- controlled `Не намираш мястото?` path remains reachable.
-
-Must verify:
-- no fake suggestions;
-- no fake coordinates;
-- no blocked flow caused only by an absent local list;
-- SG remains a separate case: no geometry, but it does have Layer-A locality data.
-
-If this requires changing approved fallback semantics, stop and ask Owner.
-
-Checkpoint required before T4.
-
----
-
 ### T4 — Suggestion vs canonical identity contract
+**Order note: moved before T3B after dependency audit**
 **Size: Medium**
 
 Goal:
@@ -195,6 +176,27 @@ Must verify:
 No backend provider implementation.
 
 Checkpoint required before T5.
+
+---
+
+### T3B — Missing Layer-A list / fallback states
+**Dependency: run after T4 identity-boundary checkpoint**
+**Size: Small-to-Medium**
+
+Goal:
+- explicitly verify MT/LU where the country exists but Layer-A has no local list;
+- ensure UI does not look broken or empty without explanation;
+- controlled `Не намираш мястото?` path remains reachable.
+
+Must verify:
+- no fake suggestions;
+- no fake coordinates;
+- no blocked flow caused only by an absent local list;
+- SG remains a separate case: no geometry, but it does have Layer-A locality data.
+
+If this requires changing approved fallback semantics, stop and ask Owner.
+
+Checkpoint required before T4.
 
 ---
 
