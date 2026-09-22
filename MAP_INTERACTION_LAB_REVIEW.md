@@ -58,7 +58,7 @@ The alternative of directly adding D3 to the C2 prototype was intentionally not 
 
 ## Verification
 
-### Source-backed candidate verification — PASS, 13 checks
+### Source-backed candidate verification — PASS, 15 checks
 
 Verified against the actual GitHub branch:
 - inline JS syntax parses;
@@ -73,7 +73,9 @@ Verified against the actual GitHub branch:
 - HTML markers share the transform math;
 - `touch-action: pan-y`;
 - coarse-pointer wheel is not captured;
-- context changes reset the manual transform.
+- context changes reset the manual transform;
+- mouse drag uses bounded pointer-capture pan;
+- the original C2 empty-query demo choices remain available without expanding the full local dataset.
 
 Runnable repository test:
 
