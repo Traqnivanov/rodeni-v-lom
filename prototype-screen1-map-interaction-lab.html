@@ -44,13 +44,15 @@ function inputField(kind,label,country,selected){const listId=kind+'Options';ret
 function fallbackBlock(kind){return '<button class="text-button" id="missing">Не намираш мястото?</button><div class="fallback" id="fallback" hidden><p>Напиши мястото в полето и натисни „Провери мястото“.</p><button class="secondary" id="lookup">Провери мястото</button><p class="error" id="lookupError" role="alert" tabindex="-1" hidden></p>'+(kind==='root'?'<button class="text-button" id="unverified" hidden>Продължи с непотвърдено място</button>':'')+'</div>'}
 function closeSuggestions(kind){const input=$(kind),box=$(kind+'Options');if(!input||!box)return;box.hidden=true;box.replaceChildren();input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');input.dataset.active='-1'}
 function visibleChoices(kind){
-  const input=$(kind),code=suggestionCountry(kind),query=input?.value||'';
-  if(!code||!norm(query))return [];
+  const input=$(kind),code=suggestionCountry(kind),query=input?.value||'',normalized=norm(query);
+  if(!code)return [];
+  const demo=choices(kind);
+  if(!normalized)return demo.slice(0,7).map(place=>({name:place.name,place}));
   const names=[],seen=new Set();
   const add=name=>{const key=norm(name);if(!key||seen.has(key)||names.length>=10)return;seen.add(key);names.push(name)};
   if(localitySuggestions&&typeof localitySuggestions.suggest==='function')localitySuggestions.suggest(code,query).forEach(add);
-  choices(kind).filter(p=>norm(p.name).includes(norm(query))).forEach(p=>add(p.name));
-  return names.map(name=>({name,place:choices(kind).find(p=>norm(p.name)===norm(name))||null}));
+  demo.filter(p=>norm(p.name).includes(normalized)).forEach(p=>add(p.name));
+  return names.map(name=>({name,place:demo.find(p=>norm(p.name)===norm(name))||null}));
 }
 function paintSuggestions(kind){const input=$(kind),box=$(kind+'Options');if(!input||!box||input.disabled)return;const list=visibleChoices(kind);box.replaceChildren(...list.map((item,i)=>{const el=document.createElement('div');el.className='suggestion';el.id=kind+'Option'+i;el.setAttribute('role','option');el.setAttribute('aria-selected','false');el.dataset.name=item.name;if(item.place)el.dataset.id=item.place.id;el.textContent=item.name;el.addEventListener('pointerdown',e=>e.preventDefault());el.addEventListener('mousedown',e=>e.preventDefault());el.addEventListener('click',()=>chooseSuggestion(kind,item.name,item.place?.id||''));return el}));box.hidden=!list.length;input.setAttribute('aria-expanded',list.length?'true':'false');input.removeAttribute('aria-activedescendant');input.dataset.active='-1'}
 function moveSuggestion(kind,delta){const input=$(kind),box=$(kind+'Options');if(!input||!box)return;if(box.hidden)paintSuggestions(kind);const opts=[...box.querySelectorAll('[role="option"]')];if(!opts.length)return;let i=Number(input.dataset.active||-1);i=delta>0?(i+1)%opts.length:(i<=0?opts.length-1:i-1);input.dataset.active=String(i);opts.forEach((o,n)=>o.setAttribute('aria-selected',n===i?'true':'false'));input.setAttribute('aria-activedescendant',opts[i].id);opts[i].scrollIntoView?.({block:'nearest'})}
