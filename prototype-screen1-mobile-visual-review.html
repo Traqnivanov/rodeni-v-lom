@@ -34,7 +34,13 @@
 <option value="rootnear">Map · Ковачица ↔ Лом</option>
 <option value="rootsame">Map · Лом ↔ Лом</option>
 <option value="exact">Result · exact</option>
+<option value="broader">Result · safe-broader</option>
+<option value="suppressed">Result · suppressed</option>
+<option value="currentonly">Result · Current-only</option>
+<option value="loading">Loading state</option>
 <option value="error">Error state</option>
+<option value="retry">Retry · temporary error → success</option>
+<option value="posterror">Post-error continue</option>
 <option value="mt">MT · без map geometry / без предложения</option>
 <option value="lu">LU · има geometry / без предложения</option>
 <option value="sg">SG · без map geometry</option>
@@ -133,7 +139,13 @@ async function applyState(){
   if(mode==='rootnear'){await current(doc,'BG','Ковачица');await root(doc,'Лом');doc.getElementById('map')?.scrollIntoView({block:'start'});await wait(180)}
   if(mode==='rootsame'){await current(doc,'BG','Лом');await root(doc,'Лом');doc.getElementById('map')?.scrollIntoView({block:'start'});await wait(180)}
   if(mode==='exact'){await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
+  if(mode==='broader'){await current(doc,'FR','Париж');await root(doc,'Ковачица');doc.getElementById('next').click();await wait(800)}
+  if(mode==='suppressed'){await current(doc,'AT','Грац');await root(doc,'София');doc.getElementById('next').click();await wait(800)}
+  if(mode==='currentonly'){await current(doc,'FR','Париж');await root(doc,'Стара Загора');await wait(180);doc.getElementById('lookup').click();await wait(180);doc.getElementById('unverified').click();await wait(800)}
+  if(mode==='loading'){await current(doc,'DE','Мюнхен');await root(doc,'Лом');frame.contentWindow.eval("state.view='loading';render();cancel()");await wait(120)}
   if(mode==='error'){doc.getElementById('network').value='fail';fire(doc.getElementById('network'),'change');await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800)}
+  if(mode==='retry'){doc.getElementById('network').value='once';fire(doc.getElementById('network'),'change');await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800);doc.getElementById('retry').click();await wait(800)}
+  if(mode==='posterror'){doc.getElementById('network').value='fail';fire(doc.getElementById('network'),'change');await current(doc,'DE','Мюнхен');await root(doc,'Лом');doc.getElementById('next').click();await wait(800);doc.getElementById('retry').click();await wait(800);doc.getElementById('skip').click();await wait(160)}
   if(mode==='mt'){await current(doc,'MT','')}
   if(mode==='lu'){await current(doc,'LU','')}
   if(mode==='sg'){await current(doc,'SG','')}
