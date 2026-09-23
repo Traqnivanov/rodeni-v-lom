@@ -1,5 +1,7 @@
 # Screen 1 — physical mobile / real-device test checklist
 
+**Canonical status:** Task #3 physical-phone checklist. Use this file for the real-device pass.
+
 **Purpose:** final physical-device evidence for the frozen Screen 1 package  
 **Frozen branch:** `review/ordinary-screen1-frozen-for-work`  
 **Frozen HEAD:** `1c1551dc47faa249132394f019491373bc876f22`  
