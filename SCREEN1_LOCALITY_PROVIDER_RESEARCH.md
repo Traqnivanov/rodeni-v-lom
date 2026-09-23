@@ -1,3 +1,15 @@
+> **CORRECTION AFTER MASTER RE-CHECK**
+>
+> The approved product architecture is already defined in `PRODUCT_MASTER_VISION_AUDIT.md §63 — Hybrid locality resolution`.
+>
+> **Existing `countries.js` + `cities.js` are not temporary data to replace.**
+> They are the approved **Layer A — fast local suggestions** and must be preserved.
+>
+> External lookup is only **Layer B — explicit fallback when the user does not find the locality**.
+> The Master currently names **GeoNames as the working fallback recommendation**, behind a backend/cache boundary.
+>
+> Therefore this research document must be read only as supporting research around the already-approved hybrid model, not as a proposal to replace the 1530-city local layer with a new provider.
+
 # Screen 1 — locality/provider research (NO DECISION / NO INTEGRATION)
 
 **Branch:** `review/ordinary-screen1-postfreeze-qa`  
