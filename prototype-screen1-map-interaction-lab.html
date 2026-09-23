@@ -191,9 +191,11 @@ function syncKeyboardMode(){
   const input=localityInputFocused(),visibleHeight=viewport?.height||innerHeight;
   if(!input)fullViewportHeight=Math.max(fullViewportHeight,visibleHeight);
   const keyboardOpen=!!(mobile&&input&&(fullViewportHeight-visibleHeight>120));
-  const changed=document.body.classList.toggle('keyboard-open',keyboardOpen)!==keyboardOpen;
+  const wasOpen=document.body.classList.contains('keyboard-open');
+  document.body.classList.toggle('keyboard-open',keyboardOpen);
+  const changed=wasOpen!==keyboardOpen;
   if(keyboardOpen){
-    const rect=input.getBoundingClientRect(),free=Math.max(72,Math.min(144,visibleHeight-rect.bottom-12));
+    const rect=input.getBoundingClientRect(),visibleBottom=(viewport?.offsetTop||0)+visibleHeight,free=Math.max(72,Math.min(144,visibleBottom-rect.bottom-12));
     document.documentElement.style.setProperty('--keyboard-list-max',free+'px');
   }else document.documentElement.style.removeProperty('--keyboard-list-max');
   if(changed)drawMap();
