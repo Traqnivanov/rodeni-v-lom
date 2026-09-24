@@ -73,7 +73,7 @@ Master §§101–112 пазят тестовата линия, която веч
 3. Повторната проверка потвърди вече одобрения public boundary: **карта → Current → Root → privacy-safe preview → registration → onboarding → „За теб“**. Не го отваряме наново без нов конфликт на по-високо ниво.
 4. Нерегистриран user не създава trusted human actions/content: няма responses, connection/contact действия, user-generated links към други users или влияние върху R.E. learning/routing като идентифициран човек.
 5. Root + Current + privacy-safe preview остават допустими преди registration като временен/private preview context; не са trusted profile/matching/routing данни преди confirmation.
-6. §104 Pending Action/Need Bridge остава **ЗА ПОВТОРНА ПРОВЕРКА само за pre-registration user-written need/action**.
+6. §104 Pending Action/Need Bridge беше повторно проверен; финалният V1 резултат е в т.8: pre-registration user-written need/action е FUTURE / неактивен.
 7. **TEST 014A е завършен** като test result: R.E. може да създава network effect след registration, но не е самостоятелен acquisition/cold-start engine.
 8. **OWNER APPROVED:** §104 pre-registration Pending Need/Action е FUTURE / неактивен за V1; Root + Current Context Bridge (§85) остава активен.
 9. **TEST 014B е завършен:** confirmed node ≠ автоматично actionable node. Network effect-ът е permission-aware и по подразбиране асиметричен; `open_to_strangers=OFF` не се заобикаля.
@@ -84,7 +84,8 @@ Master §§101–112 пазят тестовата линия, която веч
 14. **TEST 015 е завършен — R.E. V1 MOTOR PASS:** четирите задължителни сценария са логически покрити без нов механизъм. Остават две външни зависимости: national public framing и честният registration motive при low density.
 15. **Public architecture test е завършен:** Lom-only framing FAIL; dynamic `Родени в [Root]` rebrand е рисков; най-силната посока е stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично rebrand.
 16. **OWNER APPROVED — 25.09.2026:** stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично city rebrand. Ново национално име и финален public copy остават нерешени.
-17. **CURRENT NEXT:** low-density CTA / registration-motive test в одобрения public framing, с фокус върху privacy-suppressed `0–4` и честна причина за следващото действие без generic registration bait. Без Screen 1 implementation преди резултата.
+17. **TEST 016 е завършен — low-density CTA / registration motive:** при реален exact/safe-broader aggregate текущият `Виж какво има за теб` остава логичен. При privacy-suppressed `0–4` без допустим broader result универсалният registration CTA е слаб; notification CTA не е готов без отделен notification contract. Най-силната тестова посока е explicit persistence на Root + Current + ясна public алтернатива без account.
+18. **OWNER DECISION PENDING:** одобрение/отказ на low-density branching principle от Master §114. До решение няма Screen 1 implementation.
 
 
 ## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
