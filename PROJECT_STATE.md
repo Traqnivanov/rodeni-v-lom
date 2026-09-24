@@ -97,6 +97,16 @@ Master §101 пази активната хипотеза, която следв
 - Community data не става автоматично business lead.
 - **Service Trust Mechanism е OPEN** и предстои отделен design/stress test; няма implementation преди Owner approval.
 
+### Prototype / WORK continuity — current
+
+- `review/work-screen1-approved-direction` = WORK review основа.
+- `review/ordinary-screen1-frozen-for-work` = замразен ordinary Screen 1 candidate за независим WORK review.
+- `review/ordinary-screen1-c2-mobile` = отделна ordinary mobile C2 линия.
+- Не се започва Screen 1 отначало.
+- Не се продължава prototype implementation само защото старият handoff го сочи; текущият `START_HERE` §0 + `PROJECT_STATE` имат приоритет за NEXT.
+- При връщане към Screen 1: първо dependency revalidation спрямо North Star / national framing / текущите Owner решения, после ограничена prototype работа.
+
+
 ## 3. Текущи важни решения
 
 - **Ново основно правило за човешка полза — одобрено 20.09.2026:** всеки механизъм трябва да носи конкретна полза за конкретния човек според неговия реален контекст — откъде е, къде е сега, какво търси или от какво има нужда в момента. Основният тест е „Каква конкретна полза получава този човек точно сега?“. Ако няма ясен отговор, механизмът не влиза в продукта. Лом остава първата реална общност и отправната точка, но продуктът не е технически или продуктово ограничен само до Лом при вече одобрения национален модел. Пълният OWNER approval checklist е в `START_HERE.md` и Master секция #82.
