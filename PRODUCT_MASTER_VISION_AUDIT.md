@@ -6521,7 +6521,7 @@ Flow:
 
 **Дата на одобрение:** 20.09.2026
 **Одобрено от:** Admin/Owner
-**Статус:** ОДОБРЕНО ПРОДУКТОВО/PRIVACY РЕШЕНИЕ
+**Статус:** ОДОБРЕНО ИСТОРИЧЕСКО РЕШЕНИЕ — FUTURE / НЕАКТИВНО ЗА V1
 **Implementation status:** НЕ Е РЕАЛИЗИРАНО
 
 ## Проблем
@@ -8554,6 +8554,19 @@ R.E. TEST 013 показа, че най-силният registration сценар
 - кои всички бъдещи action types могат да използват bridge-а;
 - конкретният Screen 1 registration trigger;
 - brand architecture.
+
+## OWNER DECISION — 24.09.2026: §104 parked for V1
+
+Owner одобри след TEST 014A:
+
+- §104 **Pending Action / Need Bridge** остава запазен като историческо/бъдещо решение;
+- за **V1 е FUTURE / НЕАКТИВЕН**;
+- V1 не допуска pre-registration user-written need/action като trusted продуктово действие;
+- **Root + Current Context Bridge (§85) остава активен** и непроменен;
+- нужди, отговори, routing, contact и trusted human actions започват след registration/identity;
+- §104 може да бъде върнат за бъдеща версия само след нов отделен audit + Owner approval.
+
+Това решение затваря конфликта между TEST 013 continuity идеята и по-късно изяснената guest trust boundary.
 
 # 105. [OWNER DIRECTION][TEST PATH CORRECTION] Нерегистрираната граница и запазване на R.E. тестовете
 
