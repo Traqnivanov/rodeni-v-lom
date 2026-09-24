@@ -57,11 +57,12 @@ Master §101 пази активната хипотеза, която следв
 ### Текущ NEXT
 
 1. **Без нов Screen 1 implementation.**
-2. Master §102 пази test checkpoint-а от R.E. TEST 001–011 като **находки, не решения**.
-3. **TEST 012 е завършен** и е записан в Master §103 като тестов резултат, не решение.
-4. **TEST 013 е завършен.** Owner одобри Pending Action/Need Bridge; решението е в Master §104 и Dependency Map.
-5. Текущата работа е **TEST 014 — естествен growth loop**: може ли полезността на R.E. да увеличава мрежата без spam, „покани 10 приятели“ или евтина viral механика.
-6. Няма brand/Screen 1/DB/Supabase implementation преди Owner решение по архитектурата.
+2. R.E. TEST 001–013 се запазват; резултатите им не се започват отначало.
+3. **TEST 014 growth е PAUSED** там, където предполага действия/отговори/links от нерегистрирани users.
+4. Owner direction: нерегистриран user не създава trusted human actions/content и не участва в routing/learning като идентифициран човек.
+5. **Следващият exact step е ограничен одит на границата на Screen 1:** изцяло преди registration, частично преди registration или registration по-рано.
+6. §104 Pending Action/Need Bridge е **ЗА ПОВТОРНА ПРОВЕРКА** в частта за pre-registration user-written need/action; Root + Current Context Bridge от §85 остава отделно правило.
+7. След решението за Screen 1/public boundary се връщаме към R.E. тестовете от запазения checkpoint, без рестарт и без загуба на резултатите.
 
 
 ## 3. Текущи важни решения
