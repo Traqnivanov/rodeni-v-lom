@@ -8621,20 +8621,24 @@ TEST 014 growth анализът е **ПАУЗИРАН** в частта, коя
 
 Root + Current Context Bridge от §85 остава отделно вече одобрено правило и не се отменя автоматично.
 
-## Точният следващ въпрос
+## Корекция след проверка на вече одобрените решения
 
-Преди нови R.E. growth тестове се прави ограничен одит:
+След повторна проверка на Master §§79, 81, 83, 85 и Screen 1 §§91–97 е потвърдено, че registration boundary **вече е изрично одобрена**:
 
-**Screen 1 трябва ли да бъде изцяло преди registration, частично преди registration или registration трябва да дойде по-рано?**
+**public карта → Current → Root → privacy-safe preview → „Виж какво има за теб“ → registration → onboarding → „За теб“**
 
-Проверява се само:
-1. каква реална стойност получава нерегистрираният;
-2. каква полза има сайтът от тази публична стъпка;
-3. какво реално използва R.E. и каква е цената;
-4. какво е достоверно без identity;
-5. privacy/safety;
-6. каква е естествената кука към registration;
-7. дали по-леко решение дава същата стойност.
+Допълнително §79 изрично казва, че public hook-ът **не води директно към registration**; преди registration user получава кратък личен preview чрез Current + Root и реален privacy-safe aggregate.
 
-До този одит няма ново разширяване на правата/действията на нерегистрирани users.
+Следователно:
+- НЕ се отваря наново общият въпрос дали Screen 1 да бъде преди или след registration;
+- Root + Current + privacy-safe preview остават pre-registration според вече одобрения contract;
+- Owner границата „нерегистриран не създава trusted human action/content“ не противоречи на този preview, защото тези стойности са временен private/session context и не стават trusted profile/matching/routing данни преди потвърждение;
+- за повторна проверка остава само **всяко ново разширение извън този contract**, включително pre-registration free-text need/action;
+- §104 остава ЗА ПОВТОРНА ПРОВЕРКА само в частта, която предполага user-written need/action преди registration.
+
+## Точният следващ ход
+
+R.E. тестовете продължават от запазения checkpoint. TEST 014 се възобновява само при вече потвърдената граница:
+
+**анонимният получава одобрения public preview; реални човешки действия, routing, responses и trusted content изискват registration/identity.**
 
