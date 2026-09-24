@@ -430,7 +430,14 @@ Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е
 
 Screen 1, Точка 6 — loading/network/error, retry и recovery — е одобрена в Master §97.
 
-**Screen 1 contract е завършен и отделният interactive review prototype е реализиран в `prototype-screen1.html` (Master §98).** Текущият NEXT е **Owner mobile visual/flow review → конкретни корекции по Owner feedback или изрично одобрение**. До това решение prototype-ът не заменя `index.html`, не започва production/Supabase implementation и не се преминава към Screen 2.
+**Screen 1 contract е завършен и има отделни review/prototype линии.** Това е запазен prototype checkpoint, **НЕ текущият стратегически NEXT**.
+
+Текущ override:
+- prototype работата **не се започва отначало**;
+- замразените/review линии се пазят за връщане и независим WORK review;
+- **без нов Screen 1 implementation**, докато по-високата стратегическа посока от §0 и `PROJECT_STATE.md` не бъде изчистена;
+- при връщане към Screen 1 първо се прави dependency revalidation спрямо North Star, national framing и последните Owner решения;
+- prototype-ът не заменя `index.html`; няма production/Supabase промяна или Screen 2 само по стария handoff.
 
 След първата mobile проверка е задължителен и **Prototype Release Gate** от Master §99: hierarchy card преди код, hard mobile font/touch floors, viewport и state matrices, three-second test, реално визуално доказателство и независим WORK CONTROLLER pass. `Technical pass`, `mobile visual pass` и `Owner approved` са различни статуси и не могат да се заменят един с друг.
 
