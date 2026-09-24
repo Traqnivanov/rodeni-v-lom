@@ -67,7 +67,9 @@ Master §101 пази активната хипотеза, която следв
 9. **TEST 014B е завършен:** confirmed node ≠ автоматично actionable node. Network effect-ът е permission-aware и по подразбиране асиметричен; `open_to_strangers=OFF` не се заобикаля.
 10. **TEST 014C е завършен — PARTIAL PASS:** aggregate density + outbound value + contextual voluntary permission могат постепенно да усилват мрежата, но не bootstrap-ват почти нулева density. Permission не се иска за нуждите на системата.
 11. **TEST 014D е завършен:** generic referral FAIL; privacy-safe public share е безопасен, но слаб; purpose-bound invite към лично познат външен човек е най-силен кандидат, но НЕ е одобрена функция.
-12. **NEXT:** TEST 014E — строг stress test на purpose-bound invite срещу spam, stalking, token leakage/forwarding, fake needs, §71 и техническа цена.
+12. **TEST 014E е завършен — FAIL за V1:** purpose-bound invite не решава надеждно identity binding преди registration и добавя privacy/abuse/token сложност. Кандидатът не влиза във V1.
+13. **TEST 014 growth family е затворен като checkpoint:** R.E. усилва мрежата след registration, но не се превръща в acquisition/referral engine.
+14. **NEXT:** TEST 015 — end-to-end synthesis pass на текущия R.E. motor през четирите задължителни сценария, без нови функции.
 
 
 ## 3. Текущи важни решения
