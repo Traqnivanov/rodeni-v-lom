@@ -29,6 +29,20 @@
 Следващото развитие е orchestration върху тази база чрез **R.E.**, чийто вътрешни части включват Context Engine, Root Graph, Opportunity logic/model и приложимите privacy/permission/safety gates, плюс progressive onboarding и Admin/Owner Operations.
 
 
+## OWNER STRATEGIC END STATE — TRUST FIRST, SERVICES LATER
+
+Owner потвърди следната стратегическа посока:
+
+- първо се изгражда доверие чрез community продукта;
+- „Иванов Ремонти“ НЕ влиза първоначално като реклама;
+- services се появяват по-късно, тихо, само при реална нужда и трябва да се усещат като полза, не като marketing;
+- първо Лом, после възможност за национално изпълнение чрез „Иванов Ремонти“ + подбрани подизпълнители;
+- реални изпълнени услуги могат по-късно да създават доброволен social proof/status, но не fake/automatic reviews;
+- community data ≠ automatic business lead;
+- точният **Service Trust Mechanism е OPEN** и трябва да се проектира/stress-test-не отделно.
+
+Следващ чат трябва първо да прочете новата секция 0 в `START_HERE.md`.
+
 ## 2A. CURRENT PRODUCT MODEL — 24.09.2026
 
 Това е текущата рамка, от която следващ чат трябва да продължи:
