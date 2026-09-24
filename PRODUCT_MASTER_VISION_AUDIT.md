@@ -8796,3 +8796,85 @@ Network effect-ът е **permission-aware и по подразбиране ас�
 Следващият тест трябва да провери кое реално може да създаде растеж при low-density:
 **aggregate density + outbound value + доброволно permission activation**, без да превръща permission prompt-а в натиск или registration trick.
 
+# 108. [TEST RESULT] R.E. TEST 014C — low-density growth без permission натиск
+
+**Дата:** 24.09.2026  
+**Статус:** ТЕСТОВ РЕЗУЛТАТ — НЕ Е ФИНАЛНО ПРОДУКТОВО РЕШЕНИЕ  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB / SCREEN ПРОМЯНА
+
+## Цел
+
+Да се провери дали комбинацията:
+**aggregate density + outbound value + доброволно permission activation**
+може реално да помогне на мрежата при ниска плътност, без spam, broadcast или натиск за `open_to_strangers=ON`.
+
+## Сценарий 1 — нов confirmed user, но aggregate остава под privacy прага
+
+Ако добавянето на новия user не премества публичната група над threshold 5:
+- публичният резултат остава privacy-suppressed;
+- няма честна причина да се показва „растеж“ чрез по-точна бройка;
+- user може да има лична стойност само ако има допустим outbound route или друга реална Opportunity.
+
+Извод:
+**един нов account не създава автоматично видима public стойност.**
+
+## Сценарий 2 — новите confirmed users пресичат aggregate threshold
+
+Когато достатъчно реални confirmed users доведат конкретна безопасна група над прага:
+- public preview става по-информативен;
+- това може да усили доверието и registration мотива за следващи visitors;
+- но aggregate-ът пак не обещава contactable хора.
+
+Извод:
+**aggregate density има реален, но бавен network effect.**
+Той помага на acquisition слоя, без да нарушава privacy, но не решава сам cold start.
+
+## Сценарий 3 — outbound value при `open_to_strangers=OFF`
+
+OFF не пречи новият user сам да изпрати допустима заявка към подходящ recipient, ако recipient-ът позволява inbound contact и всички gates са минати.
+
+Това дава реална personal value без user да бъде принуждаван да отвори себе си за непознати.
+
+Извод:
+**outbound value е по-чист early-value механизъм от принудително permission activation.**
+
+## Сценарий 4 — кога НЕ трябва да питаме за inbound permission
+
+Generic prompt веднага след registration от типа „Включи заявки, за да помогнеш мрежата да расте“ е FAIL:
+- ползата е за системата, не достатъчно ясна за човека;
+- създава pressure;
+- противоречи на progressive enrichment / Next Best Question;
+- рискува permission да стане growth trick.
+
+## Сценарий 5 — кога permission prompt може да има смисъл
+
+Permission може да бъде предложен progressive само когато има разбираема лична причина, например:
+- user изрично иска да бъде достъпен за подходящи нови връзки;
+- user доброволно избира Guidance участие;
+- друг одобрен контекст прави inbound стойността реално разбираема.
+
+Точният trigger/copy НЕ се решава с този тест.
+
+Основен принцип от теста:
+**permission се иска за полза на човека, не за да запълним мрежата.**
+
+## TEST 014C извод
+
+**PARTIAL PASS.**
+
+Low-density growth може постепенно да се усилва чрез:
+1. повече confirmed users → по-силен privacy-safe aggregate;
+2. outbound value за новия user без принудително inbound opening;
+3. доброволно permission activation само при реална лична причина.
+
+Но това **не bootstrap-ва мрежа от почти нула**.
+
+Следователно R.E. не трябва да бъде натоварен с изкуствена задача да „създава“ density. Първоначалната плътност/привличане остава отделен acquisition/seeding проблем.
+
+## Следващ тест
+
+TEST 014D:
+**има ли естествен външен growth loop около вече доказана стойност — без referral spam, anonymous actions или permission pressure?**
+
+Проверяват се само механизми, при които човек споделя/довежда друг човек по реална причина, а не защото продуктът го кара да „покани приятели“.
+
