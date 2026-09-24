@@ -8726,3 +8726,73 @@ TEST 012 правилно установи, че конкретната нужд
 Следващият growth тест не трябва да търси anonymous actions. Той трябва да тества:
 **как вече потвърден нов node създава стойност за себе си и за съществуващата мрежа, без spam, broadcast или filler.**
 
+# 107. [TEST RESULT] R.E. TEST 014B — confirmed node ≠ автоматично actionable node
+
+**Дата:** 24.09.2026  
+**Статус:** ТЕСТОВ РЕЗУЛТАТ — извежда следствие от вече одобрени permission/visibility правила  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB / SCREEN ПРОМЯНА
+
+## Проверен проблем
+
+TEST 014A установи, че нов confirmed user може да усили мрежата. TEST 014B проверява дали това означава автоматично двустранна discovery стойност за старите users.
+
+## Сценарий A — нов user, `open_to_strangers=OFF`
+
+Новият user има:
+- confirmed identity;
+- confirmed Root + Current;
+- валиден 18+ account;
+- `open_to_strangers=OFF`.
+
+Резултат:
+- може да участва в privacy-safe aggregate според одобрения aggregate contract;
+- R.E. може да търси стойност **за самия него**;
+- той може сам да изпрати outbound request, ако получателят е допустим;
+- но не трябва автоматично да бъде показван на стар user като actionable stranger.
+
+Следствие:
+**registration/confirmation не е съгласие за inbound discovery.**
+
+## Сценарий B — нов user разрешава inbound contact
+
+Ако по-късно user изрично разреши `open_to_strangers` и има силна обяснима причина, тогава R.E. може да преоцени засегнатите candidates и да създаде inbound Opportunity според всички останали gates.
+
+Това не е broadcast и не означава показване на всички.
+
+## Сценарий C — Guidance willing, но inbound OFF
+
+Одобреният Guidance contract не заобикаля `open_to_strangers`.
+
+Следователно човек може да е willing да дава информация/насока, но при inbound OFF не се използва като shortcut за stranger request.
+
+## Основна находка
+
+Network effect-ът е **permission-aware и по подразбиране асиметричен**, не автоматично reciprocal.
+
+Нов confirmed node усилва мрежата поне по три различни начина:
+
+1. **aggregate density** — може да увеличи privacy-safe community presence след приложимия snapshot;
+2. **personal value** — R.E. може да намира допустими Opportunities за новия user;
+3. **actionable inbound value за другите** — само когато новият user изрично е разрешил съответния inbound режим и всички gates са минати.
+
+## Корекция към по-ранна тестова формулировка
+
+Фразата „нов node → reciprocal re-evaluation“ не трябва да се чете като автоматично двустранно показване.
+
+По-точно:
+**нов confirmed context event → преоценка само на засегнатия scope → всяка посока минава собствените permission/visibility gates.**
+
+Това е съвместимо с:
+- `open_to_strangers=OFF` default;
+- Visibility Contract;
+- Guidance contract;
+- Attention Gate;
+- no-broadcast принципа.
+
+## TEST 014B извод
+
+**PASS с важна граница:** нов user може да усилва мрежата без да жертва privacy, но growth loop-ът не може да разчита на автоматична reciprocal discovery.
+
+Следващият тест трябва да провери кое реално може да създаде растеж при low-density:
+**aggregate density + outbound value + доброволно permission activation**, без да превръща permission prompt-а в натиск или registration trick.
+
