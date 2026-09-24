@@ -9082,3 +9082,116 @@ Growth за V1 остава следствие от реална полезно�
 Цел: да се провери целият текущ V1 motor след TEST 001–014 без добавяне на нови функции:
 **public preview → registration boundary → confirmed context → R.E. reason/gates → opportunity/no-result → one action → privacy/attention → network effect.**
 
+# 111. [TEST RESULT] R.E. TEST 015 — end-to-end synthesis на текущия V1 motor
+
+**Дата:** 24.09.2026  
+**Статус:** TEST RESULT — SYNTHESIS / НЕ Е НОВО ПРОДУКТОВО РЕШЕНИЕ  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB / SCREEN ПРОМЯНА
+
+## Цел
+
+Да се провери целият текущ V1 motor след TEST 001–014 без добавяне на нови функции:
+
+**public preview → registration boundary → confirmed context → R.E. reason/gates → opportunity/no-result → one action → privacy/attention → network effect**
+
+през четирите задължителни сценария.
+
+## Сценарий 1 — Лом → чужбина
+
+Пример: Root Лом, Current Мюнхен.
+
+Пътят е цял:
+- public preview използва privacy-safe aggregate;
+- Root + Current се пренасят чрез §85;
+- след identity/confirmation R.E. може да използва точния Root + Current;
+- конкретен stranger се допуска само при силна причина + permission;
+- `open_to_strangers=OFF` не пречи на aggregate или outbound value;
+- при липса на person route се използва no-result resolver, без filler.
+
+**Резултат: PASS за motor logic.**
+
+## Сценарий 2 — Ковачица → чужбина/голям град
+
+Пример: Root Ковачица, Current Мюнхен.
+
+Пътят остава валиден:
+- identity остава Ковачица;
+- R.E. може да използва exact locality → municipality според §70;
+- ако Root scope не дава стойност, се сменя типът причина, а не identity;
+- няма безкрайно geographic widening;
+- privacy/permission gates остават пред relevance.
+
+**Резултат: PASS за motor logic.**
+
+Това потвърждава TEST 001–004:
+**Identity Root ≠ search scope.**
+
+## Сценарий 3 — Варна → София/чужбина
+
+Пример: Root Варна, Current София.
+
+Вътрешният motor работи:
+- Root V1 е национален;
+- Current е отделен signal;
+- няма нужда от отделен R.E. за Варна;
+- same Root / Current / Need / Moment могат да се използват по същите правила.
+
+**Резултат: PASS за motor logic, но PUBLIC FRAMING остава OPEN.**
+
+Причината:
+потребител от Варна трябва още в публичния вход да разбере, че продуктът е и за него. Старият Lom-centric Screen 1 copy не е достатъчна национална истина и вече е маркиран за revalidation.
+
+Това е public/brand architecture проблем, не дефект в R.E.
+
+## Сценарий 4 — малко/low-density населено място → чужбина
+
+Public preview може коректно да бъде privacy-suppressed.
+
+След registration motor-ът има правилно поведение:
+- canonical Root се пази;
+- exact → municipality → reason switch;
+- не се измисля човек;
+- Next Best Question се задава само ако има реален шанс за стойност;
+- no-result е допустим;
+- новият confirmed user постепенно увеличава aggregate density.
+
+**Резултат: PASS за motor logic след identity, но FUNNEL MOTIVE остава слаб.**
+
+TEST 012 остава валиден:
+при почти нулева density generic registration gate може да няма достатъчно силна причина.
+
+Това НЕ отменя одобрения public boundary:
+**preview → registration**.
+
+Но показва, че точната причина/copy/action около `Виж какво има за теб` при suppressed/low-density state трябва да бъде повторно проверена преди финално национално Screen 1 решение.
+
+## Guest / trust boundary
+
+TEST 015 потвърждава, че V1 е по-чист с:
+- pre-registration: Root + Current + privacy-safe preview;
+- post-registration/identity: needs, responses, connection actions, routing и trusted human signals;
+- §104 Pending Need/Action = FUTURE / неактивен за V1;
+- §85 Root + Current Context Bridge = активен.
+
+Няма нужда anonymous R.E. preflight да бъде връщан.
+
+## Общ TEST 015 резултат
+
+**R.E. V1 MOTOR: PASS С ДВЕ ВЪНШНИ ОТВОРЕНИ ЗАВИСИМОСТИ.**
+
+Motor-ът е логически цял през четирите сценария.
+
+Остават два проблема извън ядрото:
+1. **PUBLIC/NATIONAL FRAMING:** как човек извън Лом разбира веднага, че продуктът е и за него;
+2. **LOW-DENSITY REGISTRATION MOTIVE:** как suppressed public result води честно към следваща стъпка, без generic registration bait.
+
+Тези две точки не изискват нов R.E. механизъм.
+
+## Извод за тестовата фаза
+
+След TEST 001–015 няма основание да се измисля още вътрешна R.E. сложност само заради тестовете.
+
+Следващата работа трябва да се върне към най-високата оставаща продуктова зависимост:
+
+**public architecture „Лом ↔ България“**, след което low-density registration motive се проверява в конкретния public framing.
+
