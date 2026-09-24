@@ -65,7 +65,8 @@ Master §101 пази активната хипотеза, която следв
 7. **TEST 014A е завършен** като test result: R.E. може да създава network effect след registration, но не е самостоятелен acquisition/cold-start engine.
 8. **OWNER APPROVED:** §104 pre-registration Pending Need/Action е FUTURE / неактивен за V1; Root + Current Context Bridge (§85) остава активен.
 9. **TEST 014B е завършен:** confirmed node ≠ автоматично actionable node. Network effect-ът е permission-aware и по подразбиране асиметричен; `open_to_strangers=OFF` не се заобикаля.
-10. **NEXT:** TEST 014C — low-density growth чрез aggregate density + outbound value + доброволно permission activation, без натиск/spam.
+10. **TEST 014C е завършен — PARTIAL PASS:** aggregate density + outbound value + contextual voluntary permission могат постепенно да усилват мрежата, но не bootstrap-ват почти нулева density. Permission не се иска за нуждите на системата.
+11. **NEXT:** TEST 014D — естествен външен growth loop след доказана стойност, без referral spam, anonymous actions или permission pressure.
 
 
 ## 3. Текущи важни решения
