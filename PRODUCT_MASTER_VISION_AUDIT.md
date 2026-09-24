@@ -9195,10 +9195,12 @@ Motor-ът е логически цял през четирите сценари
 
 **public architecture „Лом ↔ България“**, след което low-density registration motive се проверява в конкретния public framing.
 
-# 112. [TEST RESULT] Public architecture „Лом ↔ България“
+# 112. [OWNER APPROVED][PUBLIC ARCHITECTURE] Public architecture „Лом ↔ България“
 
-**Дата:** 24.09.2026  
-**Статус:** TEST RESULT / ПРЕДЛОЖЕНИЕ ЗА OWNER РЕШЕНИЕ — НЕ Е ОДОБРЕНА АРХИТЕКТУРА  
+**Дата на теста:** 24.09.2026  
+**Дата на Owner approval:** 25.09.2026  
+**Одобрено от:** Admin/Owner  
+**Статус:** ОДОБРЕН СТРАТЕГИЧЕСКИ ПРИНЦИП  
 **Implementation status:** НЯМА IMPLEMENTATION / НЯМА SCREEN 1 / BRAND / DB ПРОМЯНА
 
 ## Цел
@@ -9296,6 +9298,28 @@ Motor-ът е логически цял през четирите сценари
 **една стабилна продуктова идентичност + Лом като видим произход/пилот + национален Root обхват + динамичен local context според Root, без автоматично ребрандиране на целия продукт по град.**
 
 Това решение не избира ново национално име и не заключва финален copy.
+
+## OWNER DECISION — 25.09.2026
+
+Owner **ОДОБРИ** стратегическия принцип:
+
+**една стабилна продуктова идентичност + Лом като видим произход/пилот + национален Root обхват + динамичен local context според Root, без автоматично ребрандиране на целия продукт по град.**
+
+Заключено на това ниво:
+- Лом остава origin/pilot, но не е продуктовата граница;
+- national Root scope остава за canonical населени места в България;
+- local context се адаптира според Root;
+- целият продукт не се преименува автоматично на „Родени в [Root]“;
+- ново национално име и финален public copy **не са избрани** с това решение;
+- Screen 1 flow, privacy threshold, Context Bridge, map interaction, Root/Current order и registration boundary не се променят само по силата на това approval.
+
+## NEXT
+
+Следващата стратегическа тестова задача е:
+
+**low-density CTA / registration-motive test в одобрения public framing**, особено при privacy-suppressed `0–4`, така че следващата стъпка да е честна и полезна, без generic registration bait.
+
+До приключването на този тест няма нов Screen 1 implementation.
 
 # 113. [OWNER DIRECTION] Trust-first community → service end state
 
