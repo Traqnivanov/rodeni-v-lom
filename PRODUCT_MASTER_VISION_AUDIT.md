@@ -8642,3 +8642,74 @@ R.E. тестовете продължават от запазения checkpoin
 
 **анонимният получава одобрения public preview; реални човешки действия, routing, responses и trusted content изискват registration/identity.**
 
+# 106. [TEST RESULT] R.E. TEST 014A — естествен растеж при правилната guest граница
+
+**Дата:** 24.09.2026  
+**Статус:** ТЕСТОВ РЕЗУЛТАТ — НЕ Е ФИНАЛНО ПРОДУКТОВО РЕШЕНИЕ  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА SCREEN 1 / DB / SUPABASE ПРОМЯНА
+
+## Тествана граница
+
+Public flow остава:
+**карта → Current → Root → privacy-safe preview → registration → onboarding → „За теб“**.
+
+Нерегистриран user не създава trusted human content/action, не отговаря, не route-ва, не влияе на R.E. learning като идентифициран човек.
+
+## Резултат 1 — R.E. може да създава network effect след registration
+
+Когато нов user:
+- създаде потвърдена identity;
+- потвърди Root + Current;
+- влезе под приложимите privacy/permission gates;
+
+той става нов валиден node.
+
+Това може да създаде нови Opportunity не само за него, а и за вече съществуващи users, когато новият node е релевантен към техния контекст.
+
+Работен loop:
+**public discovery → privacy-safe preview → registration при реална причина → confirmed node → reciprocal re-evaluation → explainable Opportunity → реална стойност → по-силна мрежа**
+
+Това е съвместимо с TEST 001–013 и не изисква anonymous routing или broadcast.
+
+## Резултат 2 — R.E. не е самостоятелен acquisition engine
+
+TEST 012 остава валиден:
+- силният public aggregate дава среден registration мотив;
+- при липса на допустим човек мотивът е слаб;
+- при ниска плътност generic registration gate може да е FAIL.
+
+Следователно R.E. може да **усилва мрежата след влизане**, но не трябва да се очаква сам да реши първоначалното acquisition/cold-start.
+
+Public слой и външното discoverability/word-of-mouth могат да водят хора до preview-а, но не се въвежда евтин referral/spam механизъм само за растеж.
+
+## Резултат 3 — най-силният мотив „имам конкретна нужда“ остава валиден, но се измества trust границата
+
+TEST 012 правилно установи, че конкретната нужда е силен registration мотив.
+
+При Owner границата за нерегистрирани това се тълкува така:
+
+**човек може да дойде с реална нужда, но самата нужда не се записва/route-ва като trusted user action преди identity.**
+
+Следователно V1 не трябва да разчита на anonymous free-text need → R.E. preflight.
+
+Реалното въвеждане/активиране на нуждата трябва да е след registration/identity, освен ако Owner по-късно изрично не одобри по-тясно безопасно изключение.
+
+## Отворена зависимост — §104
+
+§104 Pending Action / Need Bridge е логично одобрено continuity решение за модел, в който need/action е започнат преди registration.
+
+Настоящата Owner граница прави този V1 сценарий ненужен или конфликтен за **user-written need/action**.
+
+Затова TEST 014A води до една Owner decision point:
+- Root + Current Context Bridge (§85) остава активен;
+- дали §104 pre-registration Pending Need/Action да бъде **паркиран като FUTURE/неактивен за V1**, без да се изтрива историческото решение.
+
+До Owner решение §104 остава ЗА ПОВТОРНА ПРОВЕРКА в тази част.
+
+## TEST 014A извод
+
+**PARTIAL PASS:** естественият network effect е реалистичен след registration, но не е достатъчен сам по себе си за acquisition/cold-start.
+
+Следващият growth тест не трябва да търси anonymous actions. Той трябва да тества:
+**как вече потвърден нов node създава стойност за себе си и за съществуващата мрежа, без spam, broadcast или filler.**
+
