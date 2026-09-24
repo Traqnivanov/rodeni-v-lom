@@ -9395,3 +9395,134 @@ Service flow започва само след ясно действие/нужд
 - national subcontractor routing;
 - data model.
 
+
+
+# 114. [TEST RESULT] R.E. TEST 016 — low-density CTA / registration motive
+
+**Дата:** 25.09.2026  
+**Статус:** TEST RESULT / ПРЕДЛОЖЕНИЕ ЗА OWNER РЕШЕНИЕ — НЕ Е ОДОБРЕН SCREEN 1 CONTRACT  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА SCREEN 1 / DB / SUPABASE ПРОМЯНА
+
+## Цел
+
+Да се провери как privacy-suppressed public state `0–4`, без допустим safe-broader aggregate, може да води към следваща стъпка честно — без да обещава човек, резултат или notification, които продуктът още не може да гарантира.
+
+Тестът стъпва върху:
+- одобрения public preview и Visibility Contract;
+- одобрения Context Bridge за Root + Current;
+- TEST 012: generic registration gate при почти нулева density е FAIL;
+- guest boundary: anonymous user не създава trusted need/action;
+- §112: stable product identity + national Root + dynamic local context.
+
+## Сценарий A — exact state е под прага, но има допустим broader result
+
+Ако exact Root + Current е privacy-suppressed, но едно предварително допустимо по-широко community ниво самостоятелно покрива прага, user все пак получава реална public стойност.
+
+В този случай текущата логика може да остане:
+**реален broader aggregate → „Виж какво има за теб“ → registration → Context Bridge → „За теб“**.
+
+Тук CTA не обещава конкретен човек и има реален public signal преди registration.
+
+**Резултат: PASS.**
+
+## Сценарий B — нито exact, нито допустим broader result покриват прага
+
+Public result остава:
+
+**„Все още няма достатъчно хора за публичен резултат за тази комбинация.“**
+
+Допустимото privacy пояснение остава:
+
+**„Това не означава непременно, че няма хора — малките групи не се показват публично.“**
+
+Тук user няма доказан current result, който да оправдае обещанието **„Виж какво има за теб“** като универсален registration CTA.
+
+### Вариант 1 — запазваме същия CTA „Виж какво има за теб“
+
+**FAIL за този state.**
+
+Причина:
+- може да звучи като обещание за персонален резултат веднага след registration;
+- TEST 012 вече показа, че при почти нулева density generic registration gate е слаб;
+- след registration R.E. може честно да няма допустима Opportunity;
+- trust-first принципът не допуска account bait.
+
+### Вариант 2 — „Уведоми ме, когато има нещо“
+
+**PARTIAL / НЕ Е ГОТОВО ЗА V1 CONTRACT.**
+
+Това е по-честен мотив, защото user изрично иска persistence във времето.
+
+Но exact notification delivery/permission contract още не е заключен. Следователно Screen 1 не трябва да обещава notification, което текущият V1 contract не гарантира.
+
+### Вариант 3 — explicit persistence, без обещание за резултат
+
+**НАЙ-СИЛНА ТЕКУЩА ПОСОКА.**
+
+При privacy-suppressed state без broader result registration не се представя като unlock на скрити хора или като обещание за незабавен резултат.
+
+Работният модел е:
+
+**privacy-suppressed result → explicit „запази избраното“ intent → registration → email confirmation → confirm/edit Root + Current → „За теб“ → реална Opportunity или честен no-result resolver**
+
+Работно CTA значение, НЕ финален copy:
+
+**„Запази избраното“**
+
+До него се обяснява човешки:
+**„Ще запазим откъде си и къде си сега. Няма да ти обещаваме човек или резултат, ако няма реална причина.“**
+
+Има видим public continuation без account, например:
+**„Разгледай картата“**
+
+Така registration става изрично искане за persistence на вече дадения контекст, а не задължителна цена за несъществуващ резултат.
+
+## Защо този вариант е по-силен
+
+- не разкрива дали групата е 0, 1, 2, 3 или 4;
+- не обещава конкретен човек;
+- не обещава notification преди notification contract;
+- не кара anonymous user да пише need/action;
+- използва вече одобрения Root + Current Context Bridge;
+- не изисква нов R.E. механизъм;
+- дава на user честен начин да продължи публично без registration;
+- запазва account като логичен избор, когато user действително иска контекстът му да бъде persistent.
+
+## Ограничение
+
+Това **не решава самия cold-start** и не създава изкуствена стойност при липса на density.
+
+Целта е по-тясна:
+**да не губим доверие точно когато продуктът още няма достатъчно публична плътност.**
+
+## Отчет за уникалност
+
+Самият CTA не е уникален.
+
+Естествено различимият механизъм е:
+
+**личен Root + Current → privacy-suppressed public state → честен избор за persistence → private Context Bridge → R.E. показва стойност само когато има реална причина.**
+
+Уникалността е в continuity + privacy + explainable restraint, не в специален бутон.
+
+## Предложение за Owner решение
+
+Да се одобри следният принцип само за **privacy-suppressed state без допустим broader result**:
+
+1. универсалното **„Виж какво има за теб“** да НЕ бъде задължителният CTA в този state;
+2. registration да се предлага като **explicit persistence на Root + Current**, без обещание за човек/резултат;
+3. user да има ясна public алтернатива без registration;
+4. exact CTA/helper copy да се заключи по-късно при Screen 1 dependency revalidation;
+5. notification promise да не влиза, докато notification contract не е отделно одобрен.
+
+За states с реален exact или safe-broader public aggregate текущият **„Виж какво има за теб“** остава непроменен.
+
+## NEXT
+
+**OWNER DECISION PENDING** по този low-density branching principle.
+
+До Owner решение:
+- няма Screen 1 implementation;
+- няма промяна на production;
+- няма Supabase/DB промяна;
+- няма notification promise.
