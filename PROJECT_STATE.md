@@ -55,18 +55,16 @@ Owner потвърди следната стратегическа посока:
 - **Current Location = отделен глобален сигнал** (държава + населено място).
 - **Context Bridge V1 = Root + Current Location (§85).** §104 Pending Action/Need Bridge е запазен като FUTURE / неактивен за V1 след Owner approval; pre-registration user-written need/action не е част от V1.
 - Продуктовата логика не е Lom-only.
-- **Публичната архитектура „Лом ↔ България“ е OPEN.** Не е решено дали публичната марка ще остане „Родени в Лом“, ще има национална марка с местни общности, местни проявления върху обща платформа или друг модел.
+- **Публичната архитектура „Лом ↔ България“ е ОДОБРЕНА като стратегически принцип на 25.09.2026:** една стабилна продуктова идентичност + Лом като видим origin/pilot + national Root scope + dynamic local context според Root, без автоматично city rebrand. Това approval не избира ново национално име и не заключва финален public copy.
 - Старият Lom-centric initial Screen 1 copy в Master §92 **НЕ трябва да се използва като окончателна национална branding истина**. Той изисква повторна проверка спрямо Master §§67, 82 и бъдещото архитектурно решение.
-- Текущият mobile Screen 1 prototype е работна лаборатория. Не се доизпипва по стара продуктова рамка, докато архитектурата „Лом ↔ България“ не бъде решена.
+- Текущият mobile Screen 1 prototype е работна лаборатория. Public architecture принципът вече е одобрен, но prototype implementation остава замразен, докато не приключи следващият low-density CTA / registration-motive test и не се направи dependency revalidation.
 - Одитът на клиентската пътека показа риск: при чистене на UI могат да се махнат не само излишни елементи, а и логическите мостове **„защо ме питаш → каква полза → какво ще стане след това“**. След архитектурното решение Screen 1 се преглежда end-to-end по тази логика, а не екран по екран изолирано.
 
-### Активна идея за тест — НЕ Е РЕШЕНИЕ
+### Стратегическа тестова линия — текущ checkpoint
 
-Master §101 пази активната хипотеза, която следва да бъде проверена преди архитектурно решение:
+Master §§101–112 пазят тестовата линия, която вече е преминала през R.E. TEST 001–015 и public architecture test. Вътрешният R.E. motor е synthesis PASS, а public architecture принципът от §112 е Owner-approved на 25.09.2026.
 
-**Лом като реален пилот → динамична местна идентичност според Root → R.E. като единен мотор → human routing за информация/насока → първа стойност → естествен мотив за регистрация.**
-
-Идеята комбинира вече записани механизми, но самата синтеза не е одобрена и не разрешава implementation.
+Следващият незатворен тест е **low-density CTA / registration motive в одобрения public framing**. Това не разрешава Screen 1 implementation преди резултата и последващата dependency revalidation.
 
 ### Текущ NEXT
 
@@ -85,7 +83,8 @@ Master §101 пази активната хипотеза, която следв
 13. **TEST 014 growth family е затворен като checkpoint:** R.E. усилва мрежата след registration, но не се превръща в acquisition/referral engine.
 14. **TEST 015 е завършен — R.E. V1 MOTOR PASS:** четирите задължителни сценария са логически покрити без нов механизъм. Остават две външни зависимости: national public framing и честният registration motive при low density.
 15. **Public architecture test е завършен:** Lom-only framing FAIL; dynamic `Родени в [Root]` rebrand е рисков; най-силната посока е stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично rebrand.
-16. **OWNER DECISION PENDING:** одобрение/отказ на този стратегически принцип. След решение → low-density CTA/motive test в конкретния framing.
+16. **OWNER APPROVED — 25.09.2026:** stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично city rebrand. Ново национално име и финален public copy остават нерешени.
+17. **CURRENT NEXT:** low-density CTA / registration-motive test в одобрения public framing, с фокус върху privacy-suppressed `0–4` и честна причина за следващото действие без generic registration bait. Без Screen 1 implementation преди резултата.
 
 
 ## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
