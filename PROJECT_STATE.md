@@ -70,7 +70,8 @@ Master §101 пази активната хипотеза, която следв
 12. **TEST 014E е завършен — FAIL за V1:** purpose-bound invite не решава надеждно identity binding преди registration и добавя privacy/abuse/token сложност. Кандидатът не влиза във V1.
 13. **TEST 014 growth family е затворен като checkpoint:** R.E. усилва мрежата след registration, но не се превръща в acquisition/referral engine.
 14. **TEST 015 е завършен — R.E. V1 MOTOR PASS:** четирите задължителни сценария са логически покрити без нов механизъм. Остават две външни зависимости: national public framing и честният registration motive при low density.
-15. **NEXT:** връщаме се към open public architecture „Лом ↔ България“; след нея проверяваме low-density CTA/motive в конкретния public framing. Не добавяме нова R.E. сложност без конкретна открита дупка.
+15. **Public architecture test е завършен:** Lom-only framing FAIL; dynamic `Родени в [Root]` rebrand е рисков; най-силната посока е stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично rebrand.
+16. **OWNER DECISION PENDING:** одобрение/отказ на този стратегически принцип. След решение → low-density CTA/motive test в конкретния framing.
 
 
 ## 3. Текущи важни решения
