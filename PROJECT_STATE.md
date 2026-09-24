@@ -64,7 +64,8 @@ Master §101 пази активната хипотеза, която следв
 6. §104 Pending Action/Need Bridge остава **ЗА ПОВТОРНА ПРОВЕРКА само за pre-registration user-written need/action**.
 7. **TEST 014A е завършен** като test result: R.E. може да създава network effect след registration, но не е самостоятелен acquisition/cold-start engine.
 8. **OWNER APPROVED:** §104 pre-registration Pending Need/Action е FUTURE / неактивен за V1; Root + Current Context Bridge (§85) остава активен.
-9. **NEXT:** TEST 014 продължава с confirmed-node network loop, без anonymous actions.
+9. **TEST 014B е завършен:** confirmed node ≠ автоматично actionable node. Network effect-ът е permission-aware и по подразбиране асиметричен; `open_to_strangers=OFF` не се заобикаля.
+10. **NEXT:** TEST 014C — low-density growth чрез aggregate density + outbound value + доброволно permission activation, без натиск/spam.
 
 
 ## 3. Текущи важни решения
