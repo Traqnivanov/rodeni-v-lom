@@ -66,7 +66,8 @@ Master §101 пази активната хипотеза, която следв
 8. **OWNER APPROVED:** §104 pre-registration Pending Need/Action е FUTURE / неактивен за V1; Root + Current Context Bridge (§85) остава активен.
 9. **TEST 014B е завършен:** confirmed node ≠ автоматично actionable node. Network effect-ът е permission-aware и по подразбиране асиметричен; `open_to_strangers=OFF` не се заобикаля.
 10. **TEST 014C е завършен — PARTIAL PASS:** aggregate density + outbound value + contextual voluntary permission могат постепенно да усилват мрежата, но не bootstrap-ват почти нулева density. Permission не се иска за нуждите на системата.
-11. **NEXT:** TEST 014D — естествен външен growth loop след доказана стойност, без referral spam, anonymous actions или permission pressure.
+11. **TEST 014D е завършен:** generic referral FAIL; privacy-safe public share е безопасен, но слаб; purpose-bound invite към лично познат външен човек е най-силен кандидат, но НЕ е одобрена функция.
+12. **NEXT:** TEST 014E — строг stress test на purpose-bound invite срещу spam, stalking, token leakage/forwarding, fake needs, §71 и техническа цена.
 
 
 ## 3. Текущи важни решения
