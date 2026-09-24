@@ -63,8 +63,8 @@ Master §101 пази активната хипотеза, която следв
 5. Root + Current + privacy-safe preview остават допустими преди registration като временен/private preview context; не са trusted profile/matching/routing данни преди confirmation.
 6. §104 Pending Action/Need Bridge остава **ЗА ПОВТОРНА ПРОВЕРКА само за pre-registration user-written need/action**.
 7. **TEST 014A е завършен** като test result: R.E. може да създава network effect след registration, но не е самостоятелен acquisition/cold-start engine.
-8. **Owner decision pending:** дали §104 pre-registration Pending Need/Action да бъде паркиран като FUTURE/неактивен за V1; Root + Current Context Bridge (§85) остава.
-9. След това TEST 014 продължава с confirmed-node network loop, без anonymous actions.
+8. **OWNER APPROVED:** §104 pre-registration Pending Need/Action е FUTURE / неактивен за V1; Root + Current Context Bridge (§85) остава активен.
+9. **NEXT:** TEST 014 продължава с confirmed-node network loop, без anonymous actions.
 
 
 ## 3. Текущи важни решения
