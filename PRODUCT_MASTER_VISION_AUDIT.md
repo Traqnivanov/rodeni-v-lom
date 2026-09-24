@@ -8976,3 +8976,109 @@ TEST 014D:
 
 Ако кандидатът не издържи тези проверки, отпада; не се пази само защото помага на growth.
 
+# 110. [TEST RESULT] R.E. TEST 014E — stress test на purpose-bound invite
+
+**Дата:** 24.09.2026  
+**Статус:** TEST RESULT — FAIL КАТО V1 GROWTH КАНДИДАТ  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB / SCREEN ПРОМЯНА
+
+## Проверена идея
+
+Регистриран A има реална причина да доведе лично познат външен B, който още няма account.
+
+Идеята беше B да получи purpose-bound invite, да се регистрира и чак след identity да продължи допустимото действие.
+
+## Критичен проблем — identity binding
+
+Преди B да има account системата няма надежден начин да докаже, че човекът, отворил invite token-а, е точно B.
+
+Има само два основни начина:
+
+1. A предварително да даде email/телефон/друг identifier на B;
+2. token-ът да е bearer secret и който го притежава, да може да го claim-не.
+
+За V1 и двата варианта са проблемни:
+- вариант 1 събира third-party PII от човек, който не е дал consent;
+- вариант 2 не доказва самоличност/relationship и е уязвим при forwarding.
+
+## Token forwarding / leakage
+
+Ако token бъде препратен:
+- друг човек може да го отвори/claim-не;
+- ако landing-ът разкрива sender/need, има privacy leak;
+- ако landing-ът не разкрива нищо, функционалната му стойност преди registration става близка до generic share link.
+
+Single-use/expiry намаляват риска, но не решават identity binding.
+
+## §71 / permission conflict
+
+Token не може сам да създаде connection request или accepted relationship.
+
+§71 изисква:
+- и двете страни да са валидни 18+ accounts;
+- block/permission/cooldown/rate-limit/reason gates.
+
+Ако след registration invite-ът автоматично заобикаля тези gates → FAIL.
+
+Ако не ги заобикаля и след registration всичко минава по нормалния flow → purpose-bound token-ът губи голяма част от допълнителната си стойност спрямо по-лек външен share.
+
+## Spam / fake need / repeat invite
+
+Дори при server-side rate limits:
+- fake need може да се използва като претекст за invite;
+- repeated invite generation създава harassment vector;
+- външното препращане не може да бъде напълно контролирано от R.E.;
+- нужен е отделен token lifecycle: create, expire, revoke, claim, replay protection, audit, abuse budget.
+
+Това е значима техническа и safety цена за тесен V1 benefit.
+
+## Реална полза
+
+Полза има:
+**при low density A може лично да знае точно човека, който би помогнал.**
+
+Но за V1 тази полза не е достатъчна да оправдае identity/privacy/token сложността.
+
+## По-леката посока
+
+За V1:
+- публичното/безопасно съдържание може да се споделя по нормален външен канал;
+- сайтът не кодира private need или „предназначен recipient“ преди registration;
+- след identity се използват нормалните R.E./connection permission правила.
+
+Отделен бъдещ механизъм **„свържи се с човек, когото вече познаваш“** може да се изследва някога след registration, но не е част от този growth test и не е одобрен.
+
+## TEST 014E извод
+
+**FAIL за V1 purpose-bound invite.**
+
+Причината не е липса на growth потенциал, а:
+**недостатъчно надеждна identity binding преди registration + privacy/abuse риск + висока цена спрямо по-леката стойност.**
+
+Тъй като кандидатът никога не е бил одобрена функция, този FAIL не отменя продуктово решение.
+
+## TEST 014 — общ growth checkpoint
+
+Натрупаният резултат от 014A–014E е:
+
+- R.E. може да усилва мрежата след registration;
+- network effect-ът е permission-aware;
+- aggregate density носи бавен public network effect;
+- outbound value е по-чист от permission pressure;
+- generic referral не е core growth механизъм;
+- purpose-bound invite не издържа за V1;
+- **R.E. не трябва да бъде превръщан в acquisition/referral engine.**
+
+Growth за V1 остава следствие от реална полезност + безопасно public discoverability + confirmed users, не отделен viral mechanic.
+
+## NEXT
+
+**R.E. TEST 015 — end-to-end synthesis pass** върху четирите задължителни сценария:
+1. Лом → чужбина;
+2. Ковачица → чужбина/голям град;
+3. Варна → София/чужбина;
+4. малко/low-density населено място → чужбина.
+
+Цел: да се провери целият текущ V1 motor след TEST 001–014 без добавяне на нови функции:
+**public preview → registration boundary → confirmed context → R.E. reason/gates → opportunity/no-result → one action → privacy/attention → network effect.**
+
