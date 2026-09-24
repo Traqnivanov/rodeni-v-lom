@@ -7,6 +7,55 @@
 
 ---
 
+## CURRENT OVERRIDE — 25.09.2026 — ЧЕТИ ПРЕДИ СТАРИЯ HANDOFF
+
+Този файл съдържа исторически WORK handoff от 20.09.2026. За текущата работа **не използвай стария NEXT самостоятелно**.
+
+Преди всичко прочети:
+1. `START_HERE.md` — от самото начало, включително **§0 PRODUCT NORTH STAR + OWNER STRATEGIC END STATE**;
+2. `PROJECT_STATE.md`;
+3. `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`;
+4. само релевантните последни секции в `PRODUCT_MASTER_VISION_AUDIT.md`.
+
+### Текуща стратегическа посока
+
+- първо се изгражда реална community полезност и доверие;
+- `Иванов Ремонти` не влиза първоначално като реклама;
+- future Services трябва да се появят тихо и само при реална нужда;
+- Лом е първата реална общност/pilot, но Root моделът е национален за България;
+- R.E. е единният motor;
+- точният **Service Trust Mechanism е OPEN** и не се имплементира без отделен audit → proposal → Owner approval.
+
+### Prototype / Screen 1 continuity
+
+Не започвай Screen 1 отначало и не пипай production/Supabase.
+
+Съществуващите review линии са:
+- `review/work-screen1-approved-direction` — WORK review основа;
+- `review/ordinary-screen1-frozen-for-work` — замразен ordinary candidate за независим WORK review;
+- `review/ordinary-screen1-c2-mobile` — отделна ordinary mobile C2 линия.
+
+Текущият Screen 1 prototype е **работна лаборатория / review artifact**, не production truth.
+
+Ключово:
+- mobile-first;
+- visual readability и hierarchy са задължителни;
+- technical pass ≠ mobile visual pass ≠ Owner approval;
+- старият Lom-centric initial copy не е автоматично валиден след националния Root модел;
+- public flow остава: **карта → Current → Root → privacy-safe preview → registration → onboarding → „За теб“**;
+- без нов Screen 1 implementation, докато по-високата продуктова посока не е изчистена и Owner не върне работата към прототипа.
+
+### WORK ролята остава
+
+WORK CONTROLLER е втори след Owner и:
+- не заменя Owner;
+- контролира ordinary работата;
+- пази frozen checkpoints;
+- не приема недоказано „готово“;
+- при конфликт между стар prototype и по-нова стратегическа истина спира и докладва, вместо да пази prototype-а на всяка цена.
+
+---
+
 # 1. ТВОЯТА РОЛЯ
 
 Ти си **WORK CONTROLLER** за проекта „Родени в Лом“.
