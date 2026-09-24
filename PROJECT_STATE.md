@@ -58,11 +58,11 @@ Master §101 пази активната хипотеза, която следв
 
 1. **Без нов Screen 1 implementation.**
 2. R.E. TEST 001–013 се запазват; резултатите им не се започват отначало.
-3. **TEST 014 growth е PAUSED** там, където предполага действия/отговори/links от нерегистрирани users.
-4. Owner direction: нерегистриран user не създава trusted human actions/content и не участва в routing/learning като идентифициран човек.
-5. **Следващият exact step е ограничен одит на границата на Screen 1:** изцяло преди registration, частично преди registration или registration по-рано.
-6. §104 Pending Action/Need Bridge е **ЗА ПОВТОРНА ПРОВЕРКА** в частта за pre-registration user-written need/action; Root + Current Context Bridge от §85 остава отделно правило.
-7. След решението за Screen 1/public boundary се връщаме към R.E. тестовете от запазения checkpoint, без рестарт и без загуба на резултатите.
+3. Повторната проверка потвърди вече одобрения public boundary: **карта → Current → Root → privacy-safe preview → registration → onboarding → „За теб“**. Не го отваряме наново без нов конфликт на по-високо ниво.
+4. Нерегистриран user не създава trusted human actions/content: няма responses, connection/contact действия, user-generated links към други users или влияние върху R.E. learning/routing като идентифициран човек.
+5. Root + Current + privacy-safe preview остават допустими преди registration като временен/private preview context; не са trusted profile/matching/routing данни преди confirmation.
+6. §104 Pending Action/Need Bridge остава **ЗА ПОВТОРНА ПРОВЕРКА само за pre-registration user-written need/action**.
+7. **TEST 014 се възобновява** от запазения checkpoint при тази граница; не се рестартира и не се губят предишните тестови находки.
 
 
 ## 3. Текущи важни решения
