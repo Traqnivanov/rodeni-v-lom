@@ -84,8 +84,8 @@ Master §§101–112 пазят тестовата линия, която веч
 14. **TEST 015 е завършен — R.E. V1 MOTOR PASS:** четирите задължителни сценария са логически покрити без нов механизъм. Остават две външни зависимости: national public framing и честният registration motive при low density.
 15. **Public architecture test е завършен:** Lom-only framing FAIL; dynamic `Родени в [Root]` rebrand е рисков; най-силната посока е stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично rebrand.
 16. **OWNER APPROVED — 25.09.2026:** stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично city rebrand. Ново национално име и финален public copy остават нерешени.
-17. **TEST 016 е КОРИГИРАН след contract check:** първият branching proposal е невалиден и НЕ е Owner-approved. Одобреният flow остава и при `0–4`: privacy-safe preview → `Виж какво има за теб` → registration → onboarding → `За теб`.
-18. **CURRENT NEXT:** TEST 016 продължава само вътре в този одобрен flow: dependency check на Context Bridge + post-registration no-result + първото `За теб` + notification status + guest boundary + national framing → едно конкретно предложение как честно да се обясни registration motive при low density. Без нов route и без Screen 1 implementation.
+17. **TEST 016 е КОРИГИРАН след contract check:** първият branching proposal е невалиден и НЕ е Owner-approved. Одобрената registration boundary остава и при `0–4`: privacy-safe preview → registration → onboarding → `За теб`. §112 обаче изрично оставя точния low-density CTA/copy за повторна проверка.
+18. **CURRENT NEXT:** TEST 016 продължава вътре в тази boundary: dependency check на Context Bridge + post-registration no-result + първото `За теб` + notification status + guest boundary + national framing → едно конкретно предложение за най-честния и полезен low-density CTA/motive. Без bypass на registration и без Screen 1 implementation.
 
 
 ## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
