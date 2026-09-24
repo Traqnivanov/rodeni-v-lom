@@ -8555,4 +8555,86 @@ R.E. TEST 013 показа, че най-силният registration сценар
 - конкретният Screen 1 registration trigger;
 - brand architecture.
 
+# 105. [OWNER DIRECTION][TEST PATH CORRECTION] Нерегистрираната граница и запазване на R.E. тестовете
+
+**Дата:** 24.09.2026  
+**Статус:** OWNER DIRECTION + КОРЕКЦИЯ НА ТЕСТОВАТА ПОСОКА  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА SCREEN 1 / DB / SUPABASE ПРОМЯНА
+
+## Защо се записва
+
+По време на R.E. TEST 014 анализът започна да допуска разширения за нерегистрирани users (free-text need, anonymous preflight, външен anonymous response), без първо да провери достатъчно строго вече одобрения public/registration contract.
+
+Това е процесно отклонение. Не се приема като нова продуктова посока.
+
+## Какво НЕ се губи
+
+R.E. TEST 001–011 в §102 остават валидни като **тестови находки**, не финални решения.
+
+TEST 012 в §103 остава валиден тест на registration motive.
+
+TEST 013 остава валиден за post-registration continuity и първите минути след registration.
+
+Одобрените R.E. находки/посоки за:
+- Identity Root ≠ search scope;
+- explainable reason;
+- Need/Attention/Safety gates;
+- small-wave routing;
+- anti-spam;
+- cold-start;
+- Next Best Question;
+- route quality вместо rating на човека;
+не се отменят от тази корекция.
+
+## Къде се отклони тестът
+
+TEST 014 growth анализът е **ПАУЗИРАН** в частта, която предполага:
+- нерегистриран user да пише free-text need/action;
+- нерегистриран user да отговаря на друг user;
+- нерегистриран user да подава user-generated links/content;
+- anonymous input да влияе на R.E. learning/routing;
+- anonymous participant да се третира като достоверна човешка страна.
+
+Тези варианти не са одобрени и не се използват като основа за следващи решения.
+
+## OWNER DIRECTION — нерегистрирани users
+
+Текущата Owner граница е:
+
+**Нерегистриран user няма идентичност, върху която продуктът може да изгради достоверно човешко действие.**
+
+Следователно до отделно бъдещо Owner решение нерегистриран user:
+- НЕ пише user-generated нужди/действия, които се приемат като реални;
+- НЕ отговаря на други users;
+- НЕ изпраща connection/contact действия;
+- НЕ подава user-generated links/content към други users;
+- НЕ създава trusted/persistent human signal;
+- НЕ влияе на R.E. learning/routing като идентифициран човек.
+
+Това не отменя автоматично вече одобрения public Screen 1 preview. Отделно трябва да се реши **коя част от Screen 1 изобщо трябва да остане преди registration**.
+
+## Важно за §104 Pending Action / Need Bridge
+
+§104 остава записан като одобрено решение от предходния тест, но **частта му за pre-registration user-written need/action е ЗА ПОВТОРНА ПРОВЕРКА** спрямо настоящата Owner граница.
+
+Не се имплементира Pending Need input преди registration на база §104, докато тази зависимост не бъде разрешена изрично.
+
+Root + Current Context Bridge от §85 остава отделно вече одобрено правило и не се отменя автоматично.
+
+## Точният следващ въпрос
+
+Преди нови R.E. growth тестове се прави ограничен одит:
+
+**Screen 1 трябва ли да бъде изцяло преди registration, частично преди registration или registration трябва да дойде по-рано?**
+
+Проверява се само:
+1. каква реална стойност получава нерегистрираният;
+2. каква полза има сайтът от тази публична стъпка;
+3. какво реално използва R.E. и каква е цената;
+4. какво е достоверно без identity;
+5. privacy/safety;
+6. каква е естествената кука към registration;
+7. дали по-леко решение дава същата стойност.
+
+До този одит няма ново разширяване на правата/действията на нерегистрирани users.
 
