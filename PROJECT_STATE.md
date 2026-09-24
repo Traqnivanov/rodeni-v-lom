@@ -39,7 +39,7 @@
 - **Лом = първа реална общност + пилот + отправна точка.**
 - **Root V1 = всяко canonical населено място в България.**
 - **Current Location = отделен глобален сигнал** (държава + населено място).
-- **Context Bridge вече включва и ограничен Pending Action/Need Bridge**, когато започната нужда/действие е причината за registration. Pending нуждата е частна, непотвърдена и не участва в routing/matching преди user confirmation.
+- **Context Bridge V1 = Root + Current Location (§85).** §104 Pending Action/Need Bridge е запазен като FUTURE / неактивен за V1 след Owner approval; pre-registration user-written need/action не е част от V1.
 - Продуктовата логика не е Lom-only.
 - **Публичната архитектура „Лом ↔ България“ е OPEN.** Не е решено дали публичната марка ще остане „Родени в Лом“, ще има национална марка с местни общности, местни проявления върху обща платформа или друг модел.
 - Старият Lom-centric initial Screen 1 copy в Master §92 **НЕ трябва да се използва като окончателна национална branding истина**. Той изисква повторна проверка спрямо Master §§67, 82 и бъдещото архитектурно решение.
@@ -69,7 +69,8 @@ Master §101 пази активната хипотеза, която следв
 11. **TEST 014D е завършен:** generic referral FAIL; privacy-safe public share е безопасен, но слаб; purpose-bound invite към лично познат външен човек е най-силен кандидат, но НЕ е одобрена функция.
 12. **TEST 014E е завършен — FAIL за V1:** purpose-bound invite не решава надеждно identity binding преди registration и добавя privacy/abuse/token сложност. Кандидатът не влиза във V1.
 13. **TEST 014 growth family е затворен като checkpoint:** R.E. усилва мрежата след registration, но не се превръща в acquisition/referral engine.
-14. **NEXT:** TEST 015 — end-to-end synthesis pass на текущия R.E. motor през четирите задължителни сценария, без нови функции.
+14. **TEST 015 е завършен — R.E. V1 MOTOR PASS:** четирите задължителни сценария са логически покрити без нов механизъм. Остават две външни зависимости: national public framing и честният registration motive при low density.
+15. **NEXT:** връщаме се към open public architecture „Лом ↔ България“; след нея проверяваме low-density CTA/motive в конкретния public framing. Не добавяме нова R.E. сложност без конкретна открита дупка.
 
 
 ## 3. Текущи важни решения
