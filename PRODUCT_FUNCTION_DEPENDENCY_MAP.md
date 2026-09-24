@@ -132,7 +132,7 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 | Prototype Release Gate | Hierarchy card → hard mobile floors → viewport/state matrices → three-second/readability evidence → independent controller pass | Master §99; technical pass ≠ mobile visual pass ≠ Owner approved; реален телефон не може да попадне в desktop layout само заради reported width |
 | Registration | Email + password, минимум 12 знака, 18+, Terms + Privacy, email confirmation | Context Bridge, auth errors, existing account, session state |
 | V1 age/safety | Registration, personalized matching, contact и chat са само за 18+ | backend enforcement; legacy `age >= 14` не е валидният launch contract |
-| Контекстов мост | Root + Current Location преминават като private unconfirmed pending context | browser session, email confirmation, validation, cleanup, fallback |
+| Контекстов мост | Root + Current Location, а когато именно започната нужда/действие е причината за registration — и минимален private unconfirmed Pending Action/Need context; нищо pending не участва в aggregate/matching/routing преди user confirmation | browser session, registration, email confirmation, validation, cleanup, fallback, active need/action lifecycle, Need/Safety/Attention/Visibility gates |
 | Minimum onboarding | Име/прякор → Откъде си? → Къде си сега? | ако Root/Current вече са въведени, те се потвърждават/редактират, не се искат от нулата |
 | Explain-while-asking | Всеки въпрос казва защо се задава, каква полза отключва и какво следва | human question, benefit hint, input, forward cue, конкретен CTA |
 | Root | Точно населено място → община → силна друга причина; областта е слаб резервен signal | canonical geography, Context Engine, privacy |
