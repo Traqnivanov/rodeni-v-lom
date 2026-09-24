@@ -30,9 +30,13 @@
 
 „Родени в Лом“ не е каталог, feed, Facebook clone, dating matching или публична директория.
 
-Основният механизъм е:
+Основният механизъм се изпълнява от **R.E. — единния вътрешен мотор на продукта**.
 
-**правилният човек → по конкретна човешка причина → в правилния момент**
+R.E. обединява Context Engine, Root Graph, Opportunity logic/model и privacy/permission/safety gates. Не се създава паралелен engine за отделен град или общност.
+
+Целевият резултат е:
+
+**правилният човек / информация / помощ / действие → по конкретна човешка причина → в правилния момент**
 
 Всеки механизъм трябва да отговори:
 
@@ -106,6 +110,7 @@
 
 | Функция / механизъм | Одобрено поведение | Задължително се проверява заедно с |
 |---|---|---|
+| **R.E. — Rodeni Engine** | Единен вътрешен мотор; обединява Context Engine + Root Graph + Opportunity logic/model + privacy/permission/safety gates; не се дублира по градове | всички product flows; национален Root; Current Location; Context Bridge; visibility; opportunities; бъдещи локални общности |
 | End-to-end contract | `event → gate → reason → opportunity/queue → one clear action → result → next state → audit/privacy` | всеки user и Admin flow; explainability; failure/recovery |
 | Context Engine | Комбинира Root, Current Location, временен контекст, активна нужда, accepted хора, permissions и „защо сега“ | Gate преди relevance; без opaque score и без filler |
 | Opportunity | Кратка explainable стойност с една ясна причина и действие | current state, expiry/cooldown, permissions, next state |
@@ -118,7 +123,7 @@
 | Aggregate freshness | Root не изтича; Current Location участва до 12 месеца от последното user потвърждение | Travel не променя Current Location; expired current location се връща след reconfirmation и следващ snapshot |
 | Public CTA | „Виж какво има за теб“ | не обещава „Виж кои са“; води към registration → onboarding → „За теб“ |
 | Screen 1 reuse boundary | Запазва world map entry, minimal header и map interaction; премахва public people directory, ticker, exact counts/zero, people tabs и direct hook → auth | Master §91; няма public identities; само privacy-safe aggregate → Context Bridge |
-| Screen 1 initial public state | `Родени в Лом` → ясно map обяснение → privacy-safe world map → „А ти къде си на картата?“ → „Показваме общности, не лични профили.“ | Master §92; anonymous first viewport; secondary `Вход`/`Поверителност`; no forced uniqueness |
+| Screen 1 initial public state | **ЗА ПОВТОРНА ПРОВЕРКА на brand/national framing**; privacy-safe world map + ясна кука остават посока, но Lom-centric copy от §92 не е автоматично валидна национална формулировка | Master §§67, 82, 92, 100; публичната архитектура Лом ↔ България е OPEN; не пипай privacy/aggregate contracts като страничен ефект |
 | Screen 1 Current Location step | Hook → same-screen mobile bottom sheet/desktop side panel → canonical `Държава` → `Населено място` → country focus → „Продължи към „Откъде си?““ | Master §94; private browser session; no GPS/IP/URL/analytics/public write/count; controlled lookup fallback |
 | Screen 1 Root step | Current summary → „Откъде си?“ → national canonical Root search → `Сега`/`Откъде си` markers → „Виж какво показва картата“ | Master §95; Lom priority, not hard limit; no route line; unverified Root gives no exact-locality result and is not trusted context |
 | Screen 1 privacy-safe preview | Context summary → един допустим exact/broader/suppressed aggregate result → „Виж какво има за теб“ | Master §96; eligibility → stable snapshot → threshold 5 → bands; 0–4 общо state; едно meaningful safe broadening ниво; OFF остава aggregate-only |
