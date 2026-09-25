@@ -9395,10 +9395,12 @@ Service flow започва само след ясно действие/нужд
 - national subcontractor routing;
 - data model.
 
-# 114. [TEST CORRECTION] R.E. TEST 016 — low-density registration motive within the approved flow
+# 114. [OWNER APPROVED][R.E. TEST 016] Low-density registration motive within the approved flow
 
-**Дата:** 25.09.2026  
-**Статус:** КОРИГИРАН ТЕСТ / НЯМА НОВО ПРОДУКТОВО РЕШЕНИЕ  
+**Дата на теста:** 25.09.2026  
+**Дата на Owner approval:** 25.09.2026  
+**Одобрено от:** Admin/Owner  
+**Статус:** ОДОБРЕНО ПРОДУКТОВО РЕШЕНИЕ  
 **Implementation status:** НЯМА IMPLEMENTATION / НЯМА SCREEN 1 / DB / SUPABASE ПРОМЯНА
 
 ## Защо е коригиран
@@ -9449,21 +9451,38 @@ TEST 016 продължава **вътре в одобрената registration 
 Тества се:
 **кой CTA + човешко обяснение правят регистрацията честна, полезна и разбираема при low density, без промяна на самата registration boundary.**
 
-## CURRENT NEXT
+## OWNER DECISION — 25.09.2026
 
-Преди ново предложение се прави dependency check на:
-- Context Bridge;
-- post-registration no-result resolver;
-- първото „За теб“ преживяване;
-- notification status;
-- guest boundary;
-- national public framing.
+Owner **ОДОБРИ** low-density principle:
 
-След това се дава **едно конкретно предложение за човешкия registration motive**, без промяна на одобрения flow.
+- registration boundary остава непроменена;
+- при privacy-suppressed low-density state не се обещава конкретен човек или незабавен резултат;
+- CTA за този state е **„Запази и продължи“**;
+- краткото обяснение казва, че Root + Current ще бъдат запазени през registration и че при липса на подходящ човек „За теб“ продължава с честна следваща стъпка според реалната нужда;
+- не се обещава notification, ако няма отделно одобрен notification contract;
+- при реален exact или safe-broader aggregate default CTA **„Виж какво има за теб“** остава валиден;
+- точният финален microcopy и visual placement се проверяват при Screen 1 dependency revalidation / prototype review, без промяна на този смисъл.
 
-До Owner решение:
+## Проверка по Owner критериите
+
+- **Конкретна човешка полза:** PASS — контекстът не се губи и човекът знае какво реално ще стане след registration.
+- **3-секундно разбиране:** PASS като принцип — действието описва реалното действие, а не скрит резултат.
+- **Privacy / trust:** PASS — няма разкриване на 0–4 и няма обещание за недопустим човек.
+- **Уникалност:** PASS на ниво механизъм, не на ниво бутон — Root + Current → privacy-safe result → trusted continuity → real need / real Opportunity.
+- **Mobile / clarity:** няма нова стъпка или допълнителен екран; exact visual treatment подлежи на prototype verification.
+- **Техническа цена:** ниска; използва вече одобрени Context Bridge и no-result resolver.
+
+## NEXT
+
+Двете външни зависимости от TEST 015 вече са затворени на принципно ниво:
+1. national public framing → §112 OWNER APPROVED;
+2. low-density registration motive → §114 OWNER APPROVED.
+
+Следващата работа е **Screen 1 dependency revalidation** спрямо §§112 и 114 + текущия North Star:
+
+**преглед на initial public wording, national framing и result-state CTA/copy → едно конкретно предложение → Criteria Check → Owner approval → чак тогава ограничена prototype работа.**
+
+До това одобрение:
 - няма Screen 1 implementation;
-- няма production/Supabase/DB промяна;
-- няма нов route;
-- няма notification promise.
+- няма production/Supabase/DB промяна.
 
