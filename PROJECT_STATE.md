@@ -84,8 +84,9 @@ Master §§101–112 пазят тестовата линия, която веч
 14. **TEST 015 е завършен — R.E. V1 MOTOR PASS:** четирите задължителни сценария са логически покрити без нов механизъм. Остават две външни зависимости: national public framing и честният registration motive при low density.
 15. **Public architecture test е завършен:** Lom-only framing FAIL; dynamic `Родени в [Root]` rebrand е рисков; най-силната посока е stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично rebrand.
 16. **OWNER APPROVED — 25.09.2026:** stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично city rebrand. Ново национално име и финален public copy остават нерешени.
-17. **TEST 016 е КОРИГИРАН след contract check:** първият branching proposal е невалиден и НЕ е Owner-approved. Одобрената registration boundary остава и при `0–4`: privacy-safe preview → registration → onboarding → `За теб`. §112 обаче изрично оставя точния low-density CTA/copy за повторна проверка.
-18. **CURRENT NEXT:** TEST 016 продължава вътре в тази boundary: dependency check на Context Bridge + post-registration no-result + първото `За теб` + notification status + guest boundary + national framing → едно конкретно предложение за най-честния и полезен low-density CTA/motive. Без bypass на registration и без Screen 1 implementation.
+17. **OWNER APPROVED — TEST 016 / 25.09.2026:** при privacy-suppressed low-density state registration boundary остава; CTA е `Запази и продължи`, без обещание за човек/незабавен резултат. Root + Current се пазят през Context Bridge; ако няма Opportunity, `За теб` продължава по одобрения no-result resolver. При реален exact/safe-broader aggregate default `Виж какво има за теб` остава.
+18. **TEST 015 external dependencies са затворени на принципно ниво:** national public framing = §112 approved; low-density registration motive = §114 approved.
+19. **CURRENT NEXT:** Screen 1 dependency revalidation срещу North Star + §§112/114: initial public wording, national framing и result-state CTA/copy → едно конкретно предложение → Criteria Check → Owner approval → чак тогава ограничена prototype работа. Без implementation преди това.
 
 
 ## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
