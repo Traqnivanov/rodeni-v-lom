@@ -35,6 +35,7 @@
 - **All other Screen 1 branches / Draft PR #1:** ARCHIVE / HISTORY ONLY
 - **CURRENT WORK TYPE:** Screen 1 dependency revalidation върху **последния test/working product candidate**, не върху frozen UI. Inherited changes (mobile search/confirmation + accessibility/data fixes) се пазят като candidate behavior, но подлежат на новия Criteria Check; не се считат автоматично за final approval.
 - **CURRENT NEXT:** Owner decision on the Screen 1 revalidation proposal → if approved, implement only that approved delta in `work/screen1-current` → run existing QA/regression there → WORK review → Owner visual/flow approval.
+- **BEST-OF BASELINE LOCK:** pre-§§115–116 Screen 1 product base = `prototype-screen1-map-interaction-lab.html` blob `38544a930117fa1301d7dc6dbce1c7529cdd15cf` in `work/screen1-current`; it already carries the valid frozen/C2 lineage plus later test/working mobile/accessibility improvements. Live contributes only the explicitly approved §91 reuse principles/resources, not the old people-directory UI.
 
 **NO ENVIRONMENT JUMP:** Screen 1 work continues only in `work/screen1-current` until this checkpoint is explicitly closed or replaced.
 
