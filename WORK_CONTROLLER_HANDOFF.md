@@ -60,6 +60,23 @@ WORK при връщане трябва независимо да одитира
 WORK е длъжен да докладва значим логически конфликт, dependency gap, риск или по-силна посока спрямо крайната Owner цел, но не заменя сам Owner-approved решение.
 
 
+### Environment authority — read before touching Screen 1
+
+The canonical environment map is in `START_HERE.md` §1A and the exact current lane is in `PROJECT_STATE.md` §1B.
+
+WORK must not infer the active candidate from the newest-looking branch, open PR or prototype filename.
+
+Current:
+- live/production: untouched;
+- canonical decisions: `main`;
+- legacy `prototype-screen1.html`: historical/reference only;
+- WORK C1/C2 line: historical/reference only;
+- frozen reference: `review/ordinary-screen1-frozen-for-work` @ `1c1551dc...`, DO NOT MODIFY;
+- QA/test: `review/ordinary-screen1-postfreeze-work`; QA harness is not product UI;
+- Draft PR #1 / `review/ordinary-screen1-mobile-hierarchy`: historical review-only artifact, NOT current working lane;
+- active Screen 1 UI implementation branch: **NONE until Owner approves current revalidation**.
+
+After approval, one new active branch must be declared in State before implementation. No mid-checkpoint branch switching and no silent continuation from an older prototype.
 ### Prototype / Screen 1 continuity
 
 Не започвай Screen 1 отначало и не пипай production/Supabase.
