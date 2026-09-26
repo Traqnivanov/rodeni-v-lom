@@ -39,8 +39,27 @@ check('existing return action remains the only boundary action', () => {
   assert(!boundary.includes('Създай профил'));
 });
 
-check('result CTA remains unchanged', () => {
-  assert(html.includes('<button class="primary" id="continue">Виж какво има за теб</button>'));
+check('result CTA follows the approved value/suppressed contract', () => {
+  assert(html.includes("primaryLabel=result.type==='suppressed'?'Запази и продължи':'Виж какво има за теб'"));
+  assert(html.includes('<button class="primary" id="continue">'+primaryLabel+'</button>'));
+});
+
+check('municipality broadening replaces the old hardcoded Lom group', () => {
+  assert(html.includes('const rootCommunity='));
+  assert(html.includes('const communityBroader='));
+  assert(!html.includes('const lomGroup='));
+  assert(!html.includes('от Лом и региона'));
+});
+
+check('result exposes Current Root and Community as separate context levels', () => {
+  assert(html.includes('<span>Сега</span>'));
+  assert(html.includes('<span>Корен</span>'));
+  assert(html.includes('<span>Общност</span>'));
+});
+
+check('Sofia community naming remains outside the generic prototype mapping', () => {
+  assert(!html.includes("'BG|София':{id:"));
+  assert(html.includes('Owner hard constraint: separate research + proposal before Sofia naming/display.'));
 });
 
 check('error continuation remains secondary and unchanged', () => {
