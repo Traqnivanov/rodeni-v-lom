@@ -9487,3 +9487,290 @@ Owner **ОДОБРИ** low-density principle:
 - няма Screen 1 implementation;
 - няма production/Supabase/DB промяна.
 
+# 115. [OWNER DIRECTION][STRATEGIC CHECKPOINT] Municipality Community Graph — общината е общност, точното населено място е Root precision
+
+**Дата:** 26.09.2026  
+**Статус:** OWNER-DIRECTED STRATEGIC SYNTHESIS / CANONICAL CHECKPOINT  
+**Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB / SUPABASE / PRODUCTION / FROZEN PROTOTYPE ПРОМЯНА
+
+## Защо този checkpoint е критичен
+
+След съпоставка на:
+- историческия live продукт;
+- frozen Screen 1 prototype и ordinary review пакетите;
+- R.E. TEST 001–016;
+- §§67, 70, 75, 81, 82, 87, 88, 112 и 114;
+- текущия North Star;
+- официалната българска административна структура чрез НСИ/НРНМ/ЕКАТТЕ;
+
+се изяснява липсващият слой между **точния Root** и **националния продукт**.
+
+Историческият live продукт е бил фактически една общност на **Община Лом**, а Лом, Ковачица, Трайково, Сталийска махала и др. са били точни населени места вътре в нея. При национализирането exact Root е правилно запазен, но municipality-level community identity не е била формулирана достатъчно ясно.
+
+Frozen prototype вече съдържа демо broadening идея чрез hardcoded `lomGroup`, което доказва нуждата от по-широка свързана общност, но този demo shortcut НЕ е канонична география и не трябва да се използва за production логика.
+
+## Owner strategic direction
+
+### 1. Community unit = община
+
+За community принадлежност в България базовата географска единица е **общината**, не всяко отделно село/град като самостоятелна общност.
+
+Пример:
+- Root Ковачица → community: община Лом;
+- Root Трайково → community: община Лом;
+- Root Лом → community: община Лом.
+
+Това НЕ изтрива точното населено място.
+
+### 2. Exact Root = по-точен сигнал вътре в community
+
+User продължава да има canonical exact Root:
+- Ковачица;
+- Трайково;
+- Лом;
+- друго точно населено място.
+
+Exact Root служи за:
+- лична идентичност;
+- най-точен community match;
+- explainable reason;
+- по-силно подреждане при normal people discovery.
+
+Следователно:
+**community membership = municipality; exact locality = precision/affinity signal вътре в community.**
+
+### 3. R.E. normal people discovery
+
+За `Хора, които има смисъл да познаваш` одобреният ред от §75 остава, но вече се тълкува спрямо municipality community graph:
+
+1. exact Root;
+2. същата municipality community;
+3. силна друга комбинация извън community.
+
+Това уточнява §70: municipality не е „друга общност след провал на селото“, а общността, в която exact locality е по-силен вътрешен сигнал.
+
+### 4. Human need / moment има приоритет над географска близост
+
+Exact Root НЕ е абсолютен score и не може да победи по-релевантна конкретна нужда.
+
+Пример:
+- user е от Ковачица и живее в Мюнхен;
+- човек A е от Ковачица, но живее в Берлин;
+- човек B е от Лом и живее в Мюнхен.
+
+При normal community discovery A може да има exact-Root приоритет.
+
+Но ако user изрично търси информация/насока за Мюнхен, B може да е по-полезният Opportunity.
+
+Следователно:
+**active need / moment relevance → applicable gates → community/root precision при сравнима релевантност.**
+
+Това е съвместимо с §§75, 82 и 87.
+
+### 5. Municipality membership не означава automatic person display
+
+Общината определя community belonging и силен candidate pool.
+
+Тя НЕ означава:
+- каталог на всички членове;
+- автоматично показване на произволен човек;
+- заобикаляне на `open_to_strangers`;
+- заобикаляне на block/decline/safety/visibility;
+- filler само за да няма празен екран.
+
+Конкретен stranger се показва само при достатъчно силна и обяснима причина според Visibility/Opportunity contracts.
+
+Това е особено важно за големи/хетерогенни общини, където municipality membership сама по себе си може да е твърде широка причина.
+
+### 6. Public aggregate / safe broadening
+
+За public Screen 1 exact Root остава първият тесен контекст.
+
+При suppressed exact `0–4` системата може да провери **същата municipality community** като единственото естествено първо safe-broadening ниво.
+
+Пример:
+- Root Ковачица + Current Мюнхен е suppressed;
+- municipality Лом + Current Мюнхен независимо покрива threshold 5;
+- може да се покаже privacy-safe municipality aggregate.
+
+Не се използва размито `Лом и региона`, ако canonical municipality може да бъде посочена точно.
+
+Всяко показвано ниво трябва самостоятелно да покрива aggregate eligibility + privacy threshold.
+
+### 7. Cold-start ефект
+
+Municipality community graph намалява фрагментацията:
+
+вместо всеки малък Root да започва като почти изолирана миниобщност, новият confirmed node влиза в съществуващата municipality community.
+
+Това може да създаде стойност:
+- за новия user;
+- за други members на същата municipality;
+- за public municipality aggregate при следващ snapshot;
+- за бъдещи explainable Opportunities.
+
+Това **намалява**, но не обещава да премахне no-result:
+permissions, липса на подходящ кандидат, active need mismatch и safety gates могат честно да оставят no-result.
+
+### 8. Canonical geography — задължителна
+
+User избира само exact locality.
+
+Municipality НЕ се избира ръчно и НЕ се познава по име/близост.
+
+Тя се извежда от versioned canonical Bulgarian geography.
+
+Задължителният production source трябва да е официалната структура на **НСИ / Национален регистър на населените места / ЕКАТТЕ** или еквивалентен официален source-of-truth.
+
+Минималният logical mapping е:
+
+`root_locality_id → municipality_id → region_id`
+
+Имената не са identity keys.
+
+Това е необходимо за:
+- еднакви имена на населени места;
+- промени в административната структура;
+- точен municipality membership;
+- правилно safe broadening;
+- правилни display names.
+
+### 9. Frozen prototype correction boundary
+
+Frozen prototype съдържа demo:
+`lomGroup = {Лом, Ковачица, Монтана}`.
+
+Това НЕ е production/strategic правило.
+
+Canonical mapping показва, че:
+- Ковачица → община Лом;
+- Трайково → община Лом;
+- Монтана → община Монтана;
+- Расово → община Медковец.
+
+Следователно hardcoded proximity/group lists не се пренасят към бъдещата implementation.
+
+### 10. Brand ≠ community identity
+
+`Родени в Лом` НЕ се заключва с този checkpoint като окончателно национално име на целия продукт.
+
+Разделят се:
+
+1. **национален продукт / stable product identity** — финалното име остава OPEN;
+2. **municipality community identity** — напр. community Лом;
+3. **exact Root identity** — напр. Ковачица.
+
+Това е съвместимо с §112:
+local community context може да се показва силно, без целият продукт да се ребрандира динамично според Root.
+
+### 11. Display naming не се генерира механично
+
+Не се приема универсална формула `Родени в + municipality_name`.
+
+Причина:
+има municipality names, при които това е естествено, и други, при които е граматически или семантично лошо.
+
+Следователно community identity има:
+- canonical municipality ID;
+- canonical official municipality name;
+- отделно проверено human display label.
+
+Точният формат от типа:
+- `Родени в Лом — Ковачица`;
+- `Общност Лом · Ковачица`;
+- друг по-силен вариант;
+
+остава отделно UX/brand решение.
+
+## Stress-test matrix — PASS / boundaries
+
+1. **Exact match exists:** exact Root получава приоритет в normal discovery → PASS.
+2. **Exact match липсва, same municipality има допустим човек:** user не остава изолиран само заради малък Root → PASS.
+3. **Exact candidate е inbound OFF/blocked:** gate печели; same-municipality допустим candidate може да бъде следващ → PASS.
+4. **Explicit local need:** need/moment relevance може да изпревари exact Root elsewhere → PASS.
+5. **Public exact 0–4, municipality 5+:** municipality aggregate може да даде privacy-safe first value → PASS.
+6. **И exact, и municipality са under threshold:** public state остава suppressed → PASS; не се измисля наличие.
+7. **Няма допустим person result:** §87 no-result resolver остава → PASS; няма filler.
+8. **Large municipality:** membership ≠ automatic recommendation → PASS само ако Visibility/Opportunity gate остане задължителен.
+9. **Same-name locality:** canonical ID + municipality mapping предотвратяват смесване → PASS.
+10. **Municipality name awkward for branding:** canonical community key остава стабилен; display naming се решава отделно → PASS с OPEN naming contract.
+
+## Как се връзват live site, frozen prototype и R.E.
+
+### Live site — какво се запазва като продуктова стойност
+
+Старият live сайт съдържа полезни сигнали/действия:
+- exact settlement;
+- current city/country;
+- school;
+- profession;
+- willingness to help/guidance precursor;
+- travel;
+- connection requests;
+- accepted connections;
+- private chat.
+
+Те НЕ се връщат като public people tabs/catalog.
+
+R.E. ги използва progressive и contextual само когато носят полза.
+
+### Frozen prototype — какво се запазва
+
+Запазват се:
+- map-first entry;
+- Current → Root;
+- canonical-vs-draft boundary;
+- privacy-safe aggregate;
+- Context Bridge;
+- mobile/error/recovery work;
+- locality/map interaction work след WORK audit.
+
+Hardcoded `lomGroup` и `Лом и региона` не се канонизират.
+
+### R.E. — новото свързване
+
+**exact Root → municipality community → Current + need/moment + permissions → explainable Opportunity → one clear action**
+
+Това е липсващото свързващо звено между стария local product и националния R.E.
+
+## Criteria Check
+
+- **Human benefit:** PASS — повече реални candidates без загуба на exact identity.
+- **Cold start:** PASS като подобрение, не гаранция за резултат.
+- **Privacy:** PASS — public threshold и person visibility остават отделни.
+- **Explainability:** PASS — `от същото населено място` или `от същата община` са ясни причини.
+- **National scalability:** PASS — една логика за всички municipality IDs.
+- **Uniqueness:** PASS — community graph + exact-root precision + current need/moment + privacy gates работят като един механизъм.
+- **Technical weight:** PASS — нужният слой е versioned canonical geography, не отделен engine/site за всяка общност.
+- **Brand safety:** PASS с OPEN naming — community structure не заключва националното име.
+
+## Какво този checkpoint НЕ одобрява
+
+- финално национално име;
+- финален формат на municipality community label;
+- DB schema/migration;
+- production EKATTE import;
+- промяна на frozen prototype;
+- отделен сайт за всяка municipality;
+- public people directory;
+- автоматично person display само заради same municipality.
+
+## NEXT
+
+Следващата отделна стратегическа точка е:
+
+**Community Identity Naming Contract**
+
+Да се реши как canonical municipality community + exact Root се показват човешки и граматически правилно, без:
+- да се объркват с националния brand;
+- да се създават хиляди „Родени в [село]“;
+- да се губи exact locality;
+- да се използва механично `Родени в + municipality_name`.
+
+След този naming contract Screen 1 dependency revalidation продължава с новата municipality community semantics.
+
+До отделно Owner решение:
+- няма prototype implementation;
+- няма production/Supabase/DB промяна;
+- frozen review branch остава замразен.
+
