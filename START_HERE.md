@@ -128,7 +128,7 @@ Owner direction + audited synthesis е записан в Master §115.
 
 **Не разделяй общността на хиляди отделни села/градове. Не губи exact Root. Не показвай произволен човек само за да няма empty state.**
 
-Следващата отделна стратегическа точка е **Community Identity Naming Contract** — как municipality community + exact Root се показват човешки и граматически правилно, без да се заключва националният brand.
+**Community Identity Naming Contract е OWNER APPROVED в Master §116.** Общият модел е exact Root identity + municipality Community identity като отделни човешки нива; Sofia/Столична община остава отделен mandatory research gate. **CURRENT NEXT е Screen 1 dependency revalidation** спрямо §§112, 114, 115, 116.
 
 
 ## 2. Задължителен работен режим
