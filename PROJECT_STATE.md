@@ -1,28 +1,6 @@
 # PROJECT STATE — „Родени в Лом“
 
-## АКТУАЛЕН CHECKPOINT — WORK C1 — 21.09.2026
-
-Официалният Screen 1 candidate по §100 вече е реализиран като `prototype-screen1-work-c1.html` в `review/work-screen1-approved-direction`.
-Blob: `3645bf8c1554f38f5b272493faa690e9c085fb47`. 18 функционални/статични групи проверки: PASS. Пълен technical release gate: PARTIAL; browser visual PASS и Owner final approval: НЕ СА ПОЛУЧЕНИ.
-Виж `SCREEN1_WORK_C1_VERIFICATION.md` за доказателствата и ограниченията.
-NEXT: разрешен изолиран preview → визуална матрица/поправки → Owner final approval. Локалният browser preview е блокиран от URL policy; няма заобикаляне и няма твърдение за визуална проверка.
-Main/production/Supabase/Screen 2 остават непроменени. Предходните записи „candidate не е реализиран“ и NEXT „изграждане“ по-долу са исторически и са заменени от този checkpoint. §100 продуктовият contract остава в сила.
-
----
-
-## ТЕКУЩО СЪСТОЯНИЕ — 21.09.2026 — Master §100
-
-- Owner уточни: V13 е малко демо за изследване, не готовият официален прототип.
-- WORK CONTROLLER одобри избраната посока след одит: водещ въпрос/CTA, контекстна карта, четими Сега/Откъде маркери, компактен result и outcome-based release проверки.
-- Новият contract е Master §100. Той заменя по-старите Screen 1 NEXT указания за поредна initial breakpoint поправка; останалите privacy/flow/architecture contracts се запазват.
-- Решенията са документирани в `review/work-screen1-approved-direction`, чист клон от main `7b1af9840f0054b477f1a2fb5ec33b709c8002de`. Main не е обновен с тези документи.
-- Официалният candidate по §100: НЕ Е РЕАЛИЗИРАН. Technical/visual/final Owner approval: ПРЕДСТОЯТ.
-- NEXT EXACT STEP: изграждане на официалния Screen 1 candidate по §100, последвано от матрицата по §99 и Owner review. Не се изисква поправяне/merge на V13 като предпоставка.
-- Без Screen 2, production или Supabase промени. Историческите checkpoints по-долу не са текущи NEXT инструкции.
-
----
-
-**Актуализирано:** 20.09.2026  
+**Актуализирано:** 26.09.2026  
 **Branch:** `main`  
 **Роля на този файл:** кратък текущ handoff. Не е пълна история и не заменя Master-а.  
 **Единствен входен файл:** `START_HERE.md`.
@@ -31,8 +9,39 @@ Main/production/Supabase/Screen 2 остават непроменени. Пре�
 
 Първо прочети `START_HERE.md`. Този файл е вторият и пази само текущото състояние.
 
-След това продължи от **NEXT EXACT STEP**. Не започвай нов общ одит без конкретна причина.
+След това продължи от **CURRENT NEXT**. Не започвай нов общ одит без конкретна причина.
 
+
+## 1A. Continuity control — current
+
+- Continuity системата е синхронизирана на **26.09.2026** без създаване на нов паралелен source of truth.
+- Всеки нов чат започва от `START_HERE.md`, следва read order-а и прави краткия **STARTUP CONFIRMATION** преди съществена работа.
+- Значимите етапи се записват **checkpoint-based**: не се пази стенограма на дискусията, а крайният валиден резултат.
+- При затваряне на значим checkpoint се записва кой е дал посоката, кой е работил/анализирал, кой е одобрил, кой е записал, какво се заменя/уточнява, implementation/evidence при нужда и точният NEXT.
+- След значим checkpoint се изпълнява **SYNC GATE**: State → Master → Dependency Map → WORK/Handoff/active tracker при нужда → проверка за стар конфликтен NEXT.
+- Git history/Issues са evidence и operational history; не заменят каноничните решения.
+- Текущият продуктов NEXT е **Screen 1 dependency revalidation** спрямо §§112, 114, 115, 116.
+
+
+## 1B. ACTIVE ENVIRONMENT / WORK LANE — 26.09.2026
+
+**Current work type:** product logic + Screen 1 dependency revalidation; **НЕ UI implementation**.
+
+- **Canonical truth / decisions:** `main`
+- **Live / production:** НЕ СЕ ПИПА
+- **Legacy prototype `prototype-screen1.html`:** historical/reference, НЕ current base
+- **WORK C1/C2 branch `review/work-screen1-approved-direction`:** historical controller/reference line, НЕ current base
+- **Draft PR #1 / `review/ordinary-screen1-mobile-hierarchy`:** historical review-only candidate, НЕ current lane
+- **Frozen baseline:** `review/ordinary-screen1-frozen-for-work` @ `1c1551dc47faa249132394f019491373bc876f22`
+- **Frozen product artifact:** `prototype-screen1-map-interaction-lab.html` blob `a3334bfabd9d99d156a766ca094f2bd1cbf1822c` — DO NOT MODIFY
+- **QA/test environment:** `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`
+- **QA harness:** `prototype-screen1-mobile-visual-review.html` — QA only, not product UI
+- **ACTIVE Screen 1 UI working branch:** **NONE until Owner approves the current revalidation proposal**
+- **CURRENT NEXT:** Screen 1 dependency revalidation → one concrete proposal → Criteria Check → Owner approval.
+
+След Owner approval се създава **една нова active Screen 1 branch от post-freeze/frozen lineage**, записва се тук преди първа UI промяна и само тя се използва за следващата implementation работа.
+
+**NO ENVIRONMENT JUMP:** не се продължава от C1/C2, legacy prototype, frozen branch или произволен lab branch без explicit State transition.
 ## 2. Текущ етап
 
 Проектът има достатъчна основа за следващия етап. **Не се започва от нулата.**
@@ -48,8 +57,98 @@ Main/production/Supabase/Screen 2 остават непроменени. Пре�
 - accepted private chat;
 - privacy основата.
 
-Следващото развитие е orchestration върху тази база:
-**Context Engine + Opportunity model + progressive onboarding + Admin/Owner Operations.**
+Следващото развитие е orchestration върху тази база чрез **R.E.**, чийто вътрешни части включват Context Engine, Root Graph, Opportunity logic/model и приложимите privacy/permission/safety gates, плюс progressive onboarding и Admin/Owner Operations.
+
+
+## OWNER STRATEGIC END STATE — TRUST FIRST, SERVICES LATER
+
+Owner потвърди следната стратегическа посока:
+
+- първо се изгражда доверие чрез community продукта;
+- „Иванов Ремонти“ НЕ влиза първоначално като реклама;
+- services се появяват по-късно, тихо, само при реална нужда и трябва да се усещат като полза, не като marketing;
+- първо Лом, после възможност за национално изпълнение чрез „Иванов Ремонти“ + подбрани подизпълнители;
+- реални изпълнени услуги могат по-късно да създават доброволен social proof/status, но не fake/automatic reviews;
+- community data ≠ automatic business lead;
+- точният **Service Trust Mechanism е OPEN** и трябва да се проектира/stress-test-не отделно.
+
+Следващ чат трябва първо да прочете новата секция 0 в `START_HERE.md`.
+
+## 2A. HISTORICAL PRODUCT MODEL SNAPSHOT — 24.09.2026 — SUPERSEDED FOR CURRENT NEXT
+
+**Важно:** този блок пази контекста от 24–25.09.2026. Неговите тогавашни „текущ checkpoint / NEXT“ формулировки са исторически. **§115 и §116 вече са затворени канонични checkpoints; CURRENT NEXT е Screen 1 dependency revalidation.**
+
+Това е текущата рамка, от която следващ чат трябва да продължи:
+
+- **R.E.** = единният вътрешен мотор на продукта.
+- R.E. обединява съществуващите **Context Engine + Root Graph + Opportunity logic/model + privacy/permission/safety gates**; тези понятия не се изхвърлят, а са части на един мотор.
+- R.E. не се дублира по градове и общности.
+- **Лом = първа реална общност + пилот + отправна точка.**
+- **Root V1 = всяко canonical населено място в България.**
+- **Current Location = отделен глобален сигнал** (държава + населено място).
+- **Context Bridge V1 = Root + Current Location (§85).** §104 Pending Action/Need Bridge е запазен като FUTURE / неактивен за V1 след Owner approval; pre-registration user-written need/action не е част от V1.
+- Продуктовата логика не е Lom-only.
+- **Публичната архитектура „Лом ↔ България“ е ОДОБРЕНА като стратегически принцип на 25.09.2026:** една стабилна продуктова идентичност + Лом като видим origin/pilot + national Root scope + dynamic local context според Root, без автоматично city rebrand. Това approval не избира ново национално име и не заключва финален public copy.
+- Старият Lom-centric initial Screen 1 copy в Master §92 **НЕ трябва да се използва като окончателна национална branding истина**. Той изисква повторна проверка спрямо Master §§67, 82 и бъдещото архитектурно решение.
+- Mobile Screen 1 prototype е работна лаборатория. Исторически той е бил замразен до low-density CTA / registration-motive test; този test вече е затворен в §114. Prototype implementation остава замразен по по-новата зависимост §115 → Community Identity Naming Contract → Screen 1 dependency revalidation.
+- Одитът на клиентската пътека показа риск: при чистене на UI могат да се махнат не само излишни елементи, а и логическите мостове **„защо ме питаш → каква полза → какво ще стане след това“**. След архитектурното решение Screen 1 се преглежда end-to-end по тази логика, а не екран по екран изолирано.
+
+### Историческа стратегическа тестова линия — checkpoint към 24–25.09.2026
+
+Master §§101–112 пазят тестовата линия, която вече е преминала през R.E. TEST 001–015 и public architecture test. Вътрешният R.E. motor е synthesis PASS, а public architecture принципът от §112 е Owner-approved на 25.09.2026.
+
+Исторически следващият незатворен тест е бил **low-density CTA / registration motive**. Той вече е затворен с Owner-approved §114 и **НЕ е текущ NEXT**.
+
+### Исторически NEXT — SUPERSEDED
+
+Следващият списък пази тестовата последователност, довела до §§112/114/115/116. **Не го използвай като CURRENT NEXT.** Текущият NEXT е т.26 по-долу: Screen 1 dependency revalidation.
+
+1. **Без нов Screen 1 implementation.**
+2. R.E. TEST 001–013 се запазват; резултатите им не се започват отначало.
+3. Повторната проверка потвърди вече одобрения public boundary: **карта → Current → Root → privacy-safe preview → registration → onboarding → „За теб“**. Не го отваряме наново без нов конфликт на по-високо ниво.
+4. Нерегистриран user не създава trusted human actions/content: няма responses, connection/contact действия, user-generated links към други users или влияние върху R.E. learning/routing като идентифициран човек.
+5. Root + Current + privacy-safe preview остават допустими преди registration като временен/private preview context; не са trusted profile/matching/routing данни преди confirmation.
+6. §104 Pending Action/Need Bridge беше повторно проверен; финалният V1 резултат е в т.8: pre-registration user-written need/action е FUTURE / неактивен.
+7. **TEST 014A е завършен** като test result: R.E. може да създава network effect след registration, но не е самостоятелен acquisition/cold-start engine.
+8. **OWNER APPROVED:** §104 pre-registration Pending Need/Action е FUTURE / неактивен за V1; Root + Current Context Bridge (§85) остава активен.
+9. **TEST 014B е завършен:** confirmed node ≠ автоматично actionable node. Network effect-ът е permission-aware и по подразбиране асиметричен; `open_to_strangers=OFF` не се заобикаля.
+10. **TEST 014C е завършен — PARTIAL PASS:** aggregate density + outbound value + contextual voluntary permission могат постепенно да усилват мрежата, но не bootstrap-ват почти нулева density. Permission не се иска за нуждите на системата.
+11. **TEST 014D е завършен:** generic referral FAIL; privacy-safe public share е безопасен, но слаб; purpose-bound invite към лично познат външен човек е най-силен кандидат, но НЕ е одобрена функция.
+12. **TEST 014E е завършен — FAIL за V1:** purpose-bound invite не решава надеждно identity binding преди registration и добавя privacy/abuse/token сложност. Кандидатът не влиза във V1.
+13. **TEST 014 growth family е затворен като checkpoint:** R.E. усилва мрежата след registration, но не се превръща в acquisition/referral engine.
+14. **TEST 015 е завършен — R.E. V1 MOTOR PASS:** четирите задължителни сценария са логически покрити без нов механизъм. Остават две външни зависимости: national public framing и честният registration motive при low density.
+15. **Public architecture test е завършен:** Lom-only framing FAIL; dynamic `Родени в [Root]` rebrand е рисков; най-силната посока е stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично rebrand.
+16. **OWNER APPROVED — 25.09.2026:** stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично city rebrand. Ново национално име и финален public copy остават нерешени.
+17. **OWNER APPROVED — TEST 016 / 25.09.2026:** при privacy-suppressed low-density state registration boundary остава; CTA е `Запази и продължи`, без обещание за човек/незабавен резултат. Root + Current се пазят през Context Bridge; ако няма Opportunity, `За теб` продължава по одобрения no-result resolver. При реален exact/safe-broader aggregate default `Виж какво има за теб` остава.
+18. **TEST 015 external dependencies са затворени на принципно ниво:** national public framing = §112 approved; low-density registration motive = §114 approved.
+19. **Screen 1 dependency revalidation е ПАУЗИРАНА на стратегическа зависимост:** разговорът с Owner изясни, че municipality community semantics трябва да се затвори преди финалното Screen 1 wording.
+20. **OWNER DIRECTION + AUDITED STRATEGIC CHECKPOINT — Master §115:** community membership в България = canonical община; exact Root = точно населено място/по-силен вътрешен signal. Normal people discovery: exact Root → same municipality → силна друга причина. Active need/moment relevance има приоритет над чистата Root близост.
+21. **Public/privacy следствие:** exact public aggregate остава първи; при suppressed exact може да се провери canonical municipality aggregate, само ако самостоятелно покрива threshold. Municipality membership не разрешава person exposure.
+22. **Canonical geography:** locality→municipality трябва да идва от versioned official mapping; frozen `lomGroup` е demo и не е source of truth. Няма production/DB import с този checkpoint.
+23. **Brand boundary:** `Родени в Лом` не се заключва като финално национално име; municipality community identity + exact Root са отделен local layer. Final national brand остава OPEN.
+24. **OWNER APPROVED — Master §116:** Community Identity Naming Contract е затворен за общия случай: exact Root identity + municipality Community identity са отделни човешки нива; community display може да има human label отделно от canonical ID/official name; national brand остава отделен; механично `Родени в + municipality_name` не се използва. Sofia/Столична община остава отделен mandatory research gate.
+25. **OWNER HARD CONSTRAINT — СОФИЯ:** случаят „София / Столична община“ НЕ се решава автоматично по общия Naming Contract и НЕ подлежи на импровизирано обобщение. Когато работата стигне до конкретния Sofia case, първо се прави отделно специално проучване; едва след него се предлага решение. Това е директно Owner решение и не се отваря за обсъждане от WORK/ordinary чатове.
+26. **CURRENT NEXT:** Screen 1 dependency revalidation спрямо §§112, 114, 115, 116 → един end-to-end audit на frozen Screen 1 → едно конкретно предложение → Criteria Check → Owner approval. Без prototype implementation преди това.
+
+
+## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
+
+- „Родени в Лом“ първо печели доверие чрез собствена community полезност; не стартира като канал за реклама на Ivanov Remonti.
+- Service layer влиза тихо и само при реална потребителска нужда/ясна полза.
+- Ivanov Remonti е първият реален operational provider, но дългосрочният модел трябва да може да се разрасне от Лом към цяла България чрез собствено изпълнение, координация и подбрани подизпълнители.
+- Най-силният бъдещ social proof се търси в доброволни реални user резултати/status-и след действително извършена услуга, не в самореклама или fake reviews.
+- Community data не става автоматично business lead.
+- **Service Trust Mechanism е OPEN** и предстои отделен design/stress test; няма implementation преди Owner approval.
+
+### Prototype / WORK continuity — current
+
+- `review/work-screen1-approved-direction` = WORK review основа.
+- `review/ordinary-screen1-frozen-for-work` = замразен ordinary Screen 1 candidate за независим WORK review.
+- `review/ordinary-screen1-c2-mobile` = отделна ordinary mobile C2 линия.
+- Не се започва Screen 1 отначало.
+- Не се продължава prototype implementation само защото старият handoff го сочи; текущият `START_HERE` §0 + `PROJECT_STATE` имат приоритет за NEXT.
+- При връщане към Screen 1: първо dependency revalidation спрямо North Star / national framing / текущите Owner решения, после ограничена prototype работа.
+
 
 ## 3. Текущи важни решения
 
@@ -152,7 +251,9 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 - security remediation plan;
 - точните ranking/cooldown правила на Context Engine.
 
-## 6. NEXT EXACT STEP
+## 6. HISTORICAL APPROVED CONTRACTS — НЕ Е CURRENT NEXT
+
+**Този раздел пази одобрени договори и pre-prototype история. Не започвай работа от заглавието му. Текущият NEXT е в §2A, т.26: Screen 1 dependency revalidation.**
 
 - **P0-7 Visibility contract — ОДОБРЕНО:** 3 нива: (1) нерегистриран вижда само карта + privacy-safe агрегати, без самоличности; (2) регистриран непознат вижда кратка contextual card само при силна обяснима причина, не пълен профил; (3) accepted connection отключва комуникация, не автоматично всички лични данни. Email/телефон/точна възраст/точен адрес не са автоматично публични. Travel се показва само когато е релевантно към конкретна нужда. `open_to_strangers=OFF` спира actionable inbound discovery, но user остава в aggregate counts и може сам да изпраща outbound заявки. Няма implementation още.
 
@@ -245,9 +346,11 @@ Chat не е постоянен tab:
 Public → registered continuity:
 **карта → public hook → preview → registration → onboarding → „За теб“**.
 
-### NEXT EXACT STEP ПРЕДИ ПРОТОТИПА
+### HISTORICAL NEXT — SUPERSEDED / НЕ ИЗПОЛЗВАЙ КАТО ТЕКУЩ NEXT
 
-Допълнителните pre-prototype рискове се затварят **един по един** по OWNER approval criteria.
+Този блок пази стария pre-prototype маршрут за audit trail. **Текущият NEXT е §2A, т.26: Screen 1 dependency revalidation по §§112/114/115/116.**
+
+Допълнителните pre-prototype рискове са били затваряни **един по един** по OWNER approval criteria.
 
 - Точка 1 — public aggregate → personal value contract: **ОДОБРЕНА**.
 - Точка 2 — privacy праг и адаптивна публична видимост: **ОДОБРЕНА**.
@@ -294,7 +397,9 @@ Public → registered continuity:
 
 Текущият значим checkpoint е Master §99: Release Gate е одобрен, първите два mobile candidates са отхвърлени и initial state се коригира чрез mobile-base/desktop-opt-in архитектура с видим device report. Technical pass не означава mobile/Owner approval.
 
-## 8. Последен значим checkpoint
+## 8. Исторически значим checkpoint — НЕ Е ТЕКУЩИЯТ CHECKPOINT
+
+Текущият значим checkpoint е Master §115 / Municipality Community Graph и §2A, т.24 по-горе. Блокът отдолу се пази само като история.
 
 На 19.09.2026 Admin/Owner одобри end-to-end operating contract-а:
 **User Context Engine + Admin/Owner Operations Engine**.
