@@ -9919,6 +9919,7 @@ WORK/ordinary нямат право да приложат общия модел 
 **Дата:** 26.09.2026  
 **Статус:** OWNER APPROVED / IMPLEMENTED IN REVIEW CANDIDATE  
 **Implementation:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commit `0e9d4ee05f2aa0d0256a8237090353a41d7873ff`
+**Follow-up copy refinement:** `c12b25cf96508b6f54e94c4333ba5cea14060b27` — safe-broader е свит до compact mobile wording `≈ X км от Root · от общността Community`.
 
 ## Одобрено решение
 
@@ -9942,3 +9943,5 @@ WORK/ordinary нямат право да приложат общия модел 
 ## CURRENT NEXT
 
 Продължава visual/flow verification на същия candidate след тази bounded промяна. Проверяват се exact / safe-broader / suppressed и registration boundary; при ново продуктово решение се спира и се обсъжда с Owner **веднага**, без натрупване за по-късно.
+
+**QA follow-up:** exact distance layer е проверен live на 390 px; safe-broader, suppressed и registration boundary са преминали static/logic verification след copy refinement. Пълният Owner visual approval на updated candidate остава отделен финален gate; WORK review следва, когато WORK е наличен.
