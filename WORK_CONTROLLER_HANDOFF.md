@@ -220,7 +220,7 @@ Owner има последната дума за:
 Задължителен вход и правила за работа.
 
 ## `PROJECT_STATE.md`
-Текущ checkpoint и NEXT EXACT STEP.
+Текущ checkpoint и CURRENT NEXT.
 
 ## `PRODUCT_MASTER_VISION_AUDIT.md`
 Каноничната продуктова история и одобрените решения.
@@ -551,7 +551,9 @@ Chat НЕ е постоянен tab.
 
 ---
 
-# 16. КЪДЕ СМЕ СЕГА
+# 16. HISTORICAL WORK CHECKPOINT — НЕ Е ТЕКУЩОТО СЪСТОЯНИЕ
+
+**Този раздел пази стария WORK/Screen 1 checkpoint. Текущото състояние се взема от CURRENT OVERRIDE в началото + `PROJECT_STATE.md`.**
 
 Проектът е **на Owner review checkpoint за първия Screen 1 prototype**.
 
@@ -568,7 +570,7 @@ Chat НЕ е постоянен tab.
 - pre-prototype точка 5: Aggregate Eligibility Contract — aggregate брои само потвърдени 18+ completed-onboarding accounts с canonical user-confirmed context; pending/unresolved/deleted/suspended/banned/test не участват; OFF остава включен; Root не изтича; Current Location freshness е 12 месеца; всички промени минават през stable snapshot и отново през threshold 5;
 - pre-prototype точка 6: текущият screen-by-screen contract и prototype са community-only; Services/Ivanov Remonti/commercial flows са отложени до отделно изрично започнат future Services етап.
 
-## NEXT EXACT STEP
+## HISTORICAL NEXT — SUPERSEDED / НЕ ИЗПОЛЗВАЙ КАТО CURRENT NEXT
 
 Допълнителните pre-prototype blockers са **ЗАТВОРЕНИ**.
 
