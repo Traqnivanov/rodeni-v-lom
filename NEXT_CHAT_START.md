@@ -26,13 +26,13 @@
 2. `PROJECT_STATE.md`
 3. `WORK_CONTROLLER_HANDOFF.md`
 4. `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`
-5. Master §115 и релевантните §§67, 70, 75, 82, 87, 112, 114
+5. Master §§115–116 и релевантните §§67, 70, 75, 82, 87, 112, 114
 
 Не започвай проекта отначало.
 
 ## Текущ стратегически checkpoint
 
-Master §115 — **Municipality Community Graph**.
+Master §§115–116 — **Municipality Community Graph + Owner-approved Community Identity Naming Contract**.
 
 За България:
 
@@ -82,18 +82,16 @@ Master §115 — **Municipality Community Graph**.
 
 Frozen prototype не се пипа без ново Owner approval.
 
-## CURRENT ENVIRONMENT — НЕ ИЗБИРАЙ ДРУГ BRANCH ПО ПРЕДПОЛОЖЕНИЕ
+## CURRENT ENVIRONMENT — FINAL MODEL
 
-- canonical decisions: `main`;
-- live/production: untouched;
-- legacy `prototype-screen1.html`: historical only;
-- WORK C1/C2: historical/reference;
-- Draft PR #1 / mobile hierarchy: historical review-only;
-- frozen product baseline: `review/ordinary-screen1-frozen-for-work` @ `1c1551dc...`, DO NOT MODIFY;
-- QA/test environment: `review/ordinary-screen1-postfreeze-work`; QA harness ≠ product UI;
-- active Screen 1 UI implementation branch: **NONE** до Owner approval на current revalidation.
+- `main` = canonical truth;
+- `work/screen1-current` = единствена active Screen 1 work + QA lane;
+- frozen reference = `review/ordinary-screen1-frozen-for-work` @ `1c1551dc...`, DO NOT MODIFY;
+- live/production = untouched;
+- всички други Screen 1 branches/PR-и = archive/evidence only.
 
-Пълното правило е `START_HERE.md` §1A; точният current lane е `PROJECT_STATE.md` §1B.
+Не избирай друга среда по собствена преценка. Не започвай нов branch за малка задача.
+
 ## CURRENT NEXT
 
 **Screen 1 dependency revalidation спрямо Master §§112, 114, 115, 116**
