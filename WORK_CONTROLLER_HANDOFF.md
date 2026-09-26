@@ -60,33 +60,26 @@ WORK при връщане трябва независимо да одитира
 WORK е длъжен да докладва значим логически конфликт, dependency gap, риск или по-силна посока спрямо крайната Owner цел, но не заменя сам Owner-approved решение.
 
 
-### Environment authority — read before touching Screen 1
+### Final Screen 1 environment model
 
-The canonical environment map is in `START_HERE.md` §1A and the exact current lane is in `PROJECT_STATE.md` §1B.
+WORK must use the following model and must not reopen branch-selection questions unless a concrete technical conflict is found:
 
-WORK must not infer the active candidate from the newest-looking branch, open PR or prototype filename.
+- canonical truth: `main`;
+- single active Screen 1 work + QA lane: `work/screen1-current`;
+- source lineage for that lane: `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`;
+- frozen rollback/reference: `review/ordinary-screen1-frozen-for-work` @ `1c1551dc47faa249132394f019491373bc876f22`, DO NOT MODIFY;
+- live/production: untouched until explicit Owner promotion approval;
+- C1/C2, labs, mobile variants, old working branches and Draft PR #1: archive/evidence only.
 
-Current:
-- live/production: untouched;
-- canonical decisions: `main`;
-- legacy `prototype-screen1.html`: historical/reference only;
-- WORK C1/C2 line: historical/reference only;
-- frozen reference: `review/ordinary-screen1-frozen-for-work` @ `1c1551dc...`, DO NOT MODIFY;
-- QA/test: `review/ordinary-screen1-postfreeze-work`; QA harness is not product UI;
-- Draft PR #1 / `review/ordinary-screen1-mobile-hierarchy`: historical review-only artifact, NOT current working lane;
-- active Screen 1 UI implementation branch: **NONE until Owner approves current revalidation**.
+**One checkpoint = one active working lane.** For Screen 1 that lane is `work/screen1-current`.
 
-After approval, one new active branch must be declared in State before implementation. No mid-checkpoint branch switching and no silent continuation from an older prototype.
 ### Prototype / Screen 1 continuity
 
 Не започвай Screen 1 отначало и не пипай production/Supabase.
 
-Съществуващите review линии са:
-- `review/work-screen1-approved-direction` — WORK review основа;
-- `review/ordinary-screen1-frozen-for-work` — замразен ordinary candidate за независим WORK review;
-- `review/ordinary-screen1-c2-mobile` — отделна ordinary mobile C2 линия.
+Текущата единствена работна линия е `work/screen1-current`. Frozen candidate остава неподвижна референция, а старите C1/C2/lab/mobile branches са history/evidence only.
 
-Текущият Screen 1 prototype е **работна лаборатория / review artifact**, не production truth.
+Текущият Screen 1 candidate все още е review/prototype работа, не production truth.
 
 Ключово:
 - mobile-first;
