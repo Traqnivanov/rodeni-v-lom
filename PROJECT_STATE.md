@@ -108,6 +108,7 @@ Master §§101–112 пазят тестовата линия, която веч
 22. **Canonical geography:** locality→municipality трябва да идва от versioned official mapping; frozen `lomGroup` е demo и не е source of truth. Няма production/DB import с този checkpoint.
 23. **Brand boundary:** `Родени в Лом` не се заключва като финално национално име; municipality community identity + exact Root са отделен local layer. Final national brand остава OPEN.
 24. **CURRENT NEXT:** Community Identity Naming Contract → едно конкретно предложение как canonical municipality community + exact Root се показват човешки/граматически правилно, включително awkward municipality names, без dynamic site rebrand. След Owner решение → Screen 1 dependency revalidation по §§112, 114, 115. Без implementation преди това.
+25. **OWNER HARD CONSTRAINT — СОФИЯ:** случаят „София / Столична община“ НЕ се решава автоматично по общия Naming Contract и НЕ подлежи на импровизирано обобщение. Когато работата стигне до конкретния Sofia case, първо се прави отделно специално проучване; едва след него се предлага решение. Това е директно Owner решение и не се отваря за обсъждане от WORK/ordinary чатове.
 
 
 ## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
