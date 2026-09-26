@@ -125,7 +125,7 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 | Public CTA | Default при реален exact/safe-broader aggregate: „Виж какво има за теб“. **ОДОБРЕНО за privacy-suppressed low-density state:** „Запази и продължи“ | и двата CTA водят през същата registration boundary; low-density CTA не обещава човек/резултат, а честно continuity на Root + Current към „За теб“; Master §§112, 114 |
 | Screen 1 reuse boundary | Запазва world map entry, minimal header и map interaction; премахва public people directory, ticker, exact counts/zero, people tabs и direct hook → auth | Master §91; няма public identities; само privacy-safe aggregate → Context Bridge |
 | Public architecture „Лом ↔ България“ | **ОДОБРЕНО 25.09 + УТОЧНЕНО §115:** една stable product identity + Лом origin/pilot + national Root; municipality community identity е local layer, не automatic site rebrand. Final national brand остава OPEN | Master §§100, 112, 115; Community Identity Naming Contract е NEXT; не генерирай механично `Родени в + municipality_name` |
-| Screen 1 initial public state | **ЗА DEPENDENCY REVALIDATION:** wording/national framing спрямо §112 + result-state CTA/copy спрямо §114; registration boundary, privacy threshold и Root/Current order остават | Master §§67, 79, 82, 91–97, 100, 112, 114; CURRENT NEXT е едно Screen 1 proposal след пълен Criteria Check; без prototype implementation преди Owner approval |
+| Screen 1 initial public state | **ЗА DEPENDENCY REVALIDATION след Naming Contract:** wording/national framing спрямо §§112/115 + result-state CTA/copy спрямо §114; registration boundary, privacy threshold и Root/Current order остават | Master §§67, 79, 82, 91–97, 100, 112, 114, 115; CURRENT NEXT първо е Community Identity Naming Contract, после едно Screen 1 proposal; без prototype implementation преди Owner approval |
 | Screen 1 Current Location step | Hook → same-screen mobile bottom sheet/desktop side panel → canonical `Държава` → `Населено място` → country focus → „Продължи към „Откъде си?““ | Master §94; private browser session; no GPS/IP/URL/analytics/public write/count; controlled lookup fallback |
 | Screen 1 Root step | Current summary → „Откъде си?“ → national canonical Root search → `Сега`/`Откъде си` markers → „Виж какво показва картата“ | Master §95; Lom priority, not hard limit; no route line; unverified Root gives no exact-locality result and is not trusted context |
 | Screen 1 privacy-safe preview | Context summary → exact locality aggregate; ако exact е suppressed, първото естествено safe-broadening ниво е canonical municipality aggregate; иначе suppressed | Master §§84, 88, 96, 114, 115; всяко ниво самостоятелно минава eligibility + stable snapshot + threshold 5; OFF остава aggregate-only; exact CTA vs low-density CTA по §114 |
@@ -221,6 +221,7 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 
 ## 7. Какво още НЕ е заключено
 
+- **Community Identity Naming Contract** — exact human display на municipality community + exact Root, без заключване на final national brand;
 - точният Context Engine ranking/cooldown;
 - точната Next Best Question логика;
 - окончателният screen-by-screen layout;
