@@ -55,7 +55,9 @@ Owner потвърди следната стратегическа посока:
 
 Следващ чат трябва първо да прочете новата секция 0 в `START_HERE.md`.
 
-## 2A. CURRENT PRODUCT MODEL — 24.09.2026
+## 2A. HISTORICAL PRODUCT MODEL SNAPSHOT — 24.09.2026 — SUPERSEDED FOR CURRENT NEXT
+
+**Важно:** този блок пази контекста от 24–25.09.2026. Неговите тогавашни „текущ checkpoint / NEXT“ формулировки са исторически. **Текущият валиден checkpoint е Master §115, а CURRENT NEXT е Community Identity Naming Contract.**
 
 Това е текущата рамка, от която следващ чат трябва да продължи:
 
@@ -69,16 +71,18 @@ Owner потвърди следната стратегическа посока:
 - Продуктовата логика не е Lom-only.
 - **Публичната архитектура „Лом ↔ България“ е ОДОБРЕНА като стратегически принцип на 25.09.2026:** една стабилна продуктова идентичност + Лом като видим origin/pilot + national Root scope + dynamic local context според Root, без автоматично city rebrand. Това approval не избира ново национално име и не заключва финален public copy.
 - Старият Lom-centric initial Screen 1 copy в Master §92 **НЕ трябва да се използва като окончателна национална branding истина**. Той изисква повторна проверка спрямо Master §§67, 82 и бъдещото архитектурно решение.
-- Текущият mobile Screen 1 prototype е работна лаборатория. Public architecture принципът вече е одобрен, но prototype implementation остава замразен, докато не приключи следващият low-density CTA / registration-motive test и не се направи dependency revalidation.
+- Mobile Screen 1 prototype е работна лаборатория. Исторически той е бил замразен до low-density CTA / registration-motive test; този test вече е затворен в §114. Prototype implementation остава замразен по по-новата зависимост §115 → Community Identity Naming Contract → Screen 1 dependency revalidation.
 - Одитът на клиентската пътека показа риск: при чистене на UI могат да се махнат не само излишни елементи, а и логическите мостове **„защо ме питаш → каква полза → какво ще стане след това“**. След архитектурното решение Screen 1 се преглежда end-to-end по тази логика, а не екран по екран изолирано.
 
-### Стратегическа тестова линия — текущ checkpoint
+### Историческа стратегическа тестова линия — checkpoint към 24–25.09.2026
 
 Master §§101–112 пазят тестовата линия, която вече е преминала през R.E. TEST 001–015 и public architecture test. Вътрешният R.E. motor е synthesis PASS, а public architecture принципът от §112 е Owner-approved на 25.09.2026.
 
-Следващият незатворен тест е **low-density CTA / registration motive в одобрения public framing**. Това не разрешава Screen 1 implementation преди резултата и последващата dependency revalidation.
+Исторически следващият незатворен тест е бил **low-density CTA / registration motive**. Той вече е затворен с Owner-approved §114 и **НЕ е текущ NEXT**.
 
-### Текущ NEXT
+### Исторически NEXT — SUPERSEDED
+
+Следващият списък пази тестовата последователност, довела до §§112/114/115. **Не го използвай като CURRENT NEXT.** Текущият NEXT е т.24 по-долу: Community Identity Naming Contract.
 
 1. **Без нов Screen 1 implementation.**
 2. R.E. TEST 001–013 се запазват; резултатите им не се започват отначало.
@@ -226,7 +230,9 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 - security remediation plan;
 - точните ranking/cooldown правила на Context Engine.
 
-## 6. NEXT EXACT STEP
+## 6. HISTORICAL APPROVED CONTRACTS — НЕ Е CURRENT NEXT
+
+**Този раздел пази одобрени договори и pre-prototype история. Не започвай работа от заглавието му. Текущият NEXT е в §2A, т.24: Community Identity Naming Contract.**
 
 - **P0-7 Visibility contract — ОДОБРЕНО:** 3 нива: (1) нерегистриран вижда само карта + privacy-safe агрегати, без самоличности; (2) регистриран непознат вижда кратка contextual card само при силна обяснима причина, не пълен профил; (3) accepted connection отключва комуникация, не автоматично всички лични данни. Email/телефон/точна възраст/точен адрес не са автоматично публични. Travel се показва само когато е релевантно към конкретна нужда. `open_to_strangers=OFF` спира actionable inbound discovery, но user остава в aggregate counts и може сам да изпраща outbound заявки. Няма implementation още.
 
