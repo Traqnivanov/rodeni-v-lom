@@ -85,7 +85,7 @@ Frozen prototype не се пипа без ново Owner approval.
 ## CURRENT ENVIRONMENT — FINAL MODEL
 
 - `main` = canonical truth;
-- `work/screen1-current` = единствена active Screen 1 work + QA lane;
+- `work/screen1-current` = единствена active Screen 1 work + QA lane; current product candidate = carried-forward test/working blob `38544a93...`; QA harness = `dc4962a...`;
 - frozen reference = `review/ordinary-screen1-frozen-for-work` @ `1c1551dc...`, DO NOT MODIFY;
 - live/production = untouched;
 - всички други Screen 1 branches/PR-и = archive/evidence only.
