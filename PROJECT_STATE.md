@@ -23,6 +23,24 @@
 - Текущият продуктов NEXT е **Screen 1 dependency revalidation** спрямо §§112, 114, 115, 116.
 
 
+## 1B. ACTIVE ENVIRONMENT / WORK LANE — 26.09.2026
+
+**Current work type:** product logic + Screen 1 dependency revalidation; **НЕ UI implementation**.
+
+- **Canonical truth / decisions:** `main`
+- **Live / production:** НЕ СЕ ПИПА
+- **Legacy prototype `prototype-screen1.html`:** historical/reference, НЕ current base
+- **WORK C1/C2 branch `review/work-screen1-approved-direction`:** historical controller/reference line, НЕ current base
+- **Frozen baseline:** `review/ordinary-screen1-frozen-for-work` @ `1c1551dc47faa249132394f019491373bc876f22`
+- **Frozen product artifact:** `prototype-screen1-map-interaction-lab.html` blob `a3334bfabd9d99d156a766ca094f2bd1cbf1822c` — DO NOT MODIFY
+- **QA/test environment:** `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`
+- **QA harness:** `prototype-screen1-mobile-visual-review.html` — QA only, not product UI
+- **ACTIVE Screen 1 UI working branch:** **NONE until Owner approves the current revalidation proposal**
+- **CURRENT NEXT:** Screen 1 dependency revalidation → one concrete proposal → Criteria Check → Owner approval.
+
+След Owner approval се създава **една нова active Screen 1 branch от post-freeze/frozen lineage**, записва се тук преди първа UI промяна и само тя се използва за следващата implementation работа.
+
+**NO ENVIRONMENT JUMP:** не се продължава от C1/C2, legacy prototype, frozen branch или произволен lab branch без explicit State transition.
 ## 2. Текущ етап
 
 Проектът има достатъчна основа за следващия етап. **Не се започва от нулата.**
