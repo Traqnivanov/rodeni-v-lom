@@ -115,7 +115,7 @@ Naming Contract за общия случай вече е **OWNER APPROVED (§116
 ## Как да разбереш, че си тръгнал в грешна посока
 
 Спри, ако започнеш да:
-- правиш код преди Naming Contract;
+- правиш prototype/code преди текущия Screen 1 revalidation proposal + Owner approval;
 - третираш всяко село като отделна community;
 - губиш exact Root;
 - приемаш same municipality като достатъчно основание за показване на произволен stranger;
