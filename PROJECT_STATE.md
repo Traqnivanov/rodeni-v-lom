@@ -425,4 +425,4 @@ Public → registered continuity:
 - след registration километри не стоят постоянно — logged-in продуктът се води от текущия човешки контекст;
 - пълният contract е Master §118.
 
-**CURRENT NEXT:** distance-layer logic/static pass е завършен за exact → safe-broader → suppressed → registration boundary; exact има и live 390 px check. Следва WORK review, когато WORK е наличен, и финален Owner visual approval на updated candidate. Всяко ново продуктово решение се обсъжда с Owner веднага при откриване.
+**CURRENT NEXT:** updated Screen 1 candidate е с финален mobile visual QA PASS в един bounded live run: exact 390, safe-broader 390, suppressed 390, registration boundary, exact 360 и exact 412 — 6/6 PASS, без blocking defect и без ново product decision. Следва независим WORK review, когато WORK е наличен, после Owner visual approval/freeze на същия candidate. Не се започва нов Screen 1 вариант.
