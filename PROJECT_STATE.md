@@ -31,6 +31,7 @@
 - **Live / production:** НЕ СЕ ПИПА
 - **Legacy prototype `prototype-screen1.html`:** historical/reference, НЕ current base
 - **WORK C1/C2 branch `review/work-screen1-approved-direction`:** historical controller/reference line, НЕ current base
+- **Draft PR #1 / `review/ordinary-screen1-mobile-hierarchy`:** historical review-only candidate, НЕ current lane
 - **Frozen baseline:** `review/ordinary-screen1-frozen-for-work` @ `1c1551dc47faa249132394f019491373bc876f22`
 - **Frozen product artifact:** `prototype-screen1-map-interaction-lab.html` blob `a3334bfabd9d99d156a766ca094f2bd1cbf1822c` — DO NOT MODIFY
 - **QA/test environment:** `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`
