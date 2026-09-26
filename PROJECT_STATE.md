@@ -409,3 +409,19 @@ Public → registered continuity:
 `open_to_strangers`, minors/14+, connection pair integrity и structured travel.
 
 **P0-1: 18+ — затворено. P0-2: inbound contact gate — затворено. P0-3: unordered pair + separate safety block — затворено. P0-4: structured travel — затворено. P0-5: role matrix — затворено. P0-6: registration V1 — затворено. Следва P0-7: post-confirmation onboarding.**
+
+
+## 9. CURRENT SCREEN 1 OWNER DECISION — 26.09.2026
+
+**Current ↔ Root distance context — OWNER APPROVED и implemented in review candidate.**
+
+- active implementation: `work/screen1-current` / `prototype-screen1-map-interaction-lab.html`;
+- implementation commit: `0e9d4ee05f2aa0d0256a8237090353a41d7873ff`;
+- когато има потвърдени Current + Root с canonical geo coordinates, картата показва лека връзка между тях и приблизително географско разстояние;
+- това НЕ е route/flight distance и НЕ използва routing API;
+- distance calculation е presentation/context layer, не R.E. logic;
+- safe-broader пази exact Root; Community не става трета лична map точка;
+- след registration километри не стоят постоянно — logged-in продуктът се води от текущия човешки контекст;
+- пълният contract е Master §118.
+
+**CURRENT NEXT:** visual/flow verification на updated Screen 1 candidate: exact → safe-broader → suppressed → registration boundary. Всяко ново продуктово решение се обсъжда с Owner веднага при откриване.
