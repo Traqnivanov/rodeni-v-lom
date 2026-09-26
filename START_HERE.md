@@ -131,6 +131,177 @@ Owner direction + audited synthesis е записан в Master §115.
 **Community Identity Naming Contract е OWNER APPROVED в Master §116.** Общият модел е exact Root identity + municipality Community identity като отделни човешки нива; Sofia/Столична община остава отделен mandatory research gate. **CURRENT NEXT е Screen 1 dependency revalidation** спрямо §§112, 114, 115, 116.
 
 
+## 1A. ENVIRONMENT / BRANCH REGISTRY — ЗАДЪЛЖИТЕЛНО
+
+Тази секция определя **коя среда за какво служи**. Нов чат няма право да избира прототип/branch по име, по давност или по това „къде изглежда най-готово“.
+
+### A. LIVE / PRODUCTION
+
+- Реалният сайт и production поведението са отделни от Screen 1 review работата.
+- `index.html` + реалният Supabase/production слой **НЕ са текущата Screen 1 работна среда**.
+- Live се променя само след отделен promotion/deployment checkpoint и Owner approval.
+- Никакъв prototype PASS не означава автоматично промяна на live.
+
+### B. MAIN — CANONICAL PRODUCT TRUTH
+
+Branch: `main`
+
+Роля:
+- canonical документация;
+- Owner решения;
+- CURRENT STATE / CURRENT NEXT;
+- Master;
+- Dependency Map;
+- continuity/process rules.
+
+`main` **не е автоматично активният UI prototype branch**.
+
+Текущата работа в този чат е именно тук на ниво **product logic / dependency revalidation**, без Screen 1 UI implementation.
+
+### C. LEGACY / EARLY SCREEN 1 PROTOTYPE
+
+Artifact на `main`:
+- `prototype-screen1.html`
+
+Статус:
+- по-ранен Screen 1 prototype;
+- последните му значими промени са преди по-късните WORK/ordinary/frozen линии;
+- пази се за история/сравнение;
+- **НЕ е текуща база за продължаване на Screen 1**.
+
+Не се „връщай“ към него само защото е в `main`.
+
+### D. WORK CONTROLLED C1/C2 LINE — HISTORICAL CONTROLLER LINE
+
+Branch:
+- `review/work-screen1-approved-direction`
+
+Ключови artifacts:
+- `prototype-screen1-work-c1.html`
+- `prototype-screen1-work-c2.html`
+
+Роля:
+- пази WORK C1/C2 историята и controller решенията/evidence;
+- C2 е важен по-стар WORK candidate/reference;
+- използва се за audit/comparison, когато трябва да се разбере как е стигнато до по-късния frozen package.
+
+Статус:
+- **не е текущата working lane**;
+- не се продължава директно от C1/C2, освен ако Owner/WORK изрично не отхвърли по-късната линия и не върне проекта назад.
+
+### E. FROZEN ORDINARY SCREEN 1 BASELINE — НЕ СЕ ПИПА
+
+Branch:
+- `review/ordinary-screen1-frozen-for-work`
+
+Frozen SHA:
+- `1c1551dc47faa249132394f019491373bc876f22`
+
+Active frozen product-facing artifact:
+- `prototype-screen1-map-interaction-lab.html`
+- frozen blob: `a3334bfabd9d99d156a766ca094f2bd1cbf1822c`
+
+Роля:
+- последният замразен ordinary product candidate;
+- точна контролна снимка за сравнение;
+- база, спрямо която се проверяват новите продуктови решения;
+- подлежи на независим WORK review, но по-новите §§112/114/115/116 вече изискват dependency revalidation преди старият candidate да може да бъде приет безусловно.
+
+Правило:
+- **НИКОГА не се редактира този branch/artifact.**
+- Frozen означава reference baseline, не работна площадка.
+
+### F. POST-FREEZE QA / TEST ENVIRONMENT
+
+Branch:
+- `review/ordinary-screen1-postfreeze-work`
+
+Base:
+- създаден от frozen SHA `1c1551dc...`
+
+Текущ известен post-freeze head:
+- `d7c760484fd780c7827c40eba644b6d1d3a39a48`
+
+Product candidate вътре:
+- `prototype-screen1-map-interaction-lab.html` остава със същия frozen blob `a3334bf...`
+
+QA-only harness:
+- `prototype-screen1-mobile-visual-review.html`
+
+Роля:
+- accessibility/data/state/regression проверки;
+- QA harness;
+- post-freeze audit reports;
+- доказателства за това как frozen candidate се държи.
+
+Правило:
+- QA harness **не е product UI** и не се promote-ва като продукт;
+- test PASS тук не променя frozen candidate;
+- това е средата за проверка, не production.
+
+### G. OTHER ORDINARY / C2 / LAB BRANCHES — ИСТОРИЯ И EVIDENCE
+
+Примери:
+- `review/ordinary-screen1-c2-mobile`
+- `review/ordinary-screen1-working`
+- `review/ordinary-locality-integration-lab`
+- `review/ordinary-map-interaction-lab`
+- `review/ordinary-screen1-matrix-lab`
+- други по-ранни review branches.
+
+Роля:
+- пазят конкретни експерименти, QA evidence и исторически work packages.
+
+Правило:
+- **не са текуща working lane**, освен ако `PROJECT_STATE.md` изрично не обяви конкретен branch за ACTIVE;
+- не се събират произволно промени от различни branches.
+
+### CURRENT ACTIVE LANE — 26.09.2026
+
+В момента **няма активна Screen 1 UI implementation branch**.
+
+Работата е:
+- canonical product/revalidation работа в `main`;
+- reference product baseline = frozen candidate `1c1551dc...` / blob `a3334bf...`;
+- QA/evidence environment = `review/ordinary-screen1-postfreeze-work`;
+- CURRENT NEXT = Screen 1 dependency revalidation спрямо §§112, 114, 115, 116;
+- няма промяна на live/frozen/prototype code преди Owner approval на конкретното revalidation предложение.
+
+### След Owner approval на Screen 1 revalidation
+
+Не се започва от друг стар prototype.
+
+Създава се **една нова active working branch**, която:
+1. продължава от post-freeze/frozen lineage, а не от C1, C2 или legacy `prototype-screen1.html`;
+2. запазва frozen product artifact като доказуема начална база;
+3. синхронизира текущите canonical решения от `main` преди UI промяна;
+4. става единствената ACTIVE Screen 1 working lane;
+5. използва post-freeze QA harness/evidence за regression verification;
+6. след WORK review + Owner approval може да бъде promoted; преди това live остава непокътнат.
+
+Точният branch name и стартов SHA се записват в `PROJECT_STATE.md` **в момента на създаването**, преди първата промяна.
+
+### NO ENVIRONMENT JUMP — ТВЪРДО ПРАВИЛО
+
+В рамките на един checkpoint не се сменя working environment по средата.
+
+Преди всяка implementation задача трябва да е ясно записано:
+- **SOURCE BASELINE** — от кой exact branch/SHA идва работата;
+- **ACTIVE WORKING BRANCH**;
+- **ACTIVE PRODUCT ARTIFACT**;
+- **QA / TEST ENVIRONMENT**;
+- **FROZEN / DO NOT TOUCH**;
+- **PROMOTION TARGET**;
+- **CURRENT NEXT**.
+
+Смяна на working branch е позволена само ако:
+1. текущият checkpoint е затворен или изрично прекратен;
+2. причината за смяната е записана;
+3. новият branch е създаден от изрично посочена база;
+4. `PROJECT_STATE.md` е обновен **преди** новата работа;
+5. няма скрити промени, които остават само в стария branch.
+
+**Не се работи „донякъде“ в една среда и после не се продължава от друга без formal handoff.**
 ## 2. Задължителен работен режим
 
 За нова логика, UX, механизъм, роли, security, DB, matching, Admin flow:
