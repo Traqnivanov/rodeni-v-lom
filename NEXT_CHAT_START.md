@@ -84,33 +84,22 @@ Frozen prototype не се пипа без ново Owner approval.
 
 ## CURRENT NEXT
 
-**Community Identity Naming Contract**
+**Screen 1 dependency revalidation спрямо Master §§112, 114, 115, 116**
 
-Цел:
+Naming Contract за общия случай вече е **OWNER APPROVED (§116)**:
+- exact Root identity и municipality Community identity са отделни човешки нива;
+- community display label е отделен от canonical municipality ID/official name;
+- national brand остава отделен;
+- не се използва механично `Родени в + municipality_name`;
+- при Root/community с еднакво човешко име е допустим compact display без загуба на отделните identity данни;
+- **Sofia/Столична община остава отделен mandatory research gate и НЕ е решена от §116.**
 
-да се намери един човешки и национално мащабируем начин за показване на:
-
-**municipality community + exact Root**
-
-без:
-- хиляди отделни „Родени в [село]“ общности;
-- загуба на exact locality;
-- механично `Родени в + municipality_name`;
-- объркване между local community identity и националния brand;
-- dynamic full-site rebrand.
-
-**OWNER HARD CONSTRAINT — СОФИЯ:** Sofia/Столична община е специален случай. Не решавай нейния human display label чрез общия модел по подразбиране. Когато стигнеш до конкретната Sofia задача, първо направи отделно специално проучване и чак след това предложи решение. Това Owner решение не се отваря за дискусия от WORK/ordinary чат.
-
-Задължително тествай поне:
-- Лом / Ковачица;
-- Лом / Трайково;
-- Враца / населено място от общината;
-- Столична община / София;
-- община с неудобно/нечовешко display име.
-
-После дай:
-
-**ЕДНО най-добро конкретно предложение → рискове → Criteria Check → Owner approval.**
+Следващата работа:
+1. end-to-end audit на frozen Screen 1 спрямо §§112, 114, 115, 116;
+2. провери first 3 seconds, Current → Root, preview, exact→municipality broadening, CTA, registration continuity и mobile;
+3. открий конфликтите между frozen demo semantics и новия approved model;
+4. дай **ЕДНО най-добро конкретно предложение → рискове → Criteria Check → Owner approval**;
+5. без prototype implementation преди Owner approval.
 
 ## Забрани до Owner approval
 
