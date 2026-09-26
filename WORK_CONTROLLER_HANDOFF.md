@@ -7,7 +7,7 @@
 
 ---
 
-## CURRENT OVERRIDE — 25.09.2026 — ЧЕТИ ПРЕДИ СТАРИЯ HANDOFF
+## CURRENT OVERRIDE — 26.09.2026 — ЧЕТИ ПРЕДИ СТАРИЯ HANDOFF
 
 Този файл съдържа исторически WORK handoff от 20.09.2026. За текущата работа **не използвай стария NEXT самостоятелно**.
 
@@ -41,6 +41,22 @@ Owner даде изрична стратегическа посока и раз�
 - municipality community display naming е отделният текущ NEXT.
 
 WORK при връщане трябва независимо да одитира §115 спрямо North Star и зависимостите, но **не трябва да връща проекта към стария модел „всяко село = отделна community“ или към hardcoded `Лом и региона`**, освен ако не открие конкретен конфликт и го представи на Owner.
+
+
+### Continuity protocol — задължително при връщане на WORK
+
+Преди съществена работа WORK трябва след read order-а кратко да потвърди:
+- ролята си и authority границата;
+- крайната Owner цел и основните критерии, включително естествената уникалност;
+- current checkpoint;
+- last valid important Owner decision;
+- current NEXT;
+- OPEN и FROZEN / DO NOT TOUCH.
+
+При приключване на значим checkpoint WORK не записва стенограма. Записва само крайния валиден резултат + provenance и изпълнява SYNC GATE според `START_HERE.md`.
+
+WORK е длъжен да докладва значим логически конфликт, dependency gap, риск или по-силна посока спрямо крайната Owner цел, но не заменя сам Owner-approved решение.
+
 
 ### Prototype / Screen 1 continuity
 
