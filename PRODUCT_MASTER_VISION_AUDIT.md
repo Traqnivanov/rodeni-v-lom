@@ -9800,3 +9800,83 @@ Hardcoded `lomGroup` и `Лом и региона` не се канонизир�
 - няма production/Supabase/DB промяна;
 - frozen review branch остава замразен.
 
+
+
+# 116. [OWNER APPROVED] Community Identity Naming Contract — Root identity + Community identity са отделни нива
+
+**Дата:** 26.09.2026  
+**Статус:** OWNER APPROVED / CANONICAL PRODUCT CONTRACT  
+**Implementation status:** НЯМА PROTOTYPE / PRODUCTION / DB IMPLEMENTATION
+
+**Provenance — §116:**
+- **Origin / direction:** §115 + Owner requirement за човешки, национално мащабируем community display;
+- **Worked / analysed by:** ordinary ChatGPT — stress test върху exact Root, municipality community, awkward municipality names, mobile/brand/uniqueness boundaries;
+- **Approved by:** Owner — общият модел е приет; Sofia/Столична община е изрично изключена за отделно бъдещо проучване;
+- **Recorded by:** ordinary ChatGPT с Owner approval;
+- **Clarifies:** §115, т.10–11 — brand ≠ community identity; display naming не се генерира механично;
+- **Next:** Screen 1 dependency revalidation по §§112, 114, 115, 116.
+
+## Одобрен общ модел
+
+1. **Exact Root identity и Community identity са две отделни човешки нива.**
+   - Root = точно canonical населено място;
+   - Community = canonical municipality membership, показано с човешки display label.
+
+2. **Националният brand е отделен слой.**
+   - Не се създава dynamic full-site rebrand по Root или municipality;
+   - не се заключва финалното национално име с този contract.
+
+3. **Canonical identity ≠ display wording.**
+   - municipality membership се определя от canonical municipality ID;
+   - official municipality name се пази отделно;
+   - user-facing community display label може да бъде куриран за яснота и естествен език;
+   - display label никога не променя canonical geography.
+
+4. **Не се използва механично `Родени в + municipality_name`.**
+   Awkward/нечовешки municipality names не се насилват в brand-like формула.
+
+5. **Exact Root не се губи зад community label.**
+   Малко населено място като Ковачица/Трайково остава видимо като личен Root, докато community принадлежността е Лом.
+
+6. **При Root и community с едно и също човешко име може да се използва компактен display без безсмислено повторение**, но данните и логиката остават две отделни identity нива.
+
+7. **Критерият „Уникално“ остава активен и след approval.**
+   Този contract е текущата валидна посока, не догма. Ако по-късна работа докаже по-силен собствен механизъм/структура/логика с реална човешка полза, той се предлага на Owner; не се подменя тихо. При ново Owner решение старият contract се маркира SUPERSEDED/CLARIFIED.
+
+## OWNER HARD CONSTRAINT — Sofia / Столична община
+
+Sofia case НЕ се счита за решен от общия §116 модел.
+
+Преди конкретен Sofia naming/display contract:
+- отделно специално проучване;
+- отделен анализ;
+- конкретно предложение;
+- Owner решение.
+
+WORK/ordinary нямат право да приложат общия модел автоматично към Sofia human display label.
+
+## Criteria Check
+
+- **Human clarity:** PASS — Root и community не се смесват.
+- **Exact identity:** PASS — малките населени места остават видими.
+- **National scalability:** PASS — една canonical municipality логика без хиляди отделни community brands.
+- **Brand safety:** PASS — local identity не заключва national brand.
+- **Awkward municipality names:** PASS чрез отделен human display label.
+- **Mobile:** PASS като двуслойна семантика с допустимо compact display при дублиране.
+- **Uniqueness:** PASS на системно ниво — различимостта идва от exact Root → municipality community → Current/need → explainable R.E. opportunity, не от декоративно naming усложнение.
+- **Sofia:** OPEN / отделен mandatory research gate.
+
+## Какво §116 НЕ одобрява
+
+- финално national brand име;
+- конкретен Sofia label;
+- DB/schema;
+- EKATTE import;
+- prototype implementation;
+- production copy promotion.
+
+## NEXT
+
+**Screen 1 dependency revalidation** спрямо §§112, 114, 115 и 116.
+
+Цел: да се провери frozen Screen 1 end-to-end спрямо новите municipality/community semantics и одобрения Naming Contract и да се даде едно конкретно предложение преди каквато и да е implementation.
