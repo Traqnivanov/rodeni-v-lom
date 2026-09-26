@@ -9493,6 +9493,15 @@ Owner **ОДОБРИ** low-density principle:
 **Статус:** OWNER-DIRECTED STRATEGIC SYNTHESIS / CANONICAL CHECKPOINT  
 **Implementation status:** НЯМА IMPLEMENTATION / НЯМА DB / SUPABASE / PRODUCTION / FROZEN PROTOTYPE ПРОМЯНА
 
+**Provenance — §115:**
+- **Origin / direction:** Owner — изрична стратегическа посока за community semantics и national-ready модел;
+- **Worked / analysed by:** ordinary ChatGPT — audit/synthesis на live продукта, frozen Screen 1, R.E. tests, dependency map и релевантните Master решения;
+- **Approved by:** Owner — посоката и записването ѝ като текущ strategic checkpoint са изрично одобрени;
+- **Recorded by:** ordinary ChatGPT с Owner разрешение;
+- **Clarifies / supersedes:** уточнява §§70/75 и отменя използването на demo/hardcoded broadening като продуктова география; не отменя Visibility/Opportunity gates;
+- **Evidence:** Git history за §115 и последвалия State/Dependency/Handoff sync;
+- **Next:** Community Identity Naming Contract; няма implementation преди отделно Owner решение.
+
 ## Защо този checkpoint е критичен
 
 След съпоставка на:
