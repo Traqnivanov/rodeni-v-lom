@@ -41,11 +41,43 @@ const find=id=>places.find(p=>p.id===id),hasCoords=p=>Number.isFinite(p?.x)&&Num
 const BG_LATIN={а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ж:'zh',з:'z',и:'i',й:'y',к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'h',ц:'ts',ч:'ch',ш:'sh',щ:'sht',ъ:'a',ь:'y',ю:'yu',я:'ya'};
 const bgLatinKey=value=>norm(value).split('').map(ch=>BG_LATIN[ch]??ch).join('').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').replace(/iya\b/g,'ia').trim();
 const exact={'DE|Мюнхен|BG|Лом':'25+','GB|Лондон|BG|Лом':'10+','ES|Мадрид|BG|Лом':'5+','IT|Милано|BG|Лом':'5+','FR|Лион|BG|Лом':'5+','AT|Грац|BG|Лом':'5+','BG|София|BG|Лом':'10+'};
-const broader={'FR|Париж':'5+','DE|Берлин':'10+','AT|Виена':'5+','ES|Барселона':'5+','NL|Амстердам':'5+'};
-// Explicit demo eligibility, never a universal geographic inference.
-const lomGroup=new Set(['BG|Лом','BG|Ковачица','BG|Монтана']);
+// Prototype-only municipality mapping for demo canonical Roots.
+// Production source of truth remains the approved versioned official locality→municipality mapping.
+const rootCommunity={
+  'BG|Лом':{id:'muni-lom',label:'Лом'},
+  'BG|Ковачица':{id:'muni-lom',label:'Лом'},
+  'BG|Монтана':{id:'muni-montana',label:'Монтана'},
+  'BG|Пловдив':{id:'muni-plovdiv',label:'Пловдив'},
+  'BG|Видин':{id:'muni-vidin',label:'Видин'},
+  'BG|Берковица':{id:'muni-berkovitsa',label:'Берковица'},
+  'BG|Враца':{id:'muni-vratsa',label:'Враца'},
+  'BG|Козлодуй':{id:'muni-kozloduy',label:'Козлодуй'},
+  'BG|Плевен':{id:'muni-pleven',label:'Плевен'},
+  'BG|Варна':{id:'muni-varna',label:'Варна'},
+  'BG|Русе':{id:'muni-ruse',label:'Русе'},
+  'BG|Велико Търново':{id:'muni-veliko-tarnovo',label:'Велико Търново'},
+  'BG|Бургас':{id:'muni-burgas',label:'Бургас'}
+};
+// Sofia/Stolichna municipality is intentionally NOT assigned a human community label here.
+// Owner hard constraint: separate research + proposal before Sofia naming/display.
+const communityBroader={
+  'FR|Париж|muni-lom':'5+',
+  'DE|Берлин|muni-lom':'10+',
+  'AT|Виена|muni-lom':'5+',
+  'ES|Барселона|muni-lom':'5+',
+  'NL|Амстердам|muni-lom':'5+'
+};
 const currentOnly={'FR|Париж':'25+','DE|Мюнхен':'50+','AT|Виена':'10+'};
-function aggregate(current,root,pending){if(!current)return {type:'suppressed'};if(pending)return currentOnly[current]?{type:'current',band:currentOnly[current]}:{type:'suppressed'};if(!root)return {type:'suppressed'};if(exact[current+'|'+root])return {type:'exact',band:exact[current+'|'+root]};if(lomGroup.has(root)&&broader[current])return {type:'broader',band:broader[current]};return {type:'suppressed'}}
+const communityFor=root=>rootCommunity[root]||null;
+function aggregate(current,root,pending){
+  if(!current)return {type:'suppressed'};
+  if(pending)return currentOnly[current]?{type:'current',band:currentOnly[current]}:{type:'suppressed'};
+  if(!root)return {type:'suppressed'};
+  if(exact[current+'|'+root])return {type:'exact',band:exact[current+'|'+root],community:communityFor(root)};
+  const community=communityFor(root),band=community?communityBroader[current+'|'+community.id]:null;
+  if(band)return {type:'broader',band,community};
+  return {type:'suppressed',community};
+}
 const KEY='rodeni-work-screen1-c2',blank=()=>({country:'',current:'',currentDraft:'',root:'',rootDraft:'',pending:'',view:'current'});let state=blank(),active=false,timer=null,generation=0,attempt=0,storageOK=true,recovered=false,editingCurrent=false,editingRoot=false;
 try{const d=JSON.parse(sessionStorage.getItem(KEY)||'null');if(d&&d.version===1&&Date.now()-d.updated<86400000&&Date.now()>=d.updated&&(!d.current||find(d.current)?.country===d.country)&&(!d.root||find(d.root)?.country==='BG')&&(!d.country||countries[d.country])){state={country:d.country||'',current:d.current||'',currentDraft:typeof d.currentDraft==='string'?d.currentDraft.slice(0,100):'',root:d.root||'',rootDraft:typeof d.rootDraft==='string'?d.rootDraft.slice(0,100):'',pending:typeof d.pending==='string'?d.pending.slice(0,100):'',view:'current'};if(state.current)state.currentDraft='';if(state.root){state.rootDraft='';state.pending=''}}else if(d){sessionStorage.removeItem(KEY);recovered=true}}catch{storageOK=false}
 function save(){try{sessionStorage.setItem(KEY,JSON.stringify({...state,version:1,updated:Date.now()}))}catch{storageOK=false}}
@@ -94,8 +126,8 @@ else if(state.view==='root'){h=confirmRoot?'<h2 id="question" tabindex="-1" clas
 else if(state.view==='loading'){h='<h2 id="question" tabindex="-1">Проверяваме твоя контекст…</h2><p class="helper" role="status">Търсим допустим общностен резултат.</p><button class="secondary" id="back">Промени местата</button>'}
 else if(state.view==='error'){h='<h2 id="question" tabindex="-1">Резултатът не се зареди</h2><p class="helper" role="alert">Техническа грешка не означава, че няма хора. Изборите ти остават тук.</p><div class="actions"><button class="primary" id="retry">Опитай отново</button>'+(attempt>0?'<button class="secondary" id="skip">Продължи без публичен резултат</button>':'')+'<button class="secondary" id="back">Промени местата</button></div>'}
 else if(state.view==='boundary'){h='<h2 id="question" tabindex="-1">Следва кратка регистрация</h2><p class="helper">Избраните места ще се запазят частно. След като потвърдиш имейла си, ще ги прегледаш и можеш да ги промениш, преди да станат част от профила ти.</p><p class="notice">Този Screen 1 прототип спира пред регистрацията.</p>'+(!storageOK?'<p class="notice">В този браузър изборите остават само докато страницата е отворена.</p>':'')+'<button class="secondary" id="return">Назад към '+(state.returnView==='error'?'проверката':'резултата')+'</button>'}
-else{const result=aggregate(state.current,state.root,state.pending);let text='',explain='',label='',band=result.band||'',bandClass='';if(result.type==='exact'){label='За двете ти места';text='В '+c.name+' има хора, свързани с '+r.name+'.';explain='Показваме диапазон, не точен брой и не списък с хора.'}else if(result.type==='broader'){label='По-широка общност';band=result.band+' души в '+c.name;bandClass=' broader-band';text='от Лом и региона';explain=r.name==='Лом'?'За самия Лом не показваме отделен брой.':'За избраното място „'+r.name+'“ не показваме отделен брой.'}else if(result.type==='current'){label='Само според „Сега“';text='Участници в общността в '+c.name;explain='Произходът „'+state.pending+'“ не е потвърден. Този резултат не използва него.'}else{label='Защитена видимост';text='Засега няма публичен резултат'+(state.pending?' за това място.':' за тази комбинация.');explain='Това не означава, че няма хора. Малките групи не се показват.'+(state.pending?' Произходът остава непотвърден.':'')}
-h='<h2 id="question" tabindex="-1">'+(state.pending?'Общността около теб':'Резултат за твоите две места')+'</h2><p class="sr">Сега: '+esc(c.name)+'. Откъде: '+esc(r?.name||state.pending)+(state.pending?' — непотвърдено':'')+'.</p><div class="result"><div class="kind">'+label+'</div>'+(band?'<div class="band'+bandClass+'">'+esc(band)+'</div>':'')+'<p>'+esc(text)+'</p><p class="explain">'+esc(explain)+'</p></div><p class="lock">Конкретен човек се показва само при ясна обща причина и разрешени нови заявки.</p><div class="actions"><button class="primary" id="continue">Виж какво има за теб</button><button class="secondary" id="back">Промени местата</button></div>'}
+else{const result=aggregate(state.current,state.root,state.pending),community=result.community||communityFor(state.root);let text='',explain='',label='',band=result.band||'',bandClass='',primaryLabel=result.type==='suppressed'?'Запази и продължи':'Виж какво има за теб';const rootLabel=r?.name||state.pending||'—',communityLabel=state.pending?'Още не е определена':(community?.label||'Още не е определена');if(result.type==='exact'){label='Точен сигнал';text='В '+c.name+' има хора, свързани с '+r.name+'.';explain='Показваме диапазон, не точен брой и не списък с хора.'}else if(result.type==='broader'){label='Твоята общност';band=result.band+' души в '+c.name;bandClass=' broader-band';text='от общността '+community.label;explain='За точния корен „'+r.name+'“ не показваме отделен брой; показваме безопасния общностен сигнал.'}else if(result.type==='current'){label='Само според „Сега“';text='Има публичен общностен сигнал в '+c.name+'.';explain='Коренът „'+state.pending+'“ още не е потвърден, затова общността ти още не е определена и този резултат не използва Root.'}else{label='Защитена видимост';text='Засега няма публичен резултат'+(state.pending?' за това място.':' за тази комбинация.');explain='Това не означава, че няма хора. Малките групи не се показват.'+(state.pending?' Коренът остава непотвърден.':'')}
+h='<h2 id="question" tabindex="-1">Резултат за твоя контекст</h2><div class="status"><div class="status-context"><span>Сега</span><b>'+esc(c.name)+', '+esc(countries[c.country]||c.country)+'</b></div></div><div class="status"><div class="status-context"><span>Корен</span><b>'+esc(rootLabel)+(state.pending?' — непотвърдено':'')+'</b></div></div><div class="status"><div class="status-context"><span>Общност</span><b>'+esc(communityLabel)+'</b></div></div><div class="result"><div class="kind">'+label+'</div>'+(band?'<div class="band'+bandClass+'">'+esc(band)+'</div>':'')+'<p>'+esc(text)+'</p><p class="explain">'+esc(explain)+'</p></div><p class="lock">Конкретен човек се показва само при ясна обща причина и разрешени нови заявки.</p><div class="actions"><button class="primary" id="continue">'+primaryLabel+'</button><button class="secondary" id="back">Промени местата</button></div>'}
 $('content').innerHTML=h;
 if(state.view==='current'){if(confirmCurrent){$('editCurrent').onclick=()=>{editingCurrent=true;render()};$('next').onclick=()=>{editingCurrent=false;change('root')}}else{$('country').onchange=()=>{state.country=$('country').value;state.current='';state.currentDraft='';attempt=0;resetMapInteractionState();save();render();$('current').focus()};if(state.country)wirePlace('current');$('next').onclick=()=>{if(!acceptTyped('current')){fail('Първо потвърди населеното място.');return}editingCurrent=false;change('root')}}}
 if(state.view==='root'){if(confirmRoot){$('editCurrent').onclick=()=>{editingCurrent=true;state.view='current';render()};$('editRoot').onclick=()=>{editingRoot=true;render();requestAnimationFrame(()=>$('root')?.focus())};$('next').onclick=()=>{editingRoot=false;lookup()}}else{wirePlace('root');$('next').onclick=()=>{if(!acceptTyped('root')){fail('Първо потвърди населеното място или използвай непотвърдения вариант.');return}editingRoot=false;lookup()}}}
