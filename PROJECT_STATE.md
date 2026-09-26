@@ -417,6 +417,7 @@ Public → registered continuity:
 
 - active implementation: `work/screen1-current` / `prototype-screen1-map-interaction-lab.html`;
 - implementation commit: `0e9d4ee05f2aa0d0256a8237090353a41d7873ff`;
+- latest bounded copy refinement: `c12b25cf96508b6f54e94c4333ba5cea14060b27`;
 - когато има потвърдени Current + Root с canonical geo coordinates, картата показва лека връзка между тях и приблизително географско разстояние;
 - това НЕ е route/flight distance и НЕ използва routing API;
 - distance calculation е presentation/context layer, не R.E. logic;
@@ -424,4 +425,4 @@ Public → registered continuity:
 - след registration километри не стоят постоянно — logged-in продуктът се води от текущия човешки контекст;
 - пълният contract е Master §118.
 
-**CURRENT NEXT:** visual/flow verification на updated Screen 1 candidate: exact → safe-broader → suppressed → registration boundary. Всяко ново продуктово решение се обсъжда с Owner веднага при откриване.
+**CURRENT NEXT:** distance-layer logic/static pass е завършен за exact → safe-broader → suppressed → registration boundary; exact има и live 390 px check. Следва WORK review, когато WORK е наличен, и финален Owner visual approval на updated candidate. Всяко ново продуктово решение се обсъжда с Owner веднага при откриване.
