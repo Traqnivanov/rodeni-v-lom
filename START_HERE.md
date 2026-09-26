@@ -111,6 +111,25 @@ R.E. обединява, а не заменя:
 
 **Лом остава първата реална общност, пилотът и отправната точка, но не е техническата граница на R.E.**
 
+### CURRENT STRATEGIC CHECKPOINT — MUNICIPALITY COMMUNITY GRAPH
+
+Owner direction + audited synthesis е записан в Master §115.
+
+За България:
+- **community membership = canonical община**;
+- **Root = точно canonical населено място вътре в тази общност**;
+- R.E. при normal people discovery предпочита exact Root, после same municipality, после силна друга причина;
+- при active need / Travel / конкретен момент реалната човешка релевантност има приоритет над чистата географска близост;
+- municipality membership никога не заобикаля Visibility / `open_to_strangers` / block / decline / safety gates;
+- public exact `0–4` може да broadens само към canonical municipality aggregate, ако той самостоятелно покрива privacy threshold;
+- user не избира община ръчно — тя се извежда от versioned official locality→municipality mapping;
+- hardcoded групи от prototype-а не са geographic source of truth;
+- националното име на продукта остава OPEN; municipality community identity и exact Root са отделен слой, не автоматичен rebrand.
+
+**Не разделяй общността на хиляди отделни села/градове. Не губи exact Root. Не показвай произволен човек само за да няма empty state.**
+
+Следващата отделна стратегическа точка е **Community Identity Naming Contract** — как municipality community + exact Root се показват човешки и граматически правилно, без да се заключва националният brand.
+
 
 ## 2. Задължителен работен режим
 
