@@ -307,9 +307,11 @@ Chat не е постоянен tab:
 Public → registered continuity:
 **карта → public hook → preview → registration → onboarding → „За теб“**.
 
-### NEXT EXACT STEP ПРЕДИ ПРОТОТИПА
+### HISTORICAL NEXT — SUPERSEDED / НЕ ИЗПОЛЗВАЙ КАТО ТЕКУЩ NEXT
 
-Допълнителните pre-prototype рискове се затварят **един по един** по OWNER approval criteria.
+Този блок пази стария pre-prototype маршрут за audit trail. **Текущият NEXT е §2A, т.24: Community Identity Naming Contract → после Screen 1 dependency revalidation по §§112/114/115.**
+
+Допълнителните pre-prototype рискове са били затваряни **един по един** по OWNER approval criteria.
 
 - Точка 1 — public aggregate → personal value contract: **ОДОБРЕНА**.
 - Точка 2 — privacy праг и адаптивна публична видимост: **ОДОБРЕНА**.
@@ -356,7 +358,9 @@ Public → registered continuity:
 
 Текущият значим checkpoint е Master §99: Release Gate е одобрен, първите два mobile candidates са отхвърлени и initial state се коригира чрез mobile-base/desktop-opt-in архитектура с видим device report. Technical pass не означава mobile/Owner approval.
 
-## 8. Последен значим checkpoint
+## 8. Исторически значим checkpoint — НЕ Е ТЕКУЩИЯТ CHECKPOINT
+
+Текущият значим checkpoint е Master §115 / Municipality Community Graph и §2A, т.24 по-горе. Блокът отдолу се пази само като история.
 
 На 19.09.2026 Admin/Owner одобри end-to-end operating contract-а:
 **User Context Engine + Admin/Owner Operations Engine**.
