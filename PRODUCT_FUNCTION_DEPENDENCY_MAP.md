@@ -1,26 +1,6 @@
 # PRODUCT FUNCTION DEPENDENCY MAP — „Родени в Лом“
 
-## SCREEN 1 — АКТУАЛИЗАЦИЯ 21.09.2026 / Master §100
-
-Този индекс следва приетия след одит contract от Master §100 в `review/work-screen1-approved-direction`; main още не е обновен.
-
-| Решение | Зависимости и проверка |
-|---|---|
-| Въпрос/лична полза/CTA пред картата | Initial viewport, реална четимост, §99; не се смалява текст заради геометрията на картата |
-| Контекстна карта след start | Hide public signals, Current→Root, back/close/reopen; началото не показва наследени лични маркери |
-| Фиксирани Сега/Откъде надписи | Единна проекция, точни координати, fit на двете места, дълги имена, 200% текст, screen-reader context |
-| Compact result | Двете места остават разбираеми; exact/broader/suppressed се различават честно |
-| Safe broader | Current locality + допустима Root принадлежност; никакъв универсален Lom fallback за несвързан Root |
-| Hybrid fallback | Controlled lookup representation, unverified Root, допустим Current-only result, retry/recovery; demo не е production resolver |
-| Close/loading и session | Закъснял резултат не възстановява затворен flow; черновата се валидира; context bridge остава частен |
-| Път към registration | Boundary само в Screen 1; потвърждение и review преди реален профил; няма Screen 2 implementation |
-| Приемане на демо идея | Отделно от code quality, visual PASS и final Owner approval; чист promotion path |
-
-Privacy eligibility/threshold, OFF aggregate inclusion, stranger visibility и community-only scope остават непроменени. Новият критерий за собствено преживяване е разбираемият преход „Сега + Откъде → допустим резултат за моя контекст“, не декларация за световна уникалност.
-
----
-
-**Дата:** 20.09.2026
+**Последна актуализация:** 25.09.2026
 **Статус:** ЗАДЪЛЖИТЕЛЕН ОПЕРАТИВЕН ИНДЕКС НА ОДОБРЕНИТЕ ФУНКЦИИ
 **Обхват:** продуктова логика, UX, privacy, safety, flow и зависимости преди решение
 **Не е:** нова продуктова спецификация, заместител на Master-а или разрешение за implementation
@@ -50,9 +30,13 @@ Privacy eligibility/threshold, OFF aggregate inclusion, stranger visibility и c
 
 „Родени в Лом“ не е каталог, feed, Facebook clone, dating matching или публична директория.
 
-Основният механизъм е:
+Основният механизъм се изпълнява от **R.E. — единния вътрешен мотор на продукта**.
 
-**правилният човек → по конкретна човешка причина → в правилния момент**
+R.E. обединява Context Engine, Root Graph, Opportunity logic/model и privacy/permission/safety gates. Не се създава паралелен engine за отделен град или общност.
+
+Целевият резултат е:
+
+**правилният човек / информация / помощ / действие → по конкретна човешка причина → в правилния момент**
 
 Всеки механизъм трябва да отговори:
 
@@ -126,6 +110,8 @@ Privacy eligibility/threshold, OFF aggregate inclusion, stranger visibility и c
 
 | Функция / механизъм | Одобрено поведение | Задължително се проверява заедно с |
 |---|---|---|
+| **R.E. — Rodeni Engine** | Единен вътрешен мотор; обединява Context Engine + Root Graph + Opportunity logic/model + privacy/permission/safety gates; не се дублира по градове | всички product flows; национален Root; Current Location; Context Bridge; visibility; opportunities; бъдещи локални общности |
+| **Municipality Community Graph** | **Master §115:** community membership = canonical municipality; exact Root locality = precision/affinity signal вътре в community. Normal discovery: exact Root → same municipality → strong outside reason; active need/moment relevance може да изпревари чистата Root близост | official versioned locality→municipality mapping; Visibility/Opportunity gates; public aggregate; naming contract; **Sofia/Столична община има отделен задължителен research gate преди display/naming решение**; national brand остава отделен |
 | End-to-end contract | `event → gate → reason → opportunity/queue → one clear action → result → next state → audit/privacy` | всеки user и Admin flow; explainability; failure/recovery |
 | Context Engine | Комбинира Root, Current Location, временен контекст, активна нужда, accepted хора, permissions и „защо сега“ | Gate преди relevance; без opaque score и без filler |
 | Opportunity | Кратка explainable стойност с една ясна причина и действие | current state, expiry/cooldown, permissions, next state |
@@ -136,21 +122,22 @@ Privacy eligibility/threshold, OFF aggregate inclusion, stranger visibility и c
 | Aggregate privacy | 0–4 се скриват в едно общо състояние; при 5+ се показват `5+`, `10+`, `25+`, `50+`, `100+` | всяка подгрупа отделно; без exact zero и arbitrary differencing |
 | Aggregate eligibility | Само confirmed-email, completed-onboarding, confirmed-18+, canonical user-confirmed profiles; без pending/unresolved/deleted/suspended/banned/test | един account веднъж; OFF остава; stable snapshot; threshold се прилага след eligibility |
 | Aggregate freshness | Root не изтича; Current Location участва до 12 месеца от последното user потвърждение | Travel не променя Current Location; expired current location се връща след reconfirmation и следващ snapshot |
-| Public CTA | „Виж какво има за теб“ | не обещава „Виж кои са“; води към registration → onboarding → „За теб“ |
+| Public CTA | Default при реален exact/safe-broader aggregate: „Виж какво има за теб“. **ОДОБРЕНО за privacy-suppressed low-density state:** „Запази и продължи“ | и двата CTA водят през същата registration boundary; low-density CTA не обещава човек/резултат, а честно continuity на Root + Current към „За теб“; Master §§112, 114 |
 | Screen 1 reuse boundary | Запазва world map entry, minimal header и map interaction; премахва public people directory, ticker, exact counts/zero, people tabs и direct hook → auth | Master §91; няма public identities; само privacy-safe aggregate → Context Bridge |
-| Screen 1 initial public state | `Родени в Лом` → ясно map обяснение → privacy-safe world map → „А ти къде си на картата?“ → „Показваме общности, не лични профили.“ | Master §92; anonymous first viewport; secondary `Вход`/`Поверителност`; no forced uniqueness |
+| Public architecture „Лом ↔ България“ | **ОДОБРЕНО 25.09 + УТОЧНЕНО §§115–116:** една stable product identity + Лом origin/pilot + national Root; exact Root identity и municipality Community identity са отделни човешки нива; local community identity не е automatic site rebrand. Final national brand остава OPEN | Master §§100, 112, 115, 116; не генерирай механично `Родени в + municipality_name`; Sofia human display има отделен mandatory research gate |
+| Screen 1 initial public state | **CURRENT NEXT — DEPENDENCY REVALIDATION:** wording/national framing спрямо §§112/115/116 + result-state CTA/copy спрямо §114; registration boundary, privacy threshold и Root/Current order остават | Master §§67, 79, 82, 91–97, 100, 112, 114, 115, 116; един end-to-end audit → едно Screen 1 proposal → Owner approval; без prototype implementation преди това |
 | Screen 1 Current Location step | Hook → same-screen mobile bottom sheet/desktop side panel → canonical `Държава` → `Населено място` → country focus → „Продължи към „Откъде си?““ | Master §94; private browser session; no GPS/IP/URL/analytics/public write/count; controlled lookup fallback |
 | Screen 1 Root step | Current summary → „Откъде си?“ → national canonical Root search → `Сега`/`Откъде си` markers → „Виж какво показва картата“ | Master §95; Lom priority, not hard limit; no route line; unverified Root gives no exact-locality result and is not trusted context |
-| Screen 1 privacy-safe preview | Context summary → един допустим exact/broader/suppressed aggregate result → „Виж какво има за теб“ | Master §96; eligibility → stable snapshot → threshold 5 → bands; 0–4 общо state; едно meaningful safe broadening ниво; OFF остава aggregate-only |
+| Screen 1 privacy-safe preview | Context summary → exact locality aggregate; ако exact е suppressed, първото естествено safe-broadening ниво е canonical municipality aggregate; иначе suppressed | Master §§84, 88, 96, 114, 115; всяко ниво самостоятелно минава eligibility + stable snapshot + threshold 5; OFF остава aggregate-only; exact CTA vs low-density CTA по §114 |
 | Screen 1 recovery states | Loading пази map/context → human BG error → retry само на failed операцията → optional secondary continue without preview | Master §97; error ≠ 0–4/zero; session draft persistence; canonical Current requirement; publishable snapshot е backend-authoritative; Context Bridge остава pending/private |
 | Screen 1 review prototype | `prototype-screen1.html` събира Screen 1 contract-а в отделен interactive demo flow | Master §98; demo data; `index.html`/Supabase/DB са непроменени; Owner mobile visual/flow approval е задължителен преди promotion или следващ screen |
 | Prototype Release Gate | Hierarchy card → hard mobile floors → viewport/state matrices → three-second/readability evidence → independent controller pass | Master §99; technical pass ≠ mobile visual pass ≠ Owner approved; реален телефон не може да попадне в desktop layout само заради reported width |
 | Registration | Email + password, минимум 12 знака, 18+, Terms + Privacy, email confirmation | Context Bridge, auth errors, existing account, session state |
 | V1 age/safety | Registration, personalized matching, contact и chat са само за 18+ | backend enforcement; legacy `age >= 14` не е валидният launch contract |
-| Контекстов мост | Root + Current Location преминават като private unconfirmed pending context | browser session, email confirmation, validation, cleanup, fallback |
+| Контекстов мост | **V1:** Root + Current Location като private unconfirmed pending context. **FUTURE / неактивно за V1:** Pending Action/Need bridge за pre-registration user-written need/action | browser session, registration, email confirmation, validation, cleanup, fallback; Master §§85, 104, 106 |
 | Minimum onboarding | Име/прякор → Откъде си? → Къде си сега? | ако Root/Current вече са въведени, те се потвърждават/редактират, не се искат от нулата |
 | Explain-while-asking | Всеки въпрос казва защо се задава, каква полза отключва и какво следва | human question, benefit hint, input, forward cue, конкретен CTA |
-| Root | Точно населено място → община → силна друга причина; областта е слаб резервен signal | canonical geography, Context Engine, privacy |
+| Root | User избира точно canonical населено място. То определя exact Root; municipality се извежда автоматично и определя community membership. **§116:** exact Root identity и Community identity се показват като отделни човешки нива; областта остава слаб резервен context | Master §§67, 70, 75, 115, 116; official locality→municipality mapping; Context Engine; privacy; Sofia special research gate |
 | Current Location | Отделен signal от Root | public preview, Context Engine, Travel, privacy |
 | Hybrid locality resolution | Fast local suggestions + explicit fallback + canonical locality identity | избрана държава, validation, cache, unresolved locality не дава exact-locality opportunity |
 | School signal | Допълнителен context signal, не задължителен minimum onboarding field | може да участва в matching, без автоматично да се показва на stranger |
@@ -234,6 +221,7 @@ Privacy eligibility/threshold, OFF aggregate inclusion, stranger visibility и c
 
 ## 7. Какво още НЕ е заключено
 
+- **Community Identity Naming Contract — OWNER APPROVED (§116):** exact Root identity + municipality Community identity са отделни човешки нива; Sofia/Столична община остава отделен mandatory research gate;
 - точният Context Engine ranking/cooldown;
 - точната Next Best Question логика;
 - окончателният screen-by-screen layout;
