@@ -82,6 +82,18 @@ Master §115 — **Municipality Community Graph**.
 
 Frozen prototype не се пипа без ново Owner approval.
 
+## CURRENT ENVIRONMENT — НЕ ИЗБИРАЙ ДРУГ BRANCH ПО ПРЕДПОЛОЖЕНИЕ
+
+- canonical decisions: `main`;
+- live/production: untouched;
+- legacy `prototype-screen1.html`: historical only;
+- WORK C1/C2: historical/reference;
+- Draft PR #1 / mobile hierarchy: historical review-only;
+- frozen product baseline: `review/ordinary-screen1-frozen-for-work` @ `1c1551dc...`, DO NOT MODIFY;
+- QA/test environment: `review/ordinary-screen1-postfreeze-work`; QA harness ≠ product UI;
+- active Screen 1 UI implementation branch: **NONE** до Owner approval на current revalidation.
+
+Пълното правило е `START_HERE.md` §1A; точният current lane е `PROJECT_STATE.md` §1B.
 ## CURRENT NEXT
 
 **Screen 1 dependency revalidation спрямо Master §§112, 114, 115, 116**
