@@ -27,12 +27,13 @@
 
 - **Canonical truth:** `main`
 - **ACTIVE Screen 1 work + QA:** `work/screen1-current`
-- **Source lineage for current branch:** `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`
+- **Product candidate source:** `review/ordinary-screen1-working` @ `e4401f1dce83208cd75d79bc825bcba7cfb481ab` → carried forward product blob `38544a930117fa1301d7dc6dbce1c7529cdd15cf`
+- **QA/audit source:** `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48` → QA harness blob `dc4962a83705373b6d84eabb506f09e807605fa0`
 - **Frozen rollback/reference:** `review/ordinary-screen1-frozen-for-work` @ `1c1551dc47faa249132394f019491373bc876f22`
 - **Frozen product blob:** `a3334bfabd9d99d156a766ca094f2bd1cbf1822c`
 - **Live / production:** untouched
 - **All other Screen 1 branches / Draft PR #1:** ARCHIVE / HISTORY ONLY
-- **CURRENT WORK TYPE:** Screen 1 dependency revalidation; active branch is ready, but no new product UI implementation is allowed until the current revalidation proposal receives Owner approval.
+- **CURRENT WORK TYPE:** Screen 1 dependency revalidation върху **последния test/working product candidate**, не върху frozen UI. Inherited changes (mobile search/confirmation + accessibility/data fixes) се пазят като candidate behavior, но подлежат на новия Criteria Check; не се считат автоматично за final approval.
 - **CURRENT NEXT:** Owner decision on the Screen 1 revalidation proposal → if approved, implement only that approved delta in `work/screen1-current` → run existing QA/regression there → WORK review → Owner visual/flow approval.
 
 **NO ENVIRONMENT JUMP:** Screen 1 work continues only in `work/screen1-current` until this checkpoint is explicitly closed or replaced.
