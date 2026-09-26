@@ -20,7 +20,7 @@
 - При затваряне на значим checkpoint се записва кой е дал посоката, кой е работил/анализирал, кой е одобрил, кой е записал, какво се заменя/уточнява, implementation/evidence при нужда и точният NEXT.
 - След значим checkpoint се изпълнява **SYNC GATE**: State → Master → Dependency Map → WORK/Handoff/active tracker при нужда → проверка за стар конфликтен NEXT.
 - Git history/Issues са evidence и operational history; не заменят каноничните решения.
-- Текущият продуктов NEXT **не се променя от тази process корекция**: остава **Community Identity Naming Contract**.
+- Текущият продуктов NEXT е **Screen 1 dependency revalidation** спрямо §§112, 114, 115, 116.
 
 
 ## 2. Текущ етап
@@ -107,8 +107,9 @@ Master §§101–112 пазят тестовата линия, която веч
 21. **Public/privacy следствие:** exact public aggregate остава първи; при suppressed exact може да се провери canonical municipality aggregate, само ако самостоятелно покрива threshold. Municipality membership не разрешава person exposure.
 22. **Canonical geography:** locality→municipality трябва да идва от versioned official mapping; frozen `lomGroup` е demo и не е source of truth. Няма production/DB import с този checkpoint.
 23. **Brand boundary:** `Родени в Лом` не се заключва като финално национално име; municipality community identity + exact Root са отделен local layer. Final national brand остава OPEN.
-24. **CURRENT NEXT:** Community Identity Naming Contract → едно конкретно предложение как canonical municipality community + exact Root се показват човешки/граматически правилно, включително awkward municipality names, без dynamic site rebrand. След Owner решение → Screen 1 dependency revalidation по §§112, 114, 115. Без implementation преди това.
+24. **OWNER APPROVED — Master §116:** Community Identity Naming Contract е затворен за общия случай: exact Root identity + municipality Community identity са отделни човешки нива; community display може да има human label отделно от canonical ID/official name; national brand остава отделен; механично `Родени в + municipality_name` не се използва. Sofia/Столична община остава отделен mandatory research gate.
 25. **OWNER HARD CONSTRAINT — СОФИЯ:** случаят „София / Столична община“ НЕ се решава автоматично по общия Naming Contract и НЕ подлежи на импровизирано обобщение. Когато работата стигне до конкретния Sofia case, първо се прави отделно специално проучване; едва след него се предлага решение. Това е директно Owner решение и не се отваря за обсъждане от WORK/ordinary чатове.
+26. **CURRENT NEXT:** Screen 1 dependency revalidation спрямо §§112, 114, 115, 116 → един end-to-end audit на frozen Screen 1 → едно конкретно предложение → Criteria Check → Owner approval. Без prototype implementation преди това.
 
 
 ## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
