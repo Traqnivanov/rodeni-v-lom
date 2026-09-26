@@ -9691,6 +9691,23 @@ local community context може да се показва силно, без ц�
 
 остава отделно UX/brand решение.
 
+## 12. [OWNER HARD CONSTRAINT] Sofia / Столична община — отделно проучване преди naming решение
+
+**Дата:** 26.09.2026  
+**Origin:** Owner  
+**Authority:** директно Owner решение; не подлежи на обсъждане/отмяна от WORK или ordinary чат.
+
+Случаят **София / Столична община** се изважда от автоматичното прилагане на общия Community Identity Naming Contract.
+
+Когато проектът стигне до конкретното naming/display решение за София:
+- първо се прави **отделно специално проучване**;
+- проверяват се административната специфика, човешкото възприятие и приложимият display модел;
+- чак след това се представя конкретно предложение на Owner;
+- не се приема предварително, че общият municipality display модел е достатъчен;
+- не се записва финален Sofia label преди това отделно проучване и Owner решение.
+
+Това правило не променя canonical geography или municipality membership. То поставя отделен задължителен research gate само върху **човешкото naming/display решение за Sofia case**.
+
 ## Stress-test matrix — PASS / boundaries
 
 1. **Exact match exists:** exact Root получава приоритет в normal discovery → PASS.
