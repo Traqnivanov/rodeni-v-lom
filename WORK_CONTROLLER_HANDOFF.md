@@ -26,6 +26,22 @@
 - R.E. е единният motor;
 - точният **Service Trust Mechanism е OPEN** и не се имплементира без отделен audit → proposal → Owner approval.
 
+### Municipality Community Graph — 26.09.2026
+
+Owner даде изрична стратегическа посока и разрешение тя да бъде синтезирана в source of truth. Master §115 е текущият canonical checkpoint:
+
+- community membership в България = **canonical municipality**;
+- exact Root = **canonical exact locality** и по-силен вътрешен signal;
+- normal people discovery: exact Root → same municipality → strong outside reason;
+- active need/moment relevance е над чистата geography при конфликт;
+- municipality membership НЕ е permission за person display;
+- public exact suppressed може да broadens към canonical municipality aggregate само при собствен threshold PASS;
+- official locality→municipality mapping е задължителен; hardcoded `lomGroup` в frozen prototype е demo-only;
+- final national brand остава OPEN;
+- municipality community display naming е отделният текущ NEXT.
+
+WORK при връщане трябва независимо да одитира §115 спрямо North Star и зависимостите, но **не трябва да връща проекта към стария модел „всяко село = отделна community“ или към hardcoded `Лом и региона`**, освен ако не открие конкретен конфликт и го представи на Owner.
+
 ### Prototype / Screen 1 continuity
 
 Не започвай Screen 1 отначало и не пипай production/Supabase.
