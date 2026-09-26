@@ -243,6 +243,7 @@ QA-only harness:
 
 Примери:
 - `review/ordinary-screen1-c2-mobile`
+- `review/ordinary-screen1-mobile-hierarchy` / Draft PR #1 — review-only historical candidate, NOT current working lane
 - `review/ordinary-screen1-working`
 - `review/ordinary-locality-integration-lab`
 - `review/ordinary-map-interaction-lab`
