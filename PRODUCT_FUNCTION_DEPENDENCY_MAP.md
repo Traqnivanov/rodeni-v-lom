@@ -221,7 +221,7 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 
 ## 7. Какво още НЕ е заключено
 
-- **Community Identity Naming Contract** — exact human display на municipality community + exact Root, без заключване на final national brand;
+- **Community Identity Naming Contract — OWNER APPROVED (§116):** exact Root identity + municipality Community identity са отделни човешки нива; Sofia/Столична община остава отделен mandatory research gate;
 - точният Context Engine ranking/cooldown;
 - точната Next Best Question логика;
 - окончателният screen-by-screen layout;
