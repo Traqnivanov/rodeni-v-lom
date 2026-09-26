@@ -9912,3 +9912,33 @@ WORK/ordinary нямат право да приложат общия модел 
 ## CURRENT NEXT
 
 **Visual/flow verification на същия единен candidate в `work/screen1-current` → bounded fixes само при реален проблем → WORK review → Owner visual approval.**
+
+
+# 118. [OWNER APPROVED][SCREEN 1] Current ↔ Root distance context
+
+**Дата:** 26.09.2026  
+**Статус:** OWNER APPROVED / IMPLEMENTED IN REVIEW CANDIDATE  
+**Implementation:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commit `0e9d4ee05f2aa0d0256a8237090353a41d7873ff`
+
+## Одобрено решение
+
+1. След като Screen 1 знае и `Current`, и потвърден `Root`, картата може да показва лека визуална връзка между двете реални места и приблизително географско разстояние в километри.
+2. Разстоянието означава **приблизително географско разстояние между двете места**, не автомобилен маршрут, самолетен маршрут или време за пътуване.
+3. Изчислението е presentation/context layer и **не е част от R.E. decision logic**. R.E. продължава да решава Root → Community → допустим сигнал → privacy → действие.
+4. Не се използва външен routing API. При налични canonical latitude/longitude координати разстоянието се изчислява локално с геодезична формула и се закръгля за човешко показване.
+5. Линията свързва само реалните лични места `Current ↔ Root`. При safe-broader Community НЕ се добавя като трета лична точка и не заменя Root.
+6. В result state разстоянието се използва като кратък човешки контекст, който усилва смисъла на общностния сигнал; не се добавя отделен лозунг или допълнителна текстова стена на mobile.
+7. След registration този distance layer не става постоянен център на продукта. Основният logged-in продукт живее в текущия контекст `къде си сега / какво има значение сега`; Root/Community остават интелигентен фон. Разстояние се показва по-късно само когато конкретният контекст го прави полезно (например travel).
+
+## Criteria Check
+
+- **Human benefit:** PASS — разстоянието прави връзката Current ↔ Root осезаема, вместо да е суха география.
+- **Uniqueness:** PASS — стойността не е „показваме километри“, а `Current → Root → distance context → Community → privacy-safe human signal`.
+- **Mobile:** PASS по contract — един кратък distance label/ред, без нов екран и без допълнителна стъпка.
+- **Privacy:** PASS — не променя visibility thresholds или person exposure.
+- **Technical weight:** PASS — локално изчисление от координати; без routing API и без R.E. товар.
+- **Truthfulness:** PASS само при canonical geographic coordinates; SVG/map display coordinates никога не се използват за километри.
+
+## CURRENT NEXT
+
+Продължава visual/flow verification на същия candidate след тази bounded промяна. Проверяват се exact / safe-broader / suppressed и registration boundary; при ново продуктово решение се спира и се обсъжда с Owner **веднага**, без натрупване за по-късно.
