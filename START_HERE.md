@@ -246,7 +246,7 @@ Owner direction + audited synthesis е записан в Master §115.
 ## 3. Какво да прочетеш след този файл
 
 **ВИНАГИ:** отвори `PROJECT_STATE.md`.  
-Той казва къде сме точно сега и съдържа **NEXT EXACT STEP**.
+Той казва къде сме точно сега и съдържа **CURRENT NEXT**.
 
 **ПРЕДИ ВСЯКО продуктово/UX/privacy/flow решение:** отвори `PRODUCT_FUNCTION_DEPENDENCY_MAP.md` и провери всички функции и user states, които могат да променят решението. Не вземай решение по памет или само по изолираната точка.
 
@@ -481,7 +481,7 @@ Checkpoint се счита за приключен, когато има поне
 
 ## 9. NEXT
 
-След като прочетеш `PROJECT_STATE.md`, продължи от неговия **NEXT EXACT STEP**.
+След като прочетеш `PROJECT_STATE.md`, продължи от неговия **CURRENT NEXT**.
 
 Screen 1, Точка 1 — reuse boundary и основен flow — е одобрена в Master §91.
 
