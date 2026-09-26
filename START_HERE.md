@@ -140,7 +140,11 @@ Owner direction + audited synthesis е записан в Master §115.
 Не се използва като експериментален UI branch.
 
 ### 2. `work/screen1-current` = ЕДИНСТВЕНА ACTIVE SCREEN 1 WORKING LANE
-Source lineage: `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`, която е директно върху frozen Screen 1 lineage.
+Consolidated sources:
+- **product candidate:** `review/ordinary-screen1-working` @ `e4401f1dce83208cd75d79bc825bcba7cfb481ab`, blob `38544a930117fa1301d7dc6dbce1c7529cdd15cf`;
+- **QA/audit package:** `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`, QA harness blob `dc4962a83705373b6d84eabb506f09e807605fa0`.
+
+Така по-късните test/working UX промени не се губят, а frozen остава rollback/reference.
 
 Тук от този момент живеят заедно:
 - текущият Screen 1 product candidate;
