@@ -1,33 +1,109 @@
 # WORK CONTROLLER HANDOFF — „Родени в Лом“
 
-## АКТУАЛЕН CHECKPOINT — WORK C1 — 21.09.2026
-
-Официалният Screen 1 candidate по §100 вече е реализиран като `prototype-screen1-work-c1.html` в `review/work-screen1-approved-direction`.
-Blob: `3645bf8c1554f38f5b272493faa690e9c085fb47`. 18 функционални/статични групи проверки: PASS. Пълен technical release gate: PARTIAL; browser visual PASS и Owner final approval: НЕ СА ПОЛУЧЕНИ.
-Виж `SCREEN1_WORK_C1_VERIFICATION.md` за доказателствата и ограниченията.
-NEXT: разрешен изолиран preview → визуална матрица/поправки → Owner final approval. Локалният browser preview е блокиран от URL policy; няма заобикаляне и няма твърдение за визуална проверка.
-Main/production/Supabase/Screen 2 остават непроменени. Предходните записи „candidate не е реализиран“ и NEXT „изграждане“ по-долу са исторически и са заменени от този checkpoint. §100 продуктовият contract остава в сила.
-
----
-
-## АКТУАЛЕН HANDOFF — 21.09.2026 — ПРОЧЕТИ ПЪРВО
-
-Owner уточни след одита: V13 е малко демо от времето без WORK; взимаме най-добрите решения за официалния прототип. Не поправяй демото по инерция и не го merge-вай механично.
-
-WORK CONTROLLER прие посоката в Master §100: човешки въпрос/CTA водят mobile, картата следва контекста, Сега/Откъде остават четими, result е компактен и семантично верен. Обновени са критериите за ефективен размер, контрапримери и отделни acceptance статуси.
-
-Работен documentation branch: `review/work-screen1-approved-direction`, чисто от main `7b1af9840f0054b477f1a2fb5ec33b709c8002de`. Main/production/Supabase не са променени. Демото остава в отделния ordinary review branch; няма merge на неговата история.
-
-NEXT: официален Screen 1 candidate по Master §100 → §99 technical + visual evidence → Owner final approval. Към този checkpoint candidate не е реализиран. Одобрението на посоката не означава одобрение на бъдещия визуален резултат.
-
-За всяка задача предавай точен scope, критерии и доказателства. Не добавяй blanket PASS при непроверен viewport/state. Не започвай Screen 2. По-старите „първа задача“ и NEXT записи по-долу са исторически спрямо този checkpoint; постоянните роли и privacy правила остават.
-
----
-
 **Дата:** 20.09.2026  
 **Проект:** `Traqnivanov/rodeni-v-lom`  
 **Branch:** `main`  
 **Base checkpoint преди този handoff:** `4a833183a12ea0e06e0178bea46a41a22722470c`
+
+---
+
+## CURRENT OVERRIDE — 26.09.2026 — ЧЕТИ ПРЕДИ СТАРИЯ HANDOFF
+
+Този файл съдържа исторически WORK handoff от 20.09.2026. За текущата работа **не използвай стария NEXT самостоятелно**.
+
+Преди всичко прочети:
+1. `START_HERE.md` — от самото начало, включително **§0 PRODUCT NORTH STAR + OWNER STRATEGIC END STATE**;
+2. `PROJECT_STATE.md`;
+3. `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`;
+4. само релевантните последни секции в `PRODUCT_MASTER_VISION_AUDIT.md`.
+
+### Текуща стратегическа посока
+
+- първо се изгражда реална community полезност и доверие;
+- `Иванов Ремонти` не влиза първоначално като реклама;
+- future Services трябва да се появят тихо и само при реална нужда;
+- Лом е първата реална общност/pilot, но Root моделът е национален за България;
+- R.E. е единният motor;
+- точният **Service Trust Mechanism е OPEN** и не се имплементира без отделен audit → proposal → Owner approval.
+
+### Municipality Community Graph — 26.09.2026
+
+Owner даде изрична стратегическа посока и разрешение тя да бъде синтезирана в source of truth. Master §115 е текущият canonical checkpoint:
+
+- community membership в България = **canonical municipality**;
+- exact Root = **canonical exact locality** и по-силен вътрешен signal;
+- normal people discovery: exact Root → same municipality → strong outside reason;
+- active need/moment relevance е над чистата geography при конфликт;
+- municipality membership НЕ е permission за person display;
+- public exact suppressed може да broadens към canonical municipality aggregate само при собствен threshold PASS;
+- official locality→municipality mapping е задължителен; hardcoded `lomGroup` в frozen prototype е demo-only;
+- final national brand остава OPEN;
+- **Master §116 е OWNER APPROVED:** exact Root identity + municipality Community identity са отделни човешки нива; human community display label е отделен от canonical ID/official name; national brand остава отделен;
+- Sofia/Столична община НЕ е решена от общия §116 модел — има отделен mandatory research gate;
+- **CURRENT NEXT:** Screen 1 dependency revalidation спрямо §§112, 114, 115, 116.
+
+WORK при връщане трябва независимо да одитира §115 спрямо North Star и зависимостите, но **не трябва да връща проекта към стария модел „всяко село = отделна community“ или към hardcoded `Лом и региона`**, освен ако не открие конкретен конфликт и го представи на Owner.
+
+
+### Continuity protocol — задължително при връщане на WORK
+
+Преди съществена работа WORK трябва след read order-а кратко да потвърди:
+- ролята си и authority границата;
+- крайната Owner цел и основните критерии, включително естествената уникалност;
+- current checkpoint;
+- last valid important Owner decision;
+- current NEXT;
+- OPEN и FROZEN / DO NOT TOUCH.
+
+При приключване на значим checkpoint WORK не записва стенограма. Записва само крайния валиден резултат + provenance и изпълнява SYNC GATE според `START_HERE.md`.
+
+WORK е длъжен да докладва значим логически конфликт, dependency gap, риск или по-силна посока спрямо крайната Owner цел, но не заменя сам Owner-approved решение.
+
+
+### Environment authority — read before touching Screen 1
+
+The canonical environment map is in `START_HERE.md` §1A and the exact current lane is in `PROJECT_STATE.md` §1B.
+
+WORK must not infer the active candidate from the newest-looking branch, open PR or prototype filename.
+
+Current:
+- live/production: untouched;
+- canonical decisions: `main`;
+- legacy `prototype-screen1.html`: historical/reference only;
+- WORK C1/C2 line: historical/reference only;
+- frozen reference: `review/ordinary-screen1-frozen-for-work` @ `1c1551dc...`, DO NOT MODIFY;
+- QA/test: `review/ordinary-screen1-postfreeze-work`; QA harness is not product UI;
+- Draft PR #1 / `review/ordinary-screen1-mobile-hierarchy`: historical review-only artifact, NOT current working lane;
+- active Screen 1 UI implementation branch: **NONE until Owner approves current revalidation**.
+
+After approval, one new active branch must be declared in State before implementation. No mid-checkpoint branch switching and no silent continuation from an older prototype.
+### Prototype / Screen 1 continuity
+
+Не започвай Screen 1 отначало и не пипай production/Supabase.
+
+Съществуващите review линии са:
+- `review/work-screen1-approved-direction` — WORK review основа;
+- `review/ordinary-screen1-frozen-for-work` — замразен ordinary candidate за независим WORK review;
+- `review/ordinary-screen1-c2-mobile` — отделна ordinary mobile C2 линия.
+
+Текущият Screen 1 prototype е **работна лаборатория / review artifact**, не production truth.
+
+Ключово:
+- mobile-first;
+- visual readability и hierarchy са задължителни;
+- technical pass ≠ mobile visual pass ≠ Owner approval;
+- старият Lom-centric initial copy не е автоматично валиден след националния Root модел;
+- public flow остава: **карта → Current → Root → privacy-safe preview → registration → onboarding → „За теб“**;
+- без нов Screen 1 implementation, докато по-високата продуктова посока не е изчистена и Owner не върне работата към прототипа.
+
+### WORK ролята остава
+
+WORK CONTROLLER е втори след Owner и:
+- не заменя Owner;
+- контролира ordinary работата;
+- пази frozen checkpoints;
+- не приема недоказано „готово“;
+- при конфликт между стар prototype и по-нова стратегическа истина спира и докладва, вместо да пази prototype-а на всяка цена.
 
 ---
 
@@ -163,7 +239,7 @@ Owner има последната дума за:
 Задължителен вход и правила за работа.
 
 ## `PROJECT_STATE.md`
-Текущ checkpoint и NEXT EXACT STEP.
+Текущ checkpoint и CURRENT NEXT.
 
 ## `PRODUCT_MASTER_VISION_AUDIT.md`
 Каноничната продуктова история и одобрените решения.
@@ -494,7 +570,9 @@ Chat НЕ е постоянен tab.
 
 ---
 
-# 16. КЪДЕ СМЕ СЕГА
+# 16. HISTORICAL WORK CHECKPOINT — НЕ Е ТЕКУЩОТО СЪСТОЯНИЕ
+
+**Този раздел пази стария WORK/Screen 1 checkpoint. Текущото състояние се взема от CURRENT OVERRIDE в началото + `PROJECT_STATE.md`.**
 
 Проектът е **на Owner review checkpoint за първия Screen 1 prototype**.
 
@@ -511,7 +589,7 @@ Chat НЕ е постоянен tab.
 - pre-prototype точка 5: Aggregate Eligibility Contract — aggregate брои само потвърдени 18+ completed-onboarding accounts с canonical user-confirmed context; pending/unresolved/deleted/suspended/banned/test не участват; OFF остава включен; Root не изтича; Current Location freshness е 12 месеца; всички промени минават през stable snapshot и отново през threshold 5;
 - pre-prototype точка 6: текущият screen-by-screen contract и prototype са community-only; Services/Ivanov Remonti/commercial flows са отложени до отделно изрично започнат future Services етап.
 
-## NEXT EXACT STEP
+## HISTORICAL NEXT — SUPERSEDED / НЕ ИЗПОЛЗВАЙ КАТО CURRENT NEXT
 
 Допълнителните pre-prototype blockers са **ЗАТВОРЕНИ**.
 
