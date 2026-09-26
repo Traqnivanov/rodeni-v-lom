@@ -57,7 +57,7 @@ Owner потвърди следната стратегическа посока:
 
 ## 2A. HISTORICAL PRODUCT MODEL SNAPSHOT — 24.09.2026 — SUPERSEDED FOR CURRENT NEXT
 
-**Важно:** този блок пази контекста от 24–25.09.2026. Неговите тогавашни „текущ checkpoint / NEXT“ формулировки са исторически. **Текущият валиден checkpoint е Master §115, а CURRENT NEXT е Community Identity Naming Contract.**
+**Важно:** този блок пази контекста от 24–25.09.2026. Неговите тогавашни „текущ checkpoint / NEXT“ формулировки са исторически. **§115 и §116 вече са затворени канонични checkpoints; CURRENT NEXT е Screen 1 dependency revalidation.**
 
 Това е текущата рамка, от която следващ чат трябва да продължи:
 
@@ -82,7 +82,7 @@ Master §§101–112 пазят тестовата линия, която веч
 
 ### Исторически NEXT — SUPERSEDED
 
-Следващият списък пази тестовата последователност, довела до §§112/114/115. **Не го използвай като CURRENT NEXT.** Текущият NEXT е т.24 по-долу: Community Identity Naming Contract.
+Следващият списък пази тестовата последователност, довела до §§112/114/115/116. **Не го използвай като CURRENT NEXT.** Текущият NEXT е т.26 по-долу: Screen 1 dependency revalidation.
 
 1. **Без нов Screen 1 implementation.**
 2. R.E. TEST 001–013 се запазват; резултатите им не се започват отначало.
@@ -234,7 +234,7 @@ End-to-end contract-ът **User Context Engine ↔ Admin/Owner Operations Engine
 
 ## 6. HISTORICAL APPROVED CONTRACTS — НЕ Е CURRENT NEXT
 
-**Този раздел пази одобрени договори и pre-prototype история. Не започвай работа от заглавието му. Текущият NEXT е в §2A, т.24: Community Identity Naming Contract.**
+**Този раздел пази одобрени договори и pre-prototype история. Не започвай работа от заглавието му. Текущият NEXT е в §2A, т.26: Screen 1 dependency revalidation.**
 
 - **P0-7 Visibility contract — ОДОБРЕНО:** 3 нива: (1) нерегистриран вижда само карта + privacy-safe агрегати, без самоличности; (2) регистриран непознат вижда кратка contextual card само при силна обяснима причина, не пълен профил; (3) accepted connection отключва комуникация, не автоматично всички лични данни. Email/телефон/точна възраст/точен адрес не са автоматично публични. Travel се показва само когато е релевантно към конкретна нужда. `open_to_strangers=OFF` спира actionable inbound discovery, но user остава в aggregate counts и може сам да изпраща outbound заявки. Няма implementation още.
 
@@ -329,7 +329,7 @@ Public → registered continuity:
 
 ### HISTORICAL NEXT — SUPERSEDED / НЕ ИЗПОЛЗВАЙ КАТО ТЕКУЩ NEXT
 
-Този блок пази стария pre-prototype маршрут за audit trail. **Текущият NEXT е §2A, т.24: Community Identity Naming Contract → после Screen 1 dependency revalidation по §§112/114/115.**
+Този блок пази стария pre-prototype маршрут за audit trail. **Текущият NEXT е §2A, т.26: Screen 1 dependency revalidation по §§112/114/115/116.**
 
 Допълнителните pre-prototype рискове са били затваряни **един по един** по OWNER approval criteria.
 
