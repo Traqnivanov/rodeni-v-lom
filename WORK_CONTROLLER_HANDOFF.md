@@ -38,7 +38,9 @@ Owner даде изрична стратегическа посока и раз�
 - public exact suppressed може да broadens към canonical municipality aggregate само при собствен threshold PASS;
 - official locality→municipality mapping е задължителен; hardcoded `lomGroup` в frozen prototype е demo-only;
 - final national brand остава OPEN;
-- municipality community display naming е отделният текущ NEXT.
+- **Master §116 е OWNER APPROVED:** exact Root identity + municipality Community identity са отделни човешки нива; human community display label е отделен от canonical ID/official name; national brand остава отделен;
+- Sofia/Столична община НЕ е решена от общия §116 модел — има отделен mandatory research gate;
+- **CURRENT NEXT:** Screen 1 dependency revalidation спрямо §§112, 114, 115, 116.
 
 WORK при връщане трябва независимо да одитира §115 спрямо North Star и зависимостите, но **не трябва да връща проекта към стария модел „всяко село = отделна community“ или към hardcoded `Лом и региона`**, освен ако не открие конкретен конфликт и го представи на Owner.
 
