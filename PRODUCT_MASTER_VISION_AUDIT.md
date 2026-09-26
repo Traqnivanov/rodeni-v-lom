@@ -9880,3 +9880,35 @@ WORK/ordinary нямат право да приложат общия модел 
 **Screen 1 dependency revalidation** спрямо §§112, 114, 115 и 116.
 
 Цел: да се провери frozen Screen 1 end-to-end спрямо новите municipality/community semantics и одобрения Naming Contract и да се даде едно конкретно предложение преди каквато и да е implementation.
+
+
+# 117. [OWNER APPROVED][SCREEN 1 REVALIDATION] National entry + Lom pilot context
+
+**Дата:** 26.09.2026  
+**Статус:** OWNER APPROVED / IMPLEMENTED IN REVIEW CANDIDATE  
+**Implementation:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commit `f49abddf...`
+
+## Одобрена последователност
+
+1. Първият екран започва с човешкия въпрос **„А ти къде си на картата?“**.
+2. Още в initial state се казва ясно, че Root може да е от цяла България.
+3. Лом остава видим като **пилотна общност**, не като продуктова граница.
+4. Началните map сигнали се четат като сигнали за пилотната общност Лом; не остават „голи“ национални числа без контекст.
+5. След `Current → Root` същият Screen 1 преминава към личния контекст на човека.
+6. Municipality Community се извежда автоматично от Root; не се добавя трета входна стъпка.
+7. Result state показва отделно **Сега / Корен / Общност**.
+8. Exact → municipality safe-broadening → suppressed следва §§114–116; suppressed CTA = **„Запази и продължи“**, допустим exact/broader CTA = **„Виж какво има за теб“**.
+9. Sofia human community naming остава извън generic implementation до отделния Owner research gate.
+
+## Criteria Check
+
+- Human benefit: PASS — човекът вижда реален пилот и веднага разбира, че продуктът е и за неговия Root.
+- Logic: PASS — pilot context → Current → Root → derived Community → privacy-safe result.
+- Clarity: PASS — Лом = origin/pilot; Root = точното място; Community = derived municipality; Current = къде е човекът сега.
+- Uniqueness: PASS на ниво механизъм — реален pilot signal → личен context → exact Root → municipality community → privacy-safe value.
+- Mobile: PASS като структура — няма нов екран или трето поле; visual verification остава задължително.
+- Privacy: PASS — thresholds/visibility/registration boundary не се отслабват.
+
+## CURRENT NEXT
+
+**Visual/flow verification на същия единен candidate в `work/screen1-current` → bounded fixes само при реален проблем → WORK review → Owner visual approval.**
