@@ -66,7 +66,8 @@ WORK must use the following model and must not reopen branch-selection questions
 
 - canonical truth: `main`;
 - single active Screen 1 work + QA lane: `work/screen1-current`;
-- source lineage for that lane: `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`;
+- product candidate carried from `review/ordinary-screen1-working` @ `e4401f1d...`, blob `38544a93...`;
+- QA/audit package carried from `review/ordinary-screen1-postfreeze-work` @ `d7c76048...`, harness `dc4962a...`;
 - frozen rollback/reference: `review/ordinary-screen1-frozen-for-work` @ `1c1551dc47faa249132394f019491373bc876f22`, DO NOT MODIFY;
 - live/production: untouched until explicit Owner promotion approval;
 - C1/C2, labs, mobile variants, old working branches and Draft PR #1: archive/evidence only.
