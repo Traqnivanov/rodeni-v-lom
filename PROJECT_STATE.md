@@ -25,23 +25,18 @@
 
 ## 1B. ACTIVE ENVIRONMENT / WORK LANE — 26.09.2026
 
-**Current work type:** product logic + Screen 1 dependency revalidation; **НЕ UI implementation**.
+- **Canonical truth:** `main`
+- **ACTIVE Screen 1 work + QA:** `work/screen1-current`
+- **Source lineage for current branch:** `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`
+- **Frozen rollback/reference:** `review/ordinary-screen1-frozen-for-work` @ `1c1551dc47faa249132394f019491373bc876f22`
+- **Frozen product blob:** `a3334bfabd9d99d156a766ca094f2bd1cbf1822c`
+- **Live / production:** untouched
+- **All other Screen 1 branches / Draft PR #1:** ARCHIVE / HISTORY ONLY
+- **CURRENT WORK TYPE:** Screen 1 dependency revalidation; active branch is ready, but no new product UI implementation is allowed until the current revalidation proposal receives Owner approval.
+- **CURRENT NEXT:** Owner decision on the Screen 1 revalidation proposal → if approved, implement only that approved delta in `work/screen1-current` → run existing QA/regression there → WORK review → Owner visual/flow approval.
 
-- **Canonical truth / decisions:** `main`
-- **Live / production:** НЕ СЕ ПИПА
-- **Legacy prototype `prototype-screen1.html`:** historical/reference, НЕ current base
-- **WORK C1/C2 branch `review/work-screen1-approved-direction`:** historical controller/reference line, НЕ current base
-- **Draft PR #1 / `review/ordinary-screen1-mobile-hierarchy`:** historical review-only candidate, НЕ current lane
-- **Frozen baseline:** `review/ordinary-screen1-frozen-for-work` @ `1c1551dc47faa249132394f019491373bc876f22`
-- **Frozen product artifact:** `prototype-screen1-map-interaction-lab.html` blob `a3334bfabd9d99d156a766ca094f2bd1cbf1822c` — DO NOT MODIFY
-- **QA/test environment:** `review/ordinary-screen1-postfreeze-work` @ `d7c760484fd780c7827c40eba644b6d1d3a39a48`
-- **QA harness:** `prototype-screen1-mobile-visual-review.html` — QA only, not product UI
-- **ACTIVE Screen 1 UI working branch:** **NONE until Owner approves the current revalidation proposal**
-- **CURRENT NEXT:** Screen 1 dependency revalidation → one concrete proposal → Criteria Check → Owner approval.
+**NO ENVIRONMENT JUMP:** Screen 1 work continues only in `work/screen1-current` until this checkpoint is explicitly closed or replaced.
 
-След Owner approval се създава **една нова active Screen 1 branch от post-freeze/frozen lineage**, записва се тук преди първа UI промяна и само тя се използва за следващата implementation работа.
-
-**NO ENVIRONMENT JUMP:** не се продължава от C1/C2, legacy prototype, frozen branch или произволен lab branch без explicit State transition.
 ## 2. Текущ етап
 
 Проектът има достатъчна основа за следващия етап. **Не се започва от нулата.**
