@@ -258,3 +258,18 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 5. едва след това се преминава към следващо решение или implementation.
 
 Не се разчита на паметта на текущия чат.
+
+
+## Screen 1 distance context — Owner-approved dependency note (26.09.2026)
+
+`Current + Root canonical coordinates → local geographic distance → map/context presentation`.
+
+Този слой:
+- НЕ променя Root → Municipality Community mapping;
+- НЕ участва в Opportunity ranking или visibility gating;
+- НЕ добавя third Community point към личната карта;
+- НЕ използва routing API;
+- се показва само когато има надеждни geographic coordinates;
+- след onboarding се използва само при реална контекстова полза, не като постоянна метрика.
+
+Продуктовата причина е: географското разстояние да даде човешки контекст на връзката `Сега ↔ Корен`, след което Community/R.E. показват каква реална стойност има около човека сега.
