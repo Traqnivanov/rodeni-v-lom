@@ -86,7 +86,12 @@ Master §§101–112 пазят тестовата линия, която веч
 16. **OWNER APPROVED — 25.09.2026:** stable product identity + Лом като origin/pilot + national Root scope + dynamic local context без автоматично city rebrand. Ново национално име и финален public copy остават нерешени.
 17. **OWNER APPROVED — TEST 016 / 25.09.2026:** при privacy-suppressed low-density state registration boundary остава; CTA е `Запази и продължи`, без обещание за човек/незабавен резултат. Root + Current се пазят през Context Bridge; ако няма Opportunity, `За теб` продължава по одобрения no-result resolver. При реален exact/safe-broader aggregate default `Виж какво има за теб` остава.
 18. **TEST 015 external dependencies са затворени на принципно ниво:** national public framing = §112 approved; low-density registration motive = §114 approved.
-19. **CURRENT NEXT:** Screen 1 dependency revalidation срещу North Star + §§112/114: initial public wording, national framing и result-state CTA/copy → едно конкретно предложение → Criteria Check → Owner approval → чак тогава ограничена prototype работа. Без implementation преди това.
+19. **Screen 1 dependency revalidation е ПАУЗИРАНА на стратегическа зависимост:** разговорът с Owner изясни, че municipality community semantics трябва да се затвори преди финалното Screen 1 wording.
+20. **OWNER DIRECTION + AUDITED STRATEGIC CHECKPOINT — Master §115:** community membership в България = canonical община; exact Root = точно населено място/по-силен вътрешен signal. Normal people discovery: exact Root → same municipality → силна друга причина. Active need/moment relevance има приоритет над чистата Root близост.
+21. **Public/privacy следствие:** exact public aggregate остава първи; при suppressed exact може да се провери canonical municipality aggregate, само ако самостоятелно покрива threshold. Municipality membership не разрешава person exposure.
+22. **Canonical geography:** locality→municipality трябва да идва от versioned official mapping; frozen `lomGroup` е demo и не е source of truth. Няма production/DB import с този checkpoint.
+23. **Brand boundary:** `Родени в Лом` не се заключва като финално национално име; municipality community identity + exact Root са отделен local layer. Final national brand остава OPEN.
+24. **CURRENT NEXT:** Community Identity Naming Contract → едно конкретно предложение как canonical municipality community + exact Root се показват човешки/граматически правилно, включително awkward municipality names, без dynamic site rebrand. След Owner решение → Screen 1 dependency revalidation по §§112, 114, 115. Без implementation преди това.
 
 
 ## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
