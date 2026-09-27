@@ -40,7 +40,7 @@ Owner даде изрична стратегическа посока и раз�
 - final national brand остава OPEN;
 - **Master §116 е OWNER APPROVED:** exact Root identity + municipality Community identity са отделни човешки нива; human community display label е отделен от canonical ID/official name; national brand остава отделен;
 - Sofia/Столична община НЕ е решена от общия §116 модел — има отделен mandatory research gate;
-- **CURRENT NEXT:** Screen 1 dependency revalidation спрямо §§112, 114, 115, 116.
+- **CURRENT NEXT (27.09):** ограничен Screen 1 human-language/user-journey audit на `work/screen1-current` след Owner-approved §§117–119 → mobile visual/flow recheck → независим WORK gate → Owner freeze decision. §118 distance остава одобрен; §119 уточнява честния exact/broader CTA. Production и Supabase не се пипат.
 
 WORK при връщане трябва независимо да одитира §115 спрямо North Star и зависимостите, но **не трябва да връща проекта към стария модел „всяко село = отделна community“ или към hardcoded `Лом и региона`**, освен ако не открие конкретен конфликт и го представи на Owner.
 

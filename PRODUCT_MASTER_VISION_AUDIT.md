@@ -9945,3 +9945,21 @@ WORK/ordinary нямат право да приложат общия модел 
 Продължава visual/flow verification на същия candidate след тази bounded промяна. Проверяват се exact / safe-broader / suppressed и registration boundary; при ново продуктово решение се спира и се обсъжда с Owner **веднага**, без натрупване за по-късно.
 
 **FINAL MOBILE VISUAL QA — PASS:** един ограничен live-browser run върху updated candidate провери exact 390, safe-broader 390, suppressed 390, registration boundary, exact 360 и exact 412. Всички 6 състояния PASS: няма JS/render errors, clipping, horizontal overflow, overlap или счупена hierarchy; distance line/badge не се бъркат с route; Root/Community distinction остава ясно; privacy copy и registration boundary са коректни. Няма blocking defect и няма ново product decision. WORK review остава независимият следващ gate, когато WORK е наличен; Owner visual approval може да се даде върху този candidate.
+
+
+# 119. [OWNER APPROVED][SCREEN 1] Честен преход от публичния резултат към регистрация
+
+**Дата:** 27.09.2026  
+**Статус:** OWNER APPROVED / IMPLEMENTED IN REVIEW CANDIDATE / MOBILE VISUAL RECHECK PENDING  
+**Origin:** Owner откри, че „Виж какво има за теб“ обещава непосредствен резултат, а действието първо отваря регистрация.  
+**Worked / analysed by:** WORK CONTROLLER. **Approved by:** Owner. **Recorded by:** WORK CONTROLLER.  
+**Implementation evidence:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commit `1223a7c5dfcac4f448421e115d73b9d792917345`; syntax PASS и ограничена проверка на условните състояния.  
+**Clarifies / supersedes:** само точния default CTA текст за exact/safe-broader в §§79, 96, 114, 117 и Dependency Map. Одобреният public → registration → confirmation → „За теб“ път остава.
+
+При **exact** или **safe-broader** допустим публичен резултат, непосредствено преди действието се показва: **„Следва кратка регистрация. Ще потвърдиш избраните места, преди да отвориш „За теб“.“** Водещият бутон е **„Продължи с тези места“**. Човекът вече е получил privacy-safe стойност; действието продължава с неговите две места, без да обещава незабавен човек или втори резултат при натискане.
+
+При **suppressed/low-density** одобреният бутон **„Запази и продължи“** остава. Unverified Root/current-only се проверява отделно при езиковия одит; §119 не го превръща в потвърден Root.
+
+**Uniqueness check:** самият бутон не е уникална функция. Различимостта е в непрекъснатия, честен механизъм: Current + exact Root → допустим общностен резултат → частен непотвърден Context Bridge → потвърждение → „За теб“ според реалния човек. Този текст прави механизма разбираем, без нов екран, скрита стъпка или по-слаба privacy граница.
+
+**CURRENT NEXT:** ограничен human-language audit на същия candidate, едно доказано изменение наведнъж; после мобилна visual/flow проверка и независим WORK gate. Това решение само по себе си не означава Owner freeze, production или Supabase промяна.

@@ -1,6 +1,6 @@
 # PROJECT STATE — „Родени в Лом“
 
-**Актуализирано:** 26.09.2026  
+**Актуализирано:** 27.09.2026  
 **Branch:** `main`  
 **Роля на този файл:** кратък текущ handoff. Не е пълна история и не заменя Master-а.  
 **Единствен входен файл:** `START_HERE.md`.
@@ -20,7 +20,7 @@
 - При затваряне на значим checkpoint се записва кой е дал посоката, кой е работил/анализирал, кой е одобрил, кой е записал, какво се заменя/уточнява, implementation/evidence при нужда и точният NEXT.
 - След значим checkpoint се изпълнява **SYNC GATE**: State → Master → Dependency Map → WORK/Handoff/active tracker при нужда → проверка за стар конфликтен NEXT.
 - Git history/Issues са evidence и operational history; не заменят каноничните решения.
-- Текущият продуктов NEXT е **Screen 1 dependency revalidation** спрямо §§112, 114, 115, 116.
+- Текущият продуктов NEXT е **ограничен human-language/user-journey audit на Screen 1** след Owner-approved §§117–119. §118 distance и §119 registration transition са реализирани само в review candidate; final mobile/Owner freeze още не са минати.
 
 
 ## 1B. ACTIVE ENVIRONMENT / WORK LANE — 26.09.2026
@@ -35,7 +35,8 @@
 - **All other Screen 1 branches / Draft PR #1:** ARCHIVE / HISTORY ONLY
 - **CURRENT WORK TYPE:** Screen 1 dependency revalidation върху **последния test/working product candidate**, не върху frozen UI. Inherited changes (mobile search/confirmation + accessibility/data fixes) се пазят като candidate behavior, но подлежат на новия Criteria Check; не се считат автоматично за final approval.
 - **CURRENT SCREEN 1 CANDIDATE UPDATE:** municipality-aware result logic is implemented in `work/screen1-current` (`e7c14fbb...`; regression-test alignment `0ef1bb28...`). Initial national framing + explicit `Пилотна общност: Лом` is implemented at `f49abddf...`. Old `lomGroup` / `Лом и региона` are removed; Kovačitsa→Lom community works; Montana is separate; Sofia generic naming remains intentionally unresolved; suppressed state CTA = `Запази и продължи`; result exposes `Сега / Корен / Общност`. Initial-state checks: 9/9 PASS; inline JS PASS. **Not yet Owner visual/flow approved.**
-- **CURRENT NEXT:** visual/flow review of this same candidate → bounded fixes only if needed → WORK review → Owner approval.
+- **LAST VALID OWNER DECISIONS:** §118 Current ↔ Root distance (implementation `0e9d4ee...`, copy `c12b25c...`); §119 честен exact/broader CTA и преход към регистрация (implementation `1223a7c...`).
+- **CURRENT NEXT:** човешки език и реална пътека на същия candidate, едно доказано изменение наведнъж → мобилен visual/flow recheck → WORK review → Owner freeze decision. Още няма финално Owner approval на Screen 1.
 - **BEST-OF BASELINE LOCK:** pre-§§115–116 Screen 1 product base = `prototype-screen1-map-interaction-lab.html` blob `38544a930117fa1301d7dc6dbce1c7529cdd15cf` in `work/screen1-current`; it already carries the valid frozen/C2 lineage plus later test/working mobile/accessibility improvements. Live contributes only the explicitly approved §91 reuse principles/resources, not the old people-directory UI.
 - **BEST-OF RECONCILIATION COMPLETE:** no additional approved Screen 1 mechanism was found that is missing from the current candidate. C2 mobile strengths (compact/adaptive map, in-page suggestions, keyboard selection, readable mobile hierarchy), frozen locality/map work, later mobile search/confirmation and accessibility fixes are already represented. Known unresolved items are not silently merged: map keyboard-equivalent accessibility remains OPEN; Brussels alias/entity-scope mismatch remains OPEN; §§115–116 municipality/result changes are the current product delta.
 
