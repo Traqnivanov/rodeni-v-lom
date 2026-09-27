@@ -9,7 +9,7 @@
 
 ## CURRENT OVERRIDE — 26.09.2026 — ЧЕТИ ПРЕДИ СТАРИЯ HANDOFF
 
-Този файл съдържа исторически WORK handoff от 20.09.2026. За текущата работа **не използвай стария NEXT самостоятелно**.
+Този файл съдържа исторически WORK handoff от 20.09.2026. За текущата работа **не използвай стария NEXT самостоятелно**. WORK role, крайна цел, четирите среди и текущият checkpoint са изведени във входния блок на `START_HERE.md` §0A; потвърди ги пред Owner преди ordinary задача.
 
 Преди всичко прочети:
 1. `START_HERE.md` — от самото начало, включително **§0 PRODUCT NORTH STAR + OWNER STRATEGIC END STATE**;
@@ -40,10 +40,14 @@ Owner даде изрична стратегическа посока и раз�
 - final national brand остава OPEN;
 - **Master §116 е OWNER APPROVED:** exact Root identity + municipality Community identity са отделни човешки нива; human community display label е отделен от canonical ID/official name; national brand остава отделен;
 - Sofia/Столична община НЕ е решена от общия §116 модел — има отделен mandatory research gate;
-- **CURRENT NEXT (27.09):** ограничен Screen 1 human-language/user-journey audit на `work/screen1-current` след Owner-approved §§117–119 → mobile visual/flow recheck → независим WORK gate → Owner freeze decision. §118 distance остава одобрен; §119 уточнява честния exact/broader CTA. Production и Supabase не се пипат.
+- **CURRENT NEXT (27.09, след Owner-approved §§117–120):** вземи точния NEXT от `PROJECT_STATE.md` §1B: bounded geo coverage (до 25 еднозначни места; Брюксел отделно OPEN) → актуална mobile visual/flow QA → независим WORK gate → Owner freeze. §118 distance остава одобрен; §§119–120 заменят старите CTA/езикови чернови. Production и Supabase не се пипат.
 
 WORK при връщане трябва независимо да одитира §115 спрямо North Star и зависимостите, но **не трябва да връща проекта към стария модел „всяко село = отделна community“ или към hardcoded `Лом и региона`**, освен ако не открие конкретен конфликт и го представи на Owner.
 
+
+### WORK → ordinary: предаване без Owner като куриер на микрозадачи
+
+Ordinary е отделен чат. Текст, написан в WORK чата, НЕ е изпратена задача; кажи „текст за Owner да предаде“ и не твърди, че е възложено, докато Owner не го потвърди. Първо провери целта, одобрения contract, текущия branch/blob и зависимостите. Дай завършена разумно оразмерена изпълнителска задача; не делегирай продуктово решение. Посочи repo/branch/file/base SHA, позволени и забранени промени, доказуеми източници, stop conditions, проверки, формат на отчета. Изисквай повторна проверка на branch HEAD/blob непосредствено преди commit. След връщане WORK сам проверява diff, източници и твърденията за QA; data/syntax pass ≠ visual pass ≠ Owner approval. При ново продуктово решение обсъди веднага с Owner; синхронизирай документите при значим checkpoint, не след всяка микропромяна.
 
 ### Continuity protocol — задължително при връщане на WORK
 
