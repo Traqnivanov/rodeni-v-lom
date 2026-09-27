@@ -9969,7 +9969,7 @@ WORK/ordinary нямат право да приложат общия модел 
 **Дата:** 27.09.2026
 **Статус:** OWNER APPROVED / IMPLEMENTED IN REVIEW CANDIDATE / MOBILE VISUAL RECHECK PENDING
 **Owner approval:** последната коригирана версия на WORK предложенията след независим преглед на ordinary audit; по-ранните две чернови за unverified Root НЕ се прилагат.
-**Implementation:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commits `2800b4abd764294767878c9926e46513d1f72ece` и `1bb83466d142a43c82729ac8aad954f4f96e04fb`; inline JS syntax PASS преди втория bounded conditional fix, повторна visual/flow QA предстои.
+**Implementation:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commits `2800b4abd764294767878c9926e46513d1f72ece` и `1bb83466d142a43c82729ac8aad954f4f96e04fb`; inline JS syntax PASS и след последния conditional fix; повторна visual/flow QA предстои.
 **Clarifies:** §§96, 114, 119 само за клиентски език и неразрешен Root; privacy threshold, canonical resolver contract, registration boundary и R.E. не се променят.
 
 1. Root step: `Изборът ти остава личен. Ще го прегледаш и потвърдиш след регистрацията.` Изборът е pending до изричното потвърждение.
