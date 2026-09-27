@@ -9963,3 +9963,23 @@ WORK/ordinary нямат право да приложат общия модел 
 **Uniqueness check:** самият бутон не е уникална функция. Различимостта е в непрекъснатия, честен механизъм: Current + exact Root → допустим общностен резултат → частен непотвърден Context Bridge → потвърждение → „За теб“ според реалния човек. Този текст прави механизма разбираем, без нов екран, скрита стъпка или по-слаба privacy граница.
 
 **CURRENT NEXT:** ограничен human-language audit на същия candidate, едно доказано изменение наведнъж; после мобилна visual/flow проверка и независим WORK gate. Това решение само по себе си не означава Owner freeze, production или Supabase промяна.
+
+# 120. [OWNER APPROVED][SCREEN 1] Човешки език на резултатите и непотвърден Root
+
+**Дата:** 27.09.2026
+**Статус:** OWNER APPROVED / IMPLEMENTED IN REVIEW CANDIDATE / MOBILE VISUAL RECHECK PENDING
+**Owner approval:** последната коригирана версия на WORK предложенията след независим преглед на ordinary audit; по-ранните две чернови за unverified Root НЕ се прилагат.
+**Implementation:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commits `2800b4abd764294767878c9926e46513d1f72ece` и `1bb83466d142a43c82729ac8aad954f4f96e04fb`; inline JS syntax PASS преди втория bounded conditional fix, повторна visual/flow QA предстои.
+**Clarifies:** §§96, 114, 119 само за клиентски език и неразрешен Root; privacy threshold, canonical resolver contract, registration boundary и R.E. не се променят.
+
+1. Root step: `Изборът ти остава личен. Ще го прегледаш и потвърдиш след регистрацията.` Изборът е pending до изричното потвърждение.
+2. Exact: `За двете ти места` и `В [Current] има хора, свързани с [exact Root].` Публичното размерно ниво остава диапазон, а не точен брой или списък с хора.
+3. Safe-broader: `По-широка общност`; `За [exact Root] не показваме отделен брой. Този резултат е за общността [derived Community].` Общността се определя от валидния mapping, не е hardcode Lom и не заменя личния Root на картата.
+4. Suppressed: премахва се системното заглавие `Защитена видимост`; остава общото privacy-safe обяснение без допускане дали има нула или малка група.
+5. Unverified Root + independently eligible Current-only aggregate: над диапазона `Само за [Current]`; `Този брой е за хора, посочили [Current] като място, където живеят. Не показва колко са от [unverified Root].` Преди CTA: `Следва кратка регистрация. Мястото „[unverified Root]“ остава непотвърдено, докато не бъде проверено.` CTA: `Продължи към регистрация`.
+6. Unverified Root + suppressed aggregate: същият registration notice и `Продължи към регистрация`; `Запази и продължи` остава за suppressed с потвърден Root. Unverified Root никога не се представя за trusted context.
+7. Registration boundary: при unverified Root изрично `Откъде: [Root] — непотвърдено.` и условно обяснение, че мястото остава непотвърдено до проверка. Клиентското изречение `Този Screen 1 прототип спира пред регистрацията.` се премахва от панела; demo disclaimer остава извън преживяването.
+
+**Criteria check:** едно смислено публично ниво; точен/по-широк/само Current резултат са разграничени; no exact count, no public identity, no false claim of verified Root; текстът води към реалното следващо действие без нов екран. Уникалността е връзката Current → Root → Community → допустим сигнал → честен преход, не декоративен елемент.
+
+**CURRENT NEXT:** ограничена mobile visual/flow QA на exact, broader, suppressed, current-only pending и pending suppressed, плюс registration boundary на 360/390/412 px. След QA: независим WORK gate и Owner final visual approval. Main production и Supabase не са променяни.
