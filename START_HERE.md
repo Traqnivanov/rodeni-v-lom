@@ -4,6 +4,18 @@
 
 Ако четеш само един файл в началото — чети този.
 
+## 0A. ВХОД ЗА НОВ WORK CONTROLLER — ПРОЧЕТИ ПРЕДИ ТЕКУЩА ЗАДАЧА
+
+Този блок е кратък указател, не втори source of truth. Подробните одобрени решения са в Master; точният CURRENT NEXT е в PROJECT_STATE.md §1B. Нов чат, назначен от Owner за WORK CONTROLLER, е втори след Owner и контролира ordinary изпълнителя. Ако ролята не е посочена в разговора, установи я от Owner, преди да възлагаш работа; не се обявявай сам за Owner или WORK.
+
+- Крайна цел: „Родени в Лом“ първо дава самостоятелна общностна полза и доверие. R.E. свързва Root, Current, активна нужда, контекст и разрешения с подходящ човек, информация, помощ или действие по ясна причина и в правилния момент. Лом е първият пилот; Root V1 е национален за България, Current може да е по света.
+- Стратегически край: Owner на проекта и „Иванов Ремонти“ е един и същи. Бъдеща услуга се появява тихо само при изрично проявена реална нужда, с ясно посочен реален изпълнител; „Иванов Ремонти“ е първият предвиден provider. Service Trust Mechanism е OPEN и не се имплементира сега.
+- Одобрена пътека: public карта → Сега/Корен → privacy-safe общностен резултат → кратка регистрация → потвърждение на pending контекст → minimum onboarding → „За теб“. По-нататък „Карта“, „Хора“ (само accepted връзки), „Ти“ и progressive контекст. Конкретен непознат се показва само по силна причина и разрешен visibility contract; публичният сигнал не е каталог на хора.
+- Средите са четири роли: main = canonical decisions; work/screen1-current = единственият активен Screen 1 review/QA branch; review/ordinary-screen1-frozen-for-work = неподвижна референция; live index.html + Supabase = само изрично promoted production. Не създавай паралелен Screen 1 branch и не променяй production/Supabase без отделно Owner решение.
+- Текущ статус (27.09.2026): активен review файл prototype-screen1-map-interaction-lab.html, не production и без финален Owner visual approval. Master §§115–120 управляват community, national entry, distance и актуалния човешки език. След Монтана и четирите места в commit f4f4f9d2a43c50aa258211d331899b7050d2e3f0 19 от 45 демо места имат geo координати; 26 нямат, от които BE|Брюксел е отделен alias/entity риск. Това е demo coverage, не production locality resolver.
+- CURRENT NEXT: сверѝ PROJECT_STATE.md §1B и актуалния файл; затвори надеждното geo покритие без предположения за Брюксел; провери реално mobile/flow при 360/390/412 px; направи независим WORK gate; Owner решава freeze. Не започвай Screen 2 или promotion. По-старите human-language NEXT и „30 липсващи“ са superseded.
+- Работен ред: първо START_HERE.md от начало до край → PROJECT_STATE.md → Dependency Map → релевантните Master секции → WORK_CONTROLLER_HANDOFF.md CURRENT OVERRIDE. Преди работа направи STARTUP CONFIRMATION от §6B. Не възлагай задачата, преди да можеш да обясниш целта, одобреното преди/след регистрация, средите, OPEN и точния NEXT. При конфликт спри зависимата част и докладвай на Owner.
+
 ## 0. PRODUCT NORTH STAR + OWNER STRATEGIC END STATE
 
 ### Какво строим за човека
@@ -128,7 +140,7 @@ Owner direction + audited synthesis е записан в Master §115.
 
 **Не разделяй общността на хиляди отделни села/градове. Не губи exact Root. Не показвай произволен човек само за да няма empty state.**
 
-**Community Identity Naming Contract е OWNER APPROVED в Master §116.** Общият модел е exact Root identity + municipality Community identity като отделни човешки нива; Sofia/Столична община остава отделен mandatory research gate. **CURRENT NEXT е ограничен Screen 1 human-language audit** след §§117–119; работи се в `work/screen1-current`, без Owner freeze. Виж `PROJECT_STATE.md` за точната следваща работа.
+**Community Identity Naming Contract е OWNER APPROVED в Master §116.** Общият модел е exact Root identity + municipality Community identity като отделни човешки нива; Sofia/Столична община остава отделен mandatory research gate. **CURRENT NEXT е в `PROJECT_STATE.md` §1B:** след §§117–120 human-language решенията са реализирани само в review кандидата; остава geo coverage → актуална mobile visual/flow QA → WORK gate → Owner freeze. Няма production/Supabase промяна.
 
 
 ## 1A. FINAL ENVIRONMENT MODEL — НЕ УСЛОЖНЯВАЙ
