@@ -122,12 +122,12 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 | Aggregate privacy | 0–4 се скриват в едно общо състояние; при 5+ се показват `5+`, `10+`, `25+`, `50+`, `100+` | всяка подгрупа отделно; без exact zero и arbitrary differencing |
 | Aggregate eligibility | Само confirmed-email, completed-onboarding, confirmed-18+, canonical user-confirmed profiles; без pending/unresolved/deleted/suspended/banned/test | един account веднъж; OFF остава; stable snapshot; threshold се прилага след eligibility |
 | Aggregate freshness | Root не изтича; Current Location участва до 12 месеца от последното user потвърждение | Travel не променя Current Location; expired current location се връща след reconfirmation и следващ snapshot |
-| Public CTA | Default при реален exact/safe-broader aggregate: „Виж какво има за теб“. **ОДОБРЕНО за privacy-suppressed low-density state:** „Запази и продължи“ | и двата CTA водят през същата registration boundary; low-density CTA не обещава човек/резултат, а честно continuity на Root + Current към „За теб“; Master §§112, 114 |
+| Public CTA | **Exact/safe-broader:** `Продължи с тези места`, предшестван непосредствено от `Следва кратка регистрация. Ще потвърдиш избраните места, преди да отвориш „За теб“.` **Suppressed:** `Запази и продължи`. | И двата пътя водят през регистрация → email/места потвърждение → „За теб“. Няма обещание за незабавен човек или резултат; Master §§85, 114, 119. Unverified Root остава отделна езикова проверка. |
 | Screen 1 reuse boundary | Запазва world map entry, minimal header и map interaction; премахва public people directory, ticker, exact counts/zero, people tabs и direct hook → auth | Master §91; няма public identities; само privacy-safe aggregate → Context Bridge |
 | Public architecture „Лом ↔ България“ | **ОДОБРЕНО 25.09 + УТОЧНЕНО §§115–116:** една stable product identity + Лом origin/pilot + national Root; exact Root identity и municipality Community identity са отделни човешки нива; local community identity не е automatic site rebrand. Final national brand остава OPEN | Master §§100, 112, 115, 116; не генерирай механично `Родени в + municipality_name`; Sofia human display има отделен mandatory research gate |
 | Screen 1 initial public state | **OWNER APPROVED + IMPLEMENTED IN REVIEW CANDIDATE:** human hook → explicit national Root scope → `Пилотна общност: Лом` initial map context → Current → Root → derived Community → privacy-safe result; no third input step | Master §§112, 114, 115, 116, 117; live/production untouched; visual/flow verification remains before WORK/Owner approval |
 | Screen 1 Current Location step | Hook → same-screen mobile bottom sheet/desktop side panel → canonical `Държава` → `Населено място` → country focus → „Продължи към „Откъде си?““ | Master §94; private browser session; no GPS/IP/URL/analytics/public write/count; controlled lookup fallback |
-| Screen 1 Root step | Current summary → „Откъде си?“ → national canonical Root search → `Сега`/`Откъде си` markers → „Виж какво показва картата“ | Master §95; Lom priority, not hard limit; no route line; unverified Root gives no exact-locality result and is not trusted context |
+| Screen 1 Root step | Current summary → „Откъде си?“ → national canonical Root search → `Сега`/`Откъде си` markers → „Виж какво показва картата“ | Master §§95, 118: лека Current ↔ Root линия и приблизително географско разстояние само при потвърдени координати; не е маршрут, не е R.E. сигнал; unverified Root не дава exact result. |
 | Screen 1 privacy-safe preview | Context summary → exact locality aggregate; ако exact е suppressed, първото естествено safe-broadening ниво е canonical municipality aggregate; иначе suppressed | Master §§84, 88, 96, 114, 115; всяко ниво самостоятелно минава eligibility + stable snapshot + threshold 5; OFF остава aggregate-only; exact CTA vs low-density CTA по §114 |
 | Screen 1 recovery states | Loading пази map/context → human BG error → retry само на failed операцията → optional secondary continue without preview | Master §97; error ≠ 0–4/zero; session draft persistence; canonical Current requirement; publishable snapshot е backend-authoritative; Context Bridge остава pending/private |
 | Screen 1 review prototype | `prototype-screen1.html` събира Screen 1 contract-а в отделен interactive demo flow | Master §98; demo data; `index.html`/Supabase/DB са непроменени; Owner mobile visual/flow approval е задължителен преди promotion или следващ screen |
@@ -258,3 +258,18 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 5. едва след това се преминава към следващо решение или implementation.
 
 Не се разчита на паметта на текущия чат.
+
+
+## Screen 1 distance context — Owner-approved dependency note (26.09.2026)
+
+`Current + Root canonical coordinates → local geographic distance → map/context presentation`.
+
+Този слой:
+- НЕ променя Root → Municipality Community mapping;
+- НЕ участва в Opportunity ranking или visibility gating;
+- НЕ добавя third Community point към личната карта;
+- НЕ използва routing API;
+- се показва само когато има надеждни geographic coordinates;
+- след onboarding се използва само при реална контекстова полза, не като постоянна метрика.
+
+Продуктовата причина е: географското разстояние да даде човешки контекст на връзката `Сега ↔ Корен`, след което Community/R.E. показват каква реална стойност има около човека сега.

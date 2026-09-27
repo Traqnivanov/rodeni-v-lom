@@ -9912,3 +9912,54 @@ WORK/ordinary нямат право да приложат общия модел 
 ## CURRENT NEXT
 
 **Visual/flow verification на същия единен candidate в `work/screen1-current` → bounded fixes само при реален проблем → WORK review → Owner visual approval.**
+
+
+# 118. [OWNER APPROVED][SCREEN 1] Current ↔ Root distance context
+
+**Дата:** 26.09.2026  
+**Статус:** OWNER APPROVED / IMPLEMENTED IN REVIEW CANDIDATE  
+**Implementation:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commit `0e9d4ee05f2aa0d0256a8237090353a41d7873ff`
+**Follow-up copy refinement:** `c12b25cf96508b6f54e94c4333ba5cea14060b27` — safe-broader е свит до compact mobile wording `≈ X км от Root · от общността Community`.
+
+## Одобрено решение
+
+1. След като Screen 1 знае и `Current`, и потвърден `Root`, картата може да показва лека визуална връзка между двете реални места и приблизително географско разстояние в километри.
+2. Разстоянието означава **приблизително географско разстояние между двете места**, не автомобилен маршрут, самолетен маршрут или време за пътуване.
+3. Изчислението е presentation/context layer и **не е част от R.E. decision logic**. R.E. продължава да решава Root → Community → допустим сигнал → privacy → действие.
+4. Не се използва външен routing API. При налични canonical latitude/longitude координати разстоянието се изчислява локално с геодезична формула и се закръгля за човешко показване.
+5. Линията свързва само реалните лични места `Current ↔ Root`. При safe-broader Community НЕ се добавя като трета лична точка и не заменя Root.
+6. В result state разстоянието се използва като кратък човешки контекст, който усилва смисъла на общностния сигнал; не се добавя отделен лозунг или допълнителна текстова стена на mobile.
+7. След registration този distance layer не става постоянен център на продукта. Основният logged-in продукт живее в текущия контекст `къде си сега / какво има значение сега`; Root/Community остават интелигентен фон. Разстояние се показва по-късно само когато конкретният контекст го прави полезно (например travel).
+
+## Criteria Check
+
+- **Human benefit:** PASS — разстоянието прави връзката Current ↔ Root осезаема, вместо да е суха география.
+- **Uniqueness:** PASS — стойността не е „показваме километри“, а `Current → Root → distance context → Community → privacy-safe human signal`.
+- **Mobile:** PASS по contract — един кратък distance label/ред, без нов екран и без допълнителна стъпка.
+- **Privacy:** PASS — не променя visibility thresholds или person exposure.
+- **Technical weight:** PASS — локално изчисление от координати; без routing API и без R.E. товар.
+- **Truthfulness:** PASS само при canonical geographic coordinates; SVG/map display coordinates никога не се използват за километри.
+
+## CURRENT NEXT
+
+Продължава visual/flow verification на същия candidate след тази bounded промяна. Проверяват се exact / safe-broader / suppressed и registration boundary; при ново продуктово решение се спира и се обсъжда с Owner **веднага**, без натрупване за по-късно.
+
+**FINAL MOBILE VISUAL QA — PASS:** един ограничен live-browser run върху updated candidate провери exact 390, safe-broader 390, suppressed 390, registration boundary, exact 360 и exact 412. Всички 6 състояния PASS: няма JS/render errors, clipping, horizontal overflow, overlap или счупена hierarchy; distance line/badge не се бъркат с route; Root/Community distinction остава ясно; privacy copy и registration boundary са коректни. Няма blocking defect и няма ново product decision. WORK review остава независимият следващ gate, когато WORK е наличен; Owner visual approval може да се даде върху този candidate.
+
+
+# 119. [OWNER APPROVED][SCREEN 1] Честен преход от публичния резултат към регистрация
+
+**Дата:** 27.09.2026  
+**Статус:** OWNER APPROVED / IMPLEMENTED IN REVIEW CANDIDATE / MOBILE VISUAL RECHECK PENDING  
+**Origin:** Owner откри, че „Виж какво има за теб“ обещава непосредствен резултат, а действието първо отваря регистрация.  
+**Worked / analysed by:** WORK CONTROLLER. **Approved by:** Owner. **Recorded by:** WORK CONTROLLER.  
+**Implementation evidence:** `work/screen1-current`, `prototype-screen1-map-interaction-lab.html`, commit `1223a7c5dfcac4f448421e115d73b9d792917345`; syntax PASS и ограничена проверка на условните състояния.  
+**Clarifies / supersedes:** само точния default CTA текст за exact/safe-broader в §§79, 96, 114, 117 и Dependency Map. Одобреният public → registration → confirmation → „За теб“ път остава.
+
+При **exact** или **safe-broader** допустим публичен резултат, непосредствено преди действието се показва: **„Следва кратка регистрация. Ще потвърдиш избраните места, преди да отвориш „За теб“.“** Водещият бутон е **„Продължи с тези места“**. Човекът вече е получил privacy-safe стойност; действието продължава с неговите две места, без да обещава незабавен човек или втори резултат при натискане.
+
+При **suppressed/low-density** одобреният бутон **„Запази и продължи“** остава. Unverified Root/current-only се проверява отделно при езиковия одит; §119 не го превръща в потвърден Root.
+
+**Uniqueness check:** самият бутон не е уникална функция. Различимостта е в непрекъснатия, честен механизъм: Current + exact Root → допустим общностен резултат → частен непотвърден Context Bridge → потвърждение → „За теб“ според реалния човек. Този текст прави механизма разбираем, без нов екран, скрита стъпка или по-слаба privacy граница.
+
+**CURRENT NEXT:** ограничен human-language audit на същия candidate, едно доказано изменение наведнъж; после мобилна visual/flow проверка и независим WORK gate. Това решение само по себе си не означава Owner freeze, production или Supabase промяна.
