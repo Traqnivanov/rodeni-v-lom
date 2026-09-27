@@ -40,7 +40,7 @@ Owner даде изрична стратегическа посока и раз�
 - final national brand остава OPEN;
 - **Master §116 е OWNER APPROVED:** exact Root identity + municipality Community identity са отделни човешки нива; human community display label е отделен от canonical ID/official name; national brand остава отделен;
 - Sofia/Столична община НЕ е решена от общия §116 модел — има отделен mandatory research gate;
-- **CURRENT NEXT (27.09, след Owner-approved §§117–120):** вземи точния NEXT от `PROJECT_STATE.md` §1B: bounded geo coverage (до 25 еднозначни места; Брюксел отделно OPEN) → актуална mobile visual/flow QA → независим WORK gate → Owner freeze. §118 distance остава одобрен; §§119–120 заменят старите CTA/езикови чернови. Production и Supabase не се пипат.
+- **CURRENT NEXT (27.09, след Owner-approved §§117–120):** вземи точния NEXT от `PROJECT_STATE.md` §1B: risk-based QA на важните distance двойки и честно скриване при липсващи координати (без масово ръчно попълване на 25 demo места; Брюксел отделно OPEN) → актуална mobile visual/flow QA → независим WORK gate → Owner freeze. §118 distance остава одобрен; §§119–120 заменят старите CTA/езикови чернови. Production и Supabase не се пипат.
 
 WORK при връщане трябва независимо да одитира §115 спрямо North Star и зависимостите, но **не трябва да връща проекта към стария модел „всяко село = отделна community“ или към hardcoded `Лом и региона`**, освен ако не открие конкретен конфликт и го представи на Owner.
 
