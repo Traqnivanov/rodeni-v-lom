@@ -54,7 +54,11 @@ const geo={
   'BG|Ковачица':[43.79927,23.36245],
   // GeoNames 729114: populated place Montana; coordinates are geographic, not SVG map coordinates.
   'BG|Монтана':[43.41285432,23.2217356],
-  'BG|София':[42.69751353,23.32414627]
+  'BG|София':[42.69751353,23.32414627],
+  'BG|Пловдив':[42.15387,24.75001],
+  'BG|Видин':[43.99159,22.88236],
+  'BG|Берковица':[43.23741,23.12509],
+  'BG|Враца':[43.21052,23.56312]
 };
 function geoDistanceKm(a,b){const ga=geo[a?.id],gb=geo[b?.id];if(!ga||!gb)return null;const toRad=n=>n*Math.PI/180,R=6371.0088,lat1=toRad(ga[0]),lat2=toRad(gb[0]),dLat=toRad(gb[0]-ga[0]),dLon=toRad(gb[1]-ga[1]),h=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(h)))}
 function formatDistance(km){if(!Number.isFinite(km))return '';const rounded=Math.max(10,Math.round(km/10)*10);return '≈ '+new Intl.NumberFormat('bg-BG').format(rounded)+' км'}
