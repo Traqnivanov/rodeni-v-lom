@@ -314,6 +314,8 @@ Owner-approved решение е **текущата валидна посока*
 
 ## 3. Какво да прочетеш след този файл
 
+**Source Map:** ENTRY = `START_HERE.md`; CURRENT STATE = `PROJECT_STATE.md`; MASTER / OWNER DECISIONS = `PRODUCT_MASTER_VISION_AUDIT.md`; DEPENDENCIES = `PRODUCT_FUNCTION_DEPENDENCY_MAP.md`; WORK CONTROL = `WORK_CONTROLLER_HANDOFF.md`; EVIDENCE = GitHub commits / QA. `main` пази каноничните решения, а `work/screen1-current` е единствената активна Screen 1 работна линия.
+
 **ВИНАГИ:** отвори `PROJECT_STATE.md`.  
 Той казва къде сме точно сега и съдържа **CURRENT NEXT**.
 
