@@ -76,7 +76,7 @@ Owner потвърди следната стратегическа посока:
 
 ## 2A. HISTORICAL PRODUCT MODEL SNAPSHOT — 24.09.2026 — SUPERSEDED FOR CURRENT NEXT
 
-**Важно:** този блок пази контекста от 24–25.09.2026. Неговите тогавашни „текущ checkpoint / NEXT“ формулировки са исторически. **§115 и §116 вече са затворени канонични checkpoints; CURRENT NEXT е Screen 1 dependency revalidation.**
+**Важно:** този блок пази контекста от 24–25.09.2026. Неговите тогавашни „текущ checkpoint / NEXT“ формулировки са исторически. **§115 и §116 са затворени канонични checkpoints; посоченият по-долу NEXT е исторически. Текущият NEXT след §§117–119 е в §1B.**
 
 Това е текущата рамка, от която следващ чат трябва да продължи:
 
@@ -101,7 +101,7 @@ Master §§101–112 пазят тестовата линия, която веч
 
 ### Исторически NEXT — SUPERSEDED
 
-Следващият списък пази тестовата последователност, довела до §§112/114/115/116. **Не го използвай като CURRENT NEXT.** Текущият NEXT е т.26 по-долу: Screen 1 dependency revalidation.
+Следващият списък пази тестовата последователност, довела до §§112/114/115/116. **Не го използвай като CURRENT NEXT.** Текущият NEXT е в §1B по-горе.
 
 1. **Без нов Screen 1 implementation.**
 2. R.E. TEST 001–013 се запазват; резултатите им не се започват отначало.
@@ -128,7 +128,7 @@ Master §§101–112 пазят тестовата линия, която веч
 23. **Brand boundary:** `Родени в Лом` не се заключва като финално национално име; municipality community identity + exact Root са отделен local layer. Final national brand остава OPEN.
 24. **OWNER APPROVED — Master §116:** Community Identity Naming Contract е затворен за общия случай: exact Root identity + municipality Community identity са отделни човешки нива; community display може да има human label отделно от canonical ID/official name; national brand остава отделен; механично `Родени в + municipality_name` не се използва. Sofia/Столична община остава отделен mandatory research gate.
 25. **OWNER HARD CONSTRAINT — СОФИЯ:** случаят „София / Столична община“ НЕ се решава автоматично по общия Naming Contract и НЕ подлежи на импровизирано обобщение. Когато работата стигне до конкретния Sofia case, първо се прави отделно специално проучване; едва след него се предлага решение. Това е директно Owner решение и не се отваря за обсъждане от WORK/ordinary чатове.
-26. **CURRENT NEXT:** Screen 1 dependency revalidation спрямо §§112, 114, 115, 116 → един end-to-end audit на frozen Screen 1 → едно конкретно предложение → Criteria Check → Owner approval. Без prototype implementation преди това.
+26. **HISTORICAL NEXT — SUPERSEDED:** Screen 1 dependency revalidation спрямо §§112, 114, 115, 116 → един end-to-end audit на frozen Screen 1 → едно конкретно предложение → Criteria Check → Owner approval. Без prototype implementation преди това.
 
 
 ## 2B. OWNER STRATEGIC END STATE — TRUST-FIRST SERVICE
@@ -412,7 +412,7 @@ Public → registered continuity:
 **P0-1: 18+ — затворено. P0-2: inbound contact gate — затворено. P0-3: unordered pair + separate safety block — затворено. P0-4: structured travel — затворено. P0-5: role matrix — затворено. P0-6: registration V1 — затворено. Следва P0-7: post-confirmation onboarding.**
 
 
-## 9. CURRENT SCREEN 1 OWNER DECISION — 26.09.2026
+## 9. HISTORICAL SCREEN 1 DISTANCE CHECKPOINT — 26.09.2026 (NEXT SUPERSEDED)
 
 **Current ↔ Root distance context — OWNER APPROVED и implemented in review candidate.**
 
@@ -426,4 +426,4 @@ Public → registered continuity:
 - след registration километри не стоят постоянно — logged-in продуктът се води от текущия човешки контекст;
 - пълният contract е Master §118.
 
-**CURRENT NEXT:** updated Screen 1 candidate е с финален mobile visual QA PASS в един bounded live run: exact 390, safe-broader 390, suppressed 390, registration boundary, exact 360 и exact 412 — 6/6 PASS, без blocking defect и без ново product decision. Следва независим WORK review, когато WORK е наличен, после Owner visual approval/freeze на същия candidate. Не се започва нов Screen 1 вариант.
+**HISTORICAL QA RESULT (преди §119 и последните текстови промени):** ограничен mobile visual run на exact 390, safe-broader 390, suppressed 390, registration boundary, exact 360 и exact 412 даде 6/6 PASS за тогавашния candidate. Този PASS не покрива по-новия текст и не е Owner freeze. Текущият NEXT е в §1B: човешки език/пътека → нов bounded mobile recheck → WORK review → Owner decision.
