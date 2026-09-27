@@ -52,6 +52,8 @@ const geo={
   'NL|Амстердам':[52.3676,4.9041],
   'BG|Лом':[43.8317,23.23793],
   'BG|Ковачица':[43.79927,23.36245],
+  // GeoNames 729114: populated place Montana; coordinates are geographic, not SVG map coordinates.
+  'BG|Монтана':[43.41285432,23.2217356],
   'BG|София':[42.69751353,23.32414627]
 };
 function geoDistanceKm(a,b){const ga=geo[a?.id],gb=geo[b?.id];if(!ga||!gb)return null;const toRad=n=>n*Math.PI/180,R=6371.0088,lat1=toRad(ga[0]),lat2=toRad(gb[0]),dLat=toRad(gb[0]-ga[0]),dLon=toRad(gb[1]-ga[1]),h=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(h)))}
