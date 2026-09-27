@@ -40,7 +40,7 @@ Owner даде изрична стратегическа посока и раз�
 - final national brand остава OPEN;
 - **Master §116 е OWNER APPROVED:** exact Root identity + municipality Community identity са отделни човешки нива; human community display label е отделен от canonical ID/official name; national brand остава отделен;
 - Sofia/Столична община НЕ е решена от общия §116 модел — има отделен mandatory research gate;
-- **CURRENT NEXT (27.09, Owner override §121):** точният NEXT е в PROJECT_STATE.md §1B. Не възлагай 25 geo записа, GeoNames интеграция или production километри. Наличните distance примери са само review demo. Mobile visual/flow QA и честен fallback → WORK gate → Owner freeze. §121 ограничава §118; production/Supabase не се пипат.
+- **CURRENT NEXT (27.09, Master §§121–122):** точният NEXT е в PROJECT_STATE.md §1B. Първо едно ограничено предложение към Owner за exact result copy, който свързва далечния Корен с общност в настоящия град; никаква самоволна подмяна на §120. След решение — bounded mobile QA и честен fallback → WORK gate → Owner freeze. Не възлагай geo записите, GeoNames или production километри; наличните distance примери остават review demo, не R.E. логика. Production/Supabase не се пипат.
 
 WORK при връщане трябва независимо да одитира §115 спрямо North Star и зависимостите, но **не трябва да връща проекта към стария модел „всяко село = отделна community“ или към hardcoded `Лом и региона`**, освен ако не открие конкретен конфликт и го представи на Owner.
 
@@ -599,7 +599,7 @@ Screen 1, Точка 3 — context panel и „Къде си сега?“ — е
 
 Screen 1, Точка 4 — „Откъде си?“ и Root selection — е **ОДОБРЕНА** в Master §95. Стъпката пази Current summary, използва national canonical Root search, не се hardcode-ва Lom-only и визуално показва `Сега`/`Откъде си` без подвеждаща route линия.
 
-Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е **ОДОБРЕНА** в Master §96. Показва се един допустим aggregate result; exact `Root + Current` изисква threshold 5, 0–4 са общо privacy състояние, а safe broadening е само към едно предварително определено смислено community ниво. CTA остава **„Виж какво има за теб“** и не обещава конкретни хора.
+Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е **ОДОБРЕНА** в Master §96. Показва се един допустим aggregate result; exact `Root + Current` изисква threshold 5, 0–4 са общо privacy състояние, а safe broadening е само към едно предварително определено смислено community ниво. исторически CTA е бил **„Виж какво има за теб“**, но е **ЗАМЕНЕН** от §119 (exact/broader: „Продължи с тези места“ с notice) и §120 (непотвърден Root: „Продължи към регистрация“); не го възстановявай.
 
 Screen 1, Точка 6 — loading/network/error, retry и recovery — е **ОДОБРЕНА** в Master §97. Техническа грешка никога не става `0–4`/zero/community result; context draft-ът се пази; retry повтаря само failed операцията; secondary `Продължи без публичен резултат` е допустимо само честно и без измислен aggregate.
 
