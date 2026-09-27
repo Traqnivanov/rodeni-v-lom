@@ -564,12 +564,12 @@ Screen 1, Точка 5 — privacy-safe preview, 0–4 и safe broadening — е
 
 Screen 1, Точка 6 — loading/network/error, retry и recovery — е одобрена в Master §97.
 
-**Screen 1 contract е завършен и има отделни review/prototype линии.** Това е запазен prototype checkpoint, **НЕ текущият стратегически NEXT**.
+**Историческият Screen 1 screen-by-screen contract е завършен.** Текущият активен candidate и работният NEXT са в `PROJECT_STATE.md` §1B; старите review линии са само доказателство/rollback.
 
 Текущ override:
 - prototype работата **не се започва отначало**;
 - замразените/review линии се пазят за връщане и независим WORK review;
-- **без нов Screen 1 implementation**, докато по-високата стратегическа посока от §0 и `PROJECT_STATE.md` не бъде изчистена;
+- Screen 1 се изменя само в `work/screen1-current` в рамките на Owner-approved решенията; ново продуктово решение се предлага на Owner преди implementation;
 - при връщане към Screen 1 първо се прави dependency revalidation спрямо North Star, national framing и последните Owner решения;
 - prototype-ът не заменя `index.html`; няма production/Supabase промяна или Screen 2 само по стария handoff.
 
