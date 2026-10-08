@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Родени в Лом · Първи екран след имейла · review</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#f5f7fb;background:#0b1a30;line-height:1.45}
+    *{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f1bd55;outline-offset:3px}
+    .review{background:#eef2f7;color:#18304c;padding:12px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:14px}.review strong{font-size:14px}.review select{min-height:44px;border:1px solid #66819d;border-radius:9px;padding:6px 12px;background:#fff;color:#16324e}.review small{max-width:680px}
+    .shell{max-width:580px;margin:auto;padding:20px 18px 130px}.brand{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #344762;padding:4px 0 18px;font-weight:750;letter-spacing:.01em}.brand small{font-size:14px;color:#bcc9dc;font-weight:500}.eyebrow{color:#f1c56c;font-size:14px;font-weight:650;margin:26px 0 7px}.hero h1{font-size:28px;line-height:1.16;margin:0 0 10px;letter-spacing:-.025em}.hero p{color:#cbd5e3;margin:0;font-size:16px}.panel{background:#142841;border:1px solid #354b64;border-radius:19px;margin-top:24px;padding:20px}.block+.block{border-top:1px solid #364a62;padding-top:24px;margin-top:24px}.block h2{font-size:22px;line-height:1.2;margin:0 0 8px}.hint{font-size:15px;color:#c6d3e2;margin:0 0 16px}.label{font-size:16px;font-weight:650;display:block;margin-bottom:8px}.text-input,.choice{width:100%;min-height:52px;background:#0f2138;color:#fff;border:1.5px solid #688097;border-radius:11px;padding:12px 14px;font-size:16px}.text-input::placeholder{color:#9bacbe}.value{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:8px 0}.value-name{font-size:18px;font-weight:650;min-width:0;overflow-wrap:anywhere}.change{color:#f1c56c;border:1px solid #9e824c;background:transparent;border-radius:10px;padding:10px 14px;min-height:48px;font-size:16px;font-weight:650;flex:none}.field-row{display:grid;gap:12px}.error{color:#ffb4b4;font-size:15px;margin:9px 0 0}.privacy{font-size:14px;color:#c6d3e2;margin:19px 0 0}.privacy strong{color:#f5f7fb}.bottom{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(11,26,48,0),#0b1a30 16%);padding:20px 18px max(18px,env(safe-area-inset-bottom));pointer-events:none}.bottom-inner{max-width:544px;margin:auto;pointer-events:auto}.primary{width:100%;min-height:54px;background:#edb94c;color:#10233b;border:0;border-radius:12px;font-size:17px;font-weight:750;box-shadow:0 4px 15px #0004}.primary:disabled{background:#8896a5;color:#13263f;cursor:default;box-shadow:none}.status{font-size:14px;color:#d8e2ef;text-align:center;margin:7px 0 0}.success{background:#163b39;border:1px solid #509a78;border-radius:14px;padding:20px;margin-top:24px}.success h2{font-size:22px;margin:0 0 10px}.success p{margin:0;color:#d1eee2;font-size:16px}.blocked{border-color:#b27070}.blocked h2{font-size:22px;margin:0 0 9px}.blocked p{color:#e6c9c9;margin:0;font-size:16px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:380px){.shell{padding-left:16px;padding-right:16px}.panel{padding:18px}.hero h1{font-size:26px}.block h2{font-size:22px}}@media(min-width:740px){.shell{padding-top:30px}.bottom{background:linear-gradient(180deg,transparent,#0b1a30 25%)}}
+  </style>
+</head>
+<body>
+  <div class="review" aria-label="Контроли само за преглед">
+    <strong>Review прототип · демо данни</strong>
+    <label for="scenario">Състояние</label>
+    <select id="scenario">
+      <option value="pending">Запазени места</option>
+      <option value="missing">Липсваща чернова</option>
+      <option value="unverified">Непотвърден Корен</option>
+      <option value="blocked">Имейлът не е потвърден</option>
+      <option value="error">Грешка при запис</option>
+    </select>
+    <small>Това е самостоятелна визуална проба. Няма акаунт, реални данни или запис към сървър.</small>
+  </div>
+  <main class="shell">
+    <div class="brand"><span>Родени в Лом</span><small>Първи стъпки</small></div>
+    <div id="app"></div>
+  </main>
+  <div class="bottom" id="footer"><div class="bottom-inner"><button class="primary" id="continue" type="button">Потвърди и продължи</button><p class="status" id="status" role="status" aria-live="polite"></p></div></div>
+  <script>
+    (()=>{
+      const rootOptions=['Лом','Ковачица','Монтана','Варна'];
+      const locationOptions={'Германия':['Мюнхен','Берлин'],'Испания':['Барселона'],'България':['Лом','София','Варна']};
+      const scenario=document.getElementById('scenario'),app=document.getElementById('app'),button=document.getElementById('continue'),footer=document.getElementById('footer'),status=document.getElementById('status');
+      let state={};
+      const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const opts=(arr,selected)=>arr.map(v=>`<option value="${escape(v)}" ${v===selected?'selected':''}>${escape(v)}</option>`).join('');
+      function reset(){const mode=scenario.value;state={mode,name:'',root:mode==='missing'?'':mode==='unverified'?'Ковачица':'Ковачица',country:mode==='missing'?'':'Германия',city:mode==='missing'?'':'Мюнхен',rootEdit:mode==='missing'||mode==='unverified',currentEdit:mode==='missing',rootVerified:mode!=='unverified',error:'',done:false,busy:false};render()}
+      function render(){
+        footer.hidden=state.done||state.mode==='blocked';status.textContent=state.busy?'Проверяваме избраното…':'';button.disabled=state.busy;
+        if(state.mode==='blocked'){app.innerHTML='<section class="panel blocked"><h2>Потвърди имейла си</h2><p>Провери писмото за потвърждение, преди да продължиш с профила.</p></section>';return}
+        if(state.done){app.innerHTML='<section class="hero"><p class="eyebrow">Готово</p><h1>Изборите ти са потвърдени</h1><p>Следва „За теб“.</p></section><section class="success"><h2>Review край на този екран</h2><p>Това демо не показва хора или персонален резултат и не записва профил.</p></section>';return}
+        const note=state.mode==='missing'?'Избери двете места, за да продължиш.':'Запазихме избраното преди регистрацията.';
+        const rootControl=state.rootEdit?`<label class="label" for="root">Населено място в България</label><select class="choice" id="root"><option value="">Избери населено място</option>${opts(rootOptions,state.rootVerified?state.root:'')}</select>${!state.rootVerified?'<p class="hint" style="margin:9px 0 0">Мястото от картата остава непотвърдено. Избери го от разпознатите места.</p>':''}`:`<div class="value"><span class="value-name">${escape(state.root)}</span><button class="change" id="edit-root" type="button" aria-label="Промени откъде си">Промени</button></div>`;
+        const countries=Object.keys(locationOptions),cities=locationOptions[state.country]||[];
+        const currentControl=state.currentEdit?`<div class="field-row"><div><label class="label" for="country">Държава</label><select class="choice" id="country"><option value="">Избери държава</option>${opts(countries,state.country)}</select></div><div><label class="label" for="city">Населено място</label><select class="choice" id="city" ${state.country?'':'disabled'}><option value="">Избери населено място</option>${opts(cities,state.city)}</select></div></div>`:`<div class="value"><span class="value-name">${escape(state.city)}, ${escape(state.country)}</span><button class="change" id="edit-current" type="button" aria-label="Промени къде си сега">Промени</button></div>`;
+        app.innerHTML=`<section class="hero"><p class="eyebrow">След потвърден имейл</p><h1>${escape(note)}</h1><p>Прегледай и потвърди, за да продължиш.</p></section><form class="panel" id="form" novalidate><div class="block"><h2>Как да те виждат другите?</h2><p class="hint">Напиши името или прякора, с който искаш да се показваш в „Родени в Лом“.</p><label class="label" for="name">Име или прякор</label><input class="text-input" id="name" autocomplete="nickname" maxlength="80" value="${escape(state.name)}"></div><div class="block"><h2>Откъде си?</h2>${rootControl}</div><div class="block"><h2>Къде си сега?</h2><p class="hint">Избери къде живееш в момента. Така можем да ти показваме хора наблизо.</p>${currentControl}</div>${state.error?`<p class="error" id="error" role="alert">${escape(state.error)}</p>`:''}<p class="privacy">Изборите от картата са <strong>лична чернова</strong>. Потвърждаваш ги с бутона по-долу; дотогава не участват в общностни бройки.</p></form>`;
+        const name=document.getElementById('name');name.addEventListener('input',e=>{state.name=e.target.value});
+        document.getElementById('edit-root')?.addEventListener('click',()=>{state.rootEdit=true;render();document.getElementById('root').focus()});
+        document.getElementById('edit-current')?.addEventListener('click',()=>{state.currentEdit=true;render();document.getElementById('country').focus()});
+        document.getElementById('root')?.addEventListener('change',e=>{state.root=e.target.value;state.rootVerified=!!state.root});
+        document.getElementById('country')?.addEventListener('change',e=>{state.country=e.target.value;state.city='';render();document.getElementById('city').focus()});
+        document.getElementById('city')?.addEventListener('change',e=>{state.city=e.target.value});
+        document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();submit()});
+      }
+      function submit(){if(state.busy)return;state.name=document.getElementById('name')?.value.trim()||'';state.error=!state.name?'Въведи име или прякор.':!state.root||!state.rootVerified?'Избери разпознато населено място, откъдето си.':!state.country||!state.city?'Избери държава и населено място, където живееш.':'';if(state.error){render();document.getElementById('error')?.scrollIntoView({block:'center',behavior:'smooth'});return}state.busy=true;render();setTimeout(()=>{state.busy=false;if(state.mode==='error'){state.error='Не успяхме да запазим избраното. Опитай отново.';render();document.getElementById('error')?.scrollIntoView({block:'center',behavior:'smooth'})}else{state.done=true;render();window.scrollTo({top:0,behavior:'smooth'})}},700)}
+      button.addEventListener('click',submit);scenario.addEventListener('change',reset);reset();
+    })();
+  </script>
+</body>
+</html>
