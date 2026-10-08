@@ -37,7 +37,7 @@
       let state={};
       const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
       const opts=(arr,selected)=>arr.map(v=>`<option value="${escape(v)}" ${v===selected?'selected':''}>${escape(v)}</option>`).join('');
-      function reset(){const mode=scenario.value;state={mode,name:'',root:mode==='missing'?'':mode==='unverified'?'Ковачица':'Ковачица',country:mode==='missing'?'':'Германия',city:mode==='missing'?'':'Мюнхен',rootEdit:mode==='missing'||mode==='unverified',currentEdit:mode==='missing',rootVerified:mode!=='unverified',error:'',done:false,busy:false};render()}
+      function reset(){const mode=scenario.value;state={mode,name:'',root:mode==='missing'?'':'Ковачица',country:mode==='missing'?'':'Германия',city:mode==='missing'?'':'Мюнхен',rootEdit:mode==='missing'||mode==='unverified',currentEdit:mode==='missing',rootVerified:mode!=='unverified',error:'',done:false,busy:false,failedOnce:false};render()}
       function render(){
         footer.hidden=state.done||state.mode==='blocked';status.textContent=state.busy?'Проверяваме избраното…':'';button.disabled=state.busy;
         if(state.mode==='blocked'){app.innerHTML='<section class="panel blocked"><h2>Потвърди имейла си</h2><p>Провери писмото за потвърждение, преди да продължиш с профила.</p></section>';return}
@@ -55,7 +55,7 @@
         document.getElementById('city')?.addEventListener('change',e=>{state.city=e.target.value});
         document.getElementById('form').addEventListener('submit',e=>{e.preventDefault();submit()});
       }
-      function submit(){if(state.busy)return;state.name=document.getElementById('name')?.value.trim()||'';state.error=!state.name?'Въведи име или прякор.':!state.root||!state.rootVerified?'Избери разпознато населено място, откъдето си.':!state.country||!state.city?'Избери държава и населено място, където живееш.':'';if(state.error){render();document.getElementById('error')?.scrollIntoView({block:'center',behavior:'smooth'});return}state.busy=true;render();setTimeout(()=>{state.busy=false;if(state.mode==='error'){state.error='Не успяхме да запазим избраното. Опитай отново.';render();document.getElementById('error')?.scrollIntoView({block:'center',behavior:'smooth'})}else{state.done=true;render();window.scrollTo({top:0,behavior:'smooth'})}},700)}
+      function submit(){if(state.busy)return;state.name=document.getElementById('name')?.value.trim()||'';state.error=!state.name?'Въведи име или прякор.':!state.root||!state.rootVerified?'Избери разпознато населено място, откъдето си.':!state.country||!state.city?'Избери държава и населено място, където живееш.':'';if(state.error){render();document.getElementById('error')?.scrollIntoView({block:'center',behavior:'smooth'});return}state.busy=true;render();setTimeout(()=>{state.busy=false;if(state.mode==='error'&&!state.failedOnce){state.failedOnce=true;state.error='Не успяхме да запазим избраното. Опитай отново.';render();document.getElementById('error')?.scrollIntoView({block:'center',behavior:'smooth'})}else{state.done=true;render();window.scrollTo({top:0,behavior:'smooth'})}},700)}
       button.addEventListener('click',submit);scenario.addEventListener('change',reset);reset();
     })();
   </script>
