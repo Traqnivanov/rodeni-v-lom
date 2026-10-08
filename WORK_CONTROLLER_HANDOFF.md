@@ -7,7 +7,7 @@
 
 ---
 
-## CURRENT OVERRIDE — 26.09.2026 — ЧЕТИ ПРЕДИ СТАРИЯ HANDOFF
+## CURRENT OVERRIDE — 08.10.2026 — OWNER APPROVED REGISTERED-SCREEN CONTRACT\n\nOwner прие WORK предложението за един екран след потвърден имейл (Master §123). Работи в отделната `work/registered-onboarding-review` линия с `prototype-registered-onboarding-review.html`, без да връщаш Screen 1 отначало и без main/live/Supabase промяна. Screen 1 `work/screen1-current` остава отворен без финален Owner visual freeze. Провери pending/missing/unverified/error/blocked състоянията на 360/390/412 px, после WORK доклад и Owner review. Естествената уникалност се проверява за всяко решение, без декоративна квота. Старият Screen 1 NEXT по-долу е исторически за тази нова задача.\n\n## HISTORICAL OVERRIDE — 26.09.2026 — SCREEN 1
 
 Този файл съдържа исторически WORK handoff от 20.09.2026. За текущата работа **не използвай стария NEXT самостоятелно**. WORK role, крайна цел, четирите среди и текущият checkpoint са изведени във входния блок на `START_HERE.md` §0A; потвърди ги пред Owner преди ordinary задача.
 
