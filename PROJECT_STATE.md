@@ -1,6 +1,6 @@
 # PROJECT STATE — „Родени в Лом“
 
-**Актуализирано:** 27.09.2026  
+**Актуализирано:** 08.10.2026  
 **Branch:** `main`  
 **Роля на този файл:** кратък текущ handoff. Не е пълна история и не заменя Master-а.  
 **Единствен входен файл:** `START_HERE.md`.
@@ -20,10 +20,21 @@
 - При затваряне на значим checkpoint се записва кой е дал посоката, кой е работил/анализирал, кой е одобрил, кой е записал, какво се заменя/уточнява, implementation/evidence при нужда и точният NEXT.
 - След значим checkpoint се изпълнява **SYNC GATE**: State → Master → Dependency Map → WORK/Handoff/active tracker при нужда → проверка за стар конфликтен NEXT.
 - Git history/Issues са evidence и operational history; не заменят каноничните решения.
-- Текущият продуктов NEXT е **едно Owner решение за exact result human copy (§122)** преди ограничен mobile visual/flow QA на Screen 1 след Owner-approved §§117–120. §120 human-language и unverified Root result/CTA са реализирани само в review candidate; final mobile/Owner freeze още не са минати.
+- Историческият Screen 1 NEXT от 27.09 е **едно Owner решение за exact result human copy (§122)** преди ограничен mobile visual/flow QA на Screen 1 след Owner-approved §§117–120. §120 human-language и unverified Root result/CTA са реализирани само в review candidate; final mobile/Owner freeze още не са минати.
 
 
 ## 1B. ACTIVE ENVIRONMENT / WORK LANE — 26.09.2026
+
+### OWNER CHECKPOINT — 08.10.2026 (registered screen)
+
+Owner одобри WORK предложението за **един minimum-onboarding екран след потвърден имейл**, по Master §123. Одобрената последователност е Име/прякор → Root → Current, като двата избора от Screen 1 се преглеждат/редактират вместо да се искат наново. Един CTA `Потвърди и продължи` води към `За теб` само след canonical validation и изрично потвърждение. Private pending не е aggregate/matching/permission. При липсваща чернова се попълват само двата минимални въпроса; unverified Root не става trusted от регистрацията.
+
+- **ACTIVE registered-screen review:** `work/registered-onboarding-review`, файл `prototype-registered-onboarding-review.html`; отделно от Screen 1 линията. Demo-only, без auth/backend persistence.
+- **Screen 1 review:** `work/screen1-current` остава отворен и без final Owner visual freeze; този checkpoint не го слива или заменя.
+- **main/live/Supabase:** не са променяни от този review checkpoint. Решението и прототипът са записани в review branch; promotion на документите в canonical main изисква отделен контролиран review.
+- **NEXT:** мобилна визуална/flow QA на 360/390/412 px за запазени места, липсващ pending, непотвърден Root, грешка/повторен опит и блокиран непотвърден имейл → WORK доклад → Owner преглед. След това отделен договор за първия реален `За теб` резултат, не автоматичен feed.
+
+### SCREEN 1 HISTORICAL LANE (still open)
 
 - **Canonical truth:** `main`
 - **ACTIVE Screen 1 work + QA:** `work/screen1-current`
