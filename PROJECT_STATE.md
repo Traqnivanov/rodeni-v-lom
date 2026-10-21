@@ -1,6 +1,6 @@
 # PROJECT STATE — „Родени в Лом“
 
-**Актуализирано:** 27.09.2026  
+**Актуализирано:** 08.10.2026  
 **Branch:** `main`  
 **Роля на този файл:** кратък текущ handoff. Не е пълна история и не заменя Master-а.  
 **Единствен входен файл:** `START_HERE.md`.
@@ -20,10 +20,24 @@
 - При затваряне на значим checkpoint се записва кой е дал посоката, кой е работил/анализирал, кой е одобрил, кой е записал, какво се заменя/уточнява, implementation/evidence при нужда и точният NEXT.
 - След значим checkpoint се изпълнява **SYNC GATE**: State → Master → Dependency Map → WORK/Handoff/active tracker при нужда → проверка за стар конфликтен NEXT.
 - Git history/Issues са evidence и operational history; не заменят каноничните решения.
-- Текущият продуктов NEXT е **едно Owner решение за exact result human copy (§122)** преди ограничен mobile visual/flow QA на Screen 1 след Owner-approved §§117–120. §120 human-language и unverified Root result/CTA са реализирани само в review candidate; final mobile/Owner freeze още не са минати.
+- Историческият Screen 1 NEXT от 27.09 е **едно Owner решение за exact result human copy (§122)** преди ограничен mobile visual/flow QA на Screen 1 след Owner-approved §§117–120. §120 human-language и unverified Root result/CTA са реализирани само в review candidate; final mobile/Owner freeze още не са минати.
 
 
 ## 1B. ACTIVE ENVIRONMENT / WORK LANE — 26.09.2026
+
+### OWNER CHECKPOINT — 08.10.2026 (registered screen)
+
+Owner одобри WORK предложението за **един minimum-onboarding екран след потвърден имейл**, по Master §123. Одобрената последователност е Име/прякор → Root → Current, като двата избора от Screen 1 се преглеждат/редактират вместо да се искат наново. Един CTA `Потвърди и продължи` води към `За теб` само след canonical validation и изрично потвърждение. Private pending не е aggregate/matching/permission. При липсваща чернова се попълват само двата минимални въпроса; unverified Root не става trusted от регистрацията.
+
+- **ACTIVE registered-screen review:** `work/registered-onboarding-review`, файл `prototype-registered-onboarding-review.html`; отделно от Screen 1 линията. Demo-only, без auth/backend persistence.
+- **Screen 1 review:** `work/screen1-current` остава отворен и без final Owner visual freeze; този checkpoint не го слива или заменя.
+- **main/live/Supabase:** не са променяни от този review checkpoint. Решението и прототипът са записани в review branch; promotion на документите в canonical main изисква отделен контролиран review.
+- **OWNER PROCESS DIRECTION — 21.10.2026:** логическата цялост на продукта се довършва преди финалното визуално шлайфане. Това не е visual PASS, WORK approval, Owner freeze или разрешение за production. Отворените визуални проверки се пазят като задължителен QA дълг, не блокират анализа на следващите екрани.
+- **DEFERRED ONBOARDING QA:** реален визуален/flow преглед на 360/390/412 px за pending, missing, unverified Root, blocked email и error/retry; първи viewport, видим CTA, нормален scroll и keyboard/focus/touch, четимост, contrast, текстове и privacy точно при потвърждението. След това WORK доклад → Owner visual решение. Наличните syntax/data и desktop проверки не са mobile visual PASS.
+- **WORK PROPOSAL — 21.10.2026:** `review/for-you-first-entry-logic.md` @ `4d262e956f3cfd74d6802dd1226199db6f63f444` съдържа анализ и един first-entry кандидат. Не е Owner-approved contract. Основният dependency gap е V1 пътеката зад `Посочи нужда`. Тя е одитирана и разработена като НЕОДОБРЕН WORK кандидат в `review/need-entry-v1-logic.md` @ `34d9bee0336af16004006c43246252829f84df17`: structured Travel е одобрен; Guidance input/lifecycle и автоматичният routing не са. Следва Owner решение за двупътечната V1 граница и параметрите преди prototype или backend задача.
+- **ACTIVE LOGICAL NEXT:** първият реален `За теб` след minimum onboarding. По §§75, 82, 87, 90 и Dependency Map се затварят роля, първи 3 секунди, до три актуални карти, приоритет `Чака теб → Полезно точно сега → Хора, които има смисъл да познаваш`, честен no-result и една полезна следваща стъпка, пълните states, visibility/permission/safety gates и естествена уникалност. Едно конкретно предложение към Owner преди нов продуктов договор или прототип. После логически contracts за `Карта`, `Хора`, `Ти` и свързващите ги requests, Travel и recovery flows, без да се прескачат отделните Owner решения. Final visual QA на цялата пътека остава преди promotion.
+
+### SCREEN 1 HISTORICAL LANE (still open)
 
 - **Canonical truth:** `main`
 - **ACTIVE Screen 1 work + QA:** `work/screen1-current`

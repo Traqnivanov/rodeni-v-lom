@@ -1,6 +1,6 @@
 # PRODUCT FUNCTION DEPENDENCY MAP — „Родени в Лом“
 
-**Последна актуализация:** 27.09.2026
+**Последна актуализация:** 08.10.2026
 **Статус:** ЗАДЪЛЖИТЕЛЕН ОПЕРАТИВЕН ИНДЕКС НА ОДОБРЕНИТЕ ФУНКЦИИ
 **Обхват:** продуктова логика, UX, privacy, safety, flow и зависимости преди решение
 **Не е:** нова продуктова спецификация, заместител на Master-а или разрешение за implementation
@@ -112,7 +112,9 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 
 След регистрация: `потвърждение на контекста → minimum onboarding → „За теб“`, воден от активна нужда/момент и текущото място. R.E. използва exact Root и municipality Community като фон; при реална причина може да даде обяснимо Opportunity и едно действие само през приложимите privacy/permission/safety gates. Не обещаваме хора/услуга/известие, защото публично има 5+; ако няма допустима възможност сега, няма измислен човек или feed за запълване.
 
-**Идеи, не одобрена имплементация:** конкретен Opportunity copy/layout за „За теб“, „тиха мрежа“ и нов notification trigger. Старият §120 exact result copy е действащ до отделно Owner решение за §122 предложения; въпросът е CURRENT NEXT в State §1B. Не започвай Screen 2 от този запис.
+**OWNER CHECKPOINT 08.10.2026:** Одобрен е отделен minimum-onboarding screen contract след email confirmation (Master §123): Identity → Root review/edit → Current review/edit → едно потвърждение → `За теб`. Private pending не е trusted identity, aggregate или matching. При липсваща чернова се попълват Root/Current; unverified Root изисква canonical избор. Review прототипът е само в `work/registered-onboarding-review`, без backend. Това разрешение не одобрява конкретен `За теб` Opportunity layout, production, DB или Supabase. Уникалността се проверява във всяка следваща стъпка според §§82/90.
+
+**Идеи, не одобрена имплементация:** конкретен Opportunity copy/layout за „За теб“, „тиха мрежа“ и нов notification trigger. Старият §120 exact result copy е действащ до отделно Owner решение за §122 предложения; въпросът е CURRENT NEXT в State §1B. Това старо ограничение е преодоляно само за одобрения onboarding contract от 08.10; `За теб` съдържанието остава отделна задача.
 
 ## 4. Каноничен регистър на функциите и зависимостите
 
@@ -184,6 +186,12 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 | Admin/Owner | Най-висока application роля; управлява system/service/roles/infrastructure | protected staff auth, DB-backed role, audit |
 | Moderator | По-ниска community/safety operational роля | няма role management, service/business, hard delete, infrastructure или general chat access |
 | Admin/Owner exceptional access | Само при конкретен report/dispute/safety/security/legal case | минимален, audit-ван достъп; Moderator няма общ достъп |
+
+## 4A. OWNER PROCESS CHECKPOINT — 21.10.2026
+
+Довършва се логическият договор за целия основен път, преди финалното визуално шлайфане. Одобреният §123 onboarding води към първия реален `За теб` резултат; публичният диапазон не дава разрешение за показване на човек. Активният NEXT е §90 анализ на `За теб` по одобрения §75 приоритет и §87 no-result resolver, включително всички редове от decision matrix по-долу. После се затварят зависимите `Карта`, `Хора`, `Ти`, requests/Travel/recovery пътеки с отделни Owner решения. Няма автоматично разрешение за implementation, services или notifications.
+
+QA дълг преди promotion: Screen 1 exact/broader/suppressed/unverified и registration; onboarding pending/missing/unverified/error/retry/blocked; 360/390/412 px, първи viewport и CTA, focus/touch/contrast, privacy и човешка полезна уникалност. Syntax/data ≠ visual PASS ≠ WORK approval ≠ Owner final approval. Виж Master §124 и State §1B.
 
 ## 5. Задължителен ред преди резултат или empty state в „За теб“
 
