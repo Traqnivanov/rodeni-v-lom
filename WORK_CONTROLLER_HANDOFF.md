@@ -7,7 +7,15 @@
 
 ---
 
-## CURRENT OVERRIDE — 08.10.2026 — OWNER APPROVED REGISTERED-SCREEN CONTRACT
+## CURRENT OVERRIDE — 21.10.2026 — LOGICAL COMPLETION BEFORE VISUAL POLISH
+
+Owner възложи логически да се довърши продуктът, като конкретните проверки за визуално шлайфане се запазят за финален QA. Одобреният §123 minimum-onboarding contract и отделният review прототип остават; 360/390/412 px visual PASS и Owner freeze НЕ са дадени. Review commit `e219d77bad69d65603578d70e7d89b3bfce11b8f` поправя pending Root continuity, липсваща чернова и демо търсене на Root; частният review адрес е `https://rodeni-lom-onboarding-review.ivanovremontibg.chatgpt.site`. Прототипът е без auth/backend и не доказва production поведение.
+
+Точният логически NEXT е `За теб` след завършен onboarding: приложи Master §§75/82/87/90, §123 и Dependency Map; анализирай всички входове, резултати, no-result, permissions и преходи; предложи един конкретен contract за Owner решение. След това премини през `Карта`, `Хора`, `Ти` и междинните действия по зависимости. Не измисляй хора, feed, service или notification trigger. Записвай отделните Owner решения, без да ги смесваш с prototype или visual approval.
+
+Deferred QA преди promotion: Screen 1 exact/broader/suppressed/unverified и registration boundary; onboarding pending/missing/unverified/error/retry/blocked; 360/390/412 px, 3-second comprehension, първи viewport/CTA/scroll, четимост/контраст/focus/touch, човешки текст, privacy и „уникално“ като полза без декорация. После end-to-end WORK audit и Owner финално решение. Никакъв merge към main, live или Supabase само от тази процесна промяна.
+
+## HISTORICAL OVERRIDE — 08.10.2026 — OWNER APPROVED REGISTERED-SCREEN CONTRACT
 
 Owner прие WORK предложението за един екран след потвърден имейл (Master §123). Работи в отделната `work/registered-onboarding-review` линия с `prototype-registered-onboarding-review.html`, без да връщаш Screen 1 отначало и без main/live/Supabase промяна. Screen 1 `work/screen1-current` остава отворен без финален Owner visual freeze. Провери pending/missing/unverified/error/blocked състоянията на 360/390/412 px, после WORK доклад и Owner review. Естествената уникалност се проверява за всяко решение, без декоративна квота. Старият Screen 1 NEXT по-долу е исторически за тази нова задача.
 
