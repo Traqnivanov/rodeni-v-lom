@@ -10056,3 +10056,26 @@ Owner постави граница след оценка на ползата и
 ## Review evidence и NEXT
 
 Review branch: `work/registered-onboarding-review`; файл: `prototype-registered-onboarding-review.html`. Това е демонстрация без реален акаунт или запис. Следва 360/390/412 px визуална/flow QA на pending, missing, unverified, error/retry и blocked → WORK доклад → Owner review. Отделно след това се анализира първият реален „За теб“ резултат по §90. Main/live/Supabase остават непроменени.
+
+# 124. [OWNER DIRECTION][PROCESS] Логическа цялост преди финално визуално шлайфане
+
+**Дата:** 21.10.2026  
+**Посока:** Admin/Owner; запис и контрол: WORK CONTROLLER.  
+**Статус:** одобрен работен ред, не нов продуктов резултат, visual PASS или разрешение за production.
+
+Owner изисква да спрем да циклим върху една и съща визуална точка. Конкретните оставащи проверки се пазят, но основната работа продължава към логическата цялост на продукта. §123 minimum-onboarding contract остава одобрен; неговият review прототип е демо без backend. Поправките за pending Root, липсваща чернова и демо canonical избор са в `work/registered-onboarding-review` @ `e219d77bad69d65603578d70e7d89b3bfce11b8f`. Desktop/състояния и JS са проверени; 360/390/412 px visual PASS не е доказан.
+
+## Ред за логическо довършване
+
+1. Първият реален `За теб` след потвърден onboarding: анализ по §§75, 82, 87, 90 и Dependency Map; приоритет, обяснима полза, максимум три актуални карти, един водещ изход, честен no-result, пълни states и visibility/permission/safety gates. Публичен `5+`/`25+` никога не обещава конкретен човек.
+2. Зависимите основни секции `Карта`, `Хора` (само accepted връзки), `Ти` и пътеките requests, Travel, contact, block/decline, recovery се проверяват като свързан продукт. За всяка нова съществена точка: §90 анализ → едно предложение → изрично Owner решение → запис; не се измисля implementation от общата посока.
+3. Преди реално promotion се прави цялостен end-to-end audit и финално visual polish/QA. Известия, Services, Service Trust Mechanism, DB/RLS и security remediation запазват отделните си gates и не се активират от този ред.
+
+## Запазен QA дълг
+
+- Screen 1: exact/safe-broader/suppressed/unverified Root, честен fallback без километри, линия само при надеждни координати, privacy и registration boundary.
+- Onboarding: pending/missing/unverified/error/retry/blocked; преглед/редакция без автоматично доверяване или загуба на чернова.
+- И за двете: действителен визуален и flow преглед на 360/390/412 px; разбиране за три секунди, първи viewport/CTA/scroll, четимост, contrast, focus/touch, човешки текст и естествена уникалност като полза, а не декорация.
+- Technical/data PASS, visual PASS, WORK approval и Owner final approval са отделни. Няма merge/live/Supabase само по този checkpoint.
+
+**CURRENT NEXT:** §90 анализ и едно конкретно предложение за първия `За теб` след §123. Задължителният QA дълг остава отворен до финалния visual gate.
