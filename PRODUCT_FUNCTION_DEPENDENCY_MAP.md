@@ -187,6 +187,12 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 | Moderator | По-ниска community/safety operational роля | няма role management, service/business, hard delete, infrastructure или general chat access |
 | Admin/Owner exceptional access | Само при конкретен report/dispute/safety/security/legal case | минимален, audit-ван достъп; Moderator няма общ достъп |
 
+## 4A. OWNER PROCESS CHECKPOINT — 21.10.2026
+
+Довършва се логическият договор за целия основен път, преди финалното визуално шлайфане. Одобреният §123 onboarding води към първия реален `За теб` резултат; публичният диапазон не дава разрешение за показване на човек. Активният NEXT е §90 анализ на `За теб` по одобрения §75 приоритет и §87 no-result resolver, включително всички редове от decision matrix по-долу. После се затварят зависимите `Карта`, `Хора`, `Ти`, requests/Travel/recovery пътеки с отделни Owner решения. Няма автоматично разрешение за implementation, services или notifications.
+
+QA дълг преди promotion: Screen 1 exact/broader/suppressed/unverified и registration; onboarding pending/missing/unverified/error/retry/blocked; 360/390/412 px, първи viewport и CTA, focus/touch/contrast, privacy и човешка полезна уникалност. Syntax/data ≠ visual PASS ≠ WORK approval ≠ Owner final approval. Виж Master §124 и State §1B.
+
 ## 5. Задължителен ред преди резултат или empty state в „За теб“
 
 Преди да се заключи, че „няма какво да се покаже“, се проверява целият актуален контекст:
