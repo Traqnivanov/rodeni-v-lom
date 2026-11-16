@@ -7,7 +7,11 @@
 
 ---
 
-## CURRENT OVERRIDE — 21.10.2026 — LOGICAL COMPLETION BEFORE VISUAL POLISH
+## CURRENT OVERRIDE — 16.11.2026 — TWO NEED PATHS APPROVED AS DIRECTION
+
+Owner прие посоката за два V1 вида зад `Посочи нужда` (Master §125): structured Travel (§73) и частна Guidance нужда с изрично изпратена единична заявка (§69/§71). Това не одобрява 30 дни, една активна нужда, конкретните полета/теми, автоматична преоценка, клиентски copy, backend/DB, prototype или production. WORK кандидатът е `review/need-entry-v1-logic.md`. Точният NEXT е тесен Guidance contract с проверки cold start, permission, no-result, duplicate/expiry, recovery и цена → Owner решение → bounded prototype. Screen 1 и onboarding visual QA дългът остава. Няма main/live/Supabase промяна.
+
+## HISTORICAL OVERRIDE — 21.10.2026 — LOGICAL COMPLETION BEFORE VISUAL POLISH
 
 Owner възложи логически да се довърши продуктът, като конкретните проверки за визуално шлайфане се запазят за финален QA. Одобреният §123 minimum-onboarding contract и отделният review прототип остават; 360/390/412 px visual PASS и Owner freeze НЕ са дадени. Review commit `e219d77bad69d65603578d70e7d89b3bfce11b8f` поправя pending Root continuity, липсваща чернова и демо търсене на Root; частният review адрес е `https://rodeni-lom-onboarding-review.ivanovremontibg.chatgpt.site`. Прототипът е без auth/backend и не доказва production поведение.
 
