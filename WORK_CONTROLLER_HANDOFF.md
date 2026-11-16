@@ -9,7 +9,7 @@
 
 ## CURRENT OVERRIDE — 16.11.2026 — TWO NEED PATHS APPROVED AS DIRECTION
 
-Owner прие посоката за два V1 вида зад `Посочи нужда` (Master §125): structured Travel (§73) и частна Guidance нужда с изрично изпратена единична заявка (§69/§71). Това не одобрява 30 дни, една активна нужда, конкретните полета/теми, автоматична преоценка, клиентски copy, backend/DB, prototype или production. WORK кандидатът е `review/need-entry-v1-logic.md`. Точният NEXT е тесен Guidance contract с проверки cold start, permission, no-result, duplicate/expiry, recovery и цена → Owner решение → bounded prototype. Screen 1 и onboarding visual QA дългът остава. Няма main/live/Supabase промяна.
+Owner прие посоката за два V1 вида зад `Посочи нужда` (Master §125): structured Travel (§73) и частна Guidance нужда с изрично изпратена единична заявка (§69/§71). Това не одобрява 30 дни, една активна нужда, конкретните полета/теми, автоматична преоценка, клиентски copy, backend/DB, prototype или production. WORK кандидатът е `review/need-entry-v1-logic.md`. Точният Guidance WORK contract вече е подготвен в `review/guidance-need-contract-proposal.md` @ `619d57154385233fef0131b0cbf896e3daa52f64` след cold-start, permission, no-result, duplicate/expiry, recovery и cost audit. Той е НЕОДОБРЕН кандидат. NEXT е Owner преглед на параметрите → sync gate → bounded prototype. Screen 1 и onboarding visual QA дългът остава. Няма main/live/Supabase промяна.
 
 ## HISTORICAL OVERRIDE — 21.10.2026 — LOGICAL COMPLETION BEFORE VISUAL POLISH
 
