@@ -27,17 +27,17 @@
       const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
       const option=(value,label,chosen)=>`<option value="${esc(value)}" ${value===chosen?'selected':''}>${esc(label)}</option>`;
       const button=(action,label,cls='primary')=>`<button type="button" class="${cls}" data-action="${action}">${label}</button>`;
-      const head=(title,sub,back)=>`${back?button('back','← Назад','back'):''}<p class="eyebrow">${esc(sub)}</p><h1 class="heading">${esc(title)}</h1>`;
+      const head=(title,sub,back)=>`${back?button('back','← Назад','back'):''}<p class="eyebrow">${esc(sub)}</p><h1 class="heading" tabindex="-1">${esc(title)}</h1>`;
       const needLabel=()=>s.active?.kind==='guidance'?`${s.active.topic} · ${s.active.place}`:`${s.active?.from} → ${s.active?.to} · около ${s.active?.date}`;
       const status=()=>{
         if(!s.active)return '';
         let guidance=s.active.kind==='guidance', label=guidance?'Нужда от насока':'Търсене на пътуващ';
-        return `<section class="card"><div class="meta">${label} · активно в демото</div><h2>${guidance?'Търсиш насока':'Търсиш човек, който пътува'}</h2><p>${esc(needLabel())}</p><p class="muted small">${guidance?'Срокът е 30 дни след изричното потвърждение.':'Търсенето е свързано с избраната дата.'} Тук няма реален запис или автоматично изпратена заявка.</p><div class="row">${button('edit','Промени','secondary')}${button('close','Приключи','quiet')}</div></section>`;
+        return `<section class="card"><div class="meta">${label} · активно в демото</div><h2>${guidance?'Търсиш насока':'Търсиш човек, който пътува'}</h2><p>${esc(needLabel())}</p>${scenario.value==='none'&&!s.request?`<p class="muted">${guidance?'Още няма човек за тази насока.':'Още няма подходящо пътуване по твоя маршрут.'} Можеш да промениш или приключиш нуждата; не обещаваме известие или бъдещо съвпадение.</p>`:''}<p class="muted small">${guidance?'Срокът е 30 дни след изричното потвърждение.':'Търсенето е свързано с избраната дата.'} Тук няма реален запис или автоматично изпратена заявка.</p><div class="row">${button('edit','Промени','secondary')}${button('close','Приключи','quiet')}</div></section>`;
       };
       const result=()=>{
         if(!s.active)return '';
         if(s.request)return `<section class="card"><div class="meta">Чака теб</div><h2>Заявката е изпратена в демото</h2><p class="muted">Реално изпращане не е извършено. Чат би се отворил само след приемане.</p></section>`;
-        if(scenario.value==='none')return `<section class="card"><div class="meta">Полезно точно сега</div><h2>${s.active.kind==='guidance'?'Още няма човек за тази насока.':'Още няма подходящо пътуване по твоя маршрут.'}</h2><p class="muted">Можеш да промениш или приключиш нуждата. Не обещаваме известие или бъдещо съвпадение.</p></section>`;
+        if(scenario.value==='none')return '';
         if(scenario.value==='waiting')return `<section class="card"><div class="meta">Чака теб · симулиран пример</div><h2>Има заявка за теб</h2><p>Тя стои пред предложенията. Тук не изпълняваме приемане или отказ.</p></section>`;
         if(scenario.value==='accepted')return `<section class="card"><div class="meta">Полезно точно сега · симулиран пример</div><h2>Мария може да помогне с тази нужда</h2><p>Вече сте свързани и има актуална причина да говорите.</p>${button('chat','Пиши на Мария')}</section>`;
         return `<section class="card"><div class="meta">Полезно точно сега · симулиран пример</div><h2>${s.active.kind==='guidance'?'Мария може да даде насока.':'Иван пътува по този маршрут.'}</h2><p>${s.active.kind==='guidance'?'Демо причина: общ корен Лом, живее в Мюнхен и е отбелязала, че споделя насоки.':'Демо причина: Мюнхен → Лом около избраната дата; готовност за помощ по това пътуване.'}</p>${button('preview',s.active.kind==='guidance'?'Попитай за насока':'Попитай Иван')}</section>`;
@@ -46,7 +46,7 @@
         if(s.page==='home'){
           h=head('За теб','След потвърден onboarding',false);
           if(!s.active){h+=`<p class="intro">Коренът ти е Лом, сега си в Мюнхен. Конкретен човек показваме само при ясна причина и разрешен контакт.</p><section class="card"><div class="meta">Полезно точно сега</div><h2>Какво би ти било полезно в Мюнхен?</h2><p class="muted">В този демо сценарий няма човек, когото можем да покажем сега.</p>${button('choose','Посочи нужда','primary full')}</section>`;}
-          else h+=`${status()}${result()}`;
+          else h+=`${result()}${status()}`;
         }
         if(s.page==='choose')h=head('Какво търсиш?','Посочи нужда',true)+`<p class="intro">Изборът тук не създава публикация и не изпраща заявка.</p><section class="card"><h2>Търся информация или насока</h2><p class="muted">За едно място и една тема.</p>${button('guidance','Избери насока','secondary full')}</section><section class="card"><h2>Търся човек, който пътува</h2><p class="muted">От, до и около коя дата.</p>${button('travel','Избери пътуване','secondary full')}</section>`;
         if(s.page==='guidance')h=head('Къде и за какво?','Информация или насока',true)+`<p class="intro">Избери едно място и една тема. Няма публичен въпрос.</p><form id="need-form" class="card" novalidate><div class="field"><label for="place">Място</label><select id="place" class="choice"><option value="">Избери място</option>${placeOptions.map(([v,l])=>option(v,l,s.place)).join('')}</select><p class="hint">„Сега“ и „Корен“ остават различни места. Друго място се появява само с проверен избор.</p></div><div class="field"><label for="topic">Тема</label><select id="topic" class="choice"><option value="">Избери тема</option>${topics.map(v=>option(v,v,s.topic)).join('')}</select></div>${s.error?`<p role="alert" class="error">${esc(s.error)}</p>`:''}<button class="primary full" type="submit">Прегледай нуждата</button></form>`;
