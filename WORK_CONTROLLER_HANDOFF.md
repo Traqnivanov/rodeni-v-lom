@@ -7,9 +7,9 @@
 
 ---
 
-## CURRENT OVERRIDE — 16.11.2026 — TWO NEED PATHS APPROVED AS DIRECTION
+## CURRENT OVERRIDE — 16.11.2026 — GUIDANCE CONTRACT APPROVED
 
-Owner прие посоката за два V1 вида зад `Посочи нужда` (Master §125): structured Travel (§73) и частна Guidance нужда с изрично изпратена единична заявка (§69/§71). Това не одобрява 30 дни, една активна нужда, конкретните полета/теми, автоматична преоценка, клиентски copy, backend/DB, prototype или production. WORK кандидатът е `review/need-entry-v1-logic.md`. Точният Guidance WORK contract вече е подготвен в `review/guidance-need-contract-proposal.md` @ `619d57154385233fef0131b0cbf896e3daa52f64` след cold-start, permission, no-result, duplicate/expiry, recovery и cost audit. Той е НЕОДОБРЕН кандидат. NEXT е Owner преглед на параметрите → sync gate → bounded prototype. Screen 1 и onboarding visual QA дългът остава. Няма main/live/Supabase промяна.
+Owner одобри двата V1 вида зад `Посочи нужда` (Master §§125–126): structured Travel (§73) и частна Guidance нужда (§§69/71) с едно canonical място + тема, най-много една активна нужда, 30 дни от изрично потвърждение, управление и изрична единична заявка към допустим човек. Само in-product scoped преоценка; всички permission/privacy/safety gates се проверяват при показване и действие. При ненадежден expiry/recovery WORK връща по-лек вариант за Owner решение. `review/guidance-need-contract-proposal.md` е основанието; Master §126 е одобреният contract. Клиентски copy, visual, backend/schema/RLS и production не са одобрени. Read-only `get_project` показа Supabase `mqilvavuzbsscsfhtuub` = `INACTIVE`; без restore или DB намеса. NEXT: синхронизирай first-entry `За теб`, направи ограничен статичен demo review flow на Travel/Guidance/result/no-result/manage → WORK audit → Owner review. Screen 1/onboarding 360/390/412 QA дългът остава. Само `work/registered-onboarding-review`; без main/live/Supabase промяна.
 
 ## HISTORICAL OVERRIDE — 21.10.2026 — LOGICAL COMPLETION BEFORE VISUAL POLISH
 
