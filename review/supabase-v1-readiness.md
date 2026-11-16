@@ -14,6 +14,22 @@
 - `messages` има RLS за accepted connection, но при реализацията трябва да се тества дали block след accept прекъсва четене и изпращане. От catalog дефиницията се вижда само `status = 'accepted'`, без отделна block проверка.
 - Security advisor има WARN за три `public` SECURITY DEFINER функции, callable от `authenticated`, и WARN за изключена leaked-password protection: https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable ; https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection . Health advisor не върна findings.
 
+
+## Сверка с текущия live frontend (read-only, `main`)
+
+| Място | Реално поведение | V1 зависимост |
+|---|---|---|
+| `index.html:264–276` | Recent-activity ticker чете `public_registrations` с име и град. | Публичният pre-registration поток не трябва да издава конкретни хора; премахване/замяна при privacy closure. |
+| `index.html:668–670` | `select('*')` тегли всички редове от public view и ги групира в браузъра. | Privacy-safe aggregate трябва да се изчислява и ограничава server-side; не се пращат сурови редове към anonymous client. |
+| `index.html:507–539` | `willing_to_help` оформя публичен таб с конкретни хора. | §69 е доброволен Guidance signal, не публичен каталог или paid service. |
+| `account.html:282` | Възрастта е незадължителна и `min="14"`. | 18+ gate и минималният onboarding са нов договор; HTML validation сама не стига. |
+| `account.html:558–578` | Две насрещни pending заявки се приемат автоматично при зареждане на страницата. | §71 изисква получателят да реши изрично; и двете посоки се свеждат до една unordered pair identity. |
+| `account.html:589, 634+` | Входящи/препоръчани хора се четат от public row view. | Замяната на view изисква едновременно нови разрешени recipient/relationship reads, иначе UI се чупи. |
+| `account.html:762` | Browser client прави пряк `connections.insert`. | Всички V1 gates трябва да са атомарни server-side; UI само инициира explicit request. |
+| `account.html:1029` | Входът използва `signInWithOtp` magic-link. | Одобреният registration contract трябва да се внедри отделно; не се включва старият flow като готов. |
+
+**Извод за реда:** новите сървърни read/action boundaries и новият frontend се разработват и тестват заедно в изолирана среда. Public row view не се изключва самостоятелно върху сегашния live `index.html`, но не се пуска и регистрация на реални хора през стария път. Promotion е едно координирано, обратимо решение след Owner преглед.
+
 ## Предложен ред за implementation, без приложение сега
 
 1. **Запази evidence/rollback:** експортирай schema и policy definitions; свери реалната production употреба на view/RPC, Auth и Storage. Не считай нулеви public редове за пълна празна среда.
