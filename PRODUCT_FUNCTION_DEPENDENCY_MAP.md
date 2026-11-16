@@ -193,9 +193,9 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 
 QA дълг преди promotion: Screen 1 exact/broader/suppressed/unverified и registration; onboarding pending/missing/unverified/error/retry/blocked; 360/390/412 px, първи viewport и CTA, focus/touch/contrast, privacy и човешка полезна уникалност. Syntax/data ≠ visual PASS ≠ WORK approval ≠ Owner final approval. Виж Master §124 и State §1B.
 
-## 4B. OWNER DIRECTION — 16.11.2026, Master §125
+## 4B. OWNER APPROVAL — 16.11.2026, Master §§125–126
 
-Зад `Посочи нужда` V1 има две одобрени като посока пътеки: structured Travel (§73) и частна Guidance нужда, при която user сам изпраща една нормална заявка само към допустим човек (§§69/71). Автоматично human routing, публичен въпрос и Services не са включени. Полета/теми, срок, duplicate/expiry и re-evaluation за Guidance остават отделен Owner gate; WORK анализът в `review/need-entry-v1-logic.md` не е approved contract. Без реален no-match/status и управление този CTA не е готов за prototype/implementation.
+Зад `Посочи нужда` V1 има structured Travel (§73) и частна Guidance нужда (§§69/71): едно canonical място и тема, до една активна нужда, 30 дни след изрично потвърждение, редакция/приключване, честен no-match/status. R.E. преглежда първо релевантен accepted човек, после допустим непознат с доброволен Guidance signal и inbound ON. Единствено изричното действие изпраща нормална единична connection request; няма директен чат преди accept, автоматичен routing, публичен въпрос, broadcast, push или Services. Re-evaluation е само scoped и in-product; expiry/recovery и всички account/18+/block/decline/limit/permission gates са задължителни. Ако reliability липсва, по-лек вариант се връща за Owner решение, а 30-дневният flow не се пуска частично. Копие, visual, schema/RLS и production са отделни gates. Supabase `mqilvavuzbsscsfhtuub` е `INACTIVE` към read-only проверката на 16.11; статичен review prototype е възможен, real Auth/DB/RLS проверка — не. NEXT: first-entry `За теб` contract → ограничен demo review flow → WORK audit → Owner review.
 
 ## 5. Задължителен ред преди резултат или empty state в „За теб“
 
