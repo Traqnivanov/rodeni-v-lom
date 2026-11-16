@@ -10094,3 +10094,21 @@ Owner изисква да спрем да циклим върху една и с
 **Не са одобрени с това „Ок“:** една активна Guidance нужда, 30-дневен срок, точните полета/теми, resolver за друго място, re-evaluation triggers, request preview copy, schema/RLS и notification. Те остават WORK кандидати за отделен анализ и Owner решение. Хипотезите §§9/101–102 за automatic small-wave human routing не се превръщат във V1 правило. §104 anonymous Pending Need bridge остава FUTURE. Services и Иванов Ремонти са извън този community flow.
 
 **Точен NEXT:** WORK затваря параметрите на Guidance need-entry/lifecycle с реални сценарии и проверка за cold start, privacy, permission, duplicate/expiry и техническа цена; представя един конкретен contract за Owner решение. След това се обновява първият `За теб` contract и се прави bounded review prototype. Финалният mobile visual gate и production promotion остават отделни.
+
+# 126. [OWNER APPROVED][REGISTERED] Guidance нужда във V1 — точен логически contract
+
+**Дата:** 16.11.2026  
+**Решение:** Admin/Owner потвърди WORK предложението в `review/guidance-need-contract-proposal.md`.  
+**Статус:** одобрен логически contract; точният клиентски текст, visual, prototype, backend/schema/RLS и production не са одобрени с това решение.
+
+Зад одобрения §125 избор `Търся информация или насока` човек след потвърден onboarding избира **едно canonical място** и **една тема**. Предлагат се потвърдените Current и exact Root/Community като ясно разграничени места. Друго място се допуска само когато има надежден canonical resolver; иначе този избор не се показва. Работните теми следват примерите в §69 (живот на място, институции, транспорт, към кого да се обърна, друга информация/насока); окончателният език се проверява визуално. Свободен личен въпрос не е задължителен при активиране. Нуждата е частна и се активира само след изричен преглед/потвърждение; няма публичен пост, автоматично изпратена заявка или paid Services пътека.
+
+Във V1 човек има **най-много една активна Guidance нужда**. Нов избор редактира същата need identity. Тя е активна **30 дни от последното изрично потвърждение**, може да се приключи по-рано и не се възкресява автоматично след expiry. Редакция/преформулиране не заобикаля decline пауза, block или лимита 5 outbound заявки/24 часа. Точният backend enforcement се проектира отделно.
+
+R.E. проверява допустим accepted човек с реална Guidance причина, после непознат с доброволен Guidance signal, inbound ON, силна обяснима причина и всички account/18+/block/decline/relationship/limit gates. Accepted контакт води към съществуващия chat; непознат се показва с кратка причина и `Попитай за насока`. Преди изпращане човек вижда получателя и каква минимална информация за място/тема/причина ще бъде споделена. Само изричното му действие изпраща **една нормална connection request**, не директен чат или въпрос към група. При липса на допустим човек `За теб` показва частния status и действия за промяна/приключване, без да разкрива защо някой е скрит и без обещание за notification.
+
+Нов релевантен confirmed context/Guidance/permission event може да преоцени само засегнатия scope и да покаже възможност **в приложението**. Няма автоматично human routing, broadcast или push. Gates се проверяват отново при показване и действие. Ако scoped re-evaluation, expiry и idempotent recovery не могат да бъдат надеждно реализирани, този 30-дневен active-need flow не се пуска частично; WORK връща по-лек моментен вариант за Owner решение.
+
+**Read-only infrastructure finding — 16.11.2026:** Supabase проект `mqilvavuzbsscsfhtuub` (`rodeni-v-lom`) е `INACTIVE` според `get_project`. Не са изпълнявани SQL, restore, migration или DB промяна. Статичен review prototype може да се направи отделно, но реални Auth/DB/RLS/expiry проверки не са възможни до отделно разрешено възстановяване и implementation gate.
+
+**NEXT:** синхронизирай first-entry `За теб` WORK кандидата с този contract; подготви ограничен статичен review prototype на `За теб → Посочи нужда → Travel/Guidance → резултат/no-result/manage`, с изрично демо обозначение и без backend. След visual/flow WORK audit → Owner review. Screen 1/onboarding отложеният 360/390/412 QA дълг остава; main/live/Supabase не се пипат.
