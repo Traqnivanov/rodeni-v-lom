@@ -10079,3 +10079,18 @@ Owner изисква да спрем да циклим върху една и с
 - Technical/data PASS, visual PASS, WORK approval и Owner final approval са отделни. Няма merge/live/Supabase само по този checkpoint.
 
 **CURRENT NEXT:** §90 анализ и едно конкретно предложение за първия `За теб` след §123. Задължителният QA дълг остава отворен до финалния visual gate.
+
+# 125. [OWNER APPROVED DIRECTION][REGISTERED] Две V1 пътеки зад „Посочи нужда“
+
+**Дата:** 16.11.2026  
+**Решение:** Admin/Owner потвърди посоката след WORK одита в `review/need-entry-v1-logic.md`.  
+**Статус:** одобрена ограничена продуктова посока; точните параметри и клиентски текст НЕ са одобрени; няма prototype/backend/DB разрешение само от този запис.
+
+След първия честен no-result в `За теб`, одобреният §87 CTA `Посочи нужда` има две разграничени пътеки:
+
+1. **„Търся човек, който пътува“** — използва вече одобрения §73 structured Travel contract: От, До, около коя дата; няма публично описание какво точно трябва, няма масово изпращане или превоз на хора.
+2. **„Търся информация или насока“** — частна и управляема нужда, отделена от платени услуги. Търси допустима човешка причина и подходящ човек през §69 Guidance и §§71/87 permission/safety gates. User сам преглежда и изпраща конкретна normal connection request; няма автоматичен human routing или публичен broadcast. При липса на допустим човек има честно състояние и управление, без обещание за бъдещ match или push.
+
+**Не са одобрени с това „Ок“:** една активна Guidance нужда, 30-дневен срок, точните полета/теми, resolver за друго място, re-evaluation triggers, request preview copy, schema/RLS и notification. Те остават WORK кандидати за отделен анализ и Owner решение. Хипотезите §§9/101–102 за automatic small-wave human routing не се превръщат във V1 правило. §104 anonymous Pending Need bridge остава FUTURE. Services и Иванов Ремонти са извън този community flow.
+
+**Точен NEXT:** WORK затваря параметрите на Guidance need-entry/lifecycle с реални сценарии и проверка за cold start, privacy, permission, duplicate/expiry и техническа цена; представя един конкретен contract за Owner решение. След това се обновява първият `За теб` contract и се прави bounded review prototype. Финалният mobile visual gate и production promotion остават отделни.
