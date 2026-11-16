@@ -193,6 +193,10 @@ R.E. обединява Context Engine, Root Graph, Opportunity logic/model и p
 
 QA дълг преди promotion: Screen 1 exact/broader/suppressed/unverified и registration; onboarding pending/missing/unverified/error/retry/blocked; 360/390/412 px, първи viewport и CTA, focus/touch/contrast, privacy и човешка полезна уникалност. Syntax/data ≠ visual PASS ≠ WORK approval ≠ Owner final approval. Виж Master §124 и State §1B.
 
+## 4B. OWNER DIRECTION — 16.11.2026, Master §125
+
+Зад `Посочи нужда` V1 има две одобрени като посока пътеки: structured Travel (§73) и частна Guidance нужда, при която user сам изпраща една нормална заявка само към допустим човек (§§69/71). Автоматично human routing, публичен въпрос и Services не са включени. Полета/теми, срок, duplicate/expiry и re-evaluation за Guidance остават отделен Owner gate; WORK анализът в `review/need-entry-v1-logic.md` не е approved contract. Без реален no-match/status и управление този CTA не е готов за prototype/implementation.
+
 ## 5. Задължителен ред преди резултат или empty state в „За теб“
 
 Преди да се заключи, че „няма какво да се покаже“, се проверява целият актуален контекст:
