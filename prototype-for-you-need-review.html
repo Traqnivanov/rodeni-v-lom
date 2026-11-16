@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>За теб · Посочи нужда · review</title>
+  <style>
+    :root{font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;color:#f4f7fb;background:#0b1a30}
+    *{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f1c56c;outline-offset:3px}
+    .review{background:#eef2f7;color:#17314e;padding:10px 16px;font-size:14px}.review summary{font-weight:750;cursor:pointer;max-width:600px;margin:auto}.controls{max-width:600px;margin:10px auto 0;display:grid;gap:7px}.controls select{width:100%;min-height:44px;padding:7px 11px;background:white;color:#172c44;border:1px solid #66819d;border-radius:9px}.controls p{margin:0}
+    .shell{max-width:600px;margin:auto;padding:18px 16px 96px}.brand{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #3d506a;padding:0 0 15px;font-weight:750}.brand small{color:#c8d4e2;font-size:14px;font-weight:500}
+    .back{color:#f1c56c;background:none;border:0;padding:12px 0;margin:8px 0 0;min-height:44px;text-align:left}.eyebrow{font-size:14px;font-weight:700;color:#f1c56c;margin:19px 0 7px}.heading{font-size:28px;line-height:1.15;letter-spacing:-.02em;margin:0 0 11px}.intro{color:#c9d6e3;margin:0 0 20px}.card{background:#142a43;border:1px solid #3e5670;border-radius:17px;padding:20px;margin:16px 0}.card h2{font-size:21px;line-height:1.2;margin:0 0 10px}.card p{margin:0 0 14px}.card p:last-child{margin-bottom:0}.muted{color:#c7d4e2}.small{font-size:14px}.meta{color:#f1c56c;font-size:14px;font-weight:700;margin-bottom:8px}.row{display:flex;gap:11px;flex-wrap:wrap}.row>*{flex:1 1 150px}.primary,.secondary,.quiet{min-height:50px;border-radius:11px;padding:10px 16px;font-size:16px;font-weight:700}.primary{background:#edb94c;color:#14233a;border:1px solid #edb94c}.secondary{background:#18354e;color:#f4f7fb;border:1px solid #71869c}.quiet{background:transparent;color:#f1c56c;border:1px solid #a88750}.full{width:100%;margin-top:10px}.choice{width:100%;min-height:52px;border:1px solid #71869c;border-radius:11px;background:#10233a;color:#f4f7fb;padding:10px 12px;font-size:16px}.field{margin:19px 0}.field label{display:block;font-weight:700;margin-bottom:8px}.hint{font-size:14px;color:#c7d4e2;margin:7px 0 0}.error{color:#ffb6b6;margin:8px 0 0}.pair{display:grid;gap:12px;grid-template-columns:1fr 1fr}.summary{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 12px}.summary dt{color:#c7d4e2}.summary dd{margin:0;font-weight:650;overflow-wrap:anywhere}.note{border-left:3px solid #f1c56c;padding-left:12px;color:#d3deea;font-size:15px;margin:20px 0}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:28px;border-top:1px solid #3d506a;padding-top:14px}.nav span{text-align:center;font-size:14px;color:#c7d4e2}.nav span:first-child{color:#f1c56c;font-weight:700}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:370px){.shell{padding-left:14px;padding-right:14px}.card{padding:17px}.heading{font-size:26px}.pair{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <details class="review" id="review" open>
+    <summary>Review прототип · само симулирани данни</summary>
+    <div class="controls"><label for="scenario">Сценарий за допустим резултат</label><select id="scenario"><option value="none">Няма допустим човек</option><option value="stranger">Допустим непознат (демо)</option><option value="accepted">Приет контакт (демо)</option><option value="waiting">Чака теб входяща заявка (демо)</option></select><p>Без акаунт, backend и запис. Изборът симулира резултат след permission gates; не доказва, че те работят в Supabase.</p></div>
+  </details>
+  <main class="shell"><header class="brand"><span>Родени в Лом</span><small>Review · За теб</small></header><div id="app" aria-live="polite"></div><nav class="nav" aria-label="Примерна основна навигация"><span>За теб</span><span>Карта</span><span>Хора</span><span>Ти</span></nav></main>
+  <script>
+    (()=>{
+      const app=document.getElementById('app'), scenario=document.getElementById('scenario');
+      const placeOptions=[['Мюнхен','Сега · Мюнхен'],['Лом','Корен · Лом']];
+      const topics=['Живот на място','Институции','Транспорт','Към кого да се обърна','Друга информация или насока'];
+      let s={page:'home',kind:'',place:'',topic:'',from:'Мюнхен',to:'Лом',date:'',active:null,request:false,error:''};
+      const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const option=(value,label,chosen)=>`<option value="${esc(value)}" ${value===chosen?'selected':''}>${esc(label)}</option>`;
+      const button=(action,label,cls='primary')=>`<button type="button" class="${cls}" data-action="${action}">${label}</button>`;
+      const head=(title,sub,back)=>`${back?button('back','← Назад','back'):''}<p class="eyebrow">${esc(sub)}</p><h1 class="heading">${esc(title)}</h1>`;
+      const needLabel=()=>s.active?.kind==='guidance'?`${s.active.topic} · ${s.active.place}`:`${s.active?.from} → ${s.active?.to} · около ${s.active?.date}`;
+      const status=()=>{
+        if(!s.active)return '';
+        let guidance=s.active.kind==='guidance', label=guidance?'Нужда от насока':'Търсене на пътуващ';
+        return `<section class="card"><div class="meta">${label} · активно в демото</div><h2>${guidance?'Търсиш насока':'Търсиш човек, който пътува'}</h2><p>${esc(needLabel())}</p><p class="muted small">${guidance?'Срокът е 30 дни след изричното потвърждение.':'Търсенето е свързано с избраната дата.'} Тук няма реален запис или автоматично изпратена заявка.</p><div class="row">${button('edit','Промени','secondary')}${button('close','Приключи','quiet')}</div></section>`;
+      };
+      const result=()=>{
+        if(!s.active)return '';
+        if(s.request)return `<section class="card"><div class="meta">Чака теб</div><h2>Заявката е изпратена в демото</h2><p class="muted">Реално изпращане не е извършено. Чат би се отворил само след приемане.</p></section>`;
+        if(scenario.value==='none')return `<section class="card"><div class="meta">Полезно точно сега</div><h2>${s.active.kind==='guidance'?'Още няма човек за тази насока.':'Още няма подходящо пътуване по твоя маршрут.'}</h2><p class="muted">Можеш да промениш или приключиш нуждата. Не обещаваме известие или бъдещо съвпадение.</p></section>`;
+        if(scenario.value==='waiting')return `<section class="card"><div class="meta">Чака теб · симулиран пример</div><h2>Има заявка за теб</h2><p>Тя стои пред предложенията. Тук не изпълняваме приемане или отказ.</p></section>`;
+        if(scenario.value==='accepted')return `<section class="card"><div class="meta">Полезно точно сега · симулиран пример</div><h2>Мария може да помогне с тази нужда</h2><p>Вече сте свързани и има актуална причина да говорите.</p>${button('chat','Пиши на Мария')}</section>`;
+        return `<section class="card"><div class="meta">Полезно точно сега · симулиран пример</div><h2>${s.active.kind==='guidance'?'Мария може да даде насока.':'Иван пътува по този маршрут.'}</h2><p>${s.active.kind==='guidance'?'Демо причина: общ корен Лом, живее в Мюнхен и е отбелязала, че споделя насоки.':'Демо причина: Мюнхен → Лом около избраната дата; готовност за помощ по това пътуване.'}</p>${button('preview',s.active.kind==='guidance'?'Попитай за насока':'Попитай Иван')}</section>`;
+      };
+      function render(){let h='';
+        if(s.page==='home'){
+          h=head('За теб','След потвърден onboarding',false);
+          if(!s.active){h+=`<p class="intro">Коренът ти е Лом, сега си в Мюнхен. Конкретен човек показваме само при ясна причина и разрешен контакт.</p><section class="card"><div class="meta">Полезно точно сега</div><h2>Какво би ти било полезно в Мюнхен?</h2><p class="muted">В този демо сценарий няма човек, когото можем да покажем сега.</p>${button('choose','Посочи нужда','primary full')}</section>`;}
+          else h+=`${status()}${result()}`;
+        }
+        if(s.page==='choose')h=head('Какво търсиш?','Посочи нужда',true)+`<p class="intro">Изборът тук не създава публикация и не изпраща заявка.</p><section class="card"><h2>Търся информация или насока</h2><p class="muted">За едно място и една тема.</p>${button('guidance','Избери насока','secondary full')}</section><section class="card"><h2>Търся човек, който пътува</h2><p class="muted">От, до и около коя дата.</p>${button('travel','Избери пътуване','secondary full')}</section>`;
+        if(s.page==='guidance')h=head('Къде и за какво?','Информация или насока',true)+`<p class="intro">Избери едно място и една тема. Няма публичен въпрос.</p><form id="need-form" class="card" novalidate><div class="field"><label for="place">Място</label><select id="place" class="choice"><option value="">Избери място</option>${placeOptions.map(([v,l])=>option(v,l,s.place)).join('')}</select><p class="hint">„Сега“ и „Корен“ остават различни места. Друго място се появява само с проверен избор.</p></div><div class="field"><label for="topic">Тема</label><select id="topic" class="choice"><option value="">Избери тема</option>${topics.map(v=>option(v,v,s.topic)).join('')}</select></div>${s.error?`<p role="alert" class="error">${esc(s.error)}</p>`:''}<button class="primary full" type="submit">Прегледай нуждата</button></form>`;
+        if(s.page==='travel')h=head('Кой маршрут търсиш?','Търся човек, който пътува',true)+`<p class="intro">Пътуването трябва да е в тази посока и около тази дата.</p><form id="need-form" class="card" novalidate><div class="pair"><div class="field"><label for="from">От</label><select class="choice" id="from">${['Мюнхен','Лом'].map(v=>option(v,v,s.from)).join('')}</select></div><div class="field"><label for="to">До</label><select class="choice" id="to">${['Лом','Мюнхен'].map(v=>option(v,v,s.to)).join('')}</select></div></div><div class="field"><label for="date">Около коя дата?</label><input class="choice" id="date" type="date" value="${esc(s.date)}"></div><p class="hint">Не искаме публично описание какво трябва да се предаде.</p>${s.error?`<p role="alert" class="error">${esc(s.error)}</p>`:''}<button class="primary full" type="submit">Прегледай търсенето</button></form>`;
+        if(s.page==='confirm')h=head('Прегледай избора','Само след потвърждение',true)+`<section class="card"><h2>${s.kind==='guidance'?'Търся информация или насока':'Търся човек, който пътува'}</h2><dl class="summary">${s.kind==='guidance'?`<dt>Място</dt><dd>${esc(s.place)}</dd><dt>Тема</dt><dd>${esc(s.topic)}</dd>`:`<dt>От</dt><dd>${esc(s.from)}</dd><dt>До</dt><dd>${esc(s.to)}</dd><dt>Около</dt><dd>${esc(s.date)}</dd>`}</dl></section><p class="note">Това е частна нужда. Потвърждението не изпраща заявка на човек. ${s.kind==='guidance'?'След 30 дни нуждата изтича, ако не я потвърдиш отново.':''}</p>${button('activate','Потвърди нуждата','primary full')}`;
+        if(s.page==='request')h=head('Преди да попиташ','Преглед на заявка',true)+`<section class="card"><h2>${s.active.kind==='guidance'?'До Мария':'До Иван'}</h2><p>Ще споделиш само ${s.active.kind==='guidance'?`място „${esc(s.active.place)}“, тема „${esc(s.active.topic)}“ и причината за предложението`:`маршрута ${esc(s.active.from)} → ${esc(s.active.to)}, датата и причината за предложението`}.</p><p class="muted">Едно изрично действие би изпратило нормална заявка за свързване. Чат има след приемане. В това демо не се изпраща нищо.</p></section>${button('send','Изпрати една заявка (демо)','primary full')}`;
+        if(s.page==='chat')h=head('Приет контакт','Симулиран пример',true)+`<section class="card"><h2>Разговор с Мария</h2><p>В реалния продукт се отваря само съществуващият частен чат. Демото не чете и не записва съобщения.</p></section>`;
+        app.innerHTML=h;app.querySelectorAll('[data-action]').forEach(el=>el.addEventListener('click',()=>act(el.dataset.action)));
+        app.querySelector('#need-form')?.addEventListener('submit',submit);
+      }
+      function act(a){s.error='';if(a==='back'){s.page=s.page==='confirm'?(s.kind==='guidance'?'guidance':'travel'):s.page==='request'||s.page==='chat'?'home':s.page==='choose'?'home':'choose'}
+        if(a==='choose')s.page='choose';
+        if(a==='guidance'||a==='travel'){s.kind=a;s.page=a}
+        if(a==='activate'){s.active=s.kind==='guidance'?{kind:s.kind,place:s.place,topic:s.topic}:{kind:s.kind,from:s.from,to:s.to,date:s.date};s.page='home';s.request=false}
+        if(a==='edit'){s.kind=s.active.kind;if(s.kind==='guidance'){s.place=s.active.place;s.topic=s.active.topic}else{s.from=s.active.from;s.to=s.active.to;s.date=s.active.date}s.page=s.kind}
+        if(a==='close'){s.active=null;s.request=false;s.page='home'}
+        if(a==='preview')s.page='request';if(a==='send'){s.request=true;s.page='home'}if(a==='chat')s.page='chat';render();window.scrollTo(0,0);app.querySelector('h1')?.focus({preventScroll:true})}
+      function submit(e){e.preventDefault();if(s.page==='guidance'){s.place=app.querySelector('#place').value;s.topic=app.querySelector('#topic').value;s.error=!s.place||!s.topic?'Избери едно място и една тема.':''}else{s.from=app.querySelector('#from').value;s.to=app.querySelector('#to').value;s.date=app.querySelector('#date').value;s.error=!s.date?'Избери дата.':s.from===s.to?'„От“ и „До“ трябва да са различни места.':''}if(s.error){render();app.querySelector('[role="alert"]')?.scrollIntoView({block:'center'});return}s.page='confirm';render();window.scrollTo(0,0)}
+      scenario.addEventListener('change',()=>{s.request=false;if(s.page!=='home')s.page='home';render()});if(matchMedia('(max-width:600px)').matches)document.getElementById('review').open=false;render();
+    })();
+  </script>
+</body>
+</html>
