@@ -1,4 +1,6 @@
--- REVIEW DRAFT ONLY. Do not apply until the coordinated Owner production gate.
+-- APPLIED 16.11.2026 after explicit Owner approval; migration 20261116190151.
+-- Actual migration query: alter view public.public_registrations set (security_invoker = true);
+-- This review file records the intended effect and verification, not an instruction to rerun.
 -- Target: Supabase project mqilvavuzbsscsfhtuub, PostgreSQL 17.
 -- Purpose: make the existing public_registrations view obey the caller's table grants/RLS.
 -- It does not provide a replacement aggregate API or make V1 ready for registration.
@@ -14,10 +16,10 @@ alter view public.public_registrations set (security_invoker = true);
 
 commit;
 
--- Verification (read-only, run separately):
--- 1. pg_class.reloptions contains security_invoker=true.
--- 2. Supabase security advisor no longer reports security_definer_view for this view.
--- 3. As anon, select count(*) from public.public_registrations returns 0.
+-- Verification after apply (read-only; completed metadata/advisor checks, client-role checks remain):
+-- 1. PASS: pg_class.reloptions contains security_invoker=true.
+-- 2. PASS: Supabase security advisor no longer reports security_definer_view.
+-- 3. OPEN: test a real anon client read; metadata shows no anon SELECT RLS policy.
 -- 4. As authenticated user A, only A's own row and explicitly accepted rows permitted
 --    by registrations RLS are visible; user B's unrelated row is absent.
 -- 5. Legacy index/account behavior is reviewed; no replacement public directory is
